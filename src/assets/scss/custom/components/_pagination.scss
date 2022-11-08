@@ -1,0 +1,14 @@
+// 
+// pagination.scss
+//
+
+
+// Pagination rounded (Custom)
+.pagination-rounded {
+    .page-link {
+        border-radius: 5px !important;
+        margin: 0 3px;
+        border: none;
+        cursor: pointer;
+    }
+}
