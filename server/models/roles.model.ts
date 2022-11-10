@@ -31,10 +31,9 @@ export default class Role
   @Column({ type: DataType.INTEGER })
   public updated_by: number;
 
-  @AllowNull(false)
-  @Column
-  public readonly created_at!: Date;
+  @Column(DataType.DATE)
+  public created_at!: Date;
 
-  @Column
-  public readonly updated_at!: Date;
+  @Column(DataType.DATE)
+  public updated_at!: Date;
 }

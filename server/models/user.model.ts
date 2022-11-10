@@ -7,14 +7,16 @@ import {
   ForeignKey,
   BelongsTo,
   Table,
+  Default,
 } from "sequelize-typescript";
 import { ICreateUser } from "@/interfaces/users.interface";
 import Role from "@/models/roles.model";
 export type UsersAttributes = Optional<ICreateUser, "id">;
-
 @Table({
-  tableName: "users",
   timestamps: true,
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  tableName: "users",
 })
 export default class User
   extends Model<ICreateUser, UsersAttributes>
@@ -50,23 +52,15 @@ export default class User
   @Column(DataType.BLOB)
   public profile_image: any;
 
-  @AllowNull(false)
-  @ForeignKey(() => User)
-  @Column({ type: DataType.INTEGER })
-  public created_by: number;
-  @BelongsTo(() => User)
-  public created_by_user: User;
-
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
   public updated_by: number;
   @BelongsTo(() => User)
   public updated_by_user: User;
 
-  @AllowNull(false)
-  @Column
-  public readonly created_at!: Date;
+  @Column 
+   public createdAt!: Date;
 
   @Column
-  public readonly updated_at!: Date;
+  public updatedAt!: Date;
 }

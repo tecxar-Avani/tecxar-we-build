@@ -6,9 +6,12 @@ import {
 } from "@/middlewares/google.middleware";
 import config from "@/configs";
 import { OpenAPI } from "routing-controllers-openapi";
+import UserService from "@/services/users.service";
 
 @Controller()
 export class AuthController {
+  private userService = new UserService();
+
   @Get("/google")
   @UseBefore(Authenticate)
   async google() {}
@@ -18,9 +21,25 @@ export class AuthController {
   @UseBefore(GoogleAuthentication)
   async google_callback(@Req() req: Request | any, @Res() res: Response) {
     try {
-      const res = req.user._json.email;
+      const userEmail = req.user._json.email;
+        const userName = req.user._json.name;
+        const googleProfileId = req.user._json.sub;
 
-      return res;
+      const user = await this.userService.getUserByEmail(userEmail);
+      if (user) {
+        return user;
+      } else {
+        const data = {
+          user_name: userName,
+          profile_id: googleProfileId,
+          email: userEmail,
+          role_id: 2,
+         is_blocked:0
+        };
+        const createUser = await this.userService.createUser(data);
+        return createUser;
+      }
+      
     } catch (error) {
       return {
         error: {

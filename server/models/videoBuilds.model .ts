@@ -11,8 +11,8 @@ import {
 } from "sequelize-typescript";
 import { IVideoBuild,VideoTypeEnumType,difficultyLevelEnumType } from "@/interfaces/videoBuilds.interface";
 import User from "@/models/user.model";
-export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 
+export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 @Table({
   tableName: "video_builds",
   timestamps: true,
@@ -28,7 +28,7 @@ export default class VideoBuilds
   @Column(DataType.STRING)
   public video_url: string;
 
-  @Default('youtube')
+  @Default("youtube")
   @Column(DataType.STRING)
   public provider: string;
 
@@ -54,10 +54,9 @@ export default class VideoBuilds
   @BelongsTo(() => User)
   public updated_by_user: User;
 
-  @AllowNull(false)
-  @Column
-  public readonly created_at!: Date;
+  @Column(DataType.DATE)
+  public created_at!: Date;
 
-  @Column
-  public readonly updated_at!: Date;
+  @Column(DataType.DATE)
+  public updated_at!: Date;
 }

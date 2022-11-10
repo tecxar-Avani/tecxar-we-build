@@ -1,0 +1,54 @@
+import { Optional } from "sequelize";
+import {
+  Column,
+  Model,
+  DataType,
+  AllowNull,
+  ForeignKey,
+  Table,
+  BelongsTo,
+} from "sequelize-typescript";
+import { IFlashCards, ResponseEnumType } from "@/interfaces/flashCards.interface";
+import VideoBuild from "@/models/videoBuilds.model ";
+import User from "@/models/user.model";
+export type Flash_CardsGroupAttributes = Optional<IFlashCards, "id">;
+
+@Table({
+  tableName: "flash_cards",
+  timestamps: true,
+})
+export default class FlashCards
+  extends Model<IFlashCards, Flash_CardsGroupAttributes>
+  implements IFlashCards
+{
+  @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
+  public id: number;
+
+  @AllowNull(false)
+  @ForeignKey(() => VideoBuild)
+  @Column(DataType.INTEGER)
+  public build_id: number;
+  @BelongsTo(() => VideoBuild)
+  public build: VideoBuild;
+
+  @Column(DataType.TEXT)
+  public question: string;
+
+  @Column(DataType.TEXT)
+  public answer: string;
+
+  @Column(DataType.ENUM("good", "hard", "easy", "again"))
+  public response: ResponseEnumType;
+
+  @ForeignKey(() => User)
+  @Column(DataType.INTEGER)
+  public created_by: number;
+  @BelongsTo(() => User)
+  public created_by_user: User;
+  
+  @Column(DataType.DATE)
+  public created_at: Date;
+
+  @Column(DataType.DATE)
+  public updated_at: Date;
+}

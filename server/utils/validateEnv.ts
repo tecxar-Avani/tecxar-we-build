@@ -25,6 +25,9 @@ function validateEnv() {
     EXPRESS_STATUS_MONITOR_PATH: str(),
     ENABLE_SWAGGER: bool(),
     SWAGGER_ENDPOINT: str(),
+    GOOGLE_CLIENT_ID: str(),
+    GOOGLE_CLIENT_SECRET: str(),
+    GOOGLE_CALLBACK_URL: str(),
   });
 }
 

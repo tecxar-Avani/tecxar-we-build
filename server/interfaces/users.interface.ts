@@ -1,5 +1,5 @@
 export interface ICreateUser {
-  id: number;
+  id?: number;
   role_id: number;
   user_name?: string;
   tag_line?: string;
@@ -7,8 +7,7 @@ export interface ICreateUser {
   profile_id: string;
   is_blocked?: number;
   profile_image?: any;
-  created_by: number;
   updated_by?: number;
-  created_at: Date;
+  created_at?: Date;
   updated_at?: Date;
 }

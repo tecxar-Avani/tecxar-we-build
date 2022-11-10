@@ -36,4 +36,9 @@ export default class Boxes
   @Column(DataType.INTEGER)
   public sorting_order: number;
 
+  @Column(DataType.DATE)
+  public created_at!: Date;
+
+  @Column(DataType.DATE)
+  public  updated_at!: Date;
 }
