@@ -49,7 +49,11 @@ const config: envConfig = {
     useMonitor: env.USE_EXPRESS_STATUS_MONITOR,
     monitorPath: env.EXPRESS_STATUS_MONITOR_PATH,
   },
- 
+  google: {
+    clientId: env.GOOGLE_CLIENT_ID,
+    clientSecret: env.GOOGLE_CLIENT_SECRET,
+    callbackUrl: env.GOOGLE_CALLBACK_URL,
+  },
 };
 
 export default config;

@@ -9,11 +9,10 @@ import { OpenAPI } from "routing-controllers-openapi";
 
 @Controller()
 export class AuthController {
-
   @Get("/google")
   @UseBefore(Authenticate)
   async google() {}
-  
+
   @Get("/google_callback")
   @OpenAPI({ summary: "google callback" })
   @UseBefore(GoogleAuthentication)
@@ -30,5 +29,10 @@ export class AuthController {
         },
       };
     }
+  }
+
+  @Get("/google_fail")
+  async google_fail(@Req() req: Request | any) {
+    return { data: "google authentication failed" };
   }
 }

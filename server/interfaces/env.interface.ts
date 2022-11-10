@@ -28,4 +28,9 @@ export interface envConfig {
     format: string;
     dir: string;
   };
+  google: {
+    clientId: string;
+    clientSecret: string;
+    callbackUrl: string;
+  };
 }
