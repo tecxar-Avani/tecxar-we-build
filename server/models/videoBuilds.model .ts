@@ -7,48 +7,39 @@ import {
   ForeignKey,
   BelongsTo,
   Table,
+  Default,
 } from "sequelize-typescript";
-import { ICreateUser } from "@/interfaces/users.interface";
-import Role from "@/models/roles.model";
-export type UsersAttributes = Optional<ICreateUser, "id">;
+import { IVideoBuild,VideoTypeEnumType,difficultyLevelEnumType } from "@/interfaces/videoBuilds.interface";
+import User from "@/models/user.model";
+export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 
 @Table({
-  tableName: "users",
+  tableName: "video_builds",
   timestamps: true,
 })
-export default class User
-  extends Model<ICreateUser, UsersAttributes>
-  implements ICreateUser
+export default class VideoBuilds
+  extends Model<IVideoBuild, VideoBuildAttributes>
+  implements IVideoBuild
 {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
   @AllowNull(false)
-  @ForeignKey(() => Role)
-  @Column(DataType.INTEGER)
-  public role_id: number;
-  @BelongsTo(() => Role)
-  public roles: Role;
-
   @Column(DataType.STRING)
-  public user_name: string;
+  public video_url: string;
 
+  @Default('youtube')
   @Column(DataType.STRING)
-  public tag_line: string;
+  public provider: string;
 
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  public email: string;
+  @Column(DataType.ENUM("theory", "practical"))
+  public type_of_video: VideoTypeEnumType;
 
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  public profile_id: string;
+  @Column(DataType.ENUM("low", "medium", "high", "very_high"))
+  public potential_polarization: difficultyLevelEnumType;
 
-  @Column(DataType.TINYINT)
-  public is_blocked: number;
-
-  @Column(DataType.BLOB)
-  public profile_image: any;
+  @Column(DataType.ENUM("low", "medium", "high", "very_high"))
+  public difficulty_level: difficultyLevelEnumType;
 
   @AllowNull(false)
   @ForeignKey(() => User)
