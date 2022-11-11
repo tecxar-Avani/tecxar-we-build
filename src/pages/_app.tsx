@@ -10,6 +10,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { SSRProvider } from 'react-bootstrap';
+import Dashboard from './Dashboard';
+import SideBar from './SideBar';
+import { Layout } from 'antd';
+
 
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
@@ -27,7 +31,17 @@ const WeBuildApp = ({ Component, pageProps, router, userProps, subDomain }: AppP
   return (
     <Provider store={store}>
       <SSRProvider>
+      <Layout>
+        <div className="sidebar-app">
+          <SideBar/>
+        </div>
        
+        <Layout className="site-layout">
+          <Dashboard />
+         
+          
+        </Layout>
+      </Layout>
        
       </SSRProvider>
     </Provider>
