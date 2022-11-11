@@ -1,8 +1,8 @@
-import { envConfig } from '@interfaces/env.interface';
-import validateEnv from '@utils/validateEnv';
-import project from '../../package.json';
+import { envConfig } from "@interfaces/env.interface";
+import validateEnv from "@utils/validateEnv";
+import project from "../../package.json";
 
-import 'dotenv/config';
+import "dotenv/config";
 
 const env = validateEnv();
 
@@ -54,6 +54,13 @@ const config: envConfig = {
     clientSecret: env.GOOGLE_CLIENT_SECRET,
     callbackUrl: env.GOOGLE_CALLBACK_URL,
   },
+  apiKey: env.API_KEY,
+  apiKeyUser: env.API_KEY_USER,
+  jwt: {
+    secret: env.APP_SECRET,
+    expiry: env.JWT_EXPIRES_IN,
+  },
+  urlHost: env.URL_HOST,
 };
 
 export default config;

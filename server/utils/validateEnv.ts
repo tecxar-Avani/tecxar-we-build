@@ -20,7 +20,6 @@ function validateEnv() {
     CORS_CREDENTIALS: bool(),
     logDir: str(),
     LOG_FORMAT: str(),
-
     USE_EXPRESS_STATUS_MONITOR: bool(),
     EXPRESS_STATUS_MONITOR_PATH: str(),
     ENABLE_SWAGGER: bool(),
@@ -28,6 +27,11 @@ function validateEnv() {
     GOOGLE_CLIENT_ID: str(),
     GOOGLE_CLIENT_SECRET: str(),
     GOOGLE_CALLBACK_URL: str(),
+    API_KEY_USER: str(),
+    API_KEY: str(),
+    APP_SECRET: str(),
+    JWT_EXPIRES_IN: num(),
+    URL_HOST:str()
   });
 }
 

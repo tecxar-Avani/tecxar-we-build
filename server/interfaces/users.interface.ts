@@ -21,3 +21,12 @@ export interface IUpdateUser {
   updated_by?: number;
   updatedAt?: Date;
 }
+
+export interface IFailedResponse {
+  error: {
+    title: string;
+    message: string;
+    redirect?: string;
+  };
+  status: boolean;
+}
