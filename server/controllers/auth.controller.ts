@@ -8,7 +8,7 @@ import config from "@/configs";
 import { OpenAPI } from "routing-controllers-openapi";
 import UserService from "@/services/users.service";
 
-@Controller()
+@Controller("/auth")
 export class AuthController {
   private userService = new UserService();
 
@@ -22,8 +22,8 @@ export class AuthController {
   async google_callback(@Req() req: Request | any, @Res() res: Response) {
     try {
       const userEmail = req.user._json.email;
-        const userName = req.user._json.name;
-        const googleProfileId = req.user._json.sub;
+      const userName = req.user._json.name;
+      const googleProfileId = req.user._json.sub;
 
       const user = await this.userService.getUserByEmail(userEmail);
       if (user) {
@@ -34,12 +34,11 @@ export class AuthController {
           profile_id: googleProfileId,
           email: userEmail,
           role_id: 2,
-         is_blocked:0
+          is_blocked: 0,
         };
         const createUser = await this.userService.createUser(data);
         return createUser;
       }
-      
     } catch (error) {
       return {
         error: {

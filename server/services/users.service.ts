@@ -11,22 +11,31 @@ class UserService {
     return userCreated;
   }
 
-  public async getUserByEmail(
-    email: string
-  ): Promise<ICreateUser | null> {
+  public async getUserByEmail(email: string): Promise<ICreateUser | null> {
     if (isEmpty(email)) {
       throw new HttpException(400, "Enter ID");
     }
-    const user: ICreateUser | null =
-      await this.users.findOne({
-        where: { email: email },
-      });
+    const user: ICreateUser | null = await this.users.findOne({
+      where: { email: email },
+    });
     if (!user) {
       return null;
     } else {
-      return user
+      return user;
     }
   }
+
+  public async getUsers(): Promise<ICreateUser[] | null> {
+    const user: ICreateUser[] | null = await this.users.findAll({
+      where: { is_blocked: 0 },raw:true
+    });
+    if (!user) {
+      return null;
+    } else {
+      return user;
+    }
+  }
+  
 }
 
 export default UserService;

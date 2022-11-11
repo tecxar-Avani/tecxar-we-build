@@ -68,7 +68,7 @@ class App {
           return true;
         } else {
           throw new UnauthorizedError("You're not authorized");
-          // throw new Error({ status: 401, message: 'You are not authorized' });
+         
         }
       },
       controllers: this.controllerPath,

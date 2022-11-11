@@ -1,6 +1,5 @@
-import { DatabaseObject } from "./baseObject.interface";
 
-export interface ICreateDesignation extends DatabaseObject {
+export interface ICreateDesignation  {
     id?: number;
     name: string;
     is_deleted?: boolean;

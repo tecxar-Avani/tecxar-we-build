@@ -8,6 +8,16 @@ export interface ICreateUser {
   is_blocked?: number;
   profile_image?: any;
   updated_by?: number;
-  created_at?: Date;
-  updated_at?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+
+export interface IUpdateUser {
+  user_name?: string;
+  tag_line?: string;
+  is_blocked?: number;
+  profile_image?: any;
+  updated_by?: number;
+  updatedAt?: Date;
 }
