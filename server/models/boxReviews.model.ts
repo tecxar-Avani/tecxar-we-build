@@ -18,6 +18,7 @@ export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
 
 @Table({
   tableName: "box_reviews",
+  createdAt:'createdat',
   timestamps: true,
 })
 export default class BoxReviews

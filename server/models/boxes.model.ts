@@ -14,6 +14,8 @@ export type BoxAttributes = Optional<IBoxes, "id">;
 
 @Table({
   tableName: "boxes",
+  createdAt:'createdat',
+  updatedAt:'updatedby',
   timestamps: true,
 })
 export default class Boxes
