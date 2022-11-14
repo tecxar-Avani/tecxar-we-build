@@ -15,8 +15,8 @@ import User from "@/models/user.model";
 export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 @Table({
   tableName: "video_builds",
-  createdAt:'createdat',
-  updatedAt:'updatedby',
+  createdAt:'created_at',
+  updatedAt:'updated_at',
   timestamps: true,
 })
 export default class VideoBuilds
