@@ -10,27 +10,28 @@ const Home: NextPage = () => {
       <Head>
         <title>dashboard</title>
       </Head>
-
-      <Content
-        className="site-layout-background bg-black m-0"
-        style={{
-          margin: "24px 16px",
-          padding: 24,
-          minHeight: 280,
-        }}
-      ></Content>
-      <Content
-        className="site-layout-background bg-danger m-0"
-        style={{
-          margin: "24px 16px",
-          padding: 24,
-          minHeight: 280,
-        }}
-      ></Content>
-      <div className="position-absolute left-66 top-0">
-        <h1>
-          We<span className="text-white">Build</span>
-        </h1>
+      <div className="d-flex flex-row h-full">
+        <Content
+          className="site-layout-background bg-black m-0"
+          style={{
+            margin: "24px 16px",
+            padding: 24,
+            minHeight: 280,
+          }}
+        ></Content>
+        <Content
+          className="site-layout-background bg-danger m-0"
+          style={{
+            margin: "24px 16px",
+            padding: 24,
+            minHeight: 280,
+          }}
+        ></Content>
+        <div className="position-absolute left-66 top-0">
+          <h1>
+            We<span className="text-white">Build</span>
+          </h1>
+        </div>
       </div>
     </>
   );

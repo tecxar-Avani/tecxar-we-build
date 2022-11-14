@@ -111,7 +111,7 @@ const profiledatas = [{
 }];
   return (
     <>
-      <div>
+      <div className="profile-main">
         <ProfileCard className="pt-2" profile={profiledata} />
         {/* <div className="py-4"> */}
         <div className="m-0 pb-2 overflow-x-scroll">
@@ -119,13 +119,13 @@ const profiledatas = [{
             title="Your builds"
             className="title-list-of-profile py-2"
           />
-          <div className="overflow-auto">
+          <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
               {videosData.length > 0 &&
                 videosData.map((videoData, index) => (
-                  <div className="videoProfile" key={index}>
+                  <Col lg={4} className="videoProfile px-2" key={index}>
                     <VideoCard VideoCardData={videoData} />
-                  </div>
+                  </Col>
                 ))}
             </div>
           </div>

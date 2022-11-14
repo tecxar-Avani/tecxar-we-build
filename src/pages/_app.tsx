@@ -33,11 +33,11 @@ const WeBuildApp = ({
 }: AppProps) => {
   return (
     <Provider store={store}>
-      <Layout>
+      <Layout className="h-full">
         <SideBar />
 
         <Layout className="site-layout">
-          <div className="d-flex flex-row h-full overflow-auto">
+          <div className="mainPage">
             <Component {...pageProps} />
           </div>
         </Layout>
