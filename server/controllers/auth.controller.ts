@@ -30,44 +30,46 @@ export class AuthController {
       const userEmail = req.user._json.email;
       const userName = req.user._json.name;
       const googleProfileId = req.user._json.sub;
-      if (req.user) {
-        return req.user;
-      }
-      // const user = await this.userService.getUserByEmail(userEmail);
-      // if (user) {
-      //   req.user = user
-      //   //  const token =await jwt.sign(
-      //   //    {
-      //   //      id: user.id,
-      //   //      email: userEmail,
-      //   //      name: userName,
-      //   //    },
-      //   //    JWT_KEY,
-      //   //    {
-      //   //      expiresIn: "1d",
-      //   //    }
-      //   //  );
-      //   //  res
-      //   //    .cookie("authorization", token, {
-      //   //      expires: new Date(Date.now() + 2700000),
-      //   //    })
-      //   //     .send('ok');
-      //   return {
-      //     status: true,
-      //     user: req.user,
-      //     message: "You have logged in successfully.",
-      //   };
-      // } else {
-      //   const data = {
-      //     user_name: userName,
-      //     profile_id: googleProfileId,
-      //     email: userEmail,
-      //     role_id: 2,
-      //     is_blocked: 0,
-      //   };
-      //   const createUser = await this.userService.createUser(data);
-      //   return createUser;
+      // if (req.user) {
+      //   req.cookie
+      //   return req.user;
+
       // }
+      const user = await this.userService.getUserByEmail(userEmail);
+      if (user) {
+        req.user = user;
+        const token = await jwt.sign(
+          {
+            id: user.id,
+            email: userEmail,
+            name: userName,
+          },
+          JWT_KEY,
+          {
+            expiresIn: "1d",
+          }
+        );
+        res
+          .cookie("authorization", token, {
+            expires: new Date(Date.now() + 2700000),
+          })
+          .redirect(`http://localhost:3000/api/users`);
+        // return {
+        //   status: true,
+        //   user: req.user,
+        //   message: "You have logged in successfully.",
+        // };
+      } else {
+        const data = {
+          user_name: userName,
+          profile_id: googleProfileId,
+          email: userEmail,
+          role_id: 2,
+          is_blocked: 0,
+        };
+        const createUser = await this.userService.createUser(data);
+        return createUser;
+      }
     } catch (error) {
       return {
         error: {

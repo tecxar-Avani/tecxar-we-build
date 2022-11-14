@@ -11,17 +11,13 @@ const authMiddleware = async (
 ) => {
   try {
     const userService = new USerService();
-          console.log("************", req.headers);
 
     const Authorization =
-      (req.headers &&
-        req.headers.cookie &&
-        req.headers.cookie["authorization"]) ||
-      (req.header && req.header("authorization")?.split("Bearer ")[1]) ||
+      req.cookies["authorization"] ||
+      req.header("authorization")?.split("Bearer ")[1] ||
       null;
-      console.log("************", req.headers.cookies);
-     const apiKey = req.header && req.header("api_key");
-   
+    const apiKey = req.header("api_key");
+
     if (apiKey == config.apiKey) {
       const user = await userService.getUserByEmail(config.apiKeyUser);
       if (user) {
@@ -57,11 +53,9 @@ const authMiddleware = async (
     res.cookie("authorization", "", {
       expires: new Date(Date.now()),
     });
-    res
-      .status(httpStatus.UNAUTHORIZED)
-      .send({
-        error: { code: httpStatus.UNAUTHORIZED, message: "Not Authorized" },
-      });
+    res.status(httpStatus.UNAUTHORIZED).send({
+      error: { code: httpStatus.UNAUTHORIZED, message: "Not Authorized" },
+    });
   }
 };
 export default authMiddleware;

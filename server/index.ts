@@ -16,6 +16,8 @@ import swaggerUi from "swagger-ui-express";
 import path from "path";
 import passport from "passport";
 import session from "express-session";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 class App {
   public app: express.Application;
@@ -32,29 +34,17 @@ class App {
 
     this.app.use(express.static(path.join(__dirname, "/../public")));
     this.connectToDatabase();
-    this.initializeRoutes();
-    // this.initializeSwagger();
-    //    this.app.use(
-    //      session({
-    //        secret: config.jwt.secret,
-    //        resave: false,
-    //        saveUninitialized: true,
-    //        name: "session",
-    //        store: new sessionStore({
-    //          db: this.db.sequelize,
-    //          expiration: 60 * 60 * 100000,
-    //        }),
-    //        // cookie: { secure: false, maxAge: 60 * 60 * 100000 },
-    //        // cookie: { secure: true, maxAge: 60 * 60 * 100000 },
-    //      })
-    //    );
-       passport.serializeUser(function (user, done) {
-         done(null, user);
-       });
+    this.initializeMiddlewares();
 
-       passport.deserializeUser(function (user, done) {
-         done(null, user);
-       });}
+    this.initializeRoutes();
+    passport.serializeUser(function (user, done) {
+      done(null, user);
+    });
+
+    passport.deserializeUser(function (user, done) {
+      done(null, user);
+    });
+  }
 
   public listen() {
     return new Promise((resolve, reject) => {
@@ -81,6 +71,40 @@ class App {
     DB.sequelize.sync({ force: false });
   }
 
+  private initializeMiddlewares() {
+    this.app.disable("x-powered-by");
+    this.app.use(
+      cors({
+        origin: config.cors.enabled,
+        credentials: config.cors.credentials,
+      })
+    );
+    // this.app.use(
+    //   helmet({
+    //     contentSecurityPolicy: {
+    //       useDefaults: true,
+    //       directives: {
+    //         defaultSrc: ["'self'"],
+    //         styleSrc: ["'self'", "'unsafe-inline'"],
+    //         imgSrc: ["'self'", "data:", "https:"],
+    //         scriptSrc: [
+    //           "'self'",
+    //           "'unsafe-inline'",
+    //           "'unsafe-eval'",
+    //           "cdnjs.cloudflare.com",
+    //         ],
+    //       },
+    //     },
+    //   })
+    // );
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cookieParser());
+    // if (config.express.useMonitor) {
+    //   StatusMonitor.mount(this.app);
+    // }
+  }
+
   private initializeRoutes() {
     useExpressServer(this.app, {
       cors: {
@@ -100,8 +124,6 @@ class App {
       routePrefix: config.apiPrefix,
     });
   }
-
-
 
   private initializeSwagger() {
     if (config.swagger.enabled) {

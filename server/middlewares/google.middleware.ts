@@ -56,32 +56,50 @@ export class GoogleAuthentication implements ExpressMiddlewareInterface {
   //     return request.logIn(user, next);
   //   })(request, response, next);
   // }
+  //******************** */
+  // authenticate = (callback: {
+  //   (err: { message: any }, user: ICreateUser): void;
+  //   (...args: any[]): any;
+  // }) =>
+  //   passport.authenticate(
+  //     "google",
+  //     { failureRedirect: "/google_fail", session: false },
+  //     callback
+  //   );
 
-  authenticate = (callback: {
-    (err: { message: any }, user: ICreateUser): void;
-    (...args: any[]): any;
-  }) =>
+  // use(request: Request, response: Response, next: NextFunction): any {
+  //   return this.authenticate((err: { message: any }, user: ICreateUser) => {
+  //     if (err || !user) {
+  //       logger.info("Unauthorized access");
+  //       const error: IFailedResponse = {
+  //         error: {
+  //           title: "failed to login",
+  //           message: err.message,
+  //         },
+  //         status: false,
+  //       };
+  //       return next(error);
+  //     }
+
+  //     return request.logIn(user, next);
+  //   })(request, response, next);
+  // }
+
+  authenticate = (callback: any) =>
     passport.authenticate(
       "google",
       { failureRedirect: "/google_fail", session: false },
       callback
     );
 
-  use(request: Request, response: Response, next: NextFunction): any {
-    return this.authenticate((err: { message: any }, user: ICreateUser) => {
+  use(req: Request | any, res: Response, next: NextFunction): any {
+    return this.authenticate((err: any, user: any, info: any) => {
       if (err || !user) {
-        logger.info("Unauthorized access");
-        const error: IFailedResponse = {
-          error: {
-            title: "failed to login",
-            message: err.message,
-          },
-          status: false,
-        };
-        return next(error);
+        return next(new UnauthorizedError(info));
       }
 
-      return request.logIn(user, next);
-    })(request, response, next);
+      req.user = user;
+      return next();
+    })(req, res, next);
   }
 }
