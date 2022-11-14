@@ -15,9 +15,9 @@ import User from "@/models/user.model";
 export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 @Table({
   tableName: "video_builds",
-  createdAt:'created_at',
-  updatedAt:'updated_at',
   timestamps: true,
+  createdAt: "created_at",
+  updatedAt: "updated_at",
 })
 export default class VideoBuilds
   extends Model<IVideoBuild, VideoBuildAttributes>
@@ -57,8 +57,8 @@ export default class VideoBuilds
   public updated_by_user: User;
 
   @Column(DataType.DATE)
-  public created_at!: Date;
+  public createdAt!: Date;
 
   @Column(DataType.DATE)
-  public updated_at!: Date;
+  public updatedAt!: Date;
 }

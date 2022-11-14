@@ -1,37 +1,37 @@
 import { IVideoBuild, difficultyLevelEnumType, VideoTypeEnumType } from '@interfaces/videoBuilds.interface';
 import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class videobuildDto implements IVideoBuild {
-    @IsNumber()
-    id: number;
+export class videoBuildDto implements IVideoBuild {
+  @IsString()
+  video_url: string;
 
-    @IsString()
-    video_url: string;
+  @IsOptional()
+  @IsString()
+  provider?: string;
 
-    @IsOptional()
-    @IsString()
-    provider?: string;
+  @IsOptional()
+  @IsString()
+  type_of_video?: VideoTypeEnumType;
 
-    @IsOptional()
-    type_of_video?: VideoTypeEnumType;
+  @IsOptional()
+  @IsString()
+  potential_polarization?: difficultyLevelEnumType;
 
-    @IsOptional()
-    potential_polarization?: difficultyLevelEnumType;
+  @IsOptional()
+  @IsString()
+  difficulty_level?: difficultyLevelEnumType;
 
-    @IsOptional()
-    difficulty_level?: difficultyLevelEnumType;
+  @IsNumber()
+  created_by: number;
 
-    @IsNumber()
-    created_by: number;
+  @IsOptional()
+  @IsNumber()
+  updated_by?: number;
 
-    @IsOptional()
-    @IsNumber()
-    updated_by?: number;
+  //   @IsDate()
+  //   created_at: Date;
 
-    @IsDate()
-    created_at: Date;
-
-    @IsOptional()
-    @IsDate()
-    updated_at?: Date;
+  //   @IsOptional()
+  //   @IsDate()
+  //   updated_at?: Date;
 }
