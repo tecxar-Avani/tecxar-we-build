@@ -6,12 +6,12 @@ import { Button, Card, CardImg, Col, Row } from "react-bootstrap";
 //   VideoCardData: any;
 // }
 
-const CustomButton = (props: any) => {
+const Ractangle = (props: any) => {
     return (
 
-        <Button variant={` ${props.className}`}>{props.title}</Button>
+        <div className="rectangle"></div>
 
     );
 };
 
-export default CustomButton;
+export default Ractangle;
