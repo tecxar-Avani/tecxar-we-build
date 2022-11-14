@@ -20,6 +20,12 @@ const SearchPage = () => {
       <div>
         <ProfileCard profile={profiledata} />
       </div>
+      <div>
+        <ProfileCard profile={profiledata} />
+      </div>
+      <div>
+        <ProfileCard profile={profiledata} />
+      </div>
     </>
   );
 };

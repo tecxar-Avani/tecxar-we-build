@@ -122,6 +122,23 @@ body,
   padding-right: 1rem;
 }
 
+.builds-Main {
+  .videoProfile {
+    width: 300px;
+  }
+}
+
+.mainPage {
+  overflow-y: scroll;
+  // overflow: hidden !important;
+  width: 100%;
+
+  .profile-main {
+    overflow: hidden;
+    overflow-y: auto;
+  }
+}
+
 .title {
   h1 {
     font-style: normal;

@@ -37,7 +37,7 @@ const WeBuildApp = ({
         {router && router.state && !router.state.route && <SideBar />}
 
         <Layout className="site-layout">
-          <div className="d-flex flex-row h-full overflow-auto">
+          <div className="mainPage">
             <Component {...pageProps} />
           </div>
         </Layout>
