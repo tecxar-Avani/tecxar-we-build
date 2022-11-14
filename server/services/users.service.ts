@@ -17,12 +17,11 @@ class UserService {
     }
     const user: ICreateUser | null = await this.users.findOne({
       where: { email: email },
+      raw: true,
     });
-    if (!user) {
-      return null;
-    } else {
+    if (user) {
       return user;
-    }
+    } 
   }
 
   public async getUsers(): Promise<ICreateUser[] | null> {

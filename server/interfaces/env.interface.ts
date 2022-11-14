@@ -33,4 +33,11 @@ export interface envConfig {
     clientSecret: string;
     callbackUrl: string;
   };
+  apiKey: string;
+  apiKeyUser: string;
+  jwt: {
+    secret: string;
+    expiry: number;
+  };
+  urlHost: string;
 }
