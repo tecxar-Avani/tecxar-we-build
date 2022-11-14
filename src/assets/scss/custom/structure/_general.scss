@@ -129,7 +129,8 @@ body,
 }
 
 .mainPage {
-  overflow: hidden !important;
+  overflow-y: scroll;
+  // overflow: hidden !important;
   width: 100%;
 
   .profile-main {
