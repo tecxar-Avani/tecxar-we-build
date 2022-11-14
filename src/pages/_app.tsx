@@ -34,7 +34,7 @@ const WeBuildApp = ({
   return (
     <Provider store={store}>
       <Layout>
-        <SideBar />
+        {router && router.state && !router.state.route && <SideBar />}
 
         <Layout className="site-layout">
           <div className="d-flex flex-row h-full overflow-auto">

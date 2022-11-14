@@ -460,3 +460,59 @@ font-size: 15px;
   text-align: center;
   margin-top: 0;
 }
+
+.aboutclass {
+  width: 379px;
+  height: 126px;
+  top: 224px;
+  font-family: Arimo;
+  padding-left: 11px;
+  font-weight: 400;
+  font-size: 16.5px;
+  line-height: 18.97px;
+  color: #000000;
+  margin-top: 10px;
+  margin-left: 11px;
+}
+
+.border-top{
+ position: absolute;
+width: 344.02px;
+height: 0px;
+left: 24px;
+top: 361.83px;
+border: 1px solid #000000;
+}
+
+.btn1{
+// box-sizing: border-box;
+// position: absolute;
+// width: 147px;
+// height: 75px;
+// background: #DCDADA;
+// border: 0.3px solid #000000;
+// border-radius: 3px;
+// font-family: 'Arimo';
+// font-weight: 400;
+// font-size: 14px;
+// line-height: 16px;
+// color: #000000;
+}
+
+.btn2{
+ box-sizing: border-box;
+position: absolute;
+width: 147px;
+height: 75px;
+left: 212px;
+top: 388px;
+background: #F8F8F8;
+border: 0.3px solid #000000;
+border-radius: 3px;
+font-family: 'Arimo';
+font-weight: 400;
+font-size: 14px;
+line-height: 16px;
+color: #000000;
+
+}

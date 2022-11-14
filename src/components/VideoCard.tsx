@@ -23,7 +23,7 @@ const VideoCard = (props: any) => {
         </div>
         <Card.Text className="py-2">{props.VideoCardData.subTitle}</Card.Text>
       </Card.Body>
-    </Card>
+      </Card>
   );
 };
 
