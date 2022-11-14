@@ -59,8 +59,56 @@ const Profile = () => {
     boxRightTitle: "Awareness",
     boxValueRight: "15",
     flashCardProfile: "flashCardProfile.svg",
+    flashCardsNumber:38,
   };
-
+const profiledatas = [{
+  id:1,
+  title: "Mazza Konny",
+  dateOfJoined: "Date joined: Oct 2022",
+  boxLeftTitle: "Boxes",
+  boxValueLeft: "4",
+  profileImg: "Ellipse60.png",
+  bottomTitle: "all the city with me",
+  boxRightTitle: "Awareness",
+  boxValueRight: "15",
+  
+},
+{
+  id:2,
+  title: "Mazza Konny",
+  dateOfJoined: "Date joined: Oct 2022",
+  boxLeftTitle: "Boxes",
+  boxValueLeft: "4",
+  profileImg: "Ellipse60.png",
+  bottomTitle: "all the city with me",
+  boxRightTitle: "Awareness",
+  boxValueRight: "15",
+  
+},
+{
+  id:3,
+  title: "Mazza Konny",
+  dateOfJoined: "Date joined: Oct 2022",
+  boxLeftTitle: "Boxes",
+  boxValueLeft: "4",
+  profileImg: "Ellipse60.png",
+  bottomTitle: "all the city with me",
+  boxRightTitle: "Awareness",
+  boxValueRight: "15",
+  
+},
+{
+  id:4,
+  title: "Mazza Konny",
+  dateOfJoined: "Date joined: Oct 2022",
+  boxLeftTitle: "Boxes",
+  boxValueLeft: "4",
+  profileImg: "Ellipse60.png",
+  bottomTitle: "all the city with me",
+  boxRightTitle: "Awareness",
+  boxValueRight: "15",
+  
+}];
   return (
     <>
       <div>
@@ -93,6 +141,20 @@ const Profile = () => {
               videosData.map((videoData, index) => (
                 <Col md={3} key={index}>
                   <VideoCard VideoCardData={videoData} />
+                </Col>
+              ))}
+          </Row>
+        </div>
+        <div className="pb-2">
+          <HeaderTitle
+            title="Total list of Profiles"
+            className="title-list-of-profile py-2"
+          />
+          <Row className="m-0">
+            {profiledatas.length > 0 &&
+              profiledatas.map((profiledatas, index) => (
+                <Col md={3} key={index}>
+                  <ProfileCard className="AllProfile" profile={profiledatas} />
                 </Col>
               ))}
           </Row>

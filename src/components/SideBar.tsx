@@ -34,7 +34,7 @@ const SideBar = (toggle: any) => {
                 <Image src={`/img/profile.png`} className="img-fluid" />
               </a>
             </Link>
-            <Link href="/dashboard">
+            <Link href="/">
               <a>
                 <Image src={`/img/qa.png`} className="img-fluid" />
               </a>

@@ -25,7 +25,7 @@ const ProfileCard = (props: any) => {
         )}
       </div>
       <div className="d-flex justify-content-center align-items-center py-2">
-        <div className="px-4">
+        <div className={`${props.leftBoxClass}`}>
           <p className="boxes-heading m-0">
             {props.profile && props.profile.boxLeftTitle}
           </p>
@@ -37,12 +37,13 @@ const ProfileCard = (props: any) => {
           <Image
             alt="profile"
             src={`/img/${props.profile && props.profile.profileImg}`}
+            className="img-fluid"
           />
           <p className="cityWithMe mb-0 mt-2">
             “{props.profile && props.profile.bottomTitle}”
           </p>
         </div>
-        <div className="px-4">
+        <div className={`${props.rightBoxClass}`}>
           <p className="boxes-heading m-0">
             {props.profile && props.profile.boxRightTitle}
           </p>
@@ -51,13 +52,18 @@ const ProfileCard = (props: any) => {
           </p>
         </div>
       </div>
+      {props.profile && props.profile.flashCardsNumber && (
+      <div className="flashCardsContent">{props.profile.flashCardsNumber} Cards</div>
+      )}
       {props.profile && props.profile.flashCardProfile && (
         <div className="flashCards">
+          
           <Image
             alt="flashCards"
             src={`/img/${props.profile.flashCardProfile}`}
           />
         </div>
+       
       )}
     </div>
   );
