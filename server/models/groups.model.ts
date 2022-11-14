@@ -10,6 +10,8 @@ export type GroupAttributes = Optional<IGroups, "id">;
 
 @Table({
   tableName: "groups",
+  createdAt:'createdat',
+  updatedAt:'updatedby',
   timestamps: true,
 })
 export default class Groups

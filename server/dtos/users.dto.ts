@@ -1,5 +1,5 @@
 import { ICreateUser, IUpdateUser } from '@/interfaces/users.interface';
-import { IsBoolean, IsOptional, IsString, IsDate, IsNumber } from 'class-validator';
+import { IsOptional, IsString, IsDate, IsNumber } from 'class-validator';
 
 export class CreateUserDto implements ICreateUser {
   @IsOptional()
