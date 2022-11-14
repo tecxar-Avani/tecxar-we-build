@@ -37,8 +37,8 @@ body,
 
 }
 
-.left-10 {
-  left: 60px;
+.left-66 {
+  left: 66px;
 }
 
 .profile {
@@ -85,6 +85,7 @@ body,
   text-align: center;
   color: #000000;
   font-family: Arimo;
+  margin: 0;
 }
 
 .profile .subTitle {
@@ -96,6 +97,7 @@ body,
   text-align: center;
   color: #000000;
   font-family: Arimo;
+  margin: 0;
 }
 
 .profile .pcontent {
@@ -105,6 +107,30 @@ body,
   font-size: 30px;
   line-height: 34px;
 
+}
+
+.videoCard {
+  display: inline-flex;
+  // max-width: 1500px;
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.videoProfile {
+  overflow: hidden;
+  // width: 404px;
+  padding-right: 1rem;
+}
+
+.title {
+  h1 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px;
+    color: #000000;
+    margin: 0;
+  }
 }
 
 .vcontent {
