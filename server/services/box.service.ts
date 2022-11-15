@@ -1,6 +1,5 @@
 import { HttpException } from "@/exceptions/HttpException";
 import { IBoxes } from "@/interfaces/boxes.interface";
-import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
 
@@ -15,10 +14,8 @@ class BoxService {
     return createBuildData;
   }
 
-  
-  public async getBuild(userId: number): Promise<IVideoBuild[] | null> {
-    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll({
-      where: { created_by: userId },
+  public async getBuilds(): Promise<IBoxes[] | null> {
+    const videoBuilds: IBoxes[] | null = await this.box.findAll({
       raw: true,
     });
     if (!videoBuilds) {

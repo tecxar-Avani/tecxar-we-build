@@ -1,7 +1,7 @@
 import { IBoxReviews, ReviewTypeEnumType } from '@interfaces/box_reviews.interface';
 import { IsNumber, IsString, IsDate } from 'class-validator';
 
-export class BoxreviewDto implements IBoxReviews {
+export class BoxReviewDto implements IBoxReviews {
     @IsNumber()
     id: number;
 
@@ -17,6 +17,4 @@ export class BoxreviewDto implements IBoxReviews {
     @IsNumber()
     created_by: number;
 
-    @IsDate()
-    created_at: Date;
 }
