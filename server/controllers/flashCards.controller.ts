@@ -13,15 +13,14 @@ import authMiddleware from "@/middlewares/auth.middleware";
 @Controller("/flashcard")
 @UseBefore(authMiddleware)
 export class FlashController {
-    private FlashCardService = new FlashCardService();
+    private flashCardService = new FlashCardService();
 
     @Get("/")
     @OpenAPI({ summary: "Get all build of users" })
     async getFlashCard(@Req() req: Request| any, @Res() res: Response) {
         try {
-            console.log('++++',req.user)
             const user = req.user.id;
-            const flashBuild = await this.FlashCardService.getFlashCard(user);
+            const flashBuild = await this.flashCardService.getFlashCard(user);
             return flashBuild;
         } catch (error) {
             return {

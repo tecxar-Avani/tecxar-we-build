@@ -15,7 +15,7 @@ export type Flash_CardsGroupAttributes = Optional<IFlashCards, "id">;
 
 @Table({
   tableName: "flash_cards",
-  updatedAt:'updatedby',
+  updatedAt:'updated_at',
   timestamps: true,
 })
 export default class FlashCards

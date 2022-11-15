@@ -3,17 +3,17 @@ import {IFlashCards } from "@/interfaces/flashCards.interface";
 import DB from "@databases";
 
 class FlashCardService {
-  private FlashCards = DB.flashCards;
+  private flashCard = DB.flashCards;
 
   public async getFlashCard(userId:number): Promise<IFlashCards[] | null> {
-    const FlashCards: IFlashCards[] | null = await this.FlashCards.findAll({
-         where:{created_by:userId},
+    const flashCards: IFlashCards[] | null = await this.flashCard.findAll({
+          where:{created_by:userId},
       raw:true
     });
-    if (!FlashCards) {
+    if (!flashCards) {
       return null;
     } else {
-      return FlashCards;
+      return flashCards;
     }
   }
   

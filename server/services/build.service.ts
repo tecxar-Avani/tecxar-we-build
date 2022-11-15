@@ -16,7 +16,6 @@ class BuildService {
       return videoBuilds;
     }
   }
-  
 }
 
 export default BuildService;
