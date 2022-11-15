@@ -4,8 +4,12 @@ import SearchBar from "@/components/SearchBar";
 import HeaderTitle from "@/components/headerTitle";
 import VideoCard from "@/components/VideoCard";
 import { Col, Row } from "react-bootstrap";
+import { title } from "process";
+import { useRouter } from "next/router";
 
 const SearchPage = () => {
+  const router = useRouter();
+  console.log("router", router.query);
   const videosData = [
     {
       id: "1",
@@ -45,21 +49,27 @@ const SearchPage = () => {
     },
   ];
   return (
-  <>
-      <SearchBar/>
-      <HeaderTitle
-      title="Want to learn from others’ builds?"
-      className="title-list-of-profile py-4 Search"
-    />
-     <Row className="Search">
-              {videosData.length > 0 &&
-                videosData.map((videoData, index) => (
-                  <Col lg={4} className="videoProfile px-2" key={index}>
-                    <VideoCard VideoCardData={videoData} />
-                  </Col>
-
-                ))}
-          </Row> 
+    <>
+      <SearchBar />
+      {router && router.query.selfLearning ? (
+        <HeaderTitle
+          title="Want to learn about yourself?"
+          className="title-list-of-profile py-4 Search"
+        />
+      ) : (
+        <HeaderTitle
+          title="Want to learn about things?"
+          className="title-list-of-profile py-4 Search"
+        />
+      )}
+      <Row className="Search">
+        {videosData.length > 0 &&
+          videosData.map((videoData, index) => (
+            <Col lg={4} className="videoProfile px-2" key={index}>
+              <VideoCard VideoCardData={videoData} />
+            </Col>
+          ))}
+      </Row>
     </>
   );
 };

@@ -3,6 +3,7 @@ import { Image, OverlayTrigger } from "react-bootstrap";
 import { Layout, Menu, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import HeaderTitle from "./headerTitle";
 
 const { Sider } = Layout;
 
@@ -48,12 +49,12 @@ const SideBar = (toggle: any) => {
         >
           
           <div className="d-flex flex-column justify-content-between align-items-center">
-            <Link href="/search">
-              <a onClick={selfLearning}>
+            <Link href={"/search?selfLearning=true"}>
+              <a onClick={selfLearning} >
                 <Image src={`/img/user-pre.png`} className="img-fluid" />
               </a>
             </Link>
-            <Link href="/search">
+            <Link href="/search?selfLeaning=false">
               <a onClick={otherLearnning}>
                 <Image src={`/img/book.png`} className="img-fluid" />
               </a>
