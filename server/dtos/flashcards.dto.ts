@@ -2,6 +2,7 @@ import { IFlashCards, ResponseEnumType } from '@interfaces/flashCards.interface'
 import { IsOptional, IsNumber, IsString, IsDate } from 'class-validator';
 
 export class flashcardsDto implements IFlashCards {
+  @IsOptional()
   @IsNumber()
   id: number;
 

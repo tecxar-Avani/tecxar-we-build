@@ -15,6 +15,7 @@ class BoxService {
     return createBuildData;
   }
 
+  
   public async getBuild(userId: number): Promise<IVideoBuild[] | null> {
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll({
       where: { created_by: userId },

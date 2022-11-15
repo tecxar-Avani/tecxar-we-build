@@ -37,6 +37,10 @@ export class videoBuildDto implements IVideoBuild {
   boxes?: any;
 
   @IsOptional()
+  @IsArray()
+  flashCards?: any;
+
+  @IsOptional()
   @IsNumber()
   created_by: number;
 

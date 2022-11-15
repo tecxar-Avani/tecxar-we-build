@@ -7,13 +7,27 @@ import { isEmpty } from "class-validator";
 class FlashCardService {
   private flashCard = DB.flashCards;
 
-  public async createFlashCard(cardData: IFlashCards): Promise<IFlashCards | null> {
+  public async createFlashCard(
+    cardData: IFlashCards
+  ): Promise<IFlashCards | null> {
     if (isEmpty(cardData)) {
       throw new HttpException(400, "Enter the card data");
     }
     const createCardData: IFlashCards | null = await this.flashCard.create(
       { ...cardData },
       { raw: true }
+    );
+    return createCardData;
+  }
+
+  public async createBulkFlashCard(
+    cardData: IFlashCards | any
+  ): Promise<IFlashCards[] | null> {
+    if (isEmpty(cardData)) {
+      throw new HttpException(400, "Enter the flash card data");
+    }
+    const createCardData: IFlashCards[] = await this.flashCard.bulkCreate(
+      cardData
     );
     return createCardData;
   }

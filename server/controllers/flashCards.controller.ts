@@ -22,7 +22,7 @@ export class FlashController {
 
   @Post("/create")
   @HttpCode(201)
-  @OpenAPI({ summary: "Create a new build" })
+  @OpenAPI({ summary: "Create a new flash card" })
   async createFlashCard(
     @Body() cardData: flashcardsDto,
     @Req() req: Request | any,
@@ -31,19 +31,12 @@ export class FlashController {
     try {
       cardData.created_by = req.user.id;
       cardData.updated_by = req.user.id;
-      const createBuildData: IFlashCards | null =
-        await this.flashCardService.createBuild(videoBuildData);
-      if (createBuildData && createBuildData.id && videoBuildData.boxes) {
-        const newArr = videoBuildData.boxes.map((box) => ({
-          ...box,
-          build_id: createBuildData.id,
-        }));
-        await this.boxService.createBox(newArr);
-      }
+      const createCardData: IFlashCards | null =
+        await this.flashCardService.createFlashCard(cardData);
       return {
         status: true,
-        data: createBuildData,
-        message: "Video Build created successfully.",
+        data: createCardData,
+        message: "Flash Card created successfully.",
       };
     } catch (error) {
       if (error instanceof Error) {
