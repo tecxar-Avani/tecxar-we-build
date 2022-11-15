@@ -124,7 +124,7 @@ body,
 
 .builds-Main {
   .videoProfile {
-    width: 300px;
+   
   }
 }
 
@@ -275,14 +275,15 @@ body,
   width: 24%;
 }
 
+
 .ant-modal-body {
   text-align: center;
 }
 
-.ant-modal-content {
-  border-radius: 13px;
+.ant-modal-header {
+    border-bottom: 0;
+    padding: 9px 12px;
 }
-
 .ant-modal-footer {
   text-align: center;
   border-top: none;
@@ -293,15 +294,23 @@ body,
   color: white;
   border-radius: 5px;
 }
+ .ant-modal-close-x {
+    padding: 0px;
+    font-weight: 700;
+    display: block;
+    width: 13px;
+    height: 14px;
+    font-size: 13px;
+    font-style: normal;
+    line-height: 8px;
+    text-align: center;
+    border-radius: 7px;
+    background-color: black !important;
+    color: white;
+    margin-top: 15px;
+    margin-right: 13px;
+  }
 
-/* .ant-modal{
-  top: 245px;
-  
-  max-width: 411px;
-  max-height:265px;;
-  font-weight: 700;
-font-size: 15px;
-} */
 .ant-modal-body .inputbox {
   text-align: left;
 }
@@ -309,6 +318,11 @@ font-size: 15px;
 .inputbox {
   text-align: left;
   height: 80;
+  font-family: 'Arimo';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 17px;
 }
 
 .userGuide {
@@ -335,19 +349,6 @@ font-size: 15px;
   font-size: 25px;
   line-height: 29px;
 }
-
-.userGuideBg {
-  background-color: #44A82B;
-}
-
-.selfLearningBg {
-  background-color: #FFEB3D;
-}
-
-.aboutThingsBg {
-  background-color: #214DEA;
-}
-
 .novideo {
   text-align: center;
 
@@ -404,81 +405,81 @@ font-size: 15px;
   text-align: center;
 }
 
-.awarenessModal {
-  position: relative;
-}
+// .awarenessModal {
+//   position: relative;
 
-.awarenessModal .inputboxes {
-  height: 13px;
-  width: 121px;
-  font-size: 8px;
-}
 
-.awarenessModal .ant-btn {
-  background-color: #eee3e3;
-  color: white;
-  border-radius: 5px;
-}
+// .inputboxes {
+//   height: 13px;
+//   width: 121px;
+//   font-size: 8px;
+// }
 
-.awarenessModal .ant-modal-header {
-  border-bottom: 0;
-  padding: 9px 12px;
-  background-color: #E8ABAB;
-}
+// .ant-btn {
+//   background-color: #eee3e3;
+//   color: white;
+//   border-radius: 5px;
+// }
 
-.awarenessModal .ant-modal-content {
-  background-color: #E8ABAB;
-  border-radius: 7px;
-}
+// .ant-modal-header {
+//   border-bottom: 0;
+//   padding: 9px 12px;
+//   background-color: #E8ABAB;
+// }
 
-.awarenessModal .ant-modal {
-  background-color: #E8ABAB;
-  border-radius: 7px;
-  width: 440px;
-  height: 473px;
-  margin-top: 212px;
-  margin-left: 696px;
-  margin-bottom: 339px;
-  margin-right: 304px;
-}
+// .ant-modal-content {
+//   background-color: #E8ABAB;
+//   border-radius: 7px;
+// }
 
-.awarenessModal .ant-modal-close-x {
-  padding: 0px;
-  font-weight: 700;
-  display: block;
-  width: 13px;
-  height: 14px;
-  font-size: 13px;
-  font-style: normal;
-  line-height: 8px;
-  text-align: center;
+// .ant-modal {
+//   background-color: #E8ABAB;
+//   border-radius: 7px;
+//   width: 440px;
+//   height: 473px;
+//   margin-top: 212px;
+//   margin-left: 696px;
+//   margin-bottom: 339px;
+//   margin-right: 304px;
+// }
 
-  border-radius: 7px;
-  background-color: black !important;
-  color: white;
-  margin-top: 10px;
-  margin-right: 13px;
-}
+// .ant-modal-close-x {
+//   padding: 0px;
+//   font-weight: 700;
+//   display: block;
+//   width: 13px;
+//   height: 14px;
+//   font-size: 13px;
+//   font-style: normal;
+//   line-height: 8px;
+//   text-align: center;
+//   border-radius: 7px;
+//   background-color: black !important;
+//   color: white;
+//   margin-top: 10px;
+//   margin-right: 13px;
+// }
 
-.awarenessModal .ant-modal-body {
-  text-align: left;
-  padding-bottom: 0;
-  margin-right: 14px;
-}
+// .ant-modal-body {
+//   text-align: left;
+//   padding-bottom: 0;
+//   margin-right: 14px;
+// }
 
-.awarenessModal .ant-input {
-  border-radius: 4px;
-  width: 413px;
-  height: 160px;
-}
+// .ant-input {
+//   border-radius: 4px;
+//   width: 413px;
+//   height: 160px;
+// }
 
-.awarenessModal .ant-btn {
-  width: 58px;
-  height: 28px;
-  background-color: #000000;
-  text-align: center;
-  margin-top: 0;
-}
+// .ant-btn {
+//   width: 58px;
+//   height: 28px;
+//   background-color: #000000;
+//   text-align: center;
+//   margin-top: 0;
+// }
+// }
 .userGuide {
   font-family: 'Arimo';
   font-style: normal;

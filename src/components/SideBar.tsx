@@ -10,18 +10,32 @@ const SideBar = (toggle: any) => {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   // const url = window.location.origin;
-  const [isActive, setIsActive] = useState(false);
-  const [IsOn ,setIsOn ] = useState(false)
-  const [IsChange , setIsChange] = useState(false)
-  const handleAClick = () => {
-    setIsActive(currentA => !currentA)
+  const [IsSelfLearning, setIsSelfLearning] = useState(false);
+  const [IsOtherLearning ,setIsOtherLearning ] = useState(false)
+  const [IsProfile , setIsProfile] = useState(false)
+  const [IsUserGuide , setIsUserGuide] = useState(false)
+  const selfLearning = () => {
+    setIsSelfLearning(true)
   };
-  const handleBClick = () => {
-    setIsOn(currentB => !currentB)
+  const otherLearnning = () => {
+    setIsSelfLearning(false)
+    setIsUserGuide(false)
+    setIsProfile(false)
+    setIsOtherLearning(true)
   };
-  const handleCClick = () => {
-    setIsChange(currentC => !currentC)
+  const profile = () => {
+    setIsSelfLearning(false)
+    setIsOtherLearning(false)
+    setIsUserGuide(false)
+    setIsProfile(true)
   };
+  const userGuide = () => {
+    setIsSelfLearning(false)
+    setIsOtherLearning(false)
+    setIsProfile(false)
+    setIsUserGuide(true)
+  };
+  
   return (
     <>
       <div className="sidbar" >
@@ -30,26 +44,27 @@ const SideBar = (toggle: any) => {
           collapsible
           collapsed={collapsed}
           className="h-full d-flex px-3 flex-column justify-content-center align-items-center mySidebar"
-          style={{backgroundColor: isActive ? '#FFEB3D' : IsOn ? '#214DEA' : IsChange ? '#44A82B' : 'white'}}
+          style={{backgroundColor: IsSelfLearning ? '#FFEB3D' : IsOtherLearning ? '#214DEA' : IsUserGuide ? '#44A82B' :  IsProfile ? 'white' : 'white'}}
         >
+          
           <div className="d-flex flex-column justify-content-between align-items-center">
             <Link href="/search">
-              <a onClick={handleAClick}>
+              <a onClick={selfLearning}>
                 <Image src={`/img/user-pre.png`} className="img-fluid" />
               </a>
             </Link>
             <Link href="/search">
-              <a onClick={handleBClick}>
+              <a onClick={otherLearnning}>
                 <Image src={`/img/book.png`} className="img-fluid" />
               </a>
             </Link>
             <Link href="/profile">
-              <a>
+              <a onClick={profile}>
                 <Image src={`/img/profile.png`} className="img-fluid" />
               </a>
             </Link>
             <Link href="/UserGuide">
-              <a onClick={handleCClick}>
+              <a onClick={userGuide}>
                 <Image src={`/img/qa.png`} className="img-fluid" />
               </a>
             </Link>

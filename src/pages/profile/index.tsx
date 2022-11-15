@@ -73,7 +73,9 @@ const profiledatas = [{
   bottomTitle: "all the city with me",
   boxRightTitle: "Awareness",
   boxValueRight: "15",
-  
+  blockIcon:"block.svg",
+  UnBlockIcon:"unBlock.svg",
+  deleteIcon:"delete.svg",
 },
 {
   id:2,
@@ -85,7 +87,9 @@ const profiledatas = [{
   bottomTitle: "all the city with me",
   boxRightTitle: "Awareness",
   boxValueRight: "15",
-  
+  blockIcon:"block.svg",
+  UnBlockIcon:"unBlock.svg",
+  deleteIcon:"delete.svg",
 },
 {
   id:3,
@@ -97,7 +101,9 @@ const profiledatas = [{
   bottomTitle: "all the city with me",
   boxRightTitle: "Awareness",
   boxValueRight: "15",
-  
+  blockIcon:"block.svg",
+  UnBlockIcon:"unBlock.svg",
+  deleteIcon:"delete.svg",
 },
 {
   id:4,
@@ -109,12 +115,15 @@ const profiledatas = [{
   bottomTitle: "all the city with me",
   boxRightTitle: "Awareness",
   boxValueRight: "15",
-  
+  blockIcon:"block.svg",
+  UnBlockIcon:"unBlock.svg",
+  deleteIcon:"delete.svg",
 }];
 const flashCardModalData = {
-  title:"",
+  // title:["hello"],
+  headerIcon:["deleteFlash.svg","edit.svg"],
   footer:['save','Reveal answer','Delete'],
-  content:"What is dark matter so hard to detect?",
+  textbox:[{'header':'input','box':''},{'header':'output','box':''}],
 }
 
   return (
@@ -131,7 +140,7 @@ const flashCardModalData = {
             <div className="d-flex overflow-auto">
               {videosData.length > 0 &&
                 videosData.map((videoData, index) => (
-                  <Col lg={4} className="videoProfile px-2" key={index}>
+                  <Col md={4} className="videoProfile px-2" key={index}>
                     <VideoCard VideoCardData={videoData} />
                   </Col>
                 ))}

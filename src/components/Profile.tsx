@@ -72,6 +72,12 @@ const ProfileCard = (props: any) => {
         </div>
        
       )}
+       <div className="button justify-content-center d-flex">
+      {props.profile && props.profile.blockIcon && (<figure><Image src={`/img/${props.profile && props.profile.blockIcon}`} height="41" width="41" className="mx-2 button"/> <figcaption> Block </figcaption></figure>)}
+      {props.profile && props.profile.UnBlockIcon && (<figure><Image src={`/img/${props.profile && props.profile.UnBlockIcon}`} height="41" width="41" className="mx-2 button"/> <figcaption> Unblock </figcaption></figure>)}
+      {props.profile && props.profile.deleteIcon && (<figure><Image src={`/img/${props.profile && props.profile.deleteIcon}`} height="41" width="41" className="mx-2 button"/> <figcaption> Delete </figcaption></figure>)}  
+      
+        </div>
       
     </div>
   );
