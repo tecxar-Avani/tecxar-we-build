@@ -33,8 +33,8 @@ const WeBuildApp = ({
 }: AppProps) => {
   return (
     <Provider store={store}>
-      <Layout className="h-full">
-        <SideBar />
+      <Layout>
+        {router && router.state && !router.state.route && <SideBar />}
 
         <Layout className="site-layout">
           <div className="mainPage">

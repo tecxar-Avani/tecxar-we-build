@@ -527,3 +527,35 @@ line-height: 29px;
 }
  
 
+.awarenessModal .ant-btn {
+  width: 58px;
+  height: 28px;
+  background-color: #000000;
+  text-align: center;
+  margin-top: 0;
+}
+
+.btn1{
+background-color: #DCDADA;
+color: black;
+}
+.btn2{
+  background-color: #F8F8F8;
+  color: black;
+}
+.rectangle{
+  // position: absolute;
+  width: 890px;
+  height: 30px;
+  left: 469px;
+  top: 99px;
+  border: 0.3px solid rgba(0, 0, 0, 0.25);
+}
+.outerbox{
+  width: 270px;
+  height: 170px;
+  left: 509px;
+  top: 129px;
+  border: 0.3px solid rgba(0, 0, 0, 0.25);
+}
+

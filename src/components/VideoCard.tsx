@@ -8,7 +8,7 @@ import { Card, CardImg, Col, Row } from "react-bootstrap";
 
 const VideoCard = (props: any) => {
   return (
-    <Link href="/">
+   
     <Card className="p-0 border-0 rounded-0 mx-2">
       {props.VideoCardData.title && (
         <Card.Header>{props.VideoCardData.title}</Card.Header>
@@ -25,8 +25,7 @@ const VideoCard = (props: any) => {
         </div>
         <Card.Text className="py-2">{props.VideoCardData.subTitle}</Card.Text>
       </Card.Body>
-    </Card>
-    </Link>
+      </Card>
   );
 };
 
