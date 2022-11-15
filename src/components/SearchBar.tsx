@@ -9,8 +9,8 @@ const onSearch = (value: any) => console.log(value);
 const SearchBar = () => {
     return (
       <>
-        <div className="searchCard row mt-4 justify-content-center">
-          <div className="col col-md-8">
+        <div className="searchCard mt-4 justify-content-center">
+          <div className="w-75 md-8 m-auto">
             <Input className="w-full rounded-pill" placeholder="Enter your YouTube URL here or search for exisiting build using keywords" />
           </div>
         </div>

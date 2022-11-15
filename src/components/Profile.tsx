@@ -1,12 +1,16 @@
-import React from "react";
-import { Card, CardImg, Col, Image, Row } from "react-bootstrap";
+import { Modal } from "antd";
+import React, { useState } from "react";
+import { Button, Card, CardImg, Col, Image, Row } from "react-bootstrap";
+import FlashCardModal from "./FlashCardModal";
 
 // interface IVideosCard {
 //   VideoCardData: any;
 // }
 
 const ProfileCard = (props: any) => {
-  console.log("props", props);
+  const [loading, setLoading] = useState(false);
+
+ 
   return (
     <div
       className={`${props.className} profile text-center border-bottom pb-3 position-relative`}
@@ -56,15 +60,19 @@ const ProfileCard = (props: any) => {
       <div className="flashCardsContent">{props.profile.flashCardsNumber} Cards</div>
       )}
       {props.profile && props.profile.flashCardProfile && (
-        <div className="flashCards">
+        <div className="flashCards" onClick= {() => {
+          props.setModal2Open(true)
+        }}>
           
           <Image
             alt="flashCards"
             src={`/img/${props.profile.flashCardProfile}`}
+            
           />
         </div>
        
       )}
+      
     </div>
   );
 };

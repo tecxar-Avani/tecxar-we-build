@@ -1,15 +1,17 @@
+import FlashCardModal from "@/components/FlashCardModal";
 import HeaderTitle from "@/components/headerTitle";
 import ProfileCard from "@/components/Profile";
 import VideoCard from "@/components/VideoCard";
-import React from "react";
+import { Button } from "antd";
+import React, { useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 
+
+
 const Profile = () => {
-  // const videosData = {[
-  //   {
-  //     id
-  //   }
-  // ]};
+  const [modal2Open, setModal2Open] = useState(false);
+ 
+ 
   const videosData = [
     {
       id: "1",
@@ -109,10 +111,16 @@ const profiledatas = [{
   boxValueRight: "15",
   
 }];
+const flashCardModalData = {
+  title:"",
+  footer:['save','Reveal answer','Delete'],
+  content:"What is dark matter so hard to detect?",
+}
+
   return (
     <>
       <div className="profile-main">
-        <ProfileCard className="pt-2" profile={profiledata} />
+        <ProfileCard className="pt-2" profile={profiledata} setModal2Open={setModal2Open} />
         {/* <div className="py-4"> */}
         <div className="m-0 pb-2 overflow-x-scroll">
           <HeaderTitle
@@ -139,7 +147,7 @@ const profiledatas = [{
           <Row className="m-0">
             {videosData.length > 0 &&
               videosData.map((videoData, index) => (
-                <Col md={3} key={index}>
+                <Col md={4} key={index} className="videoProfile">
                   <VideoCard VideoCardData={videoData} />
                 </Col>
               ))}
@@ -160,6 +168,8 @@ const profiledatas = [{
           </Row>
         </div>
       </div>
+     
+      <FlashCardModal modal2Open={modal2Open} flashCard={flashCardModalData} setModal2Open={setModal2Open} visible={modal2Open}/>
     </>
   );
 };
