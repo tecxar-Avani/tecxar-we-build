@@ -53,12 +53,12 @@ const SearchPage = () => {
       <SearchBar />
       {router && router.query.selfLearning ? (
         <HeaderTitle
-          title="Want to learn about yourself?"
+          title="Learn something new about yourself"
           className="title-list-of-profile py-4 Search"
         />
       ) : (
         <HeaderTitle
-          title="Want to learn about things?"
+          title="Want to learn from others’ builds?"
           className="title-list-of-profile py-4 Search"
         />
       )}
