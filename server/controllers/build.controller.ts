@@ -11,7 +11,7 @@ import {
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BuildService from "@/services/build.service";
-// import BoxService from '@/services/'
+ import BoxService from '@/services/box.service'
 import authMiddleware from "@/middlewares/auth.middleware";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 import { videoBuildDto } from "@/dtos/videobuilds.dto";
@@ -22,7 +22,7 @@ import { now } from "sequelize/types/utils";
 @UseBefore(authMiddleware)
 export class BuildController {
   private buildService = new BuildService();
-  // private boxService = new BoxService();
+  private boxService = new BoxService();
 
   @Post("/create")
   @HttpCode(201)
@@ -42,7 +42,7 @@ export class BuildController {
           ...box,
           build_id: createBuildData.id,
         }));
-        // await this;
+        await this.boxService.createBox(newArr);
       }
       return {
         status: true,
