@@ -10,14 +10,14 @@ export enum difficultyLevelEnumType {
 }
 
 export interface IVideoBuild {
-  id: number;
+  id?: number;
   video_url: string;
   provider?: string;
   type_of_video?: VideoTypeEnumType;
   potential_polarization?: difficultyLevelEnumType;
   difficulty_level?: difficultyLevelEnumType;
-  created_by: number;
+  created_by?: number;
   updated_by?: number;
-  created_at: Date;
-  updated_at?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -16,7 +16,7 @@ const authMiddleware = async (
       req.cookies["authorization"] ||
       req.header("authorization")?.split("Bearer ")[1] ||
       null;
-    const apiKey = req.header("api_key");
+    const apiKey =  req.header("api_key");
 
     if (apiKey == config.apiKey) {
       const user = await userService.getUserByEmail(config.apiKeyUser);

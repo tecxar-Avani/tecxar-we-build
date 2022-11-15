@@ -11,6 +11,8 @@ export type RoleAttributes = Optional<IRole, "id">;
 
 @Table({
   tableName: "roles",
+  createdAt:"createdAt",
+  updatedAt:"updatedAt",
   timestamps: true,
 })
 export default class Role
@@ -32,8 +34,8 @@ export default class Role
   public updated_by: number;
 
   @Column(DataType.DATE)
-  public created_at!: Date;
+  public readonly createdAt!: Date;
 
   @Column(DataType.DATE)
-  public updated_at!: Date;
+  public readonly updatedAt!: Date;
 }

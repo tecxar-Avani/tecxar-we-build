@@ -12,5 +12,5 @@ export interface IFlashCards {
   answer: string;
   response: ResponseEnumType;
   created_by: number;
-  updated_at: Date;
+  updatedAt?: Date;
 }
