@@ -18,7 +18,8 @@ export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
 
 @Table({
   tableName: "box_reviews",
-  createdAt:'createdat',
+  createdAt: "createdAt",
+  updatedAt:"updatedAt",
   timestamps: true,
 })
 export default class BoxReviews
@@ -49,5 +50,8 @@ export default class BoxReviews
   public created_by_user: User;
 
   @Column(DataType.DATE)
-  public created_at: Date;
+  public readonly createdAt!: Date;
+
+  @Column(DataType.DATE)
+  public readonly updatedAt!: Date;
 }

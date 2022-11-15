@@ -11,5 +11,5 @@ export interface IBoxReviews {
   review_type: ReviewTypeEnumType;
   comment: string;
   created_by: number;
-  created_at: Date;
+  createdAt: Date;
 }

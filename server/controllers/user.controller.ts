@@ -1,11 +1,5 @@
 import { Response } from "express";
-import {
-  Controller,
-  Req,
-  UseBefore,
-  Res,
-  Get,
-} from "routing-controllers";
+import { Controller, Req, UseBefore, Res, Get } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import UserService from "@/services/users.service";
 import authMiddleware from "@/middlewares/auth.middleware";
@@ -34,9 +28,13 @@ export class UserController {
 
   @Get("/userByEmail")
   @OpenAPI({ summary: "Get all users" })
-  async getUserByEmail(@Req() req: RequestWithUser | any, @Res() res: Response) {
+  async getUserByEmail(
+    @Req() req: RequestWithUser | any,
+    @Res() res: Response
+  ) {
     try {
-      const user = await this.userService.getUserByEmail('email');
+      const userEmail = req.user.email;
+      const user = await this.userService.getUserByEmail(userEmail);
       return user;
     } catch (error) {
       return {
@@ -47,4 +45,6 @@ export class UserController {
       };
     }
   }
+
+  
 }

@@ -15,6 +15,8 @@ import Box from "@/models/boxes.model";
 export type Boxes_GroupAttributes = Optional<IBoxes_Groups, "id">;
 @Table({
   tableName: "boxes_groups",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
   timestamps: true,
 })
 export default class Boxes_Groups
@@ -37,4 +39,10 @@ export default class Boxes_Groups
   public group_id: number;
   @BelongsTo(() => Group)
   public group: Group;
+
+  @Column(DataType.DATE)
+  public readonly createdAt!: Date;
+
+  @Column(DataType.DATE)
+  public readonly updatedAt!: Date;
 }

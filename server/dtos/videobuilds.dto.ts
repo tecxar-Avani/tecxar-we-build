@@ -1,5 +1,16 @@
-import { IVideoBuild, difficultyLevelEnumType, VideoTypeEnumType } from '@interfaces/videoBuilds.interface';
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IBoxes } from "@/interfaces/boxes.interface";
+import {
+  IVideoBuild,
+  difficultyLevelEnumType,
+  VideoTypeEnumType,
+} from "@interfaces/videoBuilds.interface";
+import {
+  IsArray,
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from "class-validator";
 
 export class videoBuildDto implements IVideoBuild {
   @IsString()
@@ -21,17 +32,15 @@ export class videoBuildDto implements IVideoBuild {
   @IsString()
   difficulty_level?: difficultyLevelEnumType;
 
+  @IsOptional()
+  @IsArray()
+  boxes?: any;
+
+  @IsOptional()
   @IsNumber()
   created_by: number;
 
   @IsOptional()
   @IsNumber()
   updated_by?: number;
-
-  //   @IsDate()
-  //   created_at: Date;
-
-  //   @IsOptional()
-  //   @IsDate()
-  //   updated_at?: Date;
 }

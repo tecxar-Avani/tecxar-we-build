@@ -16,7 +16,7 @@ export interface IVideoBuild {
   type_of_video?: VideoTypeEnumType;
   potential_polarization?: difficultyLevelEnumType;
   difficulty_level?: difficultyLevelEnumType;
-  created_by: number;
+  created_by?: number;
   updated_by?: number;
   createdAt?: Date;
   updatedAt?: Date;

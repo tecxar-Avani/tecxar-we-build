@@ -58,9 +58,9 @@ export default class User
   @BelongsTo(() => User)
   public updated_by_user: User;
 
-  @Column 
-   public createdAt!: Date;
+  @Column(DataType.DATE)
+  public readonly createdAt!: Date;
 
-  @Column
-  public updatedAt!: Date;
+  @Column(DataType.DATE)
+  public readonly updatedAt!: Date;
 }

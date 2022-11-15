@@ -14,8 +14,8 @@ export type BoxAttributes = Optional<IBoxes, "id">;
 
 @Table({
   tableName: "boxes",
-  createdAt:'createdat',
-  updatedAt:'updatedby',
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
   timestamps: true,
 })
 export default class Boxes
@@ -39,8 +39,8 @@ export default class Boxes
   public sorting_order: number;
 
   @Column(DataType.DATE)
-  public created_at!: Date;
+  public readonly createdAt!: Date;
 
   @Column(DataType.DATE)
-  public  updated_at!: Date;
+  public readonly updatedAt!: Date;
 }

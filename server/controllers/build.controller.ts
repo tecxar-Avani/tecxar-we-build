@@ -11,6 +11,7 @@ import {
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BuildService from "@/services/build.service";
+// import BoxService from '@/services/'
 import authMiddleware from "@/middlewares/auth.middleware";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 import { videoBuildDto } from "@/dtos/videobuilds.dto";
@@ -21,36 +22,39 @@ import { now } from "sequelize/types/utils";
 @UseBefore(authMiddleware)
 export class BuildController {
   private buildService = new BuildService();
+  // private boxService = new BoxService();
 
   @Post("/create")
-  //   @HttpCode(201)
+  @HttpCode(201)
   @OpenAPI({ summary: "Create a new build" })
   async createBuild(
-    @Body() videoBuildData: any,
+    @Body() videoBuildData: videoBuildDto,
     @Req() req: Request | any,
     @Res() res: Response
   ) {
     try {
-      console.log("DDDDDDDDDDDDDDDDD",req);
       videoBuildData.created_by = req.user.id;
-      videoBuildData.createdAt = Date.now();
-      videoBuildData.updatedAt = Date.now()
+      videoBuildData.updated_by = req.user.id;
       const createBuildData: IVideoBuild | null =
         await this.buildService.createBuild(videoBuildData);
-
+      if (createBuildData && createBuildData.id && videoBuildData.boxes) {
+        const newArr = videoBuildData.boxes.map((box) => ({
+          ...box,
+          build_id: createBuildData.id,
+        }));
+        // await this;
+      }
       return {
         status: true,
         data: createBuildData,
         message: "Video Build created successfully.",
       };
     } catch (error) {
-      console.log("#################", error);
       if (error instanceof Error) {
         return { error: { code: 500, message: error.message } };
       }
     }
   }
-
 
   @Get("/")
   @OpenAPI({ summary: "Get all build of users" })
