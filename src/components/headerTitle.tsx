@@ -5,7 +5,7 @@ import React from "react";
 
 const HeaderTitle = (props: any) => {
   return (
-    <div className={`${props.className} title`}>
+    <div className={`${props.className} title mx-3`}>
       <h1>{props.title}</h1>
     </div>
   );

@@ -123,7 +123,7 @@ const flashCardModalData = {
   // title:["hello"],
   headerIcon:["deleteFlash.svg","edit.svg"],
   footer:['save','Reveal answer','Delete'],
-  textbox:[{'header':'input','box':''},{'header':'output','box':''}],
+  textbox:[{'header':'Front','box':''},{'header':'Back','box':''}],
 }
 
   return (
@@ -134,7 +134,7 @@ const flashCardModalData = {
         <div className="m-0 pb-2 overflow-x-scroll">
           <HeaderTitle
             title="Your builds"
-            className="title-list-of-profile py-2"
+            className="title-list-of-profile py-2 my-2"
           />
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
@@ -151,7 +151,7 @@ const flashCardModalData = {
         <div className="pb-2">
           <HeaderTitle
             title="Builds you have interacted with"
-            className="title-list-of-profile py-2"
+            className="title-list-of-profile py-2 my-2"
           />
           <Row className="m-0">
             {videosData.length > 0 &&
@@ -165,7 +165,7 @@ const flashCardModalData = {
         <div className="pb-2">
           <HeaderTitle
             title="Total list of Profiles"
-            className="title-list-of-profile py-2"
+            className="title-list-of-profile py-2 mt-4 mb-3"
           />
           <Row className="m-0">
             {profiledatas.length > 0 &&
