@@ -31,6 +31,20 @@ class BuildService {
       return videoBuilds;
     }
   }
+
+  public async getUsersBuildByUrl(
+    url: string
+  ): Promise<IVideoBuild[] | null> {
+    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll({
+      where: { video_url:url },
+      raw: true,
+    });
+    if (!videoBuilds) {
+      return null;
+    } else {
+      return videoBuilds;
+    }
+  }
 }
 
 export default BuildService;

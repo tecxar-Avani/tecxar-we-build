@@ -8,6 +8,7 @@ import {
   Post,
   HttpCode,
   Body,
+  Param,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BuildService from "@/services/build.service";
@@ -72,6 +73,27 @@ export class BuildController {
     try {
       const user = req.user.id;
       const userBuild = await this.buildService.getBuild(user);
+      return userBuild;
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
+  @Get("/url")
+  @OpenAPI({ summary: "Get all build of users" })
+  async getUsersBuildByUrl(
+    @Req() req: Request | any,
+    @Res() res: Response,
+    @Body() url: any
+  ) {
+    try {
+      const videoUrl = url.url
+      const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl);
       return userBuild;
     } catch (error) {
       return {
