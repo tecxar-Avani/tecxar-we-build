@@ -8,10 +8,11 @@ import { Button, Card, CardImg, Col, Row } from "react-bootstrap";
 
 const Ractangle = (props: any) => {
     return (
-
-        <div className="rectangle"></div>
-
-    );
+        <>
+        {props.ractBox && props.ractBox.map((out: {length: any;}) => {return(
+             <div className="rectangle"></div>
+     ) })}</>
+            );
 };
 
 export default Ractangle;

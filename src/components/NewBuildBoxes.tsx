@@ -4,37 +4,24 @@ import Ractangle from "./Ractangle";
 // interface IVideosCard {
 //   VideoCardData: any;
 // }
-
-
 const NewBuildBoxes = (props: any) => {
+ 
   return (
+    <>
+    {props.boxes &&  props.boxes.length > 0 &&  props.boxes[0].data && (
     <div className="mt-3 mx-4">
     <div className=" ms-3">
-      <Ractangle />
+      <Ractangle ractBox={props.ract}/>
       <div className="ms-4 d-flex">
-        <OuterBox />
-        <OuterBox />
-        <OuterBox />
-      </div>
-    </div>
-    <div className=" ms-3">
-      <Ractangle />
-      <div className="ms-4 d-flex" >
-        <OuterBox />
-        <OuterBox />
-        <OuterBox />
-      </div>
-    </div>
-    <div className=" ms-3">
-      <Ractangle />
-      <div className="ms-4 d-flex">
-        <OuterBox />
-        <OuterBox />
-        <OuterBox />
+        <OuterBox outer={props.outBox} inner={props.inbox}/>
       </div>
     </div>
     
+    
+    
     </div>
+    )}
+    </>
   );
 };
 

@@ -28,12 +28,45 @@ const NewBuild = () => {
     footer:['save','Reveal answer','Delete'],
     textbox:[{'header':'Front','box':''},{'header':'Back','box':''}],
   }
+const BoxData =[
+  {
+    data:"1"
+  },
+  {
+    data:"1"
+  }
+]
+const outBoxData =[
+  {
+    outer:"1"
+  },
+  {
+    outer:"1"
+  },
+  {
+    outer:"1"
+  },
+  {
+    outer:"1"
+  },
 
+]
+const inBoxData = [
+  {
+    inner:"1"
+  },
+ 
+]
+const ractangleData = [
+  {
+    ractBox:"1"
+  },
+]
   return (
     <>
       <div className="d-flex m-0">
         <NewBuildSideCard/>
-        <NewBuildBoxes setModal1Open={setModal1Open}/>
+        <NewBuildBoxes setModal1Open={setModal1Open} boxes={BoxData} outBox={outBoxData} inbox={inBoxData} ract={ractangleData}/>
         <div className="flash mb-1 me-1">
         <Image
             alt="flashCards"
