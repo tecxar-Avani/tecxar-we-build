@@ -8,7 +8,7 @@ import {
     BelongsTo,
     Table,
 } from "sequelize-typescript";
-import { IBoxes_Groups } from "@/interfaces/boxes_groups.interface";
+import { IBoxes_Groups } from "@/interfaces/boxesgroups.interface";
 import Group from "@/models/groups.model";
 import Box from "@/models/boxes.model";
 

@@ -11,7 +11,7 @@ import {
 import {
   IBoxReviews,
   ReviewTypeEnumType,
-} from "@/interfaces/box_reviews.interface";
+} from "@/interfaces/boxreviews.interface";
 import Boxes from "@/models/boxes.model";
 import User from "./user.model";
 export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;

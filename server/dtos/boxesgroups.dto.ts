@@ -1,7 +1,7 @@
-import { IBoxes_Groups } from "@interfaces/boxes_groups.interface";
-import { IsNumber } from "class-validator";
+import { IBoxesGroups,IUpdateBoxesGroups } from "@/interfaces/boxesgroups.interface";
+import { IsNumber, IsOptional } from "class-validator";
 
-export class BoxesgroupDto implements IBoxes_Groups {
+export class BoxesgroupDto implements IBoxesGroups {
     @IsNumber()
     id: number;
 
@@ -10,4 +10,18 @@ export class BoxesgroupDto implements IBoxes_Groups {
 
     @IsNumber()
     group_id: number
+}
+
+export class updateBoxesgroupDto implements IUpdateBoxesGroups {
+    @IsOptional()
+    @IsNumber()
+    id?: number;
+
+    @IsOptional()
+    @IsNumber()
+    box_id?: number;
+
+    @IsOptional()
+    @IsNumber()
+    group_id?: number
 }

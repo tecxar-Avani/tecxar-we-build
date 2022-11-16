@@ -1,14 +1,9 @@
 import { Response } from "express";
-import {
-    Controller,
-    Req,
-    UseBefore,
-    Res,
-    Get,
-} from "routing-controllers";
+import { Controller, Req, UseBefore, Res, Get, Param, Delete, Body, Put, } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
+import { updateflashcardsDto } from "@/dtos/flashcards.dto";
 
 @Controller("/flashcard")
 @UseBefore(authMiddleware)
@@ -17,11 +12,67 @@ export class FlashController {
 
     @Get("/")
     @OpenAPI({ summary: "Get all build of users" })
-    async getFlashCard(@Req() req: Request| any, @Res() res: Response) {
+    async getFlashCard(@Req() req: Request | any, @Res() res: Response) {
         try {
             const user = req.user.id;
             const flashBuild = await this.flashCardService.getFlashCard(user);
             return flashBuild;
+        } catch (error) {
+            return {
+                error: {
+                    code: 500,
+                    message: (error as Error).message,
+                },
+            };
+        }
+    }
+
+    @Get("/:id")
+    @OpenAPI({ summary: "Get all build of users" })
+    async getFlashCardBuildId(@Req() req: Request | any, @Param('id') buildId: number, @Res() res: Response) {
+        try {
+            const flashBuildId = await this.flashCardService.getFlashCardBuildId(buildId);
+            if (flashBuildId === null) {
+                return res.send({
+                    status: 404,
+                    message: 'Leave type with this Id not found',
+                });
+            }
+            return { status: true, data: flashBuildId };
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return { status: false, error: { code: 500, message: error.message } };
+            }
+        }
+    }
+
+    @Delete("/:id")
+    @OpenAPI({ summary: "Get all build of users" })
+    async deleteFlashCardById(@Req() req: Request | any, @Param('id') id: number, @Res() res: Response) {
+        try {
+            const flashByDeleteId = await this.flashCardService.deleteFlashCardById(id);
+            if (flashByDeleteId === null) {
+                return res.send({
+                    status: 404,
+                    message: 'Flash Card with this Id not found',
+                });
+            }
+            return { status: true, data: flashByDeleteId };
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return { status: false, error: { code: 500, message: error.message } };
+            }
+        }
+    }
+
+    @Put("/:id")
+    @OpenAPI({ summary: "Update build id of users" })
+    async updateFlashCard(@Req() req: Request | any, @Param('id') id: number, @Body() data: updateflashcardsDto, @Res() res: Response) {
+        try {
+            const userBuild = await this.flashCardService.updateFlashCardId(id, data);
+            return userBuild;
         } catch (error) {
             return {
                 error: {

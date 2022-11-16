@@ -14,3 +14,13 @@ export interface IFlashCards {
   created_by: number;
   updatedAt?: Date;
 }
+
+export interface IUpdateFlashCards {
+  id?: number;
+  build_id?: number;
+  question?: string;
+  answer?: string;
+  response?: ResponseEnumType;
+  created_by?: number;
+  updatedAt?: Date;
+}

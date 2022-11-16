@@ -6,3 +6,11 @@ export interface IBoxes {
   createdAt?:Date;
   updatedAt?:Date
 }
+
+export interface IUpdateBoxes {
+  id?: number;
+  build_id?: number;
+  description?: string;
+  sorting_order?: number;
+  updatedAt?:Date
+}
