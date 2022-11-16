@@ -32,9 +32,9 @@ const WeBuildApp = ({
   subDomain,
 }: AppProps) => {
   return (
-    <Provider store={store}>
-      <Layout>
-        {router && router.state && !router.state.route && <SideBar />}
+<Provider store={store}>
+      <Layout className="h-full">
+        <SideBar />
 
         <Layout className="site-layout">
           <div className="mainPage">
@@ -43,6 +43,21 @@ const WeBuildApp = ({
         </Layout>
       </Layout>
     </Provider>
+
+
+
+
+    // <Provider store={store}>
+    //   <Layout>
+    //     {router && router.state && !router.state.route && <SideBar />}
+
+    //     <Layout className="site-layout">
+    //       <div className="mainPage">
+    //         <Component {...pageProps} />
+    //       </div>
+    //     </Layout>
+    //   </Layout>
+    // </Provider>
   );
 };
 

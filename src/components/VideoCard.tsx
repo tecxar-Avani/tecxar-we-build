@@ -23,7 +23,7 @@ const VideoCard = (props: any) => {
             <span className="text-white">12:45</span>
           </div>
         </div>
-        <Card.Text className="py-2">{props.VideoCardData.subTitle}</Card.Text>
+        <Card.Text className="">{props.VideoCardData.subTitle}</Card.Text>
       </Card.Body>
       </Card>
   );

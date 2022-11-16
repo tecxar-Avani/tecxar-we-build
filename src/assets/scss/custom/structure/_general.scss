@@ -9,7 +9,9 @@ body,
   height: calc(100vh);
 
 }
-
+body{
+  color: #000000 !important;
+}
 // .ant-layout.site-layout {
 //   margin-left: 125px;
 // }
@@ -118,7 +120,6 @@ body,
 
 .videoProfile {
   overflow: hidden;
-  // width: 404px;
   padding-right: 1rem;
 }
 
@@ -258,6 +259,7 @@ body,
 .ant-input-search {
   width: 300px;
   border-radius: 25px;
+  border: 1px solid;
 }
 
 .new-build-hr {
@@ -558,4 +560,48 @@ color: black;
   top: 129px;
   border: 0.3px solid rgba(0, 0, 0, 0.25);
 }
+.innerBox{
+  width: 210px;
+  height: 110px;
+  border-radius: 4px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+  border: 0.5px solid #000000;
+}
 
+.card{
+  margin-bottom: 0px;
+}
+.ms-4{
+  margin-left: 2.45rem !important;
+}
+hr{
+  width: 344.02px;
+  margin-top: 14.17px !important;
+  margin-bottom: 14.17px !important;
+}
+
+.SelfLearningBG {
+background-color: #FFEB3D;
+}
+.ThingsLearningBG {
+background-color: #214DEA;
+}
+.UserGuideBG {
+background-color: #44A82B;
+}
+.newBuild{
+  border:0 !important;
+}
+textarea.ant-input{
+  
+  ::placeholder {
+    text-align: center;
+  
+  }
+}
+.flash{
+  align-self: end;
+}

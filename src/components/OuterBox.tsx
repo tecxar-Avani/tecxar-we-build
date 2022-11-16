@@ -9,7 +9,9 @@ import { Button, Card, CardImg, Col, Row } from "react-bootstrap";
 const OuterBox = (props: any) => {
     return (
 
-        <div className="outerbox"></div>
+        <div className="outerbox">
+            <div className="innerBox text-center" >Box A</div>
+        </div>
 
     );
 };

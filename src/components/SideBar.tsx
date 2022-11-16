@@ -44,8 +44,7 @@ const SideBar = (toggle: any) => {
           trigger={null}
           collapsible
           collapsed={collapsed}
-          className="h-full d-flex px-3 flex-column justify-content-center align-items-center mySidebar"
-          style={{backgroundColor: IsSelfLearning ? '#FFEB3D' : IsOtherLearning ? '#214DEA' : IsUserGuide ? '#44A82B' :  IsProfile ? 'white' : 'white'}}
+          className={`h-full d-flex px-3 flex-column justify-content-center align-items-center mySidebar ${IsSelfLearning ? 'SelfLearningBG' : IsOtherLearning ? 'ThingsLearningBG' : IsUserGuide ? 'UserGuideBG' :  IsProfile ? 'bg-white' : 'bg-white'}`}
         >
           
           <div className="d-flex flex-column justify-content-between align-items-center">

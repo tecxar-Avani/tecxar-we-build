@@ -62,10 +62,10 @@ const SearchPage = () => {
           className="title-list-of-profile py-4 Search"
         />
       )}
-      <Row className="Search">
+      <Row className="Search m-0">
         {videosData.length > 0 &&
           videosData.map((videoData, index) => (
-            <Col lg={4} className="videoProfile px-2" key={index}>
+            <Col lg={4} className="videoProfile pb-2" key={index}>
               <VideoCard VideoCardData={videoData} />
             </Col>
           ))}
