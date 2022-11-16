@@ -18,6 +18,8 @@ import authMiddleware from "@/middlewares/auth.middleware";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 import { videoBuildDto } from "@/dtos/videobuilds.dto";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
+import { google } from "googleapis";
+import config from "@/configs";
 
 @Controller("/build")
 @UseBefore(authMiddleware)
@@ -92,9 +94,31 @@ export class BuildController {
     @Body() url: any
   ) {
     try {
-      const videoUrl = url.url
+      const videoUrl = url.url;
+      const youtube = google.youtube({
+        version: "v3",
+        auth: config.youtubeApiKey,
+      });
       const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl);
-      return userBuild;
+      const response: any = await youtube.search.list({
+        part: ["id, snippet"],
+        q:
+          userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
+      });
+      let data
+      const titles = response.data.items.map((item) => {
+         data = {
+           videoId: item.id.videoId,
+           thumbnails: item.snippet.thumbnails.default,
+           description: item.snippet.description,
+           publishedAt: item.snippet.publishedAt,
+         };
+        //  let url = `https://www.youtube.com/watch?v=${data.videoId}`;
+
+        return data;
+      });
+      
+       return { data: titles, build: userBuild };
     } catch (error) {
       return {
         error: {
