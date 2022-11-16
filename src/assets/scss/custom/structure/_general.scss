@@ -605,3 +605,29 @@ textarea.ant-input{
 .flash{
   align-self: end;
 }
+.redTriangle{
+  margin-top: -110px;
+}
+
+  .hover:hover{    
+      transform: scale(1.03);
+  }
+  .hoverRedTriangle:hover{
+    transform: scale(1.07);
+  }
+.inspirationButton{
+  background-color: #7D1597;
+  transform: translate(9%, 350%);
+  width: 131.83px;
+
+}
+.resistanceButton{
+  background-color: #D91919;
+  transform: translate(65%, -90%);
+  width: 131.83px;
+}
+.acceptanceButton{
+  background-color: #1235AE;
+  transform: translate(-90%, -45%);
+  width: 131.83px;
+}
