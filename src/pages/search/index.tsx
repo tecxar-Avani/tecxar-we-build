@@ -6,6 +6,7 @@ import VideoCard from "@/components/VideoCard";
 import { Col, Row } from "react-bootstrap";
 import { title } from "process";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const SearchPage = () => {
   const router = useRouter();
@@ -66,7 +67,11 @@ const SearchPage = () => {
         {videosData.length > 0 &&
           videosData.map((videoData, index) => (
             <Col lg={4} className="videoProfile pb-2" key={index}>
-              <VideoCard VideoCardData={videoData} />
+              <Link href="/newBuild">
+                <a>
+                  <VideoCard VideoCardData={videoData} />
+                </a>
+              </Link>
             </Col>
           ))}
       </Row>
