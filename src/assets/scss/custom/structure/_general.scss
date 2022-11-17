@@ -554,10 +554,10 @@ color: black;
   border: 0.3px solid rgba(0, 0, 0, 0.25);
 }
 .outerbox{
-  width: 270px;
-  height: 170px;
-  left: 509px;
-  top: 129px;
+  // width: 270px;
+  // height: 170px;
+  // left: 509px;
+  // top: 129px;
   border: 0.3px solid rgba(0, 0, 0, 0.25);
 }
 .innerBox{
@@ -605,9 +605,9 @@ textarea.ant-input{
 .flash{
   align-self: end;
 }
-.redTriangle{
-  margin-top: -110px;
-}
+// .redTriangle{
+//   margin-top: -110px;
+// }
 
   // .hover:hover{    
   //     transform: scale(1.03);
@@ -615,21 +615,22 @@ textarea.ant-input{
   // .hoverRedTriangle:hover{
   //   transform: scale(1.07);
   // }
+
 .inspirationButton{
   background-color: #7D1597;
   transform: translate(9%, 350%);
-  width: 131.83px;
+ 
 
 }
 .resistanceButton{
   background-color: #D91919;
-  transform: translate(65%, -90%);
-  width: 131.83px;
+  transform: translate(105%, -110%);
+  
 }
 .acceptanceButton{
   background-color: #1235AE;
-  transform: translate(-90%, -45%);
-  width: 131.83px;
+  transform: translate(170%, -446%)
+  
 }
 .inspirationButton:hover{
   background-color: #7D1597;
@@ -643,8 +644,11 @@ textarea.ant-input{
   background-color: #D91919;
       color: #F8F8F8;
 }
-// .btn:hover {
-//   pointer-events:none;
-// }
+.redtraingle{
+  margin-top: -125px;
+    margin-bottom: 35px;
+}
+
+
 
 

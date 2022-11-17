@@ -9,31 +9,39 @@ import Ractangle from "./Ractangle";
 const NewBuildBoxes = (props: any) => {
   return (
     <div className="mt-3 mx-4">
-    <div className=" ms-3">
-      <Ractangle />
-      <div className="ms-4 d-flex">
-        <OuterBox />
-        <OuterBox />
-        <OuterBox />
+      <div className=" ms-3">
+        <Ractangle />
+        <div className="ms-4 d-flex">
+          <OuterBox />
+          <OuterBox />
+          <OuterBox />
+        </div>
       </div>
-    </div>
-    <div className=" ms-3">
-      <Ractangle />
-      <div className="ms-4 d-flex" >
-        <OuterBox />
-        <OuterBox />
-        <OuterBox />
+      <div className=" ms-3">
+        <Ractangle />
+        <div className="ms-4 d-flex" >
+          <OuterBox />
+          <OuterBox />
+          <OuterBox />
+        </div>
       </div>
-    </div>
-    <div className=" ms-3">
-      <Ractangle />
-      <div className="ms-4 d-flex">
-        <OuterBox />
-        <OuterBox />
-        <OuterBox />
+      <div className=" ms-3">
+        <Ractangle />
+        <div className="ms-4 d-flex">
+          <OuterBox />
+          <OuterBox />
+          <OuterBox />
+        </div>
       </div>
-    </div>
-    
+      <div className=" ms-3">
+        <Ractangle />
+        <div className="ms-4 d-flex">
+          <OuterBox />
+          <OuterBox />
+          <OuterBox />
+        </div>
+      </div>
+
     </div>
   );
 };
