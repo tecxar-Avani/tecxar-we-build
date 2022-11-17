@@ -7,16 +7,14 @@ import Ractangle from "./Ractangle";
 //   VideoCardData: any;
 // }
 const NewBuildBoxes = (props: any) => {
-  let arr = Array.from({ length: props.numOfBox }, () => ({
-    first_name: "",
-    last_name: "",
-  }));
   return (
     <div className="boxesMain">
       <Ractangle />
       <Row className="m-0 px-4 innerBoxMain">
-        {[...Array(props.numOfBox)].map((i, index) => {
-          return <OuterBox key={index} />;
+        {props.item?.map((itemData: any, index: any) => {
+          return (
+            <OuterBox key={index} id={itemData.id} boxData={itemData.message} />
+          );
         })}
       </Row>
     </div>
