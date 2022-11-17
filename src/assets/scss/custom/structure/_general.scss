@@ -535,7 +535,6 @@ hr{
   margin-top: 14.17px !important;
   margin-bottom: 14.17px !important;
 }
-
 .SelfLearningBG {
 background-color: #FFEB3D;
 }
@@ -548,8 +547,7 @@ background-color: #44A82B;
 .newBuild{
   border:0 !important;
 }
-textarea.ant-input{
-  
+textarea.ant-input{ 
   ::placeholder {
     text-align: center;
   
@@ -558,19 +556,19 @@ textarea.ant-input{
 .flash{
   align-self: end;
 }
-
-// .ant-modal-content{
-//   background-color: #FAEFAF;
-// }
-//   .ant-modal{
-//     margin-top: 360px;
-//     width: 260px;
-//     height:110.5px;
-//     margin-left: 126px;
-//     border-radius: 10px;
-//   }
-//   .ant-btn{
-//     text-align: center;
-//     justify-content: center;
-//   }
+.bd-highlight:hover .ant-tooltip-open{
+color: black;
+}
+.btn{
+  color: black;
+}
+.high-btn{
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+ width: 57px;
+ height: 57px;
+ padding: 16px;
+ text-align: center;
+}
 
