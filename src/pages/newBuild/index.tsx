@@ -15,7 +15,7 @@ import AwarenessModal from "@/components/AwarenessModal";
 
 const NewBuild = () => {
   const [modal2Open, setModal2Open] = useState(false);
-  const [modal1Open, setModal1Open] = useState(false);
+  const [awarenessModal, setAwarenessModal] = useState(false);
     const { TextArea } = Input;
   const flashCardModalData = {
     // title:["hello"],
@@ -24,9 +24,9 @@ const NewBuild = () => {
     textbox:[{'header':'Front','box':''},{'header':'Back','box':''}],
   }
   const awarenessModalData = {
-    title:["hello"],
-    footer:['save','Reveal answer','Delete'],
-    textbox:[{'header':'Front','box':''},{'header':'Back','box':''}],
+   title:"Resistance",
+    footer:['Add'],
+    textbox:[{'header':'Maria’s resistance   Now','box':''}],
   }
 const BoxData =[
   {
@@ -37,9 +37,6 @@ const BoxData =[
   }
 ]
 const outBoxData =[
-  {
-    outer:"1"
-  },
   {
     outer:"1"
   },
@@ -66,7 +63,7 @@ const ractangleData = [
     <>
       <div className="d-flex m-0">
         <NewBuildSideCard/>
-        <NewBuildBoxes setModal1Open={setModal1Open} boxes={BoxData} outBox={outBoxData} inbox={inBoxData} ract={ractangleData}/>
+        <NewBuildBoxes setAwarenessModal={setAwarenessModal} boxes={BoxData} outBox={outBoxData} inbox={inBoxData} ract={ractangleData}/>
         <div className="flash mb-1 me-1">
         <Image
             alt="flashCards"
@@ -76,7 +73,7 @@ const ractangleData = [
           </div>
       </div>
       <FlashCardModal modal2Open={modal2Open} flashCard={flashCardModalData} setModal2Open={setModal2Open} visible={modal2Open}/>
-      <AwarenessModal modal1Open={modal1Open} awareness={awarenessModalData} setModal1Open={setModal1Open} visible={modal1Open}/>
+      <AwarenessModal awarenessModal={awarenessModal} awareness={awarenessModalData} setAwarenessModal={setAwarenessModal} visible={awarenessModal}/>
     </>
   );
 };

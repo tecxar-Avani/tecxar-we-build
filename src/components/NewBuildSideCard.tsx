@@ -3,7 +3,7 @@ import React from "react";
 import { Image } from "react-bootstrap";
 import CustomButton from "./Button";
 import VideoCard from "./VideoCard";
-import { Button, Input } from "antd";
+import { Button, Input, Modal } from "antd";
 const NewBuildSideCard = (props: any) => {
   const { TextArea } = Input;
   const videosData = [
@@ -13,6 +13,12 @@ const NewBuildSideCard = (props: any) => {
       videoUrl: "img/RectangleVideoImg.png",
     },
   ];
+  const warning = () => {
+    Modal.warning({
+      title: '',
+      content: 'Please make an account to save your build - dont let all your hard work go to waste!Login via Google',
+    });
+  };
   return (
     <div>
           {videosData.length > 0 &&
@@ -75,7 +81,7 @@ const NewBuildSideCard = (props: any) => {
           <hr className="border-dark mb-3  " />
           <div className="d-flex owd bd-highlight">
             <div className="save bd-highlight  ">
-              <Image src="../img/save.svg" className="ms-2" />
+              <Image src="../img/save.svg" className="ms-2" onClick={warning}/>
             </div>
             <div className="backward bd-highlight">
               <Image src="../img/backward.svg" className="ms-5 me-1" />
@@ -88,6 +94,7 @@ const NewBuildSideCard = (props: any) => {
             </div>
           </div>
         </div>
+       
   );
 };
 

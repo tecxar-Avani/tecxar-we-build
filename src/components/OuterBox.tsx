@@ -9,14 +9,12 @@ import { Button, Card, CardImg, Col, Row } from "react-bootstrap";
 // }
 
 const OuterBox = (props: any) => {
-  
     return (
-      
         <>
         {props.outer && props.outer.map((out: {length: any;}) => {return(
           
                 <div className="outerbox">
-                    <div>
+                    <div  onClick= {() => { props.setAwarenessModal(true)}}>
                         {props.inner && props.inner.length > 0 && (
                             <TextArea
                                 //value={value}
@@ -30,7 +28,8 @@ const OuterBox = (props: any) => {
                     </div>
                 </div>
                        ); })
-        }     
+        }  
+          
         </>
     );
 };
