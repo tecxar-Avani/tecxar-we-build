@@ -34,16 +34,19 @@ const NewBuildSideCard = (props: any) => {
       <hr className="border-dark" />
 
 
-      <CustomButton title="Inspiration" className="inspirationButton px-1" />
+      <CustomButton title="Inspiration" className="inspirationButton px-1 " color />
       <div>
         <Image src="../img/polygon 22.png" className="hover" />
         <Image src="../img/polygon 24.png" className="hover" />
-        <CustomButton title="Acceptance" className="acceptanceButton px-1" />
+        <CustomButton title="Acceptance" className="acceptanceButton px-1 " />
         <Image src="../img/polygon 23.png" className="redTriangle hoverRedTriangle" />
       </div>
 
 
-      <CustomButton title="Resistance" className="resistanceButton px-1" />
+      <CustomButton title="Resistance" className="resistanceButton px-1 " />
+
+
+
 
 
 

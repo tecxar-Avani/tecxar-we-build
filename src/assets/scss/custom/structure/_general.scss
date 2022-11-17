@@ -609,12 +609,12 @@ textarea.ant-input{
   margin-top: -110px;
 }
 
-  .hover:hover{    
-      transform: scale(1.03);
-  }
-  .hoverRedTriangle:hover{
-    transform: scale(1.07);
-  }
+  // .hover:hover{    
+  //     transform: scale(1.03);
+  // }
+  // .hoverRedTriangle:hover{
+  //   transform: scale(1.07);
+  // }
 .inspirationButton{
   background-color: #7D1597;
   transform: translate(9%, 350%);
@@ -631,3 +631,20 @@ textarea.ant-input{
   transform: translate(-90%, -45%);
   width: 131.83px;
 }
+.inspirationButton:hover{
+  background-color: #7D1597;
+  color: #F8F8F8;
+}
+.acceptanceButton:hover{
+  background-color: #1235AE;
+    color: #F8F8F8;
+}
+.resistanceButton:hover{
+  background-color: #D91919;
+      color: #F8F8F8;
+}
+// .btn:hover {
+//   pointer-events:none;
+// }
+
+
