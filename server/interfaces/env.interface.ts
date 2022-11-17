@@ -35,6 +35,7 @@ export interface envConfig {
   };
   apiKey: string;
   apiKeyUser: string;
+  youtubeApiKey:string;
   jwt: {
     secret: string;
     expiry: number;

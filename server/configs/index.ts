@@ -56,6 +56,7 @@ const config: envConfig = {
   },
   apiKey: env.API_KEY,
   apiKeyUser: env.API_KEY_USER,
+  youtubeApiKey:env.YOUTUBE_APIKEY,
   jwt: {
     secret: env.APP_SECRET,
     expiry: env.JWT_EXPIRES_IN,

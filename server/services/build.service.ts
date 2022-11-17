@@ -33,14 +33,17 @@ class BuildService {
     }
   }
 
-  public async deleteBuild(id: number): Promise<IVideoBuild[] | null> {
-    const videoBuildsDelete: any | null = await this.videoBuild.destroy({
-      where: { id: id },
+  public async getUsersBuildByUrl(
+    url: string
+  ): Promise<IVideoBuild[] | null> {
+    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll({
+      where: { video_url: url },
+      raw: true,
     });
-    if (!videoBuildsDelete) {
+    if (!videoBuilds) {
       return null;
     } else {
-      return videoBuildsDelete;
+      return videoBuilds;
     }
   }
 
@@ -54,6 +57,19 @@ class BuildService {
       return videoBuildsUpdate;
     }
   }
+
+
+  public async deleteBuild(id: number): Promise<IVideoBuild[] | null> {
+    const videoBuildsDelete: any | null = await this.videoBuild.destroy({
+      where: { id: id },
+    });
+    if (!videoBuildsDelete) {
+      return null;
+    } else {
+      return videoBuildsDelete;
+    }
+  }
+
 }
 
 export default BuildService;

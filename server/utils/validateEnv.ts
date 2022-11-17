@@ -28,6 +28,7 @@ function validateEnv() {
     GOOGLE_CLIENT_SECRET: str(),
     GOOGLE_CALLBACK_URL: str(),
     API_KEY_USER: str(),
+    YOUTUBE_APIKEY:str(),
     API_KEY: str(),
     APP_SECRET: str(),
     JWT_EXPIRES_IN: num(),
