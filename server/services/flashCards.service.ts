@@ -1,6 +1,6 @@
 
 import { HttpException } from "@/exceptions/HttpException";
-import {IFlashCards } from "@/interfaces/flashCards.interface";
+import { IFlashCards } from "@/interfaces/flashCards.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
 
@@ -57,6 +57,17 @@ class FlashCardService {
     }
   }
 
+  public async updateFlashCardId(id: number, data): Promise<IFlashCards | null> {
+    const flashCardByUpdate: any | null = await this.flashCard.update({ ...data },
+      { where: { id: id } }
+    );
+    if (!flashCardByUpdate) {
+      return null;
+    } else {
+      return flashCardByUpdate;
+    }
+  }
+
   public async deleteFlashCardById(id: number): Promise<IFlashCards | null> {
     const flashCardByDelete: any | null = await this.flashCard.destroy({
       where: { id: id },
@@ -68,15 +79,5 @@ class FlashCardService {
     }
   }
 
-  public async updateFlashCardId(id: number, data): Promise<IFlashCards | null> {
-    const flashCardByUpdate: any | null = await this.flashCard.update({ ...data },
-      { where: { id: id } }
-    );
-    if (!flashCardByUpdate) {
-      return null;
-    } else {
-      return flashCardByUpdate;
-    }
-  }
 }
 export default FlashCardService;

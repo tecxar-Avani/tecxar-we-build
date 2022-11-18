@@ -14,7 +14,6 @@ import FlashCards from "@/models/flashCards.model";
 import BoxGroups from "@/models/boxGroups.model";
 import BoxReviews from "@/models/boxReviews.model";
 
-
 const { host, user, password, database, pool, port }: dbConfig = config.db;
 
 const sequelize = new Sequelize(database, user, password, {

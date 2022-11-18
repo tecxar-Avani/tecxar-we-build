@@ -3,7 +3,7 @@ import { HttpException } from "@/exceptions/HttpException";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
-import { where } from "sequelize";
+
 
 class BuildService {
   private videoBuild = DB.videoBuild;
@@ -58,10 +58,9 @@ class BuildService {
     }
   }
 
-
   public async deleteBuild(id: number): Promise<IVideoBuild[] | null> {
     const videoBuildsDelete: any | null = await this.videoBuild.destroy({
-      where: { id: id },
+       where: { id: id },
     });
     if (!videoBuildsDelete) {
       return null;

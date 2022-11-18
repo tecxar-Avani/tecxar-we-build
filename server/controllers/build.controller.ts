@@ -1,5 +1,8 @@
 import { Response } from "express";
-import { Controller, Req, UseBefore, Res, Get, Post, HttpCode, Body, Param, Delete, Put,} from "routing-controllers";
+import {
+  Controller, Req, UseBefore, Res, Get,
+  Post, HttpCode, Body, Param, Delete, Put,
+} from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BuildService from "@/services/build.service";
 import BoxService from "@/services/box.service";
@@ -115,7 +118,7 @@ export class BuildController {
 
   @Put("/:id")
   @OpenAPI({ summary: "Update build id of users" })
-  async UpdateUsersBuild(@Req() req: Request | any, @Param('id') id: number, @Body() data: updateVideoBuildDto, @Res() res: Response) {
+  async updateUsersBuild(@Req() req: Request | any, @Param('id') id: number, @Body() data: updateVideoBuildDto, @Res() res: Response) {
     try {
       const userBuild = await this.buildService.updateBuild(id, data);
       return userBuild;
@@ -131,7 +134,7 @@ export class BuildController {
 
   @Delete("/:id")
   @OpenAPI({ summary: "Delete build id of users" })
-  async DeleteUsersBuild(@Req() req: Request | any, @Param('id') id: number, @Res() res: Response) {
+  async deleteUsersBuild(@Req() req: Request | any, @Param('id') id: number, @Res() res: Response) {
     try {
       const userBuild = await this.buildService.deleteBuild(id);
       return userBuild;
@@ -145,3 +148,7 @@ export class BuildController {
     }
   }
 }
+function ApiTags() {
+  throw new Error("Function not implemented.");
+}
+
