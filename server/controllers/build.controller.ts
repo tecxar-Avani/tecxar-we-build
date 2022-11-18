@@ -120,7 +120,7 @@ export class BuildController {
         };
         return data;
       });
-      return { data: titles, build: userBuild };
+      return { data: titles, box: userBuild ,status:true };
     } catch (error) {
       return {
         error: {

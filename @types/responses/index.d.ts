@@ -10,8 +10,8 @@ interface ISuccessResponseData<T> extends IResponseBase {
 }
 
 interface ISuccessPaginatedData<T> extends IResponseBase {
-  count: number;
   rows: T;
+  // box:T
 }
 
 interface ISuccessResponse extends IResponseBase {
@@ -27,4 +27,4 @@ interface IFailedResponse extends IResponseBase {
 
 
 interface IBuildRowsCountResponse
-  extends ISuccessPaginatedData<IVideoBuild[]> {}
+  extends ISuccessPaginatedData<IVideoBuild> {}

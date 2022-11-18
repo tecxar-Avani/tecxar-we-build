@@ -20,7 +20,9 @@ export const getBuildByUrl: any = createAsyncThunk(
   `build/get/url`,
   async (url?: string): Promise<IBuildRowsCountResponse> => {
     const { data } = await BuildService.listBuilds(url);
-    return { status: data.status, count: data.count, rows: data.data };
+    const dataBox = {box:data.box,
+    rows:data.data}
+    return { status: data.status, rows: dataBox };
   }
 );
 
@@ -30,6 +32,7 @@ interface State {
   loading: boolean;
   error: string | undefined;
   buildList: IBuildRowsCountResponse;
+  // box:IVideoBuild[];
 }
 
 const initialState: State = {
@@ -42,9 +45,8 @@ const initialState: State = {
   },
   buildList: {
     status: true,
-    count: 0,
-    rows: [],
-  },
+    rows: []
+    },
   loading: false,
   error: undefined,
   id: 0,
@@ -72,12 +74,12 @@ const buildSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getBuildByUrl.fulfilled, (state, action) => {
-        console.log("payloadpayload", action.payload);
         if (action.payload.status) {
           return {
             ...state,
             loading: false,
             buildList: action.payload.rows,
+            box: action.payload.box,
           };
         } else {
           return {

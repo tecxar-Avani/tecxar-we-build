@@ -16,10 +16,8 @@ const SearchPage = () => {
   const router = useRouter();
   const [url, setUrl] = useState("");
   const dispatch = useAppDispatch();
-  const build = useAppSelector(buildSelector);
-  // useEffect(() => {
+  const { buildList} = useAppSelector(buildSelector);
 
-  // }, [url]);
   const videosData = [
     {
       id: "1",
@@ -60,13 +58,11 @@ const SearchPage = () => {
   ];
 
   const searchResult = (url: string) => {
-    console.log("urlurl", url);
     if (url !== "") {
       dispatch(getBuildByUrl(url));
     }
   };
 
-  console.log("FFFFFFFFFFFF", build);
   return (
     <>
       <SearchBar searchResult={searchResult} />
