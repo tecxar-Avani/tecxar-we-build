@@ -5,6 +5,27 @@ import { Col, Form } from "react-bootstrap";
 // interface IVideosCard {
 //   VideoCardData: any;
 // }
+const numOfFields = 3;
+
+// const chnageInput = (e: { target: { maxLength: any; value: any; id: any; }; }) => {
+//   const { maxLength, value, id } = e.target;
+//   const [fieldName, fieldIndex] = id;
+
+//   // Check if they hit the max character length
+//   if (value.length >= maxLength) {
+//     // Check if it's not the last input field
+//     if (parseInt(fieldIndex, 10) < 3) {
+//       // Get the next input field
+//       const nextSibling = document.querySelector(
+//         `Input.Textarea[id=${parseInt(fieldIndex, 10) + 1}]`
+//       );
+//       // If found, focus the next field
+//       if (nextSibling !== null) {
+//         nextSibling.focus();
+//       }
+//     }
+//   }
+// }
 
 const OuterBox = (props: any) => {
   const handleChange = (event: any) => {
@@ -27,6 +48,7 @@ const OuterBox = (props: any) => {
             autoSize={{ minRows: 5, maxRows: 5 }}
             maxLength={15}
             onChange={handleChange}
+            id={props.id}
           />
         </Form>
       </div>

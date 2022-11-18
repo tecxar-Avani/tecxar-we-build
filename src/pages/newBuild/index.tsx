@@ -13,6 +13,9 @@ import NewBuildBoxes from "@/components/NewBuildBoxes";
 import FlashCardModal from "@/components/FlashCardModal";
 import AwarenessModal from "@/components/AwarenessModal";
 
+
+
+
 const NewBuild = () => {
   const [modal2Open, setModal2Open] = useState(false);
   const [modal1Open, setModal1Open] = useState(false);
@@ -169,7 +172,7 @@ const NewBuild = () => {
               );
             }
           })}
-          <div className="position-absolute mkCard me-1">
+          <div className="position-absolute mkCard">
             <Image
               alt="flashCards"
               src="../../../img/mkCard.png"
@@ -178,7 +181,7 @@ const NewBuild = () => {
               }}
             />
           </div>
-          <div className="position-absolute bottom-0 end-0 flash mb-1 me-2">
+          <div className="position-absolute flash">
             <Image
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"
