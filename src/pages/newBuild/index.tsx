@@ -15,10 +15,9 @@ import AwarenessModal from "@/components/AwarenessModal";
 
 const NewBuild = () => {
   const [modal2Open, setModal2Open] = useState(false);
- 
-    const { TextArea } = Input;
-  //const [modal1Open, setModal1Open] = useState(false);
-  
+  const [modal1Open, setModal1Open] = useState(false);
+  const BoxSize = 3;
+  const { TextArea } = Input;
   const flashCardModalData = {
     // title:["hello"],
     headerIcon: ["deleteFlash.svg", "edit.svg"],
@@ -147,19 +146,28 @@ const NewBuild = () => {
     },
   ];
   let mapdata = Math.ceil(num.length / 3);
+
   return (
     <>
       <div className="d-flex m-0 w-100">
         <NewBuildSideCard />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
-          {[...Array(mapdata)].map((num, index) => {
-            return (
-              <NewBuildBoxes
-                boxes={num}
-                numOfBox={3}
-                key={index}
-              />
-            );
+          {[...Array(mapdata)].map((item, index) => {
+            const currentSize = index * BoxSize;
+            const remaningBox = num.length - currentSize;
+            const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
+            let items;
+            while (num.length > 0) {
+              items = num.splice(0, 3);
+              return (
+                <NewBuildBoxes
+                  setModal1Open={setModal1Open}
+                  item={items}
+                  numOfBox={finalSize}
+                  key={index}
+                />
+              );
+            }
           })}
           <div className="position-absolute mkCard me-1">
             <Image
