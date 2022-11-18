@@ -1,12 +1,12 @@
 
 import { HttpException } from "@/exceptions/HttpException";
-import { IFlashCards } from "@/interfaces/flashCards.interface";
+import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
 
 class FlashCardService {
   private flashCard = DB.flashCards;
-
+  private flashCardsResponse = DB.flashCardsResponse
   public async createFlashCard(
     cardData: IFlashCards
   ): Promise<IFlashCards | null> {
@@ -19,6 +19,20 @@ class FlashCardService {
     );
     return createCardData;
   }
+
+  public async createFlashCardResponse(
+    cardNewData: IFlashCardsResponse
+  ): Promise<IFlashCardsResponse | null> {
+    if (isEmpty(cardNewData)) {
+      throw new HttpException(400, "Enter the card data");
+    }
+    const createFlashCardResponse: IFlashCardsResponse | null = await this.flashCardsResponse.create(
+      { ...cardNewData },
+      { raw: true }
+    );
+    return createFlashCardResponse;
+  }
+
 
   public async createBulkFlashCard(
     cardData: IFlashCards | any
@@ -43,7 +57,6 @@ class FlashCardService {
       return flashCards;
     }
   }
-
 
   public async getFlashCardBuildId(buildId: number): Promise<IFlashCards[] | null> {
     const flashCardsBuildId: IFlashCards[] | null = await this.flashCard.findAll({

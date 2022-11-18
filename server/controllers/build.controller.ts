@@ -1,7 +1,17 @@
 import { Response } from "express";
 import {
-  Controller, Req, UseBefore, Res, Get,
-  Post, HttpCode, Body, Param, Delete, Put,
+  Controller,
+  Req,
+  UseBefore,
+  Res,
+  Get,
+  Post,
+  HttpCode,
+  Body,
+  Param,
+  Delete,
+  Put,
+  QueryParam,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BuildService from "@/services/build.service";
@@ -15,13 +25,13 @@ import { google } from "googleapis";
 import config from "@/configs";
 
 @Controller("/build")
-@UseBefore(authMiddleware)
 export class BuildController {
   private buildService = new BuildService();
   private boxService = new BoxService();
   private flashCardService = new FlashCardService();
 
   @Post("/create")
+  @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new build" })
   async createBuild(
@@ -81,9 +91,14 @@ export class BuildController {
 
   @Get("/url")
   @OpenAPI({ summary: "Get all build of users" })
-  async getUsersBuildByUrl(@Req() req: Request | any, @Res() res: Response, @Body() url: any) {
+  async getUsersBuildByUrl(
+    @Req() req: Request | any,
+    @Res() res: Response,
+    // @Body() url: any,
+    @QueryParam("url") url: string
+  ) {
     try {
-      const videoUrl = url.url;
+      const videoUrl = url;
       const youtube = google.youtube({
         version: "v3",
         auth: config.youtubeApiKey,
@@ -94,31 +109,37 @@ export class BuildController {
         q:
           userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
       });
-      let data
+      let data;
       const titles = response.data.items.map((item) => {
         data = {
           videoId: item.id.videoId,
           thumbnails: item.snippet.thumbnails.default,
           description: item.snippet.description,
           publishedAt: item.snippet.publishedAt,
+          url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
         };
-        //  let url = `https://www.youtube.com/watch?v=${data.videoId}`;
         return data;
       });
-      return { data: titles, build: userBuild };
+      return { data: titles, box: userBuild ,status:true };
     } catch (error) {
       return {
         error: {
           code: 500,
-          message: (error as Error).message
-        }
-      }
+          message: (error as Error).message,
+        },
+      };
     }
   }
 
   @Put("/:id")
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
-  async updateUsersBuild(@Req() req: Request | any, @Param('id') id: number, @Body() data: updateVideoBuildDto, @Res() res: Response) {
+  async UpdateUsersBuild(
+    @Req() req: Request | any,
+    @Param("id") id: number,
+    @Body() data: updateVideoBuildDto,
+    @Res() res: Response
+  ) {
     try {
       const userBuild = await this.buildService.updateBuild(id, data);
       return userBuild;
@@ -133,8 +154,13 @@ export class BuildController {
   }
 
   @Delete("/:id")
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Delete build id of users" })
-  async deleteUsersBuild(@Req() req: Request | any, @Param('id') id: number, @Res() res: Response) {
+  async DeleteUsersBuild(
+    @Req() req: Request | any,
+    @Param("id") id: number,
+    @Res() res: Response
+  ) {
     try {
       const userBuild = await this.buildService.deleteBuild(id);
       return userBuild;

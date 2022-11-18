@@ -1,4 +1,4 @@
-import { IFlashCards, ResponseEnumType,IUpdateFlashCards } from '@interfaces/flashCards.interface';
+import { IFlashCards, IUpdateFlashCards, IFlashCardsResponse } from '@interfaces/flashCards.interface';
 import { IsOptional, IsNumber, IsString, IsDate } from 'class-validator';
 
 export class flashcardsDto implements IFlashCards {
@@ -16,41 +16,59 @@ export class flashcardsDto implements IFlashCards {
   answer: string;
 
   @IsOptional()
-  response: ResponseEnumType;
-
-  @IsOptional()
   @IsNumber()
   created_by: number;
 
-    @IsDate()
-    updated_at: Date;
+  @IsDate()
+  updated_at: Date;
 }
 
 export class updateflashcardsDto implements IUpdateFlashCards {
-    @IsOptional()
-    @IsNumber()
-    id?: number;
+  @IsOptional()
+  @IsNumber()
+  id?: number;
 
-    @IsOptional()
-    @IsNumber()
-    build_id?: number;
+  @IsOptional()
+  @IsNumber()
+  build_id?: number;
 
-    @IsOptional()
-    @IsString()
-    question?: string;
+  @IsOptional()
+  @IsString()
+  question?: string;
 
-    @IsOptional()
-    @IsString()
-    answer?: string;
+  @IsOptional()
+  @IsString()
+  answer?: string;
 
-    @IsOptional()
-    response?: ResponseEnumType;
+  @IsOptional()
+  @IsNumber()
+  created_by?: number;
 
-    @IsOptional()
-    @IsNumber()
-    created_by?: number;
+  @IsOptional()
+  @IsDate()
+  updated_at?: Date;
+}
 
-    @IsOptional()
-    @IsDate()
-    updated_at?: Date;
+export class flashCardResponseDto implements IFlashCardsResponse {
+  @IsOptional()
+  @IsNumber()
+  id?: number;
+
+  @IsString()
+  response_tye: string;
+
+  @IsNumber()
+  flash_card_id: number;
+
+  @IsOptional()
+  @IsNumber()
+  created_by?: number;
+
+  @IsOptional()
+  @IsDate()
+  created_at: Date;
+
+  @IsOptional()
+  @IsDate()
+  updated_at?: Date;
 }

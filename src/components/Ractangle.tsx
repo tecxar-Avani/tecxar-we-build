@@ -1,18 +1,7 @@
-import Link from "next/link";
 import React from "react";
-import { Button, Card, CardImg, Col, Row } from "react-bootstrap";
-
-// interface IVideosCard {
-//   VideoCardData: any;
-// }
 
 const Ractangle = (props: any) => {
-    return (
-        <>
-        {props.ractBox && props.ractBox.map((out: {length: any;}) => {return(
-             <div className="rectangle"></div>
-     ) })}</>
-            );
+  return <div className="h-30 border border-color-25"></div>;
 };
 
 export default Ractangle;

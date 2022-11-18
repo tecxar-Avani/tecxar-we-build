@@ -120,7 +120,7 @@ const profiledatas = [{
   deleteIcon:"delete.svg",
 }];
 const flashCardModalData = {
-  // title:["hello"],
+  //title:["hello"],
   headerIcon:["deleteFlash.svg","edit.svg"],
   footer:['save','Reveal answer','Delete'],
   textbox:[{'header':'Front','box':''},{'header':'Back','box':''}],

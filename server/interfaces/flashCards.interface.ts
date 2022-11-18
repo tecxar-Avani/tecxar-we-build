@@ -5,12 +5,18 @@ export enum ResponseEnumType {
   easy='easy'
 };
 
+export interface IFlashCardsResponse{
+  id?:number;
+  response_tye?:string;
+  flash_card_id:number;
+  created_by?:number;
+}
+
 export interface IFlashCards {
   id: number;
   build_id: number;
   question: string;
   answer: string;
-  response: ResponseEnumType;
   created_by: number;
   updated_by?:number;
   updatedAt?: Date;
@@ -21,7 +27,6 @@ export interface IUpdateFlashCards {
   build_id?: number;
   question?: string;
   answer?: string;
-  response?: ResponseEnumType;
   created_by?: number;
   updatedAt?: Date;
 }

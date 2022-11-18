@@ -1,15 +1,24 @@
 import ProfileCard from "@/components/Profile";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import HeaderTitle from "@/components/headerTitle";
 import VideoCard from "@/components/VideoCard";
 import { Col, Row } from "react-bootstrap";
 import { title } from "process";
 import { useRouter } from "next/router";
+import {
+  buildSelector,
+  getBuildByUrl,
+} from "../../store/reducers/build.reducer";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import Link from "next/link";
 
 const SearchPage = () => {
   const router = useRouter();
-  console.log("router", router.query);
+  const [url, setUrl] = useState("");
+  const dispatch = useAppDispatch();
+  const { buildList} = useAppSelector(buildSelector);
+
   const videosData = [
     {
       id: "1",
@@ -48,9 +57,16 @@ const SearchPage = () => {
       videoUrl: "img/RectangleVideoImg2.png",
     },
   ];
+
+  const searchResult = (url: string) => {
+    if (url !== "") {
+      dispatch(getBuildByUrl(url));
+    }
+  };
+
   return (
     <>
-      <SearchBar />
+      <SearchBar searchResult={searchResult} />
       {router && router.query.selfLearning ? (
         <HeaderTitle
           title="Learn something new about yourself"
@@ -66,7 +82,11 @@ const SearchPage = () => {
         {videosData.length > 0 &&
           videosData.map((videoData, index) => (
             <Col lg={4} className="videoProfile pb-2" key={index}>
-              <VideoCard VideoCardData={videoData} />
+              <Link href="/newBuild">
+                <a>
+                  <VideoCard VideoCardData={videoData} />
+                </a>
+              </Link>
             </Col>
           ))}
       </Row>
