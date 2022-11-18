@@ -443,16 +443,12 @@ body {
   text-align: center;
 }
 .awarenessModal{
-  .ant-modal{
-    background-color: #E8ABAB !important;
-  }
+  
   .ant-modal-content{
-    background-color: #E8ABAB !important;
     color: #000000;
     width: 440px;
   }
-  .ant-modal-header{
-    background-color: #E8ABAB !important;   
+  .ant-modal-header{  
     font-family: 'Arimo';
     font-style: normal;
     font-weight: 700;
@@ -582,50 +578,90 @@ textarea.ant-input{
 }
 
 .flash {
-  align-self: end;
+  right: 21px;
+  bottom: 5px;
 }
-.bd-highlight:hover .ant-tooltip-open{
-color: black;
+.mkCard{
+  right: 21px;
+    bottom: 103px;
 }
+// .btn-primary{
+//   color: black;
+  
+//   :hover{
+//   color: #000 !important;
+//  background-color: white !important;
+//   }
+// }
 .btn{
-  color: black;
+  :hover{
+    :hover{
+      background-color: white;
+      color: black;
+     }
+  }
 }
 .high-btn{
   background-color: black;
   color: white;
   border: 1px solid white;
- width: 57px;
+ width: 68px;
+ height: 61px;
+ padding: 10px;
+ text-align: center;
+}
+.high-btn:hover {
+  background-color:white; /* Green */
+  color: black;
+}
+.high-btn3{
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+ width: 68px;
+ height: 61px;
+ padding: 2px;
+ text-align: center;
+}
+.high-btn3:hover {
+  background-color:white; /* Green */
+  color: black;
+}
+
+.high-btn2{
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+ width: 100px;
  height: 57px;
  padding: 16px;
  text-align: center;
 }
-
-// .redTriangle{
-//   margin-top: -110px;
-// }
-
-  // .hover:hover{    
-  //     transform: scale(1.03);
-  // }
-  // .hoverRedTriangle:hover{
-  //   transform: scale(1.07);
-  // }
+.high-btn2:hover {
+  background-color:white; /* Green */
+  color: black;
+}
+.threeButton .btn{
+  padding-left: 0;
+  padding-right: 0;
+  color: black;
+}
 
 .inspirationButton{
   background-color: #7D1597;
   transform: translate(9%, 350%);
- 
+  color: #F8F8F8;
 
 }
 .resistanceButton{
   background-color: #D91919;
   transform: translate(105%, -110%);
-  
+  color: #F8F8F8;
 }
 .acceptanceButton{
   background-color: #1235AE;
-  transform: translate(170%, -446%)
-  
+  transform: translate(170%, -446%);
+  color: #F8F8F8;
 }
 .inspirationButton:hover{
   background-color: #7D1597;
@@ -644,6 +680,51 @@ color: black;
     margin-bottom: 35px;
 }
 
+.accptanceModalBG{
+  .ant-modal-content, .ant-modal-header{
+background-color: #B2B5ED;
+  }
+  textarea.ant-input{
+    border-radius: 5px;
+  }
+  .ant-btn {
+    width:auto;
+    height: 28px;
+    background-color: #000000;
+    text-align: center;
+    margin-top: 0;
+  }
+}
+.resistanceModalBG{
+  .ant-modal-content, .ant-modal-header{
+background-color: #E8ABAB;
+}
+textarea.ant-input{
+  border-radius: 5px;
+}
+.ant-btn {
+  width:auto;
+  height: 28px;
+  background-color: #000000;
+  text-align: center;
+  margin-top: 0;
+}
+}
+.inspirationModalBG{
+  .ant-modal-content, .ant-modal-header{
+background-color: #E0C0EB;
+}
+textarea.ant-input{
+  border-radius: 5px;
+}
+.ant-btn {
+  width:auto;
+  height: 28px;
+  background-color: #000000;
+  text-align: center;
+  margin-top: 0;
+}
+}
 
 
 

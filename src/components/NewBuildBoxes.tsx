@@ -1,6 +1,6 @@
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
-import AwarenessModal from "./AwarenessModal";
+
 
 import { Col, Row } from "react-bootstrap";
 import OuterBox from "./OuterBox";
@@ -26,3 +26,4 @@ const NewBuildBoxes = (props: any) => {
 };
 
 export default NewBuildBoxes;
+

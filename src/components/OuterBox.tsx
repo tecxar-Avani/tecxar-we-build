@@ -10,7 +10,7 @@ const OuterBox = (props: any) => {
   const [value, setValue] = useState("");
   const [changeCalss, setChangeCalss] = useState(false);
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const shouldSetValue = value.length < 10;
 
     if (value.length <= 10) {
@@ -19,7 +19,7 @@ const OuterBox = (props: any) => {
     }
   };
 
-  const charAlert = (event) => {
+  const charAlert = (event: any) => {
     var textField = document.formTwo.text;
 
     if (textField.value.length > 5) {
@@ -45,7 +45,7 @@ const OuterBox = (props: any) => {
             //onChange={e => setValue(e.target.value)}
             placeholder=""
             autoSize={{ minRows: 5, maxRows: 5 }}
-            maxLength={15}
+            maxLength={15} 
             //   value={model.ServiceDescription}
             // onChange={handleChange}
             // onKeyDown={charAlert()}

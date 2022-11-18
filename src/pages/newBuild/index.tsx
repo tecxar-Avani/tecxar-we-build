@@ -15,9 +15,9 @@ import AwarenessModal from "@/components/AwarenessModal";
 
 const NewBuild = () => {
   const [modal2Open, setModal2Open] = useState(false);
-  const [awarenessModal, setAwarenessModal] = useState(false);
+ 
     const { TextArea } = Input;
-  const [modal1Open, setModal1Open] = useState(false);
+  //const [modal1Open, setModal1Open] = useState(false);
   
   const flashCardModalData = {
     // title:["hello"],
@@ -32,7 +32,6 @@ const NewBuild = () => {
     title: ["hello"],
     footer: ["save", "Reveal answer", "Delete"],
     textbox: [
-      { header: "Front", box: "" },
       { header: "Back", box: "" },
     ],
   };
@@ -156,14 +155,22 @@ const NewBuild = () => {
           {[...Array(mapdata)].map((num, index) => {
             return (
               <NewBuildBoxes
-                setModal1Open={setModal1Open}
                 boxes={num}
                 numOfBox={3}
                 key={index}
               />
             );
           })}
-          <div className="position-absolute bottom-0 end-0 flash mb-1 me-1">
+          <div className="position-absolute mkCard me-1">
+            <Image
+              alt="flashCards"
+              src="../../../img/mkCard.png"
+              onClick={() => {
+                setModal2Open(true);
+              }}
+            />
+          </div>
+          <div className="position-absolute bottom-0 end-0 flash mb-1 me-2">
             <Image
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"
@@ -179,12 +186,6 @@ const NewBuild = () => {
         flashCard={flashCardModalData}
         setModal2Open={setModal2Open}
         visible={modal2Open}
-      />
-      <AwarenessModal
-        modal1Open={modal1Open}
-        awareness={awarenessModalData}
-        setModal1Open={setModal1Open}
-        visible={modal1Open}
       />
     </>
   );
