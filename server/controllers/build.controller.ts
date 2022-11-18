@@ -111,16 +111,21 @@ export class BuildController {
       });
       let data;
       const titles = response.data.items.map((item) => {
+        const video = item.snippet.thumbnails.default.url;
+        console.log("$$$$$$$$$$$$", item.snippet.thumbnails.default.url);
+
         data = {
           videoId: item.id.videoId,
           thumbnails: item.snippet.thumbnails.default,
           description: item.snippet.description,
+          title: item.snippet.title,
           publishedAt: item.snippet.publishedAt,
-          url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+          test: video.substring(video.indexOf("vi/")[0]),
+          url: `https://www.youtube.com/embed/${item.id.videoId}`,
         };
         return data;
       });
-      return { data: titles, box: userBuild ,status:true };
+      return { data: titles, box: userBuild, status: true };
     } catch (error) {
       return {
         error: {
