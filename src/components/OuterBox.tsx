@@ -1,38 +1,59 @@
-import { Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import Link from "next/link";
-import React from "react";
-import { Button, Card, CardImg, Col, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Col, Form } from "react-bootstrap";
 
 // interface IVideosCard {
 //   VideoCardData: any;
 // }
+const numOfFields = 3;
+
+// const chnageInput = (e: { target: { maxLength: any; value: any; id: any; }; }) => {
+//   const { maxLength, value, id } = e.target;
+//   const [fieldName, fieldIndex] = id;
+
+//   // Check if they hit the max character length
+//   if (value.length >= maxLength) {
+//     // Check if it's not the last input field
+//     if (parseInt(fieldIndex, 10) < 3) {
+//       // Get the next input field
+//       const nextSibling = document.querySelector(
+//         `Input.Textarea[id=${parseInt(fieldIndex, 10) + 1}]`
+//       );
+//       // If found, focus the next field
+//       if (nextSibling !== null) {
+//         nextSibling.focus();
+//       }
+//     }
+//   }
+// }
 
 const OuterBox = (props: any) => {
-  
-    return (
-      
-        <>
-        {props.outer && props.outer.map((out: {length: any;}) => {return(
-          
-                <div className="outerbox">
-                    <div>
-                        {props.inner && props.inner.length > 0 && (
-                            <TextArea
-                                //value={value}
-                                //onChange={e => setValue(e.target.value)}
-                                placeholder=""
-                                autoSize={{ minRows: 5, maxRows: 5 }}
-                                maxLength={150}
-                                className="innerBox"
-                            />
-                        )}
-                    </div>
-                </div>
-                       ); })
-        }     
-        </>
-    );
+  const handleChange = (event: any) => {
+    let textData = event.target.value;
+    if (textData.length > 100) {
+      textData = textData.substring(0, 100);
+      alert("No more text can be entered");
+    }
+  };
+
+  return (
+    <Col sm={4} className="p-0">
+      <div className="innerBoxs p-3 w-100">
+        <Form name="formTwo">
+          <TextArea
+            name={`message${props.id}`}
+            placeholder=""
+            defaultValue={props.boxData}
+            // value={props.boxData}
+            autoSize={{ minRows: 5, maxRows: 5 }}
+            maxLength={15}
+            onChange={handleChange}
+            id={props.id}
+          />
+        </Form>
+      </div>
+    </Col>
+  );
 };
 
 export default OuterBox;

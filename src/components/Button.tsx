@@ -9,7 +9,7 @@ import { Button, Card, CardImg, Col, Row } from "react-bootstrap";
 const CustomButton = (props: any) => {
     return (
 
-        <Button variant={` ${props.className}`}>{props.title}</Button>
+        <Button variant={` ${props.className}`} >{props.title}</Button>
 
     );
 };

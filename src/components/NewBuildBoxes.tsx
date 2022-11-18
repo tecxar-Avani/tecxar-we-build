@@ -1,28 +1,27 @@
+import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
+
+
+import { Col, Row } from "react-bootstrap";
 import OuterBox from "./OuterBox";
 import Ractangle from "./Ractangle";
 // interface IVideosCard {
 //   VideoCardData: any;
 // }
 const NewBuildBoxes = (props: any) => {
- 
   return (
-    <>
-    {props.boxes &&  props.boxes.length > 0 &&  props.boxes[0].data && (
-    <div className="mt-3 mx-4">
-    <div className=" ms-3">
-      <Ractangle ractBox={props.ract}/>
-      <div className="ms-4 d-flex">
-        <OuterBox outer={props.outBox} inner={props.inbox}/>
-      </div>
+    <div className="boxesMain">
+      <Ractangle />
+      <Row className="m-0 px-4 innerBoxMain">
+        {props.item?.map((itemData: any, index: any) => {
+          return (
+            <OuterBox key={index} id={itemData.id} boxData={itemData.message} />
+          );
+        })}
+      </Row>
     </div>
-    
-    
-    
-    </div>
-    )}
-    </>
   );
 };
 
 export default NewBuildBoxes;
+

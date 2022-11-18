@@ -11,6 +11,7 @@ import {
   getBuildByUrl,
 } from "../../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import Link from "next/link";
 
 const SearchPage = () => {
   const router = useRouter();
@@ -81,7 +82,11 @@ const SearchPage = () => {
         {videosData.length > 0 &&
           videosData.map((videoData, index) => (
             <Col lg={4} className="videoProfile pb-2" key={index}>
-              <VideoCard VideoCardData={videoData} />
+              <Link href="/newBuild">
+                <a>
+                  <VideoCard VideoCardData={videoData} />
+                </a>
+              </Link>
             </Col>
           ))}
       </Row>
