@@ -8,7 +8,7 @@ import {
   Table,
   BelongsTo,
 } from "sequelize-typescript";
-import { IFlashCards} from "@/interfaces/flashCards.interface";
+import { IFlashCards } from "@/interfaces/flashCards.interface";
 import VideoBuild from "@/models/videoBuilds.model ";
 import User from "@/models/user.model";
 export type Flash_CardsGroupAttributes = Optional<IFlashCards, "id">;
@@ -16,13 +16,12 @@ export type Flash_CardsGroupAttributes = Optional<IFlashCards, "id">;
 @Table({
   tableName: "flash_cards",
   createdAt: "createdAt",
-  updatedAt:"updatedAt",
+  updatedAt: "updatedAt",
   timestamps: true,
 })
 export default class FlashCards
   extends Model<IFlashCards, Flash_CardsGroupAttributes>
-  implements IFlashCards
-{
+  implements IFlashCards {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 

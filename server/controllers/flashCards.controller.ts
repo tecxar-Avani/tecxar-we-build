@@ -16,7 +16,9 @@ import { OpenAPI } from "routing-controllers-openapi";
 import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos/flashcards.dto";
-import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
+import { IFlashCards, IFlashCardsResponse  } from "@/interfaces/flashCards.interface";
+import { google } from "googleapis";
+import config from "@/configs";
 
 @Controller("/flashcard")
 @UseBefore(authMiddleware)
@@ -47,22 +49,23 @@ export class FlashController {
     }
   }
 
-  @Post("/createflashcard")
+
+  @Post("/flashcardresponse")
   @HttpCode(201)
-  @OpenAPI({ summary: "Create a new flash card" })
-  async createFlashCardResponse(
-    @Body() cardData: flashCardResponseDto,
+  @OpenAPI({ summary: "Create a new build" })
+  async flashcardResponse(
+    @Body() flashcardResponseData: flashCardResponseDto,
     @Req() req: Request | any,
     @Res() res: Response
   ) {
     try {
-      cardData.created_by = req.user.id;
-      const createCardData: IFlashCardsResponse | null =
-        await this.flashCardService.createFlashCardResponse(cardData);
+      flashcardResponseData.created_by = req.user.id;
+      const createFlashCardResponseData: IFlashCardsResponse | null =
+        await this.flashCardService.createFlashCardResponse(flashcardResponseData);
       return {
         status: true,
-        data: createCardData,
-        message: "Flash Card created successfully.",
+        data: createFlashCardResponseData,
+        message: "Video Build created successfully.",
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -77,6 +80,24 @@ export class FlashController {
     try {
       const user = req.user.id;
       const flashBuild = await this.flashCardService.getFlashCard(user);
+      return flashBuild;
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
+  
+  @Get("/flashcardresponse")
+  @OpenAPI({ summary: "Get all build of users" })
+  async getFlashCardResponse(@Req() req: Request | any ,@Res() res: Response) {
+    try {
+       const userId = req.user.id;
+      const flashBuild = await this.flashCardService.getFlashCardResponse(userId);
       return flashBuild;
     } catch (error) {
       return {

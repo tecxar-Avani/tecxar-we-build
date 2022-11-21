@@ -4,7 +4,7 @@ import { IsOptional, IsNumber, IsString, IsDate } from 'class-validator';
 export class flashcardsDto implements IFlashCards {
   @IsOptional()
   @IsNumber()
-  id: number;
+  id?: number;
 
   @IsNumber()
   build_id: number;
@@ -17,10 +17,11 @@ export class flashcardsDto implements IFlashCards {
 
   @IsOptional()
   @IsNumber()
-  created_by: number;
+  created_by?: number;
 
+  @IsOptional()
   @IsDate()
-  updated_at: Date;
+  updated_at?: Date;
 }
 
 export class updateflashcardsDto implements IUpdateFlashCards {
@@ -55,7 +56,7 @@ export class flashCardResponseDto implements IFlashCardsResponse {
   id?: number;
 
   @IsString()
-  response_tye: ResponseEnumType;
+  response_type: ResponseEnumType;
 
   @IsNumber()
   flash_card_id: number;

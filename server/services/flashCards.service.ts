@@ -1,6 +1,6 @@
-
 import { HttpException } from "@/exceptions/HttpException";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
+import FlashCards from "@/models/flashCards.model";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
 
@@ -33,7 +33,6 @@ class FlashCardService {
     return createFlashCardResponse;
   }
 
-
   public async createBulkFlashCard(
     cardData: IFlashCards | any
   ): Promise<IFlashCards[] | null> {
@@ -44,6 +43,24 @@ class FlashCardService {
       cardData
     );
     return createCardData;
+  }
+
+  public async getFlashCardResponse(userid:number): Promise<IFlashCardsResponse[] | null> {
+    const flashCardsResponse: IFlashCardsResponse[] | null = await this.flashCardsResponse.findAll({
+    //  include:[{model:FlashCards,through:{
+    //   attributes:[],as:'flashCard',
+    //   where:{id:userid}
+    //  }}]
+       //where:{id:userid},
+       include:{model:FlashCards,required:true,attributes:[],as:'flashCard'},
+       logging:console.log
+    })
+
+    if (!flashCardsResponse) {
+      return null;
+    } else {
+      return flashCardsResponse;
+    }
   }
 
   public async getFlashCard(userId: number): Promise<IFlashCards[] | null> {
