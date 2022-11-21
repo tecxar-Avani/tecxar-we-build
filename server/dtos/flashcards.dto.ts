@@ -1,4 +1,4 @@
-import { IFlashCards, IUpdateFlashCards, IFlashCardsResponse } from '@interfaces/flashCards.interface';
+import { IFlashCards, IUpdateFlashCards, IFlashCardsResponse, ResponseEnumType } from '@interfaces/flashCards.interface';
 import { IsOptional, IsNumber, IsString, IsDate } from 'class-validator';
 
 export class flashcardsDto implements IFlashCards {
@@ -55,7 +55,7 @@ export class flashCardResponseDto implements IFlashCardsResponse {
   id?: number;
 
   @IsString()
-  response_tye: string;
+  response_tye: ResponseEnumType;
 
   @IsNumber()
   flash_card_id: number;

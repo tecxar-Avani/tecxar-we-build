@@ -6,10 +6,11 @@ export enum ResponseEnumType {
 };
 
 export interface IFlashCardsResponse{
-  id?:number;
-  response_tye?:string;
+  id:number;
+  response_tye?:ResponseEnumType;
   flash_card_id:number;
   created_by?:number;
+  createdAt?:Date
 }
 
 export interface IFlashCards {
