@@ -21,20 +21,43 @@ const OuterBox = (props: any) => {
     const { maxLength, value, id } = e.target;
     const [fieldName, fieldIndex] = id;
   
-    // Check if they hit the max character length
-    // if (value.length >= maxLength) {
-      
-      
-    //     // Get the next input field
-    //     const nextSibling = document.querySelector(
-    //       `Input.Textarea[id=${parseInt(fieldIndex, 10) + 1}]`
-    //     );
-        
-    //     // If found, focus the next field
-    //     if (nextSibling !== null) {
-    //       nextSibling.focus();
-    //     }
-    //   }
+    if (value.length >= maxLength) {
+        const nextSibling = parseInt(id)+1;
+        if (nextSibling == null) {
+          return(
+          <>
+ <Form name="formTwo" className="textBoxInner" style={{display:"none"}}>
+          <TextArea
+           name={`message${props.id}`}
+            placeholder=""
+            defaultValue={props.boxData}
+             //value={props.boxData}
+            autoSize={{ minRows: 5, maxRows: 5 }}
+            maxLength={15}
+            onChange={chageInput}
+            id={props.id}
+            
+          />
+        </Form>
+          </>
+          )
+        }
+        else{
+          <Form name="formTwo" className="textBoxInner" style={{display:"block"}}>
+          <TextArea
+           name={`message${props.id}`}
+            placeholder=""
+            defaultValue={props.boxData}
+             //value={props.boxData}
+            autoSize={{ minRows: 5, maxRows: 5 }}
+            maxLength={15}
+            onChange={chageInput}
+            id={props.id}
+            
+          />
+        </Form>
+        }
+      }
       
     }
   
@@ -43,14 +66,14 @@ const OuterBox = (props: any) => {
       <div className="innerBoxs p-3 w-100">
         <Form name="formTwo" className="textBoxInner">
           <TextArea
-           // name={`message${props.id}`}
+           name={`message${props.id}`}
             placeholder=""
-            //defaultValue={props.boxData}
-            // value={props.boxData}
+            defaultValue={props.boxData}
+             //value={props.boxData}
             autoSize={{ minRows: 5, maxRows: 5 }}
             maxLength={15}
-            //onChange={chageInput}
-            //id={props.id}
+            onChange={chageInput}
+            id={props.id}
             
           />
         </Form>

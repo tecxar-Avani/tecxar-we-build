@@ -20,7 +20,7 @@ const VideoCard = (props: any) => {
             className="rounded-0"
             src={`` }
           ></iframe> */}
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/eJ1UDdQbE-k" title="YouTube video player" allow=" picture-in-picture" allowFullScreen={true}></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/eJ1UDdQbE-k" title="YouTube video player" allow="   picture-in-picture" allowFullScreen={true}></iframe>
           <div className="position-absolute bottom-0 end-0 px-2 mb-2 py-1 bg-black rounded">
             <span className="text-white">12:45</span>
           </div>

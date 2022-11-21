@@ -5,7 +5,7 @@ interface ICustomerCredentials {
 
 type difficultyLevelEnumType = "low" | "medium" | "high" | "very_high";
 type VideoTypeEnumType = "theory" | "practical";
-
+type ResponseEnumType = "good"| "hard"| "easy"| "again"
 
 export interface IVideoBuild {
   id?: number;
@@ -17,5 +17,15 @@ export interface IVideoBuild {
   created_by?: number;
   updated_by?: number;
   createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface IFlashCard {
+  id?: number;
+  build_id?: number;
+  question: string;
+  answer: string;
+  created_by?: number;
+  updated_by?:number;
   updatedAt?: Date;
 }

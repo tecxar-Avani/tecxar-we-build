@@ -22,13 +22,7 @@ const NewBuild = () => {
   const BoxSize = 3;
   const { TextArea } = Input;
   const flashCardModalData = {
-    // title:["hello"],
-    headerIcon: ["deleteFlash.svg", "edit.svg"],
-    footer: ["save", "Reveal answer", "Delete"],
-    textbox: [
-      { header: "Front", box: "" },
-      { header: "Back", box: "" },
-    ],
+    footer: ["save"],
   };
   const awarenessModalData = {
     title: ["hello"],
