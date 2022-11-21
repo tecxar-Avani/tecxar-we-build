@@ -24,9 +24,9 @@ export const addFlashCard = createAsyncThunk(`flashcard/add`, async (createFlash
 });
 
 export const getFlashCard = createAsyncThunk(`flashcard/get`,async (getFlashCardData:IFlashCard,{dispatch}) =>{
-  const { status, data } = await flashCardService.FlashCardList(getFlashCardData); 
+  const { data } = await flashCardService.FlashCardList(getFlashCardData); 
   //dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
-  return { status, data };
+  return { status: data.status, rows: data };
 });
 
 
@@ -35,7 +35,7 @@ interface State {
     flashCard: IFlashCard;
     loading: boolean;
     error: string | undefined;
-    FlashCardList: IFlashCardRowsCountResponse;
+    flashCardList: IFlashCardRowsCountResponse;
   
 }
 
@@ -44,7 +44,7 @@ const initialState: State = {
     question: "",
     answer: "",
   },
-  FlashCardList: {
+  flashCardList: {
     status: true,
     rows: []
     },
@@ -88,13 +88,13 @@ const flashCardSlice = createSlice({
           return {
             ...state,
             loading: false,
-           
+            flashCardList: action.payload,
           };
         } else {
           return {
             ...state,
             loading: false,
-           
+            flashCardList: action.payload,
           };
         }
       })

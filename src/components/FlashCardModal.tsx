@@ -5,13 +5,13 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Card, CardImg, Col, Row } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
-// import { addFlashCard, flashCardSelector } from "../store/reducers/flashCard.reducer";
+ import { addFlashCard, flashCardSelector } from "../store/reducers/flashCard.reducer";
 import { IFlashCard } from "../../@types/common";
 
 const { Search } = Input;
 
 const FlashCardModal = (props: any) => {
- // const flashCard = useAppSelector(flashCardSelector);
+  const flashCard = useAppSelector(flashCardSelector);
   const dispatch = useAppDispatch();
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
