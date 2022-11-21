@@ -310,7 +310,9 @@ body {
   width: 24%;
 }
 
-
+.ant-modal{
+  font-family: 'Arimo';;
+}
 .ant-modal-body {
   text-align: center;
 }
@@ -740,4 +742,9 @@ textarea.ant-input{
   border-radius: 3px;
   padding: 1px;
 }
-
+.ant-form-item-label > label::after{
+  content: none;
+}
+.ant-input-textarea {
+  margin-left: 2px !important;
+}

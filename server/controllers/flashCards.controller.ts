@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Response } from "express";
 import {
   Controller,
@@ -35,7 +36,9 @@ export class FlashController {
       cardData.created_by = req.user.id;
       const createCardData: IFlashCards | null =
         await this.flashCardService.createFlashCard(cardData);
+        console.log("AAAAAAAAAAAAAAAAAAA",createCardData)
       return {
+        
         status: true,
         data: createCardData,
         message: "Flash Card created successfully.",
@@ -46,7 +49,7 @@ export class FlashController {
       }
     }
   }
-  
+
   @Get("/")
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCard(@Req() req: Request | any, @Res() res: Response) {
@@ -66,18 +69,23 @@ export class FlashController {
 
   @Get("/:id")
   @OpenAPI({ summary: "Get all build of users" })
-  async getFlashCardBuildId(@Req() req: Request | any, @Param('id') buildId: number, @Res() res: Response) {
+  async getFlashCardBuildId(
+    @Req() req: Request | any,
+    @Param("id") buildId: number,
+    @Res() res: Response
+  ) {
     try {
-      const flashBuildId = await this.flashCardService.getFlashCardBuildId(buildId);
+      const flashBuildId = await this.flashCardService.getFlashCardBuildId(
+        buildId
+      );
       if (flashBuildId === null) {
         return res.send({
           status: 404,
-          message: 'Leave type with this Id not found',
+          message: "Leave type with this Id not found",
         });
       }
       return { status: true, data: flashBuildId };
-    }
-    catch (error) {
+    } catch (error) {
       if (error instanceof Error) {
         return { status: false, error: { code: 500, message: error.message } };
       }
@@ -86,7 +94,12 @@ export class FlashController {
 
   @Put("/:id")
   @OpenAPI({ summary: "Update build id of users" })
-  async updateFlashCard(@Req() req: Request | any, @Param('id') id: number, @Body() data: updateflashcardsDto, @Res() res: Response) {
+  async updateFlashCard(
+    @Req() req: Request | any,
+    @Param("id") id: number,
+    @Body() data: updateflashcardsDto,
+    @Res() res: Response
+  ) {
     try {
       const userBuild = await this.flashCardService.updateFlashCardId(id, data);
       return userBuild;
@@ -102,18 +115,23 @@ export class FlashController {
 
   @Delete("/:id")
   @OpenAPI({ summary: "Get all build of users" })
-  async deleteFlashCardById(@Req() req: Request | any, @Param('id') id: number, @Res() res: Response) {
+  async deleteFlashCardById(
+    @Req() req: Request | any,
+    @Param("id") id: number,
+    @Res() res: Response
+  ) {
     try {
-      const flashByDeleteId = await this.flashCardService.deleteFlashCardById(id);
+      const flashByDeleteId = await this.flashCardService.deleteFlashCardById(
+        id
+      );
       if (flashByDeleteId === null) {
         return res.send({
           status: 404,
-          message: 'Flash Card with this Id not found',
+          message: "Flash Card with this Id not found",
         });
       }
       return { status: true, data: flashByDeleteId };
-    }
-    catch (error) {
+    } catch (error) {
       if (error instanceof Error) {
         return { status: false, error: { code: 500, message: error.message } };
       }

@@ -1,7 +1,7 @@
 import { Input, Modal, Button, Form } from "antd";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardImg, Col, Row } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import {
@@ -17,26 +17,11 @@ const { TextArea } = Input;
 const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
   const dispatch = useAppDispatch();
-  const [front, setFront] = useState("");
-  const [back, setBack] = useState("");
 
   const [form] = Form.useForm();
-  console.log("@@@@@@@@@@@@@@@@@@", flashCardData);
-  // const onFinish = (value: IFlashCard) => {
-  //   //dispatch(addFlashCard(data));
-  //   console.log("#################", value);
-  // };
-
-  const handleSubmit = (data: any) => {
-    console.log("#################", data);
-
-    // dispatch(addFlashCard(data));
+  const handleSubmit = (data: IFlashCard) => {
+    dispatch(addFlashCard(data));
   };
-
-  // const handleCancel = () => {
-  //   // setVisible(false)
-  //   form.resetFields()
-  // };
 
   return (
     <Modal
@@ -69,29 +54,32 @@ const FlashCardModal = (props: any) => {
           <Form
             id="form"
             form={form}
-            onFinish={(data) => console.log("CCCCCCCCC", data)}
+            onFinish={handleSubmit}
           >
             <div className="inputbox">
-              <Form.Item label="Front" name={"note"}>
-                <TextArea className={"w-100"} placeholder={"note"} />
-              </Form.Item>
-              {/* <TextArea
-                showCount
-                maxLength={100}
-                rows={4}
-                className="mb-2"
-                name={"question"}
-                id="question"
-              ></TextArea> */}
-              Back
+              <Form.Item name={"question"}>
+                Front
+             <br></br>
               <TextArea
                 showCount
                 maxLength={100}
                 rows={4}
                 className="mb-2"
-                name="answer"
+                name={"questions"}
+                id="question"
+              ></TextArea>
+               </Form.Item>
+               <Form.Item  name={"answer"}>
+               Back
+              <TextArea
+                showCount
+                maxLength={100}
+                rows={4}
+                className="mb-2"
+                name="answers"
                 id="answer"
               ></TextArea>
+               </Form.Item>
             </div>
           </Form>
         )}

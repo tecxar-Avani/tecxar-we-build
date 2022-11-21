@@ -29,3 +29,7 @@ export interface IFlashCard {
   updated_by?:number;
   updatedAt?: Date;
 }
+export interface ICreateFlashCard{
+  question: string;
+  answer: string;
+}

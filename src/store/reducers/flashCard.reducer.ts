@@ -10,13 +10,15 @@ import {
 import Router from "next/router";
 import { toast } from "react-toastify";
 import { IFlashCardRowsCountResponse } from "../../../@types/responses";
-import { IFlashCard } from "../../../@types/common";
+import { ICreateFlashCard, IFlashCard } from "../../../@types/common";
 import flashCardService from "../../service/flashCard.service";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
 
-export const addFlashCard = createAsyncThunk(`flashcard/add`, async (createFlashCardData: IFlashCard, { dispatch }) => {
+export const addFlashCard = createAsyncThunk(`flashcard/add`, async (createFlashCardData: ICreateFlashCard, { dispatch }) => {
+  console.log("#@$#$@#$@#$@#$@#$",createFlashCardData)
+
     const { status, data } = await flashCardService.addFlashCard(createFlashCardData); 
    // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
    return { status, data };
@@ -75,6 +77,7 @@ const flashCardSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(addFlashCard.fulfilled, (state, action) => {
+      
         if (action.payload.data.status === true) {
           Router.push('/build');
           toast.success(action.payload.data.message);
