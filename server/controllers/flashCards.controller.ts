@@ -16,8 +16,8 @@ import {
 import { OpenAPI } from "routing-controllers-openapi";
 import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
-import { flashcardsDto, updateflashcardsDto } from "@/dtos/flashcards.dto";
-import { IFlashCards } from "@/interfaces/flashCards.interface";
+import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos/flashcards.dto";
+import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 
 @Controller("/flashcard")
 @UseBefore(authMiddleware)
@@ -39,6 +39,30 @@ export class FlashController {
         console.log("AAAAAAAAAAAAAAAAAAA",createCardData)
       return {
         
+        status: true,
+        data: createCardData,
+        message: "Flash Card created successfully.",
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        return { error: { code: 500, message: error.message } };
+      }
+    }
+  }
+
+  @Post("/createflashcard")
+  @HttpCode(201)
+  @OpenAPI({ summary: "Create a new flash card" })
+  async createFlashCardResponse(
+    @Body() cardData: flashCardResponseDto,
+    @Req() req: Request | any,
+    @Res() res: Response
+  ) {
+    try {
+      cardData.created_by = req.user.id;
+      const createCardData: IFlashCardsResponse | null =
+        await this.flashCardService.createFlashCardResponse(cardData);
+      return {
         status: true,
         data: createCardData,
         message: "Flash Card created successfully.",
@@ -114,12 +138,8 @@ export class FlashController {
   }
 
   @Delete("/:id")
-  @OpenAPI({ summary: "Get all build of users" })
-  async deleteFlashCardById(
-    @Req() req: Request | any,
-    @Param("id") id: number,
-    @Res() res: Response
-  ) {
+  @OpenAPI({ summary: "delete all build of users" })
+  async deleteFlashCardById(@Req() req: Request | any, @Param('id') id: number, @Res() res: Response) {
     try {
       const flashByDeleteId = await this.flashCardService.deleteFlashCardById(
         id

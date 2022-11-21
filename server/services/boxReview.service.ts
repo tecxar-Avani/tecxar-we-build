@@ -1,5 +1,5 @@
 import { HttpException } from "@/exceptions/HttpException";
-import { IBoxReviews } from "@/interfaces/box_reviews.interface";
+import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
 
