@@ -21,19 +21,22 @@ const FlashCardModal = (props: any) => {
   const [back, setBack] = useState("");
 
   const [form] = Form.useForm();
+  console.log("@@@@@@@@@@@@@@@@@@",flashCardData)
+  // const onFinish = (value: IFlashCard) => {
+  //   //dispatch(addFlashCard(data));
+  //   console.log("#################", value);
+  // };
 
-  const onFinish = (value: IFlashCard) => {
-    //dispatch(addFlashCard(data));
-    console.log("#################", value);
-  };
-  const handleSubmit = (values) => {
-    console.log(values)
+  const handleSubmit = (data:any) => {
+    console.log("#################",data)
+
+    // dispatch(addFlashCard(data));
   }
   
-  const handleCancel = () => {
-    // setVisible(false)
-    form.resetFields()
-  };
+  // const handleCancel = () => {
+  //   // setVisible(false)
+  //   form.resetFields()
+  // };
 
   return (
     
@@ -62,7 +65,7 @@ const FlashCardModal = (props: any) => {
     >
       <div className="py-4">
         {props.flashCard.content || (
-          <Form form={form} onFinish={handleSubmit}>
+          <Form id="form" form={form} onFinish={handleSubmit}>
             <div className="inputbox">
               Front
               <TextArea
@@ -70,8 +73,9 @@ const FlashCardModal = (props: any) => {
                 maxLength={100}
                 rows={4}
                 className="mb-2"
-                name="front"
-                id="front"
+                name="question"
+                id="question"
+               
               ></TextArea>
               Back
               <TextArea
@@ -79,8 +83,9 @@ const FlashCardModal = (props: any) => {
                 maxLength={100}
                 rows={4}
                 className="mb-2"
-                name="back"
-                id="back"
+                name="answer"
+                id="answer"
+               
               ></TextArea>
             </div>
             </Form>
