@@ -111,8 +111,10 @@ export class BuildController {
       });
       let data;
       const titles = response.data.items.map((item) => {
-        const video = item.snippet.thumbnails.default.url;
-        console.log("$$$$$$$$$$$$", item.snippet.thumbnails.default.url);
+        const videoUrl = item.snippet.thumbnails.default.url;
+        const splittedUrl = videoUrl.split("vi/");
+        const result = splittedUrl.pop();
+        const array1 = result.split("/de");
 
         data = {
           videoId: item.id.videoId,
@@ -120,8 +122,8 @@ export class BuildController {
           description: item.snippet.description,
           title: item.snippet.title,
           publishedAt: item.snippet.publishedAt,
-          test: video.substring(video.indexOf("vi/")+1),
-          url: `https://www.youtube.com/embed/${item.id.videoId}`,
+          test: array1[0],
+          url: `https://www.youtube.com/embed/${array1[0]}`,
         };
         return data;
       });
