@@ -1,5 +1,4 @@
 import { Input, Modal, Button, Form } from "antd";
-import TextArea from "antd/lib/input/TextArea";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -13,6 +12,7 @@ import {
 import { IFlashCard } from "../../@types/common";
 
 const { Search } = Input;
+const { TextArea } = Input;
 
 const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
@@ -21,25 +21,24 @@ const FlashCardModal = (props: any) => {
   const [back, setBack] = useState("");
 
   const [form] = Form.useForm();
-  console.log("@@@@@@@@@@@@@@@@@@",flashCardData)
+  console.log("@@@@@@@@@@@@@@@@@@", flashCardData);
   // const onFinish = (value: IFlashCard) => {
   //   //dispatch(addFlashCard(data));
   //   console.log("#################", value);
   // };
 
-  const handleSubmit = (data:any) => {
-    console.log("#################",data)
+  const handleSubmit = (data: any) => {
+    console.log("#################", data);
 
     // dispatch(addFlashCard(data));
-  }
-  
+  };
+
   // const handleCancel = () => {
   //   // setVisible(false)
   //   form.resetFields()
   // };
 
   return (
-    
     <Modal
       title={
         props.flashCard.title ||
@@ -51,32 +50,39 @@ const FlashCardModal = (props: any) => {
       }
       centered
       visible={props.modal2Open}
-      onOk={form.submit} 
+      onOk={form.submit}
       onCancel={() => props.setModal2Open(false)}
       footer={
         props.flashCard.footer &&
         props.flashCard.footer.length > 0 &&
         props.flashCard.footer.map((btn: any) => {
-          return <Button form="form" key="submit" htmlType="submit">
-          Submit
-      </Button>;
+          return (
+            <Button form="form" key="submit" htmlType="submit">
+              Submit
+            </Button>
+          );
         })
       }
     >
       <div className="py-4">
         {props.flashCard.content || (
-          <Form id="form" form={form} onFinish={handleSubmit}>
+          <Form
+            id="form"
+            form={form}
+            onFinish={(data) => console.log("CCCCCCCCC", data)}
+          >
             <div className="inputbox">
-              Front
-              <TextArea
+              <Form.Item label="Front" name={"note"}>
+                <TextArea className={"w-100"} placeholder={"note"} />
+              </Form.Item>
+              {/* <TextArea
                 showCount
                 maxLength={100}
                 rows={4}
                 className="mb-2"
-                name="question"
+                name={"question"}
                 id="question"
-               
-              ></TextArea>
+              ></TextArea> */}
               Back
               <TextArea
                 showCount
@@ -85,10 +91,9 @@ const FlashCardModal = (props: any) => {
                 className="mb-2"
                 name="answer"
                 id="answer"
-               
               ></TextArea>
             </div>
-            </Form>
+          </Form>
         )}
       </div>
     </Modal>
