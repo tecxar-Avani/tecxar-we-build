@@ -8,7 +8,7 @@ import {
   Table,
   BelongsTo,
 } from "sequelize-typescript";
-import { IFlashCards, ResponseEnumType } from "@/interfaces/flashCards.interface";
+import { IFlashCards} from "@/interfaces/flashCards.interface";
 import VideoBuild from "@/models/videoBuilds.model ";
 import User from "@/models/user.model";
 export type Flash_CardsGroupAttributes = Optional<IFlashCards, "id">;
@@ -39,8 +39,6 @@ export default class FlashCards
   @Column(DataType.TEXT)
   public answer: string;
 
-  @Column(DataType.ENUM("good", "hard", "easy", "again"))
-  public response: ResponseEnumType;
 
   @ForeignKey(() => User)
   @Column(DataType.INTEGER)
