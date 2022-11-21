@@ -7,7 +7,6 @@ import { Card, CardImg, Col, Row } from "react-bootstrap";
 // }
 
 const VideoCard = (props: any) => {
-  console.log("$$$$$$$$$$$$",props.VideoCardData.videoUrl)
   return (
 
     // <Card className="p-0 border-0 rounded-0 mx-2">
