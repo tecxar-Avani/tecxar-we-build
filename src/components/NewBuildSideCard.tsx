@@ -1,13 +1,10 @@
-import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { Image } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Overlay from "react-bootstrap/Overlay";
 import CustomButton from "./Button";
-import VideoCard from "./VideoCard";
-import { MenuProps, Tooltip } from "antd";
-import { Dropdown, Space, Typography } from "antd";
-import { Input, Modal } from "antd";
+import { Tooltip } from "antd";
+import { Input } from "antd";
 import AwarenessModal from "./AwarenessModal";
 
 const NewBuildSideCard = (props: any) => {
@@ -18,7 +15,6 @@ const NewBuildSideCard = (props: any) => {
   const [type, setType] = useState(false);
   const typeVideo = useRef(null);
   const [awarenessModal, setAwarenessModal] = useState(false);
-
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
@@ -39,13 +35,7 @@ const NewBuildSideCard = (props: any) => {
   };
 
   const { TextArea } = Input;
-  const videosData = [
-    {
-      id: "1",
-      title: "",
-      videoUrl: "img/RectangleVideoImg.png",
-    },
-  ];
+
   const awarenessModalData = {
     title: ["hello"],
     footer: ["save", "Reveal answer", "Delete"],
@@ -54,14 +44,15 @@ const NewBuildSideCard = (props: any) => {
   return (
     <>
       <div>
-        {videosData.length > 0 &&
-          videosData.map((videoData, index) => (
-            <div className="videoProfile" key={index}>
-              <Link href="/newBuild">
-                <VideoCard VideoCardData={videoData} />
-              </Link>
-            </div>
-          ))}
+        <div className="videoProfile">
+          <iframe
+            width="100%"
+            height="215"
+            src={`//www.youtube.com/embed/${props.id}?autoplay=1&mute=1`}
+            name="youtube embed"
+            allow="autoplay; encrypted-media"
+          ></iframe>
+        </div>
         <TextArea
           placeholder="What is Video About?"
           autoSize={{ minRows: 3, maxRows: 5 }}

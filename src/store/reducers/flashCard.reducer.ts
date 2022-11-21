@@ -16,47 +16,54 @@ type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
 
-export const addFlashCard = createAsyncThunk(`flashcard/add`, async (createFlashCardData: IFlashCard, { dispatch }) => {
-    const { status, data } = await flashCardService.addFlashCard(createFlashCardData); 
-   // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
-   return { status, data };
+export const addFlashCard = createAsyncThunk(
+  `flashcard/add`,
+  async (createFlashCardData: IFlashCard, { dispatch }) => {
+    const { status, data } = await flashCardService.addFlashCard(
+      createFlashCardData
+    );
+    // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
+    return { status, data };
+  }
+);
 
-});
-
-export const getFlashCard = createAsyncThunk(`flashcard/get`,async (getFlashCardData:IFlashCard,{dispatch}) =>{
-  const { data } = await flashCardService.FlashCardList(getFlashCardData); 
-  //dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
-  return { status: data.status, rows: data };
-});
-
+export const getFlashCard = createAsyncThunk(
+  `flashcard/get`,
+  async (getFlashCardData: IFlashCard, { dispatch }) => {
+    const { data } = await flashCardService.FlashCardList(getFlashCardData);
+    //dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
+    return { status: data.status, rows: data };
+  }
+);
 
 interface State {
-    id: number;
-    flashCard: IFlashCard;
-    loading: boolean;
-    error: string | undefined;
-    flashCardList: IFlashCardRowsCountResponse;
-  
+  id: number;
+  flashCard: IFlashCard;
+  loading: boolean;
+  error: string | undefined;
+  flashCardList: IFlashCardRowsCountResponse;
 }
 
 const initialState: State = {
-    flashCard : {
+  flashCard: {
     question: "",
     answer: "",
   },
   flashCardList: {
     status: true,
-    rows: []
-    },
+    rows: [],
+  },
   loading: false,
   error: undefined,
   id: 0,
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
-  action.type.startsWith(flashCardSlice.name) && action.type.endsWith("/pending");
+  action.type.startsWith(flashCardSlice.name) &&
+  action.type.endsWith("/pending");
 const isRejectedAction = (action: AnyAction): action is RejectedAction =>
-  action.type.startsWith(flashCardSlice.name) && action.type.endsWith("/rejected");
+  action.type.startsWith(flashCardSlice.name) &&
+  action.type.endsWith("/rejected");
 
 const flashCardSlice = createSlice({
   name: "flashCard",
@@ -74,9 +81,9 @@ const flashCardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(addFlashCard.fulfilled, (state, action) => {
+      .addCase(addFlashCard.fulfilled, (state, action) => {
         if (action.payload.data.status === true) {
-          Router.push('/build');
+          Router.push("/build");
           toast.success(action.payload.data.message);
           return { ...state, loading: false };
         } else {
@@ -109,6 +116,5 @@ const flashCardSlice = createSlice({
 
 export const flashCardReducer = flashCardSlice.reducer;
 export const flashCardSelector = (state: RootState) => state.flashCards;
-export const { updateFlashCardData, flashCardData, flashCard } = flashCardSlice.actions;
-
-
+export const { updateFlashCardData, flashCardData, flashCard } =
+  flashCardSlice.actions;
