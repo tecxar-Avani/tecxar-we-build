@@ -120,7 +120,7 @@ export class BuildController {
           description: item.snippet.description,
           title: item.snippet.title,
           publishedAt: item.snippet.publishedAt,
-          test: video.substring(video.indexOf("vi/")[0]),
+          test: video.substring(video.indexOf("vi/")+1),
           url: `https://www.youtube.com/embed/${item.id.videoId}`,
         };
         return data;
