@@ -12,7 +12,6 @@ import {
 } from "../store/reducers/flashCard.reducer";
 import { IFlashCard } from "../../@types/common";
 
-const { Search } = Input;
 
 const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
@@ -21,7 +20,7 @@ const FlashCardModal = (props: any) => {
   const [back, setBack] = useState("");
 
   const [form] = Form.useForm();
-  console.log("@@@@@@@@@@@@@@@@@@",flashCardData)
+
   // const onFinish = (value: IFlashCard) => {
   //   //dispatch(addFlashCard(data));
   //   console.log("#################", value);
