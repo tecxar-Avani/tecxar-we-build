@@ -94,18 +94,20 @@ export class BuildController {
   async getUsersBuildByUrl(
     @Req() req: Request | any,
     @Res() res: Response,
-    // @Body() url: any,
     @QueryParam("url") url: string
+    // @Body()url:any
   ) {
     try {
+      console.log("DDDDDDDDDDD", url);
       const videoUrl = url;
       const youtube = google.youtube({
         version: "v3",
+        // part:"contentDetails",
         auth: config.youtubeApiKey,
       });
       const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl);
       const response: any = await youtube.search.list({
-        part: ["id, snippet"],
+        part: ["id", "snippet"],
         q:
           userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
       });
@@ -127,7 +129,7 @@ export class BuildController {
         };
         return data;
       });
-      return { data: titles, box: userBuild, status: true };
+      return { data: response, box: userBuild, status: true };
     } catch (error) {
       return {
         error: {
@@ -184,4 +186,3 @@ export class BuildController {
 function ApiTags() {
   throw new Error("Function not implemented.");
 }
-
