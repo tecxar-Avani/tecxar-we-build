@@ -16,14 +16,12 @@ const NewBuildSideCard = (props: any) => {
   const typeVideo = useRef(null);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
-  const [inspiration, setInspiration] = useState(false);
-  const [resistance, setResistance] = useState(false);
-
-
+  const [inspiration, setInspiration] = useState(false)
+  const [resistance, setResistance] = useState(false)
   const Acceptance = () => {
-    setResistance(false);
-    setInspiration(false);
-    setAccept(true);
+    setResistance(false)
+    setInspiration(false)
+    setAccept(true)
   };
   const Inspiration = () => {
     setAccept(false);
@@ -31,10 +29,9 @@ const NewBuildSideCard = (props: any) => {
     setInspiration(true);
   };
   const Resistance = () => {
-    setAccept(false);
-    setInspiration(false);
-    setResistance(true);
-
+    setAccept(false)
+    setInspiration(false)
+    setResistance(true)
   };
 
 
@@ -60,11 +57,7 @@ const NewBuildSideCard = (props: any) => {
             allow="autoplay; encrypted-media"
           ></iframe>
         </div>
-        <TextArea
-          placeholder="What is Video About?"
-          autoSize={{ minRows: 3, maxRows: 5 }}
-          className="py-0 newBuild"
-        />
+
         <hr className="border-dark" />
 
         <div className="mx-4">
@@ -275,12 +268,12 @@ const NewBuildSideCard = (props: any) => {
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
         className={`${accept
-          ? "accptanceModalBG"
-          : inspiration
-            ? "inspirationModalBG"
-            : resistance
-              ? "resistanceModalBG"
-              : ""
+            ? "accptanceModalBG"
+            : inspiration
+              ? "inspirationModalBG"
+              : resistance
+                ? "resistanceModalBG"
+                : ""
           }`}
       />
     </>

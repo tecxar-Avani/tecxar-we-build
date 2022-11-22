@@ -16,8 +16,15 @@ import {
 import { OpenAPI } from "routing-controllers-openapi";
 import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
-import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos/flashcards.dto";
-import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
+import {
+  flashcardsDto,
+  updateflashcardsDto,
+  flashCardResponseDto,
+} from "@/dtos/flashcards.dto";
+import {
+  IFlashCards,
+  IFlashCardsResponse,
+} from "@/interfaces/flashCards.interface";
 
 @Controller("/flashcard")
 //@UseBefore(authMiddleware)
@@ -33,12 +40,12 @@ export class FlashController {
     @Res() res: Response
   ) {
     try {
-      cardData.created_by = req.user.id;
+      //should make build id and created by id dynamic
+      cardData.build_id = 2;
+      cardData.created_by = 5;
       const createCardData: IFlashCards | null =
         await this.flashCardService.createFlashCard(cardData);
-        
       return {
-        
         status: true,
         data: createCardData,
         message: "Flash Card created successfully.",
@@ -78,7 +85,7 @@ export class FlashController {
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCard(@Req() req: Request | any, @Res() res: Response) {
     try {
-      const user = req.user.id;
+      const user = 4;
       const flashBuild = await this.flashCardService.getFlashCard(user);
       return flashBuild;
     } catch (error) {
@@ -139,7 +146,11 @@ export class FlashController {
 
   @Delete("/:id")
   @OpenAPI({ summary: "delete all build of users" })
-  async deleteFlashCardById(@Req() req: Request | any, @Param('id') id: number, @Res() res: Response) {
+  async deleteFlashCardById(
+    @Req() req: Request | any,
+    @Param("id") id: number,
+    @Res() res: Response
+  ) {
     try {
       const flashByDeleteId = await this.flashCardService.deleteFlashCardById(
         id
