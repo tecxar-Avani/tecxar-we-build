@@ -2413,11 +2413,11 @@ const Profile = () => {
               {videosData.length > 0 &&
                 videosData.map((videoData, index) => (
                   <Col md={4} className="videoProfile px-2" key={index}>
-                    <Link href={`/newBuild?id=${videoData.id}`}>
+                    {/* <Link href={`/newBuild?id=${videoData.id}`}>
                       <a>
                         <VideoCard VideoCardData={videoData} />
                       </a>
-                    </Link>
+                    </Link> */}
                   </Col>
                 ))}
             </div>
@@ -2433,11 +2433,11 @@ const Profile = () => {
             {videosData.length > 0 &&
               videosData.map((videoData, index) => (
                 <Col md={4} key={index} className="videoProfile">
-                  <Link href={`/newBuild?id=${videoData.id}`}>
+                  {/* <Link href={`/newBuild?id=${videoData.id}`}>
                     <a>
                       <VideoCard VideoCardData={videoData} />
                     </a>
-                  </Link>
+                  </Link> */}
                 </Col>
               ))}
           </Row>

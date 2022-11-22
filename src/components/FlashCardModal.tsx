@@ -19,7 +19,8 @@ const FlashCardModal = (props: any) => {
   const dispatch = useAppDispatch();
 
   const [form] = Form.useForm();
-  const handleSubmit = (data: IFlashCard) => {
+  const handleSubmit = (data: any) => {
+    console.log("BBBBBBBBBBBBB", data);
     dispatch(addFlashCard(data));
     form.resetFields();
   };
@@ -56,27 +57,27 @@ const FlashCardModal = (props: any) => {
         ) : (
           <Form id="form" form={form} onFinish={handleSubmit}>
             <div className="inputbox">
-              <Form.Item name={"question"}>
-                Front
-                <br></br>
+              <Form.Item name={"question"} label={"Front"}>
+                {/* <span>Front</span> */}
+                {/* <br></br> */}
                 <TextArea
                   showCount
                   maxLength={100}
                   rows={4}
                   className="mb-2"
-                  name={"questions"}
-                  id="question"
+                  // name={"questions"}
+                  // id="question"
                 ></TextArea>
               </Form.Item>
-              <Form.Item name={"answer"}>
-                Back
+              <Form.Item name={"answer"} label={"Back"}>
+                {/* <span>Back</span> */}
                 <TextArea
                   showCount
                   maxLength={100}
                   rows={4}
                   className="mb-2"
-                  name="answers"
-                  id="answer"
+                  // name="answers"
+                  // id="answer"
                 ></TextArea>
               </Form.Item>
             </div>

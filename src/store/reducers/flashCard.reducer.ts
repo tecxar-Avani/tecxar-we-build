@@ -83,7 +83,7 @@ const flashCardSlice = createSlice({
     builder
       .addCase(addFlashCard.fulfilled, (state, action) => {
         if (action.payload.data.status === true) {
-          Router.push("/build");
+          // Router.push("/build");
           toast.success(action.payload.data.message);
           return { ...state, loading: false };
         } else {
