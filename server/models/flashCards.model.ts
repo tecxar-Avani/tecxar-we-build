@@ -38,7 +38,6 @@ export default class FlashCards
   @Column(DataType.TEXT)
   public answer: string;
 
-
   @ForeignKey(() => User)
   @Column(DataType.INTEGER)
   public created_by: number;

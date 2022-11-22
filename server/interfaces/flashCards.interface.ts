@@ -1,16 +1,18 @@
+import User from "@/models/user.model";
+
 export enum ResponseEnumType {
   again = "again",
   good = "good",
   hard = "hard",
-  easy='easy'
+  easy = 'easy'
 };
 
-export interface IFlashCardsResponse{
-  id?:number;
-  response_type?:ResponseEnumType;
-  flash_card_id:number;
-  created_by?:number;
-  createdAt?:Date
+export interface IFlashCardsResponse {
+  id?: number;
+  response_type?: ResponseEnumType;
+  flash_card_id: number;
+  created_by?: number;
+  createdAt?: Date
 }
 
 export interface IFlashCards {
@@ -19,7 +21,7 @@ export interface IFlashCards {
   question: string;
   answer: string;
   created_by?: number;
-  updated_by?:number;
+  updated_by?: number;
   updatedAt?: Date;
 }
 

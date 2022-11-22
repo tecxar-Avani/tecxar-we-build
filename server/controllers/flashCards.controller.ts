@@ -16,7 +16,7 @@ import { OpenAPI } from "routing-controllers-openapi";
 import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos/flashcards.dto";
-import { IFlashCards, IFlashCardsResponse  } from "@/interfaces/flashCards.interface";
+import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 import { google } from "googleapis";
 import config from "@/configs";
 
@@ -91,12 +91,11 @@ export class FlashController {
     }
   }
 
-  
   @Get("/flashcardresponse")
   @OpenAPI({ summary: "Get all build of users" })
-  async getFlashCardResponse(@Req() req: Request | any ,@Res() res: Response) {
+  async getFlashCardResponse(@Req() req: Request | any, @Res() res: Response) {
     try {
-       const userId = req.user.id;
+      const userId = req.user.id;
       const flashBuild = await this.flashCardService.getFlashCardResponse(userId);
       return flashBuild;
     } catch (error) {
@@ -108,6 +107,25 @@ export class FlashController {
       };
     }
   }
+
+  @Get("/flashcardbybuild/:id")
+  @OpenAPI({ summary: "Get all build of users" })
+  async getFlashCardByBuildId(@Req() req: Request | any,@Param('id') id:number, @Res() res: Response) {
+    try {
+      const flashBuild = await this.flashCardService.getFlashCardByBuildId(id);
+      let arr = Object.assign(flashBuild)
+      console.log(arr)
+      return flashBuild;
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
 
   @Get("/:id")
   @OpenAPI({ summary: "Get all build of users" })
