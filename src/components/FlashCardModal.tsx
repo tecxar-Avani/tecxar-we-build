@@ -11,6 +11,8 @@ import {
 } from "../store/reducers/flashCard.reducer";
 import { IFlashCard } from "../../@types/common";
 
+
+
 const { Search } = Input;
 const { TextArea } = Input;
 
@@ -21,6 +23,7 @@ const FlashCardModal = (props: any) => {
   const [form] = Form.useForm();
   const handleSubmit = (data: IFlashCard) => {
     dispatch(addFlashCard(data));
+    form.resetFields();
   };
 
   return (
@@ -49,7 +52,7 @@ const FlashCardModal = (props: any) => {
         })
       }
     >
-      <div className="py-4">
+      <div className="">
         {props.flashCard.content || (
           <Form
             id="form"

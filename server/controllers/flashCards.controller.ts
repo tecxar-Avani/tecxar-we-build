@@ -20,7 +20,7 @@ import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 
 @Controller("/flashcard")
-@UseBefore(authMiddleware)
+//@UseBefore(authMiddleware)
 export class FlashController {
   private flashCardService = new FlashCardService();
 
@@ -36,7 +36,7 @@ export class FlashController {
       cardData.created_by = req.user.id;
       const createCardData: IFlashCards | null =
         await this.flashCardService.createFlashCard(cardData);
-        console.log("AAAAAAAAAAAAAAAAAAA",createCardData)
+        
       return {
         
         status: true,
