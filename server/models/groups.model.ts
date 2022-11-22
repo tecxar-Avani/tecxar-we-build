@@ -10,6 +10,8 @@ export type GroupAttributes = Optional<IGroups, "id">;
 
 @Table({
   tableName: "groups",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
   timestamps: true,
 })
 export default class Groups
@@ -23,8 +25,8 @@ export default class Groups
   public title: string;
 
   @Column(DataType.DATE)
-  public created_at!: Date;
+  public readonly createdAt!: Date;
 
   @Column(DataType.DATE)
-  public updated_at!: Date;
+  public readonly updatedAt!: Date;
 }

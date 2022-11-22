@@ -13,8 +13,7 @@ import Group from "@/models/groups.model";
 import FlashCards from "@/models/flashCards.model";
 import BoxGroups from "@/models/boxGroups.model";
 import BoxReviews from "@/models/boxReviews.model";
-
-
+import FlashCardsResponse from '@/models/flashCardsResponse.model';
 const { host, user, password, database, pool, port }: dbConfig = config.db;
 
 const sequelize = new Sequelize(database, user, password, {
@@ -83,6 +82,7 @@ const DB = {
   boxGroups:BoxGroups,
   flashCards:FlashCards,
   boxReviews:BoxReviews,
+  flashCardsResponse:FlashCardsResponse,
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };

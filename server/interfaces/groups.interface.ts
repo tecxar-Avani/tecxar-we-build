@@ -4,4 +4,9 @@ export interface IGroups {
   created_at?: Date;
   updated_at?: Date;
 }
+export interface IUpdateGroups {
+  id?: number;
+  title?: string;
+  updated_at?: Date;
+}
   

@@ -33,4 +33,12 @@ export interface envConfig {
     clientSecret: string;
     callbackUrl: string;
   };
+  apiKey: string;
+  apiKeyUser: string;
+  youtubeApiKey:string;
+  jwt: {
+    secret: string;
+    expiry: number;
+  };
+  urlHost: string;
 }

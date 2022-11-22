@@ -11,5 +11,13 @@ export interface IBoxReviews {
   review_type: ReviewTypeEnumType;
   comment: string;
   created_by: number;
-  created_at: Date;
+  createdAt?: Date;
+}
+
+export interface IUpdateBoxReviews {
+  id?: number;
+  box_id?: number;
+  review_type?: ReviewTypeEnumType;
+  comment?: string;
+  created_by?: number;
 }

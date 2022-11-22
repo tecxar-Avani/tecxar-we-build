@@ -1,7 +1,10 @@
-import { Response, NextFunction } from 'express';
-import { ExpressMiddlewareInterface, UnauthorizedError } from 'routing-controllers';
-import passport from 'passport';
-import { googleStrategy } from 'configs/passport';
+import { Response, NextFunction, Request } from "express";
+import {
+  ExpressMiddlewareInterface,
+  UnauthorizedError,
+} from "routing-controllers";
+import passport from "passport";
+import { googleStrategy } from "configs/passport";
 
 export class Authenticate implements ExpressMiddlewareInterface {
   use(req: Request, res: Response, next: NextFunction): any {
@@ -16,7 +19,13 @@ export class Authenticate implements ExpressMiddlewareInterface {
 }
 
 export class GoogleAuthentication implements ExpressMiddlewareInterface {
-  authenticate = (callback: any) => passport.authenticate('google', { failureRedirect: '/google_fail', session: false }, callback);
+
+  authenticate = (callback: any) =>
+    passport.authenticate(
+      "google",
+      { failureRedirect: "/google_fail", session: false },
+      callback
+    );
 
   use(req: Request | any, res: Response, next: NextFunction): any {
     return this.authenticate((err: any, user: any, info: any) => {
@@ -29,3 +38,4 @@ export class GoogleAuthentication implements ExpressMiddlewareInterface {
     })(req, res, next);
   }
 }
+

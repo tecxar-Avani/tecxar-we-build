@@ -8,13 +8,15 @@ import {
   Table,
   BelongsTo,
 } from "sequelize-typescript";
-import { IFlashCards, ResponseEnumType } from "@/interfaces/flashCards.interface";
+import { IFlashCards} from "@/interfaces/flashCards.interface";
 import VideoBuild from "@/models/videoBuilds.model ";
 import User from "@/models/user.model";
 export type Flash_CardsGroupAttributes = Optional<IFlashCards, "id">;
 
 @Table({
   tableName: "flash_cards",
+  createdAt: "createdAt",
+  updatedAt:"updatedAt",
   timestamps: true,
 })
 export default class FlashCards
@@ -37,18 +39,16 @@ export default class FlashCards
   @Column(DataType.TEXT)
   public answer: string;
 
-  @Column(DataType.ENUM("good", "hard", "easy", "again"))
-  public response: ResponseEnumType;
 
   @ForeignKey(() => User)
   @Column(DataType.INTEGER)
   public created_by: number;
   @BelongsTo(() => User)
   public created_by_user: User;
-  
-  @Column(DataType.DATE)
-  public created_at: Date;
 
   @Column(DataType.DATE)
-  public updated_at: Date;
+  public readonly createdAt!: Date;
+
+  @Column(DataType.DATE)
+  public readonly updatedAt!: Date;
 }

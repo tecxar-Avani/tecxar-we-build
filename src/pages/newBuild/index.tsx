@@ -12,27 +12,22 @@ import NewBuildSideCard from "@/components/NewBuildSideCard";
 import NewBuildBoxes from "@/components/NewBuildBoxes";
 import FlashCardModal from "@/components/FlashCardModal";
 import AwarenessModal from "@/components/AwarenessModal";
+import { Router, useRouter } from "next/router";
 
 const NewBuild = () => {
+  const router = useRouter();
+  console.log(" routerrouterrouterrouterv", router.query.id);
   const [modal2Open, setModal2Open] = useState(false);
   const [modal1Open, setModal1Open] = useState(false);
   const BoxSize = 3;
   const { TextArea } = Input;
   const flashCardModalData = {
-    // title:["hello"],
-    headerIcon: ["deleteFlash.svg", "edit.svg"],
-    footer: ["save", "Reveal answer", "Delete"],
-    textbox: [
-      { header: "Front", box: "" },
-      { header: "Back", box: "" },
-    ],
+    footer: ["save"],
   };
   const awarenessModalData = {
     title: ["hello"],
     footer: ["save", "Reveal answer", "Delete"],
-    textbox: [
-      { header: "Back", box: "" },
-    ],
+    textbox: [{ header: "Back", box: "" }],
   };
   const BoxData = [
     {
@@ -150,7 +145,7 @@ const NewBuild = () => {
   return (
     <>
       <div className="d-flex m-0 w-100">
-        <NewBuildSideCard />
+        <NewBuildSideCard id={router.query.id} />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
             const currentSize = index * BoxSize;
@@ -169,7 +164,7 @@ const NewBuild = () => {
               );
             }
           })}
-          <div className="position-absolute mkCard me-1">
+          <div className="position-absolute mkCard">
             <Image
               alt="flashCards"
               src="../../../img/mkCard.png"
@@ -178,7 +173,7 @@ const NewBuild = () => {
               }}
             />
           </div>
-          <div className="position-absolute bottom-0 end-0 flash mb-1 me-2">
+          <div className="position-absolute flash">
             <Image
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"

@@ -1,11 +1,14 @@
 // ** Redux Imports
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 // ** Reducers Imports
-
-// import { planReducer } from './plan';
+import { buildReducer } from "./build.reducer";
+import { flashCardReducer } from "./flashCard.reducer";
+import { videoCardReducer } from "./videoCard.reducer";
 
 const rootReducer = combineReducers({
- 
+  builds: buildReducer,
+  flashCards: flashCardReducer,
+  VideoCards: videoCardReducer,
 });
 
 export default rootReducer;

@@ -16,6 +16,8 @@ export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 @Table({
   tableName: "video_builds",
   timestamps: true,
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
 })
 export default class VideoBuilds
   extends Model<IVideoBuild, VideoBuildAttributes>
@@ -55,8 +57,8 @@ export default class VideoBuilds
   public updated_by_user: User;
 
   @Column(DataType.DATE)
-  public created_at!: Date;
+  public readonly createdAt!: Date;
 
   @Column(DataType.DATE)
-  public updated_at!: Date;
+  public readonly updatedAt!: Date;
 }
