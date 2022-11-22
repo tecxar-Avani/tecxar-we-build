@@ -4,10 +4,11 @@ import { IsOptional, IsNumber, IsString, IsDate } from 'class-validator';
 export class flashcardsDto implements IFlashCards {
   @IsOptional()
   @IsNumber()
-  id: number;
+  id?: number;
 
+  @IsOptional()
   @IsNumber()
-  build_id: number;
+  build_id?: number;
 
   @IsString()
   question: string;
@@ -17,10 +18,11 @@ export class flashcardsDto implements IFlashCards {
 
   @IsOptional()
   @IsNumber()
-  created_by: number;
+  created_by?: number;
 
+  @IsOptional()
   @IsDate()
-  updated_at: Date;
+  updated_at?: Date;
 }
 
 export class updateflashcardsDto implements IUpdateFlashCards {
