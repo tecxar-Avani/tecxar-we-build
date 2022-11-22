@@ -35,14 +35,13 @@ const WeBuildApp = ({
   console.log("router", Router?.router?.state?.route);
   console.log("pageProps", pageProps);
   return (
-   
     <Provider store={store}>
       <Layout className="h-full">
         {Router?.router?.state?.route != "/newBuild" && <SideBar />}
 
         <Layout className="site-layout">
           <div className="mainPage">
-            <Component {...pageProps} />
+            <Component {...pageProps} router={router} />
           </div>
         </Layout>
       </Layout>

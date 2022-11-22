@@ -12,11 +12,11 @@ import NewBuildSideCard from "@/components/NewBuildSideCard";
 import NewBuildBoxes from "@/components/NewBuildBoxes";
 import FlashCardModal from "@/components/FlashCardModal";
 import AwarenessModal from "@/components/AwarenessModal";
-
-
-
+import { Router, useRouter } from "next/router";
 
 const NewBuild = () => {
+  const router = useRouter();
+  console.log(" routerrouterrouterrouterv", router.query.id);
   const [modal2Open, setModal2Open] = useState(false);
   const [modal1Open, setModal1Open] = useState(false);
   const BoxSize = 3;
@@ -27,9 +27,7 @@ const NewBuild = () => {
   const awarenessModalData = {
     title: ["hello"],
     footer: ["save", "Reveal answer", "Delete"],
-    textbox: [
-      { header: "Back", box: "" },
-    ],
+    textbox: [{ header: "Back", box: "" }],
   };
   const BoxData = [
     {
@@ -147,7 +145,7 @@ const NewBuild = () => {
   return (
     <>
       <div className="d-flex m-0 w-100">
-        <NewBuildSideCard />
+        <NewBuildSideCard id={router.query.id} />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
             const currentSize = index * BoxSize;
