@@ -33,6 +33,7 @@ export class FlashController {
     @Res() res: Response
   ) {
     try {
+      console.log("@@@@@@@@@@@@@@@@@@@@@@",cardData)
       cardData.created_by = req.user.id;
       const createCardData: IFlashCards | null =
         await this.flashCardService.createFlashCard(cardData);
@@ -44,6 +45,7 @@ export class FlashController {
         message: "Flash Card created successfully.",
       };
     } catch (error) {
+      console.log("DDDDDDDDDDDDDDDD",error)
       if (error instanceof Error) {
         return { error: { code: 500, message: error.message } };
       }

@@ -11,8 +11,6 @@ import {
 } from "../store/reducers/flashCard.reducer";
 import { IFlashCard } from "../../@types/common";
 
-
-
 const { Search } = Input;
 const { TextArea } = Input;
 
@@ -46,43 +44,41 @@ const FlashCardModal = (props: any) => {
         props.flashCard.footer.map((btn: any) => {
           return (
             <Button form="form" key="submit" htmlType="submit">
-              Submit
+              {btn}
             </Button>
           );
         })
       }
     >
       <div className="">
-        {props.flashCard.content || (
-          <Form
-            id="form"
-            form={form}
-            onFinish={handleSubmit}
-          >
+        {props.flashCard.content ? (
+          <div className="p-4">{props.flashCard.content}</div>
+        ) : (
+          <Form id="form" form={form} onFinish={handleSubmit}>
             <div className="inputbox">
               <Form.Item name={"question"}>
                 Front
-             <br></br>
-              <TextArea
-                showCount
-                maxLength={100}
-                rows={4}
-                className="mb-2"
-                name={"questions"}
-                id="question"
-              ></TextArea>
-               </Form.Item>
-               <Form.Item  name={"answer"}>
-               Back
-              <TextArea
-                showCount
-                maxLength={100}
-                rows={4}
-                className="mb-2"
-                name="answers"
-                id="answer"
-              ></TextArea>
-               </Form.Item>
+                <br></br>
+                <TextArea
+                  showCount
+                  maxLength={100}
+                  rows={4}
+                  className="mb-2"
+                  name={"questions"}
+                  id="question"
+                ></TextArea>
+              </Form.Item>
+              <Form.Item name={"answer"}>
+                Back
+                <TextArea
+                  showCount
+                  maxLength={100}
+                  rows={4}
+                  className="mb-2"
+                  name="answers"
+                  id="answer"
+                ></TextArea>
+              </Form.Item>
             </div>
           </Form>
         )}

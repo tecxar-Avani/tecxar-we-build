@@ -200,8 +200,7 @@ const NewBuildSideCard = (props: any) => {
                 <button className="high-btn">Medium</button>
                 <br></br>
                 <button className="high-btn">High</button>
-                <button className="high-btn3">Very High</button>
-              </div>
+                <button className="high-btn3">Very High</button></div>
             )}
           </Overlay>
         </div>

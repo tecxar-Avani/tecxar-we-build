@@ -13,6 +13,7 @@ import NewBuildBoxes from "@/components/NewBuildBoxes";
 import FlashCardModal from "@/components/FlashCardModal";
 import AwarenessModal from "@/components/AwarenessModal";
 import { Router, useRouter } from "next/router";
+import { Content } from "antd/lib/layout/layout";
 
 const NewBuild = () => {
   const router = useRouter();
@@ -24,6 +25,10 @@ const NewBuild = () => {
   const flashCardModalData = {
     footer: ["save"],
   };
+  const flashCardModalData2={
+    content:"question",
+    footer:["Reveal Answer"],
+  }
   const awarenessModalData = {
     title: ["hello"],
     footer: ["save", "Reveal answer", "Delete"],
@@ -169,7 +174,7 @@ const NewBuild = () => {
               alt="flashCards"
               src="../../../img/mkCard.png"
               onClick={() => {
-                setModal2Open(true);
+                setModal1Open(true);
               }}
             />
           </div>
@@ -189,6 +194,12 @@ const NewBuild = () => {
         flashCard={flashCardModalData}
         setModal2Open={setModal2Open}
         visible={modal2Open}
+      />
+      <FlashCardModal
+      modal2Open={modal1Open}
+      flashCard={flashCardModalData2}
+      setModal2Open={setModal1Open}
+      visible={modal1Open}
       />
     </>
   );
