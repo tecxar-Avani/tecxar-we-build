@@ -16,12 +16,12 @@ const NewBuildSideCard = (props: any) => {
   const typeVideo = useRef(null);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
-  const [inspiration, setInspiration] = useState(false);
-  const [resistance, setResistance] = useState(false);
+  const [inspiration, setInspiration] = useState(false)
+  const [resistance, setResistance] = useState(false)
   const Acceptance = () => {
-    setResistance(false);
-    setInspiration(false);
-    setAccept(true);
+    setResistance(false)
+    setInspiration(false)
+    setAccept(true)
   };
   const Inspiration = () => {
     setAccept(false);
@@ -29,9 +29,9 @@ const NewBuildSideCard = (props: any) => {
     setInspiration(true);
   };
   const Resistance = () => {
-    setAccept(false);
-    setInspiration(false);
-    setResistance(true);
+    setAccept(false)
+    setInspiration(false)
+    setResistance(true)
   };
 
   const { TextArea } = Input;
@@ -41,6 +41,7 @@ const NewBuildSideCard = (props: any) => {
     footer: ["save", "Reveal answer", "Delete"],
     textbox: [{ header: "Back", box: "" }],
   };
+
   return (
     <>
       <div>
@@ -205,14 +206,20 @@ const NewBuildSideCard = (props: any) => {
           </Overlay>
         </div>
 
-        <hr className="border-dark mb-3  " />
+        <hr className="border-dark  ms-2  " />
         <div className="d-flex owd bd-highlight">
+
           <Tooltip
             placement="topLeft"
-            title="Please make an account to save your build - dont let all your hard work go to waste!Login via Google"
+            title={<><div className="d-flex  ">
+              <Image src="../img/bulb.png" className="mx-n2 ms-2 pe-2" /> Please make an account to save your build - don't let all your hard work go to waste!
+              Login via Google</div></>}
             arrowPointAtCenter
             color="#FAEFAF"
+
+
           >
+
             <div className="save bd-highlight  ">
               <Image src="../img/save.svg" className="ms-2" />
             </div>

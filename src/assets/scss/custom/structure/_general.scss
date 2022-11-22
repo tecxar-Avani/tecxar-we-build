@@ -695,20 +695,22 @@ textarea.ant-input {
 .inspirationButton {
   background-color: #7D1597;
   transform: translate(9%, 350%);
-  color: #F8F8F8;
-
+  color: #F8F8F8; ;
 }
 
 .resistanceButton {
   background-color: #D91919;
-  transform: translate(105%, -110%);
-  color: #F8F8F8;
+  // transform: translate(105%, -11%);
+  transform: translate(115%, -45%);
+  color: #F8F8F8; ;
+  
 }
 
 .acceptanceButton {
   background-color: #1235AE;
   transform: translate(170%, -446%);
-  color: #F8F8F8;
+  color: #F8F8F8; ; 
+  
 }
 
 .inspirationButton:hover {
@@ -719,6 +721,14 @@ textarea.ant-input {
 .acceptanceButton:hover {
   background-color: #1235AE;
   color: #F8F8F8;
+}
+.ant-tooltip-inner{
+  color: black;
+
+}
+  
+.blue{
+  margin-left: -1px;
 }
 
 .resistanceButton:hover {
@@ -777,6 +787,14 @@ textarea.ant-input {
   .ant-modal-header {
     background-color: #E0C0EB;
   }
+.redpolygon{
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color: #D91919;
+  width: 298.04px;
+  height: 84.54px;
+  margin-top: -123px;
+  margin-left: 13px;
+}
 
   textarea.ant-input {
     border-radius: 5px;
