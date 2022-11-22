@@ -1,6 +1,7 @@
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
-import { Col, Form } from "react-bootstrap";
+import { Col } from "react-bootstrap";
+import { Form } from "antd";
 
 // interface IVideosCard {
 //   VideoCardData: any;
@@ -8,6 +9,8 @@ import { Col, Form } from "react-bootstrap";
 const numOfFields = 3;
 
 const OuterBox = (props: any) => {
+  const [form] = Form.useForm();
+
   const handleChange = (event: any) => {
     let textData = event.target.value;
     if (textData.length > 100) {
@@ -24,13 +27,12 @@ const OuterBox = (props: any) => {
     if (value.length >= maxLength) {
       const nextSibling = parseInt(id) + 1;
       if (nextSibling == null) {
-        
+     
         return (
           <>
             <Form
               name="formTwo"
-              className="textBoxInner"
-              style={{ display: "none" }}
+              className="textBoxInnerNone"
             >
               <TextArea
                 name={`message${props.id}`}
@@ -48,8 +50,7 @@ const OuterBox = (props: any) => {
       } else {
         <Form
           name="formTwo"
-          className="textBoxInner"
-          style={{ display: "block" }}
+          className="textBoxInnerBlock"
         >
           <TextArea
             name={`message${props.id}`}
@@ -69,7 +70,7 @@ const OuterBox = (props: any) => {
   return (
     <Col sm={4} className="p-0">
       <div className="innerBoxs p-3 w-100">
-        <Form name="formTwo" className="textBoxInner">
+        <Form form={form} name="formTwo" className="textBoxInner">
           <div className="position-relative position-relative-example">
             <TextArea
               name={`message${props.id}`}
@@ -81,7 +82,7 @@ const OuterBox = (props: any) => {
               onChange={chageInput}
               id={props.id}
             />
-            <span className="position-absolute bg-primary px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle">
+            {/* <span className="position-absolute bg-primary px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle">
               I
             </span>
             <span className="position-absolute bg-primary px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle">
@@ -89,7 +90,7 @@ const OuterBox = (props: any) => {
             </span>
             <span className="position-absolute bg-primary px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle">
               R
-            </span>
+            </span> */}
           </div>
         </Form>
       </div>

@@ -29,121 +29,87 @@ const NewBuild = () => {
     content:"question",
     footer:["Reveal Answer"],
   }
-  const awarenessModalData = {
-    title: ["hello"],
-    footer: ["save", "Reveal answer", "Delete"],
-    textbox: [{ header: "Back", box: "" }],
-  };
-  const BoxData = [
-    {
-      data: "1",
-    },
-    {
-      data: "1",
-    },
-  ];
-  const outBoxData = [
-    {
-      outer: "1",
-    },
-    {
-      outer: "1",
-    },
-    {
-      outer: "1",
-    },
-  ];
-  const inBoxData = [
-    {
-      inner: "1",
-    },
-  ];
-  const ractangleData = [
-    {
-      ractBox: "1",
-    },
-  ];
   const num = [
     {
       id: 1,
       message: "Testing Data 1",
     },
-    {
-      id: 2,
-      message: "",
-    },
-    {
-      id: 3,
-      message: "Testing Data 3",
-    },
-    {
-      id: 4,
-      message: "Testing Data 4",
-    },
-    {
-      id: 5,
-      message: "Testing Data 5",
-    },
-    {
-      id: 6,
-      message: "Testing Data 6",
-    },
-    {
-      id: 7,
-      message: "Testing Data 7",
-    },
-    {
-      id: 8,
-      message: "Testing Data 8",
-    },
-    {
-      id: 9,
-      message: "Testing Data 9",
-    },
-    {
-      id: 10,
-      message: "Testing Data 10",
-    },
-    {
-      id: 11,
-      message: "Testing Data 11",
-    },
-    {
-      id: 12,
-      message: "Testing Data 12",
-    },
-    {
-      id: 13,
-      message: "Testing Data 13",
-    },
-    {
-      id: 14,
-      message: "Testing Data 14",
-    },
-    {
-      id: 15,
-      message: "Testing Data 15",
-    },
-    {
-      id: 16,
-      message: "Testing Data 16",
-    },
-    {
-      id: 17,
-      message: "Testing Data 17",
-    },
-    {
-      id: 18,
-      message: "Testing Data 18",
-    },
-    {
-      id: 19,
-      message: "Testing Data 19",
-    },
-    {
-      id: 20,
-      message: "Testing Data 20",
-    },
+    // {
+    //   id: 2,
+    //  message:"",
+    // },
+    // {
+    //   id: 3,
+    //   message: "",
+    // },
+    // {
+    //   id: 4,
+    //   message: "",
+    // },
+    // {
+    //   id: 5,
+    //   message: "",
+    // },
+    // {
+    //   id: 6,
+    //   message: "",
+    // },
+    // {
+    //   id: 7,
+    //   message: "",
+    // },
+    // {
+    //   id: 8,
+    //   message: "",
+    // },
+    // {
+    //   id: 9,
+    //   message: "",
+    // },
+    // {
+    //   id: 10,
+    //   message: "",
+    // },
+    // {
+    //   id: 11,
+    //   message: "",
+    // },
+    // {
+    //   id: 12,
+    //   message: "",
+    // },
+    // {
+    //   id: 13,
+    //   message: "",
+    // },
+    // {
+    //   id: 14,
+    //   message: "",
+    // },
+    // {
+    //   id: 15,
+    //   message: "",
+    // },
+    // {
+    //   id: 16,
+    //   message: "",
+    // },
+    // {
+    //   id: 17,
+    //   message: "",
+    // },
+    // {
+    //   id: 18,
+    //   message: "",
+    // },
+    // {
+    //   id: 19,
+    //   message: "",
+    // },
+    // {
+    //   id: 20,
+    //   message: "",
+    // },
   ];
   let mapdata = Math.ceil(num.length / 3);
 
