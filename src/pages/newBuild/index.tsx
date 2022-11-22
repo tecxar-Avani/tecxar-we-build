@@ -34,82 +34,82 @@ const NewBuild = () => {
       id: 1,
       message: "Testing Data 1",
     },
-    // {
-    //   id: 2,
-    //  message:"",
-    // },
-    // {
-    //   id: 3,
-    //   message: "",
-    // },
-    // {
-    //   id: 4,
-    //   message: "",
-    // },
-    // {
-    //   id: 5,
-    //   message: "",
-    // },
-    // {
-    //   id: 6,
-    //   message: "",
-    // },
-    // {
-    //   id: 7,
-    //   message: "",
-    // },
-    // {
-    //   id: 8,
-    //   message: "",
-    // },
-    // {
-    //   id: 9,
-    //   message: "",
-    // },
-    // {
-    //   id: 10,
-    //   message: "",
-    // },
-    // {
-    //   id: 11,
-    //   message: "",
-    // },
-    // {
-    //   id: 12,
-    //   message: "",
-    // },
-    // {
-    //   id: 13,
-    //   message: "",
-    // },
-    // {
-    //   id: 14,
-    //   message: "",
-    // },
-    // {
-    //   id: 15,
-    //   message: "",
-    // },
-    // {
-    //   id: 16,
-    //   message: "",
-    // },
-    // {
-    //   id: 17,
-    //   message: "",
-    // },
-    // {
-    //   id: 18,
-    //   message: "",
-    // },
-    // {
-    //   id: 19,
-    //   message: "",
-    // },
-    // {
-    //   id: 20,
-    //   message: "",
-    // },
+    {
+      id: 2,
+     message:"",
+    },
+    {
+      id: 3,
+      message: "",
+    },
+    {
+      id: 4,
+      message: "",
+    },
+    {
+      id: 5,
+      message: "",
+    },
+    {
+      id: 6,
+      message: "",
+    },
+    {
+      id: 7,
+      message: "",
+    },
+    {
+      id: 8,
+      message: "",
+    },
+    {
+      id: 9,
+      message: "",
+    },
+    {
+      id: 10,
+      message: "",
+    },
+    {
+      id: 11,
+      message: "",
+    },
+    {
+      id: 12,
+      message: "",
+    },
+    {
+      id: 13,
+      message: "",
+    },
+    {
+      id: 14,
+      message: "",
+    },
+    {
+      id: 15,
+      message: "",
+    },
+    {
+      id: 16,
+      message: "",
+    },
+    {
+      id: 17,
+      message: "",
+    },
+    {
+      id: 18,
+      message: "",
+    },
+    {
+      id: 19,
+      message: "",
+    },
+    {
+      id: 20,
+      message: "",
+    },
   ];
   let mapdata = Math.ceil(num.length / 3);
 
@@ -119,18 +119,24 @@ const NewBuild = () => {
         <NewBuildSideCard id={router.query.id} />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
+              const [arr, setArr] = useState(3);
+
             const currentSize = index * BoxSize;
             const remaningBox = num.length - currentSize;
             const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
             let items;
+
             while (num.length > 0) {
-              items = num.splice(0, 3);
+               items = num.splice(0, );
               return (
                 <NewBuildBoxes
                   setModal1Open={setModal1Open}
                   item={items}
                   numOfBox={finalSize}
                   key={index}
+                  callback={(value: number) => {
+                    setArr(value);
+                  }}
                 />
               );
             }
