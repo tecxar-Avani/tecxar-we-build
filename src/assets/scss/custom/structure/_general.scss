@@ -654,7 +654,8 @@ textarea.ant-input{
 }
 .resistanceButton{
   background-color: #D91919;
-  transform: translate(105%, -110%);
+  // transform: translate(105%, -11%);
+  transform: translate(115%, -45%);
   color: #F8F8F8; ;
   
 }
@@ -682,8 +683,7 @@ textarea.ant-input{
 }
 .ant-tooltip-inner{
   color: black;
-  background-image: url("https://unsplash.com/photos/95YRwf6CNw8");
-  
+
 }
   
 .blue{
@@ -735,6 +735,12 @@ textarea.ant-input{
   margin-top: 0;
 }
 }
-
-
+.redpolygon{
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color: #D91919;
+  width: 298.04px;
+  height: 84.54px;
+  margin-top: -123px;
+  margin-left: 13px;
+}
 

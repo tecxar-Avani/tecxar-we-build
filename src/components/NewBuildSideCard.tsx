@@ -24,6 +24,8 @@ const NewBuildSideCard = (props: any) => {
   const [inspiration, setInspiration] = useState(false)
   const [resistance, setResistance] = useState(false)
   const Acceptance = () => {
+    setResistance(false)
+    setInspiration(false)
     setAccept(true)
   };
   const Inspiration = () => {
@@ -33,7 +35,7 @@ const NewBuildSideCard = (props: any) => {
   };
   const Resistance = () => {
     setAccept(false)
-    setResistance(false)
+    setInspiration(false)
     setResistance(true)
   };
 
@@ -52,8 +54,10 @@ const NewBuildSideCard = (props: any) => {
       { header: "Back", box: "" },
     ],
   };
+
   return (
     <>
+
       <div>
         {videosData.length > 0 &&
           videosData.map((videoData, index) => (
@@ -74,25 +78,29 @@ const NewBuildSideCard = (props: any) => {
           <CustomButton title="Group" className="btn1 px-4 py-3" />
           <CustomButton title="New row" className="btn2  px-4 py-3 ms-3" />
         </div>
-        <hr className="border-dark" />
-        <CustomButton title="Inspiration" className="inspirationButton " />
-        <div>
+        <hr className="border-dark ms-2" />
+
+
+        <CustomButton title="Inspiration" className="inspirationButton" />
+
+        <div className="ms-2">
           <span onClick={() => { setAwarenessModal(true) }}>
             <Image src="../img/polygon 22.png" onClick={Inspiration} /></span>
           <span onClick={() => { setAwarenessModal(true) }}>
-            <Image src="../img/polygon 24.png" onClick={Acceptance} /></span>
-          <div>
+            <Image src="../img/polygon 24.png" onClick={Acceptance} className="blue" /></span>
+
+          <div >
             <CustomButton title="Acceptance" className="acceptanceButton " />
           </div>
         </div>
-        <div className="redtraingle"  >
-          <span onClick={() => { setAwarenessModal(true) }}>
-            <Image src="../img/polygon 23.png" onClick={Resistance} /></span>
+
+        <div className="redpolygon" >
         </div>
+
         <CustomButton title="Resistance" className="resistanceButton" />
 
-        <div className="ms-2">
-          <CustomButton title="Inspiration" className="inspirationButton " />
+        {/* <div className="ms-2"> */}
+        {/* <CustomButton title="Inspiration" className="inspirationButton " />
           <div>
             <Image src="../img/polygon 22.png" />
             <Image src="../img/polygon 24.png" className="blue" />
@@ -104,7 +112,7 @@ const NewBuildSideCard = (props: any) => {
             <Image src="../img/polygon 23.png" />
           </div>
           <CustomButton title="Resistance" className="resistanceButton" />
-        </div>
+        </div> */}
 
         <hr className="border-dark ms-2" />
 
@@ -224,12 +232,18 @@ const NewBuildSideCard = (props: any) => {
 
         <hr className="border-dark  ms-2  " />
         <div className="d-flex owd bd-highlight">
+
           <Tooltip
             placement="topLeft"
-            title="Please make an account to save your build - dont let all your hard work go to waste!Login via Google"
+            title={<><div className="d-flex  ">
+              <Image src="../img/bulb.png" className="mx-n2 ms-2 pe-2" /> Please make an account to save your build - don't let all your hard work go to waste!
+              Login via Google</div></>}
             arrowPointAtCenter
             color="#FAEFAF"
+
+
           >
+
             <div className="save bd-highlight  ">
               <Image src="../img/save.svg" className="ms-2" />
             </div>
