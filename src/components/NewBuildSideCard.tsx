@@ -18,6 +18,8 @@ const NewBuildSideCard = (props: any) => {
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
+
+
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -32,7 +34,11 @@ const NewBuildSideCard = (props: any) => {
     setAccept(false);
     setInspiration(false);
     setResistance(true);
+
   };
+
+
+
 
   const { TextArea } = Input;
 
@@ -66,7 +72,16 @@ const NewBuildSideCard = (props: any) => {
           <CustomButton title="New row" className="btn2  px-4 py-3 ms-2" />
         </div>
         <hr className="border-dark" />
-        <CustomButton title="Inspiration" className="inspirationButton " />
+
+        <span
+          onClick={() => {
+            setAwarenessModal(true);
+          }}
+        >
+          <span onClick={Inspiration} >
+            <CustomButton title="Inspiration" className="inspirationButton " />
+          </span>
+        </span>
         <div>
           <span
             onClick={() => {
@@ -86,20 +101,37 @@ const NewBuildSideCard = (props: any) => {
               className="blue"
             />
           </span>
-          <div>
-            <CustomButton title="Acceptance" className="acceptanceButton" />
+
+          <div onClick={() => {
+            setAwarenessModal(true);
+          }}>
+            <span onClick={Acceptance} >
+              < CustomButton title="Acceptance" className="acceptanceButton" />
+            </span>
           </div>
         </div>
-        <div className="redtraingle">
-          <span
-            onClick={() => {
-              setAwarenessModal(true);
-            }}
-          >
-            <Image src="../img/polygon 23.png" onClick={Resistance} />
+
+        <span
+          onClick={() => {
+            setAwarenessModal(true);
+          }}
+        >
+          <div className="redpolygon" onClick={Resistance} /></span>
+
+        <span
+          onClick={() => {
+            setAwarenessModal(true);
+          }}
+        >
+          <span onClick={Resistance}>
+            <CustomButton title="Resistance" className="resistanceButton" />
           </span>
-        </div>
-        <CustomButton title="Resistance" className="resistanceButton" />
+
+        </span>
+
+
+
+
 
         <hr className="border-dark" />
 
@@ -200,8 +232,7 @@ const NewBuildSideCard = (props: any) => {
                 <button className="high-btn">Medium</button>
                 <br></br>
                 <button className="high-btn">High</button>
-                <button className="high-btn3">Very High</button>
-              </div>
+                <button className="high-btn3">Very High</button></div>
             )}
           </Overlay>
         </div>
