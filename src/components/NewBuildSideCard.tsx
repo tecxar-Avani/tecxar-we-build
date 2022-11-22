@@ -54,11 +54,7 @@ const NewBuildSideCard = (props: any) => {
             allow="autoplay; encrypted-media"
           ></iframe>
         </div>
-        <TextArea
-          placeholder="What is Video About?"
-          autoSize={{ minRows: 3, maxRows: 5 }}
-          className="py-0 newBuild"
-        />
+       
         <hr className="border-dark" />
 
         <div className="mx-4">

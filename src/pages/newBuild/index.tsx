@@ -70,7 +70,7 @@ const NewBuild = () => {
     },
     {
       id: 2,
-      message: "Testing Data 2",
+      message: "",
     },
     {
       id: 3,
