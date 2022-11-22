@@ -7,7 +7,7 @@ import Image from "react-bootstrap/Image";
 import {
   addFlashCard,
   flashCardSelector,
-  updateFlashCardData,
+  getFlashCard,
 } from "../store/reducers/flashCard.reducer";
 import { IFlashCard } from "../../@types/common";
 
@@ -22,7 +22,7 @@ const FlashCardModal = (props: any) => {
   const handleSubmit = (data: any) => {
     console.log("BBBBBBBBBBBBB", data);
     dispatch(addFlashCard(data));
-    form.resetFields();
+    // form.resetFields();
   };
 
   return (

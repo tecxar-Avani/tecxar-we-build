@@ -27,14 +27,11 @@ export const addFlashCard = createAsyncThunk(
   }
 );
 
-export const getFlashCard = createAsyncThunk(
-  `flashcard/get`,
-  async (getFlashCardData: IFlashCard, { dispatch }) => {
-    const { data } = await flashCardService.FlashCardList(getFlashCardData);
-    //dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
-    return { status: data.status, rows: data };
-  }
-);
+export const getFlashCard = createAsyncThunk(`flashcard/get`, async () => {
+  const { data } = await flashCardService.FlashCardList();
+  // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
+  return { status: data.status, rows: data };
+});
 
 interface State {
   id: number;

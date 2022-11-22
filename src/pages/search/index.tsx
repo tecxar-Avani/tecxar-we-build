@@ -19,26 +19,22 @@ const SearchPage = () => {
   const router = useRouter();
   const [url, setUrl] = useState("");
   const dispatch = useAppDispatch();
-  const { buildList} = useAppSelector(buildSelector);
-
-  const videosData :any= [];
-  // {
-  //   subTitle : buildList.rows.map((tit: { description: any; }) => tit.description),
-  //   videoUrl : buildList.rows.map((urll: { thumbnails: { url: any; }; }) => urll.thumbnails.url)
-  //  },
-  buildList.rows && buildList.rows.length > 0 && buildList.rows.map((video:any)=>{
-videosData.push({
-  subTitle:video.description,
-  videoUrl : video.url
-})
-  })
+  const { buildList } = useAppSelector(buildSelector);
+console.log("FFFFFFFFFFFFFFFFFFFFFF",buildList)
+  const videosData: any = [];
+  buildList.rows &&
+    buildList.rows.length > 0 &&
+    buildList.rows.map((video: any) => {
+      videosData.push({
+        subTitle: video.title,
+        videoUrl: video.url,
+      });
+    });
   const searchResult = (url: string) => {
     if (url !== "") {
       dispatch(getBuildByUrl(url));
     }
   };
-  console.log("FFFFFFFFFFFFFF",videosData)
-
   return (
     <>
       <SearchBar searchResult={searchResult} />
@@ -55,9 +51,9 @@ videosData.push({
       )}
       <Row className="Search m-0">
         {videosData.length > 0 &&
-          videosData.map((videoData:any, index:number) => (
+          videosData.map((videoData: any, index: number) => (
             <Col lg={4} className="videoProfile pb-2" key={index}>
-            <Link href="/newBuild">
+              <Link href="/newBuild">
                 <a>
                   <VideoCard VideoCardData={videoData} />
                 </a>

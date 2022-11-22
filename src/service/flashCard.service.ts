@@ -4,8 +4,8 @@ class FlashCardService {
     return API.post(`/flashcard/create`, flashcard);
   }
 
-  FlashCardList(flashcard: any) {
-    return API.get(`/flashcard/get`, flashcard);
+  FlashCardList() {
+    return API.get(`/flashcard`);
   }
 }
 export default new FlashCardService();
