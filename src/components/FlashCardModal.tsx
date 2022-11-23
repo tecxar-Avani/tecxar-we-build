@@ -13,7 +13,6 @@ import { IFlashCard } from "../../@types/common";
 import { Prev } from "react-bootstrap/esm/PageItem";
 
 
-const handleShow = () => { setModal3Open(true) };
 
 
 
@@ -26,6 +25,12 @@ const { TextArea } = Input;
 const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
   const dispatch = useAppDispatch();
+const handleShow = (value:any) => {
+  const data = {
+    content: "answer"
+  };
+  props.responseCallback(data);
+};
 
   const [form] = Form.useForm();
   const handleSubmit = (data: any) => {
@@ -64,7 +69,6 @@ const FlashCardModal = (props: any) => {
         })
       }
     >
-
       <div className="">
         {props.flashCard.content ? (
           <div className="p-4">{props.flashCard.content}</div>
@@ -72,26 +76,18 @@ const FlashCardModal = (props: any) => {
           <Form id="form" form={form} onFinish={handleSubmit}>
             <div className="inputbox">
               <Form.Item name={"question"} label={"Front"}>
-                {/* <span>Front</span> */}
-                {/* <br></br> */}
                 <TextArea
                   showCount
                   maxLength={100}
-                  rows={4}
-                  className="mb-2"
-                // name={"questions"}
-                // id="question"
+                  rows={4}              
                 ></TextArea>
               </Form.Item>
               <Form.Item name={"answer"} label={"Back"}>
-                {/* <span>Back</span> */}
                 <TextArea
                   showCount
                   maxLength={100}
                   rows={4}
                   className="mb-2"
-                // name="answers"
-                // id="answer"
                 ></TextArea>
               </Form.Item>
             </div>

@@ -17,54 +17,22 @@ import { Content } from "antd/lib/layout/layout";
 
 const NewBuild = () => {
   const router = useRouter();
-  console.log(" routerrouterrouterrouterv", router.query.id);
   const [modal2Open, setModal2Open] = useState(false);
   const [modal1Open, setModal1Open] = useState(false);
-  const [modal3Open, setModal3Open] = useState(false);
+  const [modal3Open, setModal3Open] = useState({
+    content: "question",
+    footer: ["Reveal Answer"],
+  });
 
   const BoxSize = 3;
   const { TextArea } = Input;
   const flashCardModalData = {
     footer: ["save"],
   };
-  const flashCardModalData2 = {
-    content: "question",
-    footer: ["Reveal Answer"],
-  }
-  const awarenessModalData = {
-    title: ["hello"],
-    footer: ["save", "Reveal answer", "Delete"],
-    textbox: [{ header: "Back", box: "" }],
-  };
-  const BoxData = [
-    {
-      data: "1",
-    },
-    {
-      data: "1",
-    },
-  ];
-  const outBoxData = [
-    {
-      outer: "1",
-    },
-    {
-      outer: "1",
-    },
-    {
-      outer: "1",
-    },
-  ];
-  const inBoxData = [
-    {
-      inner: "1",
-    },
-  ];
-  const ractangleData = [
-    {
-      ractBox: "1",
-    },
-  ];
+  // const flashCardModalData2 = {
+  //   content: "question",
+  //   footer: ["Reveal Answer"],
+  // }
   const num = [
     {
       id: 1,
@@ -72,79 +40,79 @@ const NewBuild = () => {
     },
     {
       id: 2,
-      message: "",
+     message:"",
     },
     {
       id: 3,
-      message: "Testing Data 3",
+      message: "",
     },
     {
       id: 4,
-      message: "Testing Data 4",
+      message: "",
     },
     {
       id: 5,
-      message: "Testing Data 5",
+      message: "",
     },
     {
       id: 6,
-      message: "Testing Data 6",
+      message: "",
     },
     {
       id: 7,
-      message: "Testing Data 7",
+      message: "",
     },
     {
       id: 8,
-      message: "Testing Data 8",
+      message: "",
     },
     {
       id: 9,
-      message: "Testing Data 9",
+      message: "",
     },
     {
       id: 10,
-      message: "Testing Data 10",
+      message: "",
     },
     {
       id: 11,
-      message: "Testing Data 11",
+      message: "",
     },
     {
       id: 12,
-      message: "Testing Data 12",
+      message: "",
     },
     {
       id: 13,
-      message: "Testing Data 13",
+      message: "",
     },
     {
       id: 14,
-      message: "Testing Data 14",
+      message: "",
     },
     {
       id: 15,
-      message: "Testing Data 15",
+      message: "",
     },
     {
       id: 16,
-      message: "Testing Data 16",
+      message: "",
     },
     {
       id: 17,
-      message: "Testing Data 17",
+      message: "",
     },
     {
       id: 18,
-      message: "Testing Data 18",
+      message: "",
     },
     {
       id: 19,
-      message: "Testing Data 19",
+      message: "",
     },
     {
       id: 20,
-      message: "Testing Data 20",
+      message: "",
     },
   ];
   let mapdata = Math.ceil(num.length / 3);
@@ -155,18 +123,24 @@ const NewBuild = () => {
         <NewBuildSideCard id={router.query.id} />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
+            const [arr, setArr] = useState(3);
+
             const currentSize = index * BoxSize;
             const remaningBox = num.length - currentSize;
             const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
             let items;
+
             while (num.length > 0) {
-              items = num.splice(0, 3);
+              items = num.splice(0);
               return (
                 <NewBuildBoxes
                   setModal1Open={setModal1Open}
                   item={items}
                   numOfBox={finalSize}
                   key={index}
+                  callback={(value: number) => {
+                    setArr(value);
+                  }}
                 />
               );
             }
@@ -188,7 +162,6 @@ const NewBuild = () => {
                 setModal2Open(true);
               }}
             />
-
           </div>
         </div>
       </div>
@@ -200,9 +173,15 @@ const NewBuild = () => {
       />
       <FlashCardModal
         modal2Open={modal1Open}
-        flashCard={flashCardModalData2}
+        flashCard={modal3Open}
         setModal2Open={setModal1Open}
         visible={modal1Open}
+        responseCallback={(data: any) => {
+          const newData = {content:data.content,
+          footer:['Save','Cancel']}
+          setModal3Open(newData)
+         
+        }}
       />
     </>
   );
