@@ -13,12 +13,6 @@ import { IFlashCard } from "../../@types/common";
 import { Prev } from "react-bootstrap/esm/PageItem";
 
 
-
-
-
-
-
-
 const { Search } = Input;
 const { TextArea } = Input;
 
@@ -36,6 +30,7 @@ const FlashCardModal = (props: any) => {
   const handleSubmit = (data: any) => {
     dispatch(addFlashCard(data));
      form.resetFields();
+     dispatch(getFlashCard())
   };
 
   return (

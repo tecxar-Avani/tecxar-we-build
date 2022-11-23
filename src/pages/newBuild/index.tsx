@@ -7,6 +7,12 @@ import { Button, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import {
+  addFlashCard,
+  flashCardSelector,
+  getFlashCard,
+} from "../../store/reducers/flashCard.reducer";
 import { Col, Image, Row } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
 import NewBuildBoxes from "@/components/NewBuildBoxes";
@@ -18,22 +24,23 @@ import { Console } from "console";
 
 const NewBuild = () => {
   const router = useRouter();
-  const [modal2Open, setModal2Open] = useState(false);
-  const [modal1Open, setModal1Open] = useState(false);
-  const [modal3Open, setModal3Open] = useState({
-    content: "question",
-    footer: ["Reveal Answer"],
-  });
-
+  const flashCardData = useAppSelector(flashCardSelector);
+  const dispatch = useAppDispatch();
   const BoxSize = 3;
   const { TextArea } = Input;
   const flashCardModalData = {
     footer: ["save"],
   };
-  // const flashCardModalData2 = {
-  //   content: "question",
-  //   footer: ["Reveal Answer"],
-  // }
+  const flashCardList = (data: any) => {  
+     dispatch(getFlashCard())
+  };
+  console.log("################",flashCardData.flashCard)
+  const [modal2Open, setModal2Open] = useState(false);
+  const [modal1Open, setModal1Open] = useState(false);
+  const [modal3Open, setModal3Open] = useState({
+    content: flashCardData.flashCard.question,
+    footer: ["Reveal Answer"],
+  });
   const num = [
     {
       id: 1,
