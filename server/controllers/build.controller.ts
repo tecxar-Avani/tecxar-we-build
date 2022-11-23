@@ -23,7 +23,7 @@ import { updateVideoBuildDto, videoBuildDto } from "@/dtos/videobuilds.dto";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import { google } from "googleapis";
 import config from "@/configs";
-
+import moment from "moment-duration-format";
 @Controller("/build")
 export class BuildController {
   private buildService = new BuildService();
@@ -121,7 +121,14 @@ export class BuildController {
           id: array1[0],
           part: ["contentDetails"],
         });
-      
+         const F = duration1.data.items[0].contentDetails.duration
+        //  const  processDuration = moment(F)
+        //    .duration(F)
+        //    .format('h:mm:ss')
+        const str = 'PTHMSS';
+        const newStr = str.replace("PTHMSS", ":");
+  
+        
         let data = {
           videoId: item.id.videoId,
           thumbnails: item.snippet.thumbnails.default,
