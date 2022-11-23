@@ -20,7 +20,7 @@ const NewBuild = () => {
   console.log(" routerrouterrouterrouterv", router.query.id);
   const [modal2Open, setModal2Open] = useState(false);
   const [modal1Open, setModal1Open] = useState(false);
-  const [modal3Open, setModal3Open] = useState(false);
+
 
   const BoxSize = 3;
   const { TextArea } = Input;

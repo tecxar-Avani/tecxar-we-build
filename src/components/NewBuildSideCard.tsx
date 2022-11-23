@@ -6,6 +6,7 @@ import CustomButton from "./Button";
 import { Tooltip } from "antd";
 import { Input } from "antd";
 import AwarenessModal from "./AwarenessModal";
+import Link from "next/link";
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
@@ -257,9 +258,10 @@ const NewBuildSideCard = (props: any) => {
           <div className=" forward bd-highlight">
             <Image src="../img/forward.svg" className="me-5" />
           </div>
-          <div className=" delt bd-highlight">
-            <Image src="../img/delt.svg" className="me-3" />
-          </div>
+          <Link href={`../`}>
+            <div className=" delt bd-highlight">
+              <Image src="../img/delt.svg" className="me-3" />
+            </div></Link>
         </div>
       </div>
       <AwarenessModal
@@ -268,12 +270,12 @@ const NewBuildSideCard = (props: any) => {
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
         className={`${accept
-            ? "accptanceModalBG"
-            : inspiration
-              ? "inspirationModalBG"
-              : resistance
-                ? "resistanceModalBG"
-                : ""
+          ? "accptanceModalBG"
+          : inspiration
+            ? "inspirationModalBG"
+            : resistance
+              ? "resistanceModalBG"
+              : ""
           }`}
       />
     </>
