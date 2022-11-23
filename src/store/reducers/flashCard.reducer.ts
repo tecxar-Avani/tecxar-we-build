@@ -79,14 +79,24 @@ const flashCardSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addFlashCard.fulfilled, (state, action) => {
-        if (action.payload.data.status === true) {
-          // Router.push("/build");
-          toast.success(action.payload.data.message);
-          return { ...state, loading: false };
+        if (action.payload.data.status) {       
+         toast.success(action.payload.data.message);
+          return { ...state, loading: false,flashCardData: action.payload.data  };
         } else {
-          return { ...state, loading: false };
+          toast.error(action.payload.data.error.message);
+          return { ...state, loading: false,flashCardData: initialState.flashCard };
         }
       })
+      // .addCase(addAnnouncement.fulfilled, (state, action) => {
+      //   if (action.payload.data.status) {
+      //     toast.success(action.payload.data.message);
+      //     Router.back();
+      //     return { ...state, loading: false, announcementData: action.payload.data };
+      //   } else {
+      //     toast.error(action.payload.data.error.message);
+      //     return { ...state, loading: false, announcementData: initialState.announcementData };
+      //   }
+      // })
       .addCase(getFlashCard.fulfilled, (state, action) => {
         if (action.payload.status) {
           return {

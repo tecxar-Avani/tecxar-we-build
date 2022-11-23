@@ -20,9 +20,8 @@ const FlashCardModal = (props: any) => {
 
   const [form] = Form.useForm();
   const handleSubmit = (data: any) => {
-    console.log("BBBBBBBBBBBBB", data);
     dispatch(addFlashCard(data));
-    // form.resetFields();
+     form.resetFields();
   };
 
   return (
