@@ -94,33 +94,42 @@ export class BuildController {
   async getUsersBuildByUrl(
     @Req() req: Request | any,
     @Res() res: Response,
-    // @Body() url: any,
     @QueryParam("url") url: string
+    // @Body()url:any
   ) {
     try {
+      console.log("DDDDDDDDDDD", url);
       const videoUrl = url;
       const youtube = google.youtube({
         version: "v3",
+        // part:"contentDetails",
         auth: config.youtubeApiKey,
       });
       const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl);
       const response: any = await youtube.search.list({
-        part: ["id, snippet"],
+        part: ["id", "snippet"],
         q:
           userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
       });
       let data;
       const titles = response.data.items.map((item) => {
+        const videoUrl = item.snippet.thumbnails.default.url;
+        const splittedUrl = videoUrl.split("vi/");
+        const result = splittedUrl.pop();
+        const array1 = result.split("/de");
+
         data = {
           videoId: item.id.videoId,
           thumbnails: item.snippet.thumbnails.default,
           description: item.snippet.description,
+          title: item.snippet.title,
           publishedAt: item.snippet.publishedAt,
-          url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+          test: array1[0],
+          url: `https://www.youtube.com/embed/${array1[0]}`,
         };
         return data;
       });
-      return { data: titles, box: userBuild ,status:true };
+      return { data: response, box: userBuild, status: true };
     } catch (error) {
       return {
         error: {
@@ -178,4 +187,3 @@ export class BuildController {
 function ApiTags() {
   throw new Error("Function not implemented.");
 }
-

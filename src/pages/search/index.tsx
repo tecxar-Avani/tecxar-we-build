@@ -12,58 +12,29 @@ import {
 } from "../../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
+import build from "next/dist/build";
+import { IVideoBuild } from "../../../@types/common";
 
 const SearchPage = () => {
   const router = useRouter();
   const [url, setUrl] = useState("");
   const dispatch = useAppDispatch();
-  const { buildList} = useAppSelector(buildSelector);
-
-  const videosData = [
-    {
-      id: "1",
-      title: "",
-      subTitle: "Therapist reacts to Big Ed",
-      videoUrl: "img/RectangleVideoImg.png",
-    },
-    {
-      id: "2",
-      title: "",
-      subTitle: "School of life: The body keeps score",
-      videoUrl: "img/RectangleVideoImg2.png",
-    },
-    {
-      id: "3",
-      title: "",
-      subTitle: "Andrew Marr on LBC: “The Tories are in a full-blown cival war",
-      videoUrl: "img/RectangleVideoImg1.png",
-    },
-    {
-      id: "4",
-      title: "",
-      subTitle: "Therapist reacts to Big Ed",
-      videoUrl: "img/RectangleVideoImg.png",
-    },
-    {
-      id: "5",
-      title: "",
-      subTitle: "Andrew Marr on LBC: “The Tories are in a full-blown cival war",
-      videoUrl: "img/RectangleVideoImg1.png",
-    },
-    {
-      id: "6",
-      title: "",
-      subTitle: "School of life: The body keeps score",
-      videoUrl: "img/RectangleVideoImg2.png",
-    },
-  ];
-
+  const { buildList } = useAppSelector(buildSelector);
+console.log("FFFFFFFFFFFFFFFFFFFFFF",buildList)
+  const videosData: any = [];
+  buildList.rows &&
+    buildList.rows.length > 0 &&
+    buildList.rows.map((video: any) => {
+      videosData.push({
+        subTitle: video.title,
+        videoUrl: video.url,
+      });
+    });
   const searchResult = (url: string) => {
     if (url !== "") {
       dispatch(getBuildByUrl(url));
     }
   };
-
   return (
     <>
       <SearchBar searchResult={searchResult} />
@@ -80,7 +51,7 @@ const SearchPage = () => {
       )}
       <Row className="Search m-0">
         {videosData.length > 0 &&
-          videosData.map((videoData, index) => (
+          videosData.map((videoData: any, index: number) => (
             <Col lg={4} className="videoProfile pb-2" key={index}>
               <Link href="/newBuild">
                 <a>
