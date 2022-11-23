@@ -66,7 +66,6 @@ const OuterBox = (props: any) => {
       <div className="innerBoxs p-3 w-100 " style={{ height: "170px" }}>
         {props.arr &&
           props.arr.map((ar: any) => {
-            console.log("GGGGGGGGGGGGGG", ar, props.id);
             return (
                props.id == ar && (
                 <Form form={form} name="formTwo" className="textBoxInner">

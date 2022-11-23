@@ -18,18 +18,22 @@ import { Console } from "console";
 
 const NewBuild = () => {
   const router = useRouter();
-  console.log(" routerrouterrouterrouterv", router.query.id);
   const [modal2Open, setModal2Open] = useState(false);
   const [modal1Open, setModal1Open] = useState(false);
+  const [modal3Open, setModal3Open] = useState({
+    content: "question",
+    footer: ["Reveal Answer"],
+  });
+
   const BoxSize = 3;
   const { TextArea } = Input;
   const flashCardModalData = {
     footer: ["save"],
   };
-  const flashCardModalData2={
-    content:"question",
-    footer:["Reveal Answer"],
-  }
+  // const flashCardModalData2 = {
+  //   content: "question",
+  //   footer: ["Reveal Answer"],
+  // }
   const num = [
     {
       id: 1,
@@ -37,7 +41,7 @@ const NewBuild = () => {
     },
     {
       id: 2,
-     message:"",
+      message: "",
     },
     {
       id: 3,
@@ -120,7 +124,7 @@ const NewBuild = () => {
         <NewBuildSideCard id={router.query.id} />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
-              const [arr, setArr] = useState(3);
+            const [arr, setArr] = useState(3);
 
             const currentSize = index * BoxSize;
             const remaningBox = num.length - currentSize;
@@ -171,10 +175,18 @@ const NewBuild = () => {
         visible={modal2Open}
       />
       <FlashCardModal
-      modal2Open={modal1Open}
-      flashCard={flashCardModalData2}
-      setModal2Open={setModal1Open}
-      visible={modal1Open}
+        modal2Open={modal1Open}
+        flashCard={modal3Open}
+        setModal2Open={setModal1Open}
+        visible={modal1Open}
+        responseCallback={(data: any) => {
+          const newData = {
+            content: data.content,
+            footer: ['Save', 'Cancel']
+          }
+          setModal3Open(newData)
+
+        }}
       />
     </>
   );
