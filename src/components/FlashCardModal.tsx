@@ -13,7 +13,6 @@ import { IFlashCard } from "../../@types/common";
 import { Prev } from "react-bootstrap/esm/PageItem";
 
 
-const handleShow = () => { setModal3Open(true) };
 
 
 
@@ -26,6 +25,12 @@ const { TextArea } = Input;
 const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
   const dispatch = useAppDispatch();
+  const handleShow = (value: any) => {
+    const data = {
+      content: "answer"
+    };
+    props.responseCallback(data);
+  };
 
   const [form] = Form.useForm();
   const handleSubmit = (data: any) => {
