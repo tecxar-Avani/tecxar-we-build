@@ -150,6 +150,7 @@ export class BuildController {
     @Res() res: Response
   ) {
     try {
+      data.updated_by = req.user.id
       const userBuild = await this.buildService.updateBuild(id, data);
       return userBuild;
     } catch (error) {
