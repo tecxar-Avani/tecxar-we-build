@@ -10,7 +10,6 @@ import InnerBox from "./InnerBox";
 const numOfFields = 3;
 
 const OuterBox = (props: any) => {
-  console.log("props", props.item);
   const [form] = Form.useForm();
   const handleChange = (event: any) => {
     let textData = event.target.value;

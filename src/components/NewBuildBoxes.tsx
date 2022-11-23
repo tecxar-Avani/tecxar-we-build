@@ -9,7 +9,6 @@ import Ractangle from "./Ractangle";
 //   VideoCardData: any;
 // }
 const NewBuildBoxes = (props: any) => {
-  console.log("props.item", props.item);
   const [arr, setArr] = useState([1]);
   // if (arr.length == 4) {
   //   props.callback(3);
