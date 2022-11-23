@@ -57,7 +57,7 @@ export class flashCardResponseDto implements IFlashCardsResponse {
   id?: number;
 
   @IsString()
-  response_tye: ResponseEnumType;
+  response_type: ResponseEnumType;
 
   @IsNumber()
   flash_card_id: number;

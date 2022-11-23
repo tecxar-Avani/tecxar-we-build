@@ -63,4 +63,5 @@ export default class User
 
   @Column(DataType.DATE)
   public readonly updatedAt!: Date;
+  
 }

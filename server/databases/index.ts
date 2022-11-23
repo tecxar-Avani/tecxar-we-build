@@ -74,15 +74,15 @@ sequelize.afterBulkSync('afterSync', () => {
 });
 
 const DB = {
-  roles:Role,
-  users:User,
-  videoBuild:VideoBuild,
-  box:Box,
-  group:Group,
-  boxGroups:BoxGroups,
-  flashCards:FlashCards,
-  boxReviews:BoxReviews,
-  flashCardsResponse:FlashCardsResponse,
+  roles: Role,
+  users: User,
+  videoBuild: VideoBuild,
+  box: Box,
+  group: Group,
+  boxGroups: BoxGroups,
+  flashCards: FlashCards,
+  boxReviews: BoxReviews,
+  flashCardsResponse: FlashCardsResponse,
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };
