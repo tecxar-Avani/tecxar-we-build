@@ -10,9 +10,9 @@ import Ractangle from "./Ractangle";
 // }
 const NewBuildBoxes = (props: any) => {
   const [arr, setArr] = useState([1]);
-if(arr.length == 4){
-   props.callback(4);
-}
+  //     if(arr.length == 4){
+  //       props.callback(4);
+  //     }
   return (
     <div className="boxesMain">
       <Ractangle />
@@ -28,6 +28,7 @@ if(arr.length == 4){
               responseCallback={(value: number) => {
                 setArr([...arr, value]);
               }}
+              
             />
           );
         })}

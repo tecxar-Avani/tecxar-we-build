@@ -14,6 +14,7 @@ import FlashCardModal from "@/components/FlashCardModal";
 import AwarenessModal from "@/components/AwarenessModal";
 import { Router, useRouter } from "next/router";
 import { Content } from "antd/lib/layout/layout";
+import { Console } from "console";
 
 const NewBuild = () => {
   const router = useRouter();
@@ -125,10 +126,12 @@ const NewBuild = () => {
             const remaningBox = num.length - currentSize;
             const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
             let items;
-
-            while (num.length > 0) {
-               items = num.splice(0, );
-              return (
+           
+            while (num.length > 0)
+             {
+               items = num.splice(0, 3);
+              return (<>
+                
                 <NewBuildBoxes
                   setModal1Open={setModal1Open}
                   item={items}
@@ -137,7 +140,7 @@ const NewBuild = () => {
                   callback={(value: number) => {
                     setArr(value);
                   }}
-                />
+                /></>
               );
             }
           })}
