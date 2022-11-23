@@ -20,14 +20,16 @@ const NewBuild = () => {
   console.log(" routerrouterrouterrouterv", router.query.id);
   const [modal2Open, setModal2Open] = useState(false);
   const [modal1Open, setModal1Open] = useState(false);
+  const [modal3Open, setModal3Open] = useState(false);
+
   const BoxSize = 3;
   const { TextArea } = Input;
   const flashCardModalData = {
     footer: ["save"],
   };
-  const flashCardModalData2={
-    content:"question",
-    footer:["Reveal Answer"],
+  const flashCardModalData2 = {
+    content: "question",
+    footer: ["Reveal Answer"],
   }
   const awarenessModalData = {
     title: ["hello"],
@@ -186,6 +188,7 @@ const NewBuild = () => {
                 setModal2Open(true);
               }}
             />
+
           </div>
         </div>
       </div>
@@ -196,10 +199,10 @@ const NewBuild = () => {
         visible={modal2Open}
       />
       <FlashCardModal
-      modal2Open={modal1Open}
-      flashCard={flashCardModalData2}
-      setModal2Open={setModal1Open}
-      visible={modal1Open}
+        modal2Open={modal1Open}
+        flashCard={flashCardModalData2}
+        setModal2Open={setModal1Open}
+        visible={modal1Open}
       />
     </>
   );

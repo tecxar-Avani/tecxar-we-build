@@ -10,6 +10,15 @@ import {
   getFlashCard,
 } from "../store/reducers/flashCard.reducer";
 import { IFlashCard } from "../../@types/common";
+import { Prev } from "react-bootstrap/esm/PageItem";
+
+
+const handleShow = () => { setModal3Open(true) };
+
+
+
+
+
 
 const { Search } = Input;
 const { TextArea } = Input;
@@ -26,7 +35,9 @@ const FlashCardModal = (props: any) => {
   };
 
   return (
+
     <Modal
+      open={props.modal3Open}
       title={
         props.flashCard.title ||
         (props.flashCard.headerIcon &&
@@ -35,6 +46,7 @@ const FlashCardModal = (props: any) => {
             return <Image src={`/img/${btn}`} className="mx-1" />;
           }))
       }
+
       centered
       visible={props.modal2Open}
       onOk={form.submit}
@@ -44,13 +56,15 @@ const FlashCardModal = (props: any) => {
         props.flashCard.footer.length > 0 &&
         props.flashCard.footer.map((btn: any) => {
           return (
-            <Button form="form" key="submit" htmlType="submit">
+            <Button form="form" key="submit" htmlType="submit" className="openmodal" onClick={handleShow} >
               {btn}
             </Button>
+
           );
         })
       }
     >
+
       <div className="">
         {props.flashCard.content ? (
           <div className="p-4">{props.flashCard.content}</div>
@@ -65,8 +79,8 @@ const FlashCardModal = (props: any) => {
                   maxLength={100}
                   rows={4}
                   className="mb-2"
-                  // name={"questions"}
-                  // id="question"
+                // name={"questions"}
+                // id="question"
                 ></TextArea>
               </Form.Item>
               <Form.Item name={"answer"} label={"Back"}>
@@ -76,16 +90,25 @@ const FlashCardModal = (props: any) => {
                   maxLength={100}
                   rows={4}
                   className="mb-2"
-                  // name="answers"
-                  // id="answer"
+                // name="answers"
+                // id="answer"
                 ></TextArea>
               </Form.Item>
             </div>
           </Form>
         )}
+
       </div>
     </Modal>
   );
 };
 
 export default FlashCardModal;
+
+
+
+
+function setModal3Open(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+
