@@ -98,38 +98,43 @@ export class BuildController {
     // @Body()url:any
   ) {
     try {
-      console.log("DDDDDDDDDDD", url);
       const videoUrl = url;
       const youtube = google.youtube({
         version: "v3",
-        // part:"contentDetails",
         auth: config.youtubeApiKey,
       });
       const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl);
       const response: any = await youtube.search.list({
-        part: ["id", "snippet"],
-        q:
-          userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
-      });
+        part: ['id,snippet'], 
+         q:userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
+        });
       let data;
-      const titles = response.data.items.map((item) => {
+      const titles =await response.data.items.map((item) => {
         const videoUrl = item.snippet.thumbnails.default.url;
         const splittedUrl = videoUrl.split("vi/");
         const result = splittedUrl.pop();
         const array1 = result.split("/de");
-
+        const duration1 =  youtube.videos.list({
+          id:array1[0],
+          part: ['contentDetails']
+          })
+        
+        // const duration =await `https://www.googleapis.com/youtube/v3/videos?id=${array1[0]}&part=contentDetails&key=AIzaSyD6soQMqYTaLKwuQJSzXkwoNjc2U2gmpc0`
+       console.log("@@@@@@@@@@@@2",JSON.stringify(duration1))
         data = {
           videoId: item.id.videoId,
           thumbnails: item.snippet.thumbnails.default,
           description: item.snippet.description,
           title: item.snippet.title,
           publishedAt: item.snippet.publishedAt,
+          // duration:duration1.data.items,
           test: array1[0],
           url: `https://www.youtube.com/embed/${array1[0]}`,
         };
         return data;
       });
-      return { data: response, box: userBuild, status: true };
+   
+      return { data: titles, box: userBuild, status: true };
     } catch (error) {
       return {
         error: {
