@@ -33,9 +33,9 @@ const NewBuild = () => {
   const [buildIds, setBuildIds] = useState<number>();
 
   useEffect(() => {
-    dispatch(getFlashCardByBuildId(1));
+    dispatch(getFlashCardByBuildId(2));
   }, []);
-
+console.log("$$$$$$$$$$$$$$$$$$$$",flashCardData)
   const [addFlashCard, SetAddFlashcard] = useState(false);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({
@@ -45,7 +45,8 @@ const NewBuild = () => {
     footer: ["Reveal Answer"],
   });
   const [modal4Open, setModal4Open] = useState(false);
-
+const hello = flashCardData?.flashCardList?.rows?.flashBuild?.map((aa: any) => aa.question)
+console.log(hello)
   const num = [
     {
       id: 1,
@@ -203,7 +204,7 @@ const NewBuild = () => {
             setModal3Open(newData);
           } else {
             const newData = {
-              content: "Congratulations",
+              content: "Congratulations! You have finished your deck",
               footer: [],
               onOk: modal4Open,
             };

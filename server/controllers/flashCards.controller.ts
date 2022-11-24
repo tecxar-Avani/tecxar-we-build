@@ -113,9 +113,9 @@ export class FlashController {
 
   @Get("/flashcardbybuild/:id")
   @OpenAPI({ summary: "Get all build of users" })
-  async getFlashCardByBuildId(@Req() req: Request | any,@Param('id') id:number, @Res() res: Response) {
+  async getFlashCardByBuildId(@Req() req: Request | any,@Param('id') id:number,user:number ,@Res() res: Response) {
     try {
-      const flashBuild = await this.flashCardService.getFlashCardByBuildId(id);
+      const flashBuild = await this.flashCardService.getFlashCardByBuildId(id,user);
       let arr = Object.assign(flashBuild)      
       return {
         status: true,

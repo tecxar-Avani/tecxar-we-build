@@ -7,7 +7,7 @@ import User from "@/models/user.model";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
 import { logging } from "googleapis/build/src/apis/logging";
-import { where } from "sequelize";
+import { Op,where } from "sequelize";
 
 class FlashCardService {
   private flashCard = DB.flashCards;
@@ -85,8 +85,8 @@ class FlashCardService {
   }
 
 
-  public async getFlashCardByBuildId(buildId: number): Promise<IFlashCards[] | null> {
-    const where = { build_Id : buildId }    
+  public async getFlashCardByBuildId(buildId: number,userId:number): Promise<IFlashCards[] | null> {
+    const where = { build_id  :buildId ,created_by:  "4"}  
     const include = [
       {
         model: User,
@@ -122,7 +122,7 @@ class FlashCardService {
       raw: true,
     };
     const getFlashCardBuildId: IFlashCards[] | any = await this.flashCard.findAll(options);
-    
+    console.log("FFFFFFFFFFFFFFFFFFFFFFFF",getFlashCardBuildId)
     return getFlashCardBuildId;
   }
 
