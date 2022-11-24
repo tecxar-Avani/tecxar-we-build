@@ -13,7 +13,7 @@ import {
   flashCardSelector,
   getFlashCardByBuildId,
 } from "../../store/reducers/flashCard.reducer";
-import { Col, Image, Row } from "react-bootstrap";
+import { Card, Col, Image, Row } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
 import NewBuildBoxes from "@/components/NewBuildBoxes";
 import FlashCardModal from "@/components/FlashCardModal";
@@ -176,18 +176,16 @@ const NewBuild = () => {
             }
           })}
           <div className="position-absolute mkCard">
+          
             {userArr.length > 0 &&
               userArr.map((data: any, index: number) => {
-                console.log("DDDD", data.id);
-                // <span>{data.name}</span>;
-                <Image
-                  alt="flashCards"
-                  src="../../../img/mkCard.png"
-                  onClick={() => {
-                    setRevealAns(true);
-                  }}
-                />;
-              })}
+                return(
+                <Card className="mt-3">
+                <Card.Body>{data.name}</Card.Body>
+              </Card>
+             
+                )
+             })}
           </div>
           <div className="position-absolute flash">
             <Image
