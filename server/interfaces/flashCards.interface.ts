@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import User from "@/models/user.model";
 
 export enum ResponseEnumType {

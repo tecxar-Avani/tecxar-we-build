@@ -6,7 +6,13 @@ import VideoCard from "@/components/VideoCard";
 import { Button, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import {
+  addFlashCard,
+  flashCardSelector,
+  getFlashCardByBuildId,
+} from "../../store/reducers/flashCard.reducer";
 import { Col, Image, Row } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
 import NewBuildBoxes from "@/components/NewBuildBoxes";
@@ -14,25 +20,47 @@ import FlashCardModal from "@/components/FlashCardModal";
 import AwarenessModal from "@/components/AwarenessModal";
 import { Router, useRouter } from "next/router";
 import { Content } from "antd/lib/layout/layout";
+import { Console } from "console";
+import { addAbortSignal } from "stream";
+import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 const NewBuild = () => {
   const router = useRouter();
-  const [modal2Open, setModal2Open] = useState(false);
-  const [modal1Open, setModal1Open] = useState(false);
-  const [modal3Open, setModal3Open] = useState({
-    content: "question",
-    footer: ["Reveal Answer"],
-  });
-
+  const flashCardData = useAppSelector(flashCardSelector);
+  const dispatch = useAppDispatch();
   const BoxSize = 3;
   const { TextArea } = Input;
-  const flashCardModalData = {
-    footer: ["save"],
-  };
-  // const flashCardModalData2 = {
-  //   content: "question",
-  //   footer: ["Reveal Answer"],
-  // }
+  const flashCardArr = [
+    {
+      key: {
+        AL: [
+          { id: 1, question: "how are you?", answer: "fine" },
+          { id: 2, question: "where do you live?", answer: "Ahmadabad" },
+        ],
+
+        AC: [
+          { id: 3, question: "are you working?", answer: "yes" },
+          { id: 4, question: "can you hear us?", answer: "no" },
+        ],
+      },
+    },
+  ];
+  const userArr =[
+    {id:1,name:"AL"},
+    {id:2,name:"AC"}
+  ]
+  useEffect(() => {
+    dispatch(getFlashCardByBuildId(2));
+  }, []);
+  const [addFlashCard, SetAddFlashcard] = useState(false);
+  const [revealAns, setRevealAns] = useState(false);
+  const [modal3Open, setModal3Open] = useState({
+    content: flashCardData?.flashCardList?.rows?.flashBuild?.map(
+      (aa: any) => aa.question
+    ),
+    footer: ["Reveal Answer"],
+  });
+  const [modal4Open, setModal4Open] = useState(false);
   const num = [
     {
       id: 1,
@@ -135,58 +163,78 @@ const NewBuild = () => {
             console.log("remaningBox", remaningBox);
             console.log("finalSize", finalSize);
             let items;
-            console.log("items", items);
 
             while (num.length > 0) {
               items = num.splice(0, 3);
-              console.log("items splice", items);
               return (
-                <NewBuildBoxes
-                  setModal1Open={setModal1Open}
-                  item={items}
-                  numOfBox={finalSize}
-                  key={index}
-                  callback={(value: number) => {
-                    setArr(value);
-                  }}
-                />
+                <>
+                  <NewBuildBoxes
+                    setModal1Open={SetAddFlashcard}
+                    item={items}
+                    numOfBox={finalSize}
+                    key={index}
+                    callback={(value: number) => {
+                      setArr(value);
+                    }}
+                  />
+                </>
               );
             }
           })}
           <div className="position-absolute mkCard">
-            <Image
-              alt="flashCards"
-              src="../../../img/mkCard.png"
-              onClick={() => {
-                setModal1Open(true);
-              }}
-            />
+            {userArr.length > 0 &&
+              userArr.map((data: any, index: number) => {
+                console.log("DDDD", data.id);
+                // <span>{data.name}</span>;
+                <Image
+                  alt="flashCards"
+                  src="../../../img/mkCard.png"
+                  onClick={() => {
+                    setRevealAns(true);
+                  }}
+                />;
+              })}
           </div>
           <div className="position-absolute flash">
             <Image
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"
               onClick={() => {
-                setModal2Open(true);
+                SetAddFlashcard(true);
               }}
             />
           </div>
         </div>
       </div>
-      <FlashCardModal
-        modal2Open={modal2Open}
-        flashCard={flashCardModalData}
-        setModal2Open={setModal2Open}
-        visible={modal2Open}
+      <AddFlashCardModal
+        modal2Open={addFlashCard}
+        setModal2Open={SetAddFlashcard}
+        visible={addFlashCard}
       />
       <FlashCardModal
-        modal2Open={modal1Open}
+        modal={revealAns}
         flashCard={modal3Open}
-        setModal2Open={setModal1Open}
-        visible={modal1Open}
+        setmodalOpen={setRevealAns}
+        modalVisible={revealAns}
+        //onClick={modal3Open}
         responseCallback={(data: any) => {
-          const newData = { content: data.content, footer: ["Save"] };
-          setModal3Open(newData);
+          if (data == "Reveal Answer") {
+            const newData = {
+              content: flashCardData?.flashCardList?.rows?.flashBuild?.map(
+                (aa: any) => aa.answer
+              ),
+              footer: ["Again", "Hard", "Good", "Easy"],
+              onOk: modal4Open,
+            };
+            setModal3Open(newData);
+          } else {
+            const newData = {
+              content: "Congratulations! You have finished your deck",
+              footer: [],
+              onOk: modal4Open,
+            };
+            setModal3Open(newData);
+          }
         }}
       />
     </>

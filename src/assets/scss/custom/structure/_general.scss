@@ -780,6 +780,14 @@ textarea.ant-input {
     margin-top: 0;
   }
 }
+.redpolygon{
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color: #D91919;
+  width: 298.04px;
+  height: 84.54px;
+  margin-top: -123px;
+  margin-left: 1px;
+}
 
 .inspirationModalBG {
 
@@ -787,14 +795,6 @@ textarea.ant-input {
   .ant-modal-header {
     background-color: #E0C0EB;
   }
-.redpolygon{
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  background-color: #D91919;
-  width: 298.04px;
-  height: 84.54px;
-  margin-top: -123px;
-  margin-left: 13px;
-}
 
   textarea.ant-input {
     border-radius: 5px;

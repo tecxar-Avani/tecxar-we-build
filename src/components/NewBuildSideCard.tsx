@@ -6,6 +6,7 @@ import CustomButton from "./Button";
 import { Tooltip } from "antd";
 import { Input } from "antd";
 import AwarenessModal from "./AwarenessModal";
+import Link from "next/link";
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
@@ -34,6 +35,9 @@ const NewBuildSideCard = (props: any) => {
     setResistance(true)
   };
 
+
+
+
   const { TextArea } = Input;
 
   const awarenessModalData = {
@@ -54,7 +58,7 @@ const NewBuildSideCard = (props: any) => {
             allow="autoplay; encrypted-media"
           ></iframe>
         </div>
-       
+
         <hr className="border-dark" />
 
         <div className="mx-4">
@@ -62,7 +66,16 @@ const NewBuildSideCard = (props: any) => {
           <CustomButton title="New row" className="btn2  px-4 py-3 ms-2" />
         </div>
         <hr className="border-dark" />
-        <CustomButton title="Inspiration" className="inspirationButton " />
+
+        <span
+          onClick={() => {
+            setAwarenessModal(true);
+          }}
+        >
+          <span onClick={Inspiration} >
+            <CustomButton title="Inspiration" className="inspirationButton " />
+          </span>
+        </span>
         <div>
           <span
             onClick={() => {
@@ -82,20 +95,37 @@ const NewBuildSideCard = (props: any) => {
               className="blue"
             />
           </span>
-          <div>
-            <CustomButton title="Acceptance" className="acceptanceButton" />
+
+          <div onClick={() => {
+            setAwarenessModal(true);
+          }}>
+            <span onClick={Acceptance} >
+              < CustomButton title="Acceptance" className="acceptanceButton" />
+            </span>
           </div>
         </div>
-        <div className="redtraingle">
-          <span
-            onClick={() => {
-              setAwarenessModal(true);
-            }}
-          >
-            <Image src="../img/polygon 23.png" onClick={Resistance} />
+
+        <span
+          onClick={() => {
+            setAwarenessModal(true);
+          }}
+        >
+          <div className="redpolygon" onClick={Resistance} /></span>
+
+        <span
+          onClick={() => {
+            setAwarenessModal(true);
+          }}
+        >
+          <span onClick={Resistance}>
+            <CustomButton title="Resistance" className="resistanceButton" />
           </span>
-        </div>
-        <CustomButton title="Resistance" className="resistanceButton" />
+
+        </span>
+
+
+
+
 
         <hr className="border-dark" />
 
@@ -228,9 +258,10 @@ const NewBuildSideCard = (props: any) => {
           <div className=" forward bd-highlight">
             <Image src="../img/forward.svg" className="me-5" />
           </div>
-          <div className=" delt bd-highlight">
-            <Image src="../img/delt.svg" className="me-3" />
-          </div>
+          <Link href={`../`}>
+            <div className=" delt bd-highlight">
+              <Image src="../img/delt.svg" className="me-3" />
+            </div></Link>
         </div>
       </div>
       <AwarenessModal
@@ -238,15 +269,14 @@ const NewBuildSideCard = (props: any) => {
         awareness={awarenessModalData}
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
-        className={`${
-          accept
-            ? "accptanceModalBG"
-            : inspiration
+        className={`${accept
+          ? "accptanceModalBG"
+          : inspiration
             ? "inspirationModalBG"
             : resistance
-            ? "resistanceModalBG"
-            : ""
-        }`}
+              ? "resistanceModalBG"
+              : ""
+          }`}
       />
     </>
   );

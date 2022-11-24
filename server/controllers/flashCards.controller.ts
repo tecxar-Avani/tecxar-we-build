@@ -18,7 +18,8 @@ import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos/flashcards.dto";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
-
+import { google } from "googleapis";
+import config from "@/configs";
 
 @Controller("/flashcard")
 //@UseBefore(authMiddleware)
@@ -112,12 +113,14 @@ export class FlashController {
 
   @Get("/flashcardbybuild/:id")
   @OpenAPI({ summary: "Get all build of users" })
-  async getFlashCardByBuildId(@Req() req: Request | any,@Param('id') id:number, @Res() res: Response) {
+  async getFlashCardByBuildId(@Req() req: Request | any,@Param('id') id:number,user:number ,@Res() res: Response) {
     try {
-      const flashBuild = await this.flashCardService.getFlashCardByBuildId(id);
-      let arr = Object.assign(flashBuild)
-      console.log(arr)
-      return flashBuild;
+      const flashBuild = await this.flashCardService.getFlashCardByBuildId(id,user);
+      let arr = Object.assign(flashBuild)      
+      return {
+        status: true,
+        flashBuild,
+      }
     } catch (error) {
       return {
         error: {

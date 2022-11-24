@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 import FlashCards from "@/models/flashCards.model";
@@ -6,7 +7,7 @@ import User from "@/models/user.model";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
 import { logging } from "googleapis/build/src/apis/logging";
-import { where } from "sequelize";
+import { Op,where } from "sequelize";
 
 class FlashCardService {
   private flashCard = DB.flashCards;
@@ -84,8 +85,8 @@ class FlashCardService {
   }
 
 
-  public async getFlashCardByBuildId(buildId: number): Promise<IFlashCards[] | null> {
-    const where = { build_Id : buildId }    
+  public async getFlashCardByBuildId(buildId: number,userId:number): Promise<IFlashCards[] | null> {
+    const where = { build_id  :buildId ,created_by:  "4"}  
     const include = [
       {
         model: User,
@@ -123,8 +124,9 @@ class FlashCardService {
     const getFlashCardBuildId: IFlashCards[] | any = await this.flashCard.findAll(options);
     return getFlashCardBuildId;
   }
+
+  
   public async getFlashCard(userId: number): Promise<IFlashCards[] | null> {
-    console.log("XXXXXXXXXXXXXX", userId);
     const flashCards: IFlashCards[] | null = await this.flashCard.findAll({
       where: { created_by: userId },
       raw: true,

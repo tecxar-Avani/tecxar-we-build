@@ -18,9 +18,6 @@ const NewBuildBoxes = (props: any) => {
       <Ractangle />
       <Row className="m-0 px-4 innerBoxMain">
         {props.item?.map((itemData: any, index: any) => {
-          // if (props.item == 3) {
-          //   props.callback(4);
-          // }
           return (
             <>
               <OuterBox

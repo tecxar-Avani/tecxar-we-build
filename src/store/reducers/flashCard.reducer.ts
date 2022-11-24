@@ -22,14 +22,17 @@ export const addFlashCard = createAsyncThunk(
     const { status, data } = await flashCardService.addFlashCard(
       createFlashCardData
     );
+   
+
     // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
     return { status, data };
   }
 );
 
-export const getFlashCard = createAsyncThunk(`flashcard/get`, async () => {
-  const { data } = await flashCardService.FlashCardList();
+export const getFlashCardByBuildId = createAsyncThunk(`flashcard/flashcardbybuild`, async (buildId:number) => {
+  const { status, data } = await flashCardService.getFlashCardByBuildId(buildId);
   // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
+ 
   return { status: data.status, rows: data };
 });
 
@@ -79,20 +82,33 @@ const flashCardSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addFlashCard.fulfilled, (state, action) => {
-        if (action.payload.data.status === true) {
-          // Router.push("/build");
-          toast.success(action.payload.data.message);
-          return { ...state, loading: false };
+        if (action.payload.data.status) {   
+            
+         toast.success(action.payload.data.message);
+          return { ...state, loading: false,flashCardData: action.payload.data  };
         } else {
-          return { ...state, loading: false };
+          toast.error(action.payload.data.error.message);
+          return { ...state, loading: false,flashCardData: initialState.flashCard };
         }
       })
-      .addCase(getFlashCard.fulfilled, (state, action) => {
+      // .addCase(addAnnouncement.fulfilled, (state, action) => {
+      //   if (action.payload.data.status) {
+      //     toast.success(action.payload.data.message);
+      //     Router.back();
+      //     return { ...state, loading: false, announcementData: action.payload.data };
+      //   } else {
+      //     toast.error(action.payload.data.error.message);
+      //     return { ...state, loading: false, announcementData: initialState.announcementData };
+      //   }
+      // })
+      .addCase(getFlashCardByBuildId.fulfilled, (state, action) => {
         if (action.payload.status) {
+          
           return {
             ...state,
             loading: false,
             flashCardList: action.payload,
+          
           };
         } else {
           return {

@@ -4,8 +4,9 @@ class FlashCardService {
     return API.post(`/flashcard/create`, flashcard);
   }
 
-  FlashCardList() {
-    return API.get(`/flashcard`);
+  getFlashCardByBuildId(id: number) {
+    
+    return API.get(`/flashcard/flashcardbybuild/${id}`);
   }
 }
 export default new FlashCardService();
