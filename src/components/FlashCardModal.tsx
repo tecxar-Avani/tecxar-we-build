@@ -13,11 +13,11 @@ import {
 const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
   const dispatch = useAppDispatch();
+  const handleFlash = (data: any) => {
+    props.responseCallback(data);
+  };
 
-
-  const answer = flashCardData?.flashCardList?.rows?.flashBuild?.map(
-    (aa: any) => aa.answer
-  );
+ 
 
   return (
     <>
@@ -46,9 +46,9 @@ const FlashCardModal = (props: any) => {
                   key="submit"
                   htmlType="submit"
                   className="openmodal"
-                  onClick={props.onClick}
+                  onClick={() => handleFlash(btn)}
                 >
-                 Reaveal Answer
+                  {btn}
                 </Button>
               );
             })

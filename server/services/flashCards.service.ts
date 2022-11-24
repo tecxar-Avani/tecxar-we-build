@@ -125,8 +125,9 @@ class FlashCardService {
     
     return getFlashCardBuildId;
   }
+
+  
   public async getFlashCard(userId: number): Promise<IFlashCards[] | null> {
-    console.log("XXXXXXXXXXXXXX", userId);
     const flashCards: IFlashCards[] | null = await this.flashCard.findAll({
       where: { created_by: userId },
       raw: true,

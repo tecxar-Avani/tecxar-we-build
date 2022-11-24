@@ -32,20 +32,20 @@ const NewBuild = () => {
   const { TextArea } = Input;
   const [buildIds, setBuildIds] = useState<number>();
 
-  
-  
   useEffect(() => {
-    dispatch(getFlashCardByBuildId(1))
-  },[])
-
+    dispatch(getFlashCardByBuildId(1));
+  }, []);
 
   const [addFlashCard, SetAddFlashcard] = useState(false);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({
-    content: flashCardData?.flashCardList?.rows?.flashBuild?.map((aa:any) => aa.question),
+    content: flashCardData?.flashCardList?.rows?.flashBuild?.map(
+      (aa: any) => aa.question
+    ),
     footer: ["Reveal Answer"],
   });
   const [modal4Open, setModal4Open] = useState(false);
+
   const num = [
     {
       id: 1,
@@ -142,21 +142,21 @@ const NewBuild = () => {
             const remaningBox = num.length - currentSize;
             const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
             let items;
-           
-            while (num.length > 0)
-             {
-               items = num.splice(0, 3);
-              return (<>
-                
-                <NewBuildBoxes
-                  setModal1Open={SetAddFlashcard}
-                  item={items}
-                  numOfBox={finalSize}
-                  key={index}
-                  callback={(value: number) => {
-                    setArr(value);
-                  }}
-                /></>
+
+            while (num.length > 0) {
+              items = num.splice(0, 3);
+              return (
+                <>
+                  <NewBuildBoxes
+                    setModal1Open={SetAddFlashcard}
+                    item={items}
+                    numOfBox={finalSize}
+                    key={index}
+                    callback={(value: number) => {
+                      setArr(value);
+                    }}
+                  />
+                </>
               );
             }
           })}
@@ -187,26 +187,31 @@ const NewBuild = () => {
       />
       <FlashCardModal
         modal={revealAns}
-        // flashCard={modal3Open}
+        flashCard={modal3Open}
         setmodalOpen={setRevealAns}
         modalVisible={revealAns}
-        onClick={modal3Open}
+        //onClick={modal3Open}
+        responseCallback={(data: any) => {
+          if (data == "Reveal Answer") {
+            const newData = {
+              content: flashCardData?.flashCardList?.rows?.flashBuild?.map(
+                (aa: any) => aa.answer
+              ),
+              footer: ["Again", "Hard", "Good", "Easy"],
+              onOk: modal4Open,
+            };
+            setModal3Open(newData);
+          } else {
+            const newData = {
+              content: "Congratulations",
+              footer: [],
+              onOk: modal4Open,
+            };
+            setModal3Open(newData);
+          }
+        }}
+  
       />
-      <FlashCardModal
-        modal={modal3Open}
-        //flashCard={modal3Open}
-        setmodalOpen={setModal3Open}
-        modalVisible={modal4Open}
-      
-      />
-      <FlashCardModal
-        modal={modal4Open}
-        //flashCard={modal3Open}
-        setmodalOpen={setModal4Open}
-        modalVisible={modal4Open}
-        
-      />
-   
     </>
   );
 };
