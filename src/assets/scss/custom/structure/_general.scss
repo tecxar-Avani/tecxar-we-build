@@ -315,6 +315,7 @@ body {
 }
 .ant-modal-body {
   text-align: center;
+  margin: -29px;
 }
 
 .ant-modal-header {
@@ -810,9 +811,12 @@ textarea.ant-input {
 }
 
 .ant-tooltip-inner {
-
   color: black;
-
+}
+.bulb{
+  margin: 7px;
+  
+  padding: 4px;
 }
 
 .blue {
@@ -838,3 +842,36 @@ textarea.ant-input {
 .textBoxInnerBlock{
   display: block;
 }
+
+.buttonSave{width: 225px;
+height: 50px;}
+.btnrv{
+  .ant-btn{
+    display: none !important;
+  }
+}
+.ant-modal-close-x{
+display: none;
+}
+.ant-modal-content{
+  margin:  60px;
+}
+
+.googleicon {
+  margin-top: -8px;
+ }
+ .googleicon:hover{
+  cursor: pointer;
+ }
+.googleclr{
+ background-color: #4285F4;
+}
+.grpbtn:hover{
+background-color: 
+#DCDADA;
+}
+
+  
+
+
+

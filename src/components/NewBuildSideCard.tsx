@@ -3,10 +3,13 @@ import { Image } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Overlay from "react-bootstrap/Overlay";
 import CustomButton from "./Button";
-import { Tooltip } from "antd";
+import { Modal, Tooltip } from "antd";
 import { Input } from "antd";
 import AwarenessModal from "./AwarenessModal";
 import Link from "next/link";
+import modal from "antd/lib/modal";
+
+
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
@@ -38,6 +41,7 @@ const NewBuildSideCard = (props: any) => {
 
 
 
+
   const { TextArea } = Input;
 
   const awarenessModalData = {
@@ -45,6 +49,11 @@ const NewBuildSideCard = (props: any) => {
     footer: ["save", "Reveal answer", "Delete"],
     textbox: [{ header: "Back", box: "" }],
   };
+
+  const [modal5Open, setModal5Open] = useState(false);
+  const togglemodal = () => {
+    setModal5Open(!modal5Open);
+  }
 
   return (
     <>
@@ -62,8 +71,8 @@ const NewBuildSideCard = (props: any) => {
         <hr className="border-dark" />
 
         <div className="mx-4">
-          <CustomButton title="Group" className="btn1 px-4 py-3" />
-          <CustomButton title="New row" className="btn2  px-4 py-3 ms-2" />
+          <CustomButton title="Group" className="btn1 px-4 py-3 grpbtn" />
+          <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 newrowbtn" />
         </div>
         <hr className="border-dark" />
 
@@ -237,18 +246,36 @@ const NewBuildSideCard = (props: any) => {
           <Tooltip
             placement="topLeft"
             title={<><div className="d-flex  ">
-              <Image src="../img/bulb.png" className="mx-n2 ms-2 pe-2" /> Please make an account to save your build - don't let all your hard work go to waste!
+              <Image src="../img/bulb.png" className="mx-n2 ms-2 pe-2 bulb" /> Please make an account to save your build - don't let all your hard work go to waste!
               Login via Google</div></>}
             arrowPointAtCenter
             color="#FAEFAF"
-
-
           >
-
             <div className="save bd-highlight  ">
-              <Image src="../img/save.svg" className="ms-2" />
+              <Image src="../img/save.svg" className="ms-2" alt="no image" onClick={() => setModal5Open(true)} />
             </div>
+
           </Tooltip>
+
+
+          <Modal
+            title=""
+            centered
+            open={modal5Open}
+            className="btnrv .ant-modal-close-x"
+          >
+            <div className=''>
+              <Image src='../img/google.png' className="border border-primary googleicon" onClick={() => {
+                console.log("hhhhh")
+              }} />
+              <button className="googleclr border border-primary buttonSave text-white fs-3">Sign Up With Google</button>
+            </div>
+            <span className="fs-5">Add Google Sign In Button To Website</span>
+
+          </Modal>
+
+
+
           {/* <div className="save bd-highlight  ">
           <Image src="../img/save.svg" className="ms-2" onClick={warning} />
         </div> */}
@@ -264,6 +291,9 @@ const NewBuildSideCard = (props: any) => {
             </div></Link>
         </div>
       </div>
+
+
+
       <AwarenessModal
         awarenessModal={awarenessModal}
         awareness={awarenessModalData}
@@ -277,6 +307,8 @@ const NewBuildSideCard = (props: any) => {
               ? "resistanceModalBG"
               : ""
           }`}
+
+
       />
     </>
   );
