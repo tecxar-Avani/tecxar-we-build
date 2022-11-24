@@ -30,12 +30,28 @@ const NewBuild = () => {
   const dispatch = useAppDispatch();
   const BoxSize = 3;
   const { TextArea } = Input;
-  const [buildIds, setBuildIds] = useState<number>();
+  const flashCardArr = [
+    {
+      key: {
+        AL: [
+          { id: 1, question: "how are you?", answer: "fine" },
+          { id: 2, question: "where do you live?", answer: "Ahmadabad" },
+        ],
 
+        AC: [
+          { id: 3, question: "are you working?", answer: "yes" },
+          { id: 4, question: "can you hear us?", answer: "no" },
+        ],
+      },
+    },
+  ];
+  const userArr =[
+    {id:1,name:"AL"},
+    {id:2,name:"AC"}
+  ]
   useEffect(() => {
     dispatch(getFlashCardByBuildId(2));
   }, []);
-console.log("$$$$$$$$$$$$$$$$$$$$",flashCardData)
   const [addFlashCard, SetAddFlashcard] = useState(false);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({
@@ -45,8 +61,6 @@ console.log("$$$$$$$$$$$$$$$$$$$$",flashCardData)
     footer: ["Reveal Answer"],
   });
   const [modal4Open, setModal4Open] = useState(false);
-const hello = flashCardData?.flashCardList?.rows?.flashBuild?.map((aa: any) => aa.question)
-console.log(hello)
   const num = [
     {
       id: 1,
@@ -162,13 +176,18 @@ console.log(hello)
             }
           })}
           <div className="position-absolute mkCard">
-            <Image
-              alt="flashCards"
-              src="../../../img/mkCard.png"
-              onClick={() => {
-                setRevealAns(true);
-              }}
-            />
+            {userArr.length > 0 &&
+              userArr.map((data: any, index: number) => {
+                console.log("DDDD", data.id);
+                // <span>{data.name}</span>;
+                <Image
+                  alt="flashCards"
+                  src="../../../img/mkCard.png"
+                  onClick={() => {
+                    setRevealAns(true);
+                  }}
+                />;
+              })}
           </div>
           <div className="position-absolute flash">
             <Image
@@ -211,7 +230,6 @@ console.log(hello)
             setModal3Open(newData);
           }
         }}
-  
       />
     </>
   );
