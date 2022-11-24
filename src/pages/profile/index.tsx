@@ -1,3 +1,4 @@
+import AddFlashCardModal from "@/components/AddFlashCardModal";
 import FlashCardModal from "@/components/FlashCardModal";
 import HeaderTitle from "@/components/headerTitle";
 import ProfileCard from "@/components/Profile";
@@ -11,7 +12,7 @@ import { useDispatch } from "react-redux";
 // import { getVideoCard } from "../../store/reducers/videoCard.reducer";
 
 const Profile = () => {
-  const [modal2Open, setModal2Open] = useState(false);
+  const [modal1Open, setModal1Open] = useState(false);
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -2400,7 +2401,7 @@ const Profile = () => {
         <ProfileCard
           className="pt-2"
           profile={profiledata}
-          setModal2Open={setModal2Open}
+          setModal2Open={setModal1Open}
         />
         {/* <div className="py-4"> */}
         <div className="m-0 pb-2 overflow-x-scroll">
@@ -2459,10 +2460,10 @@ const Profile = () => {
       </div>
 
       <FlashCardModal
-        modal2Open={modal2Open}
+        modal3Open={modal1Open}
         flashCard={flashCardModalData}
-        setModal2Open={setModal2Open}
-        visible={modal2Open}
+        setModal3Open={setModal1Open}
+        visible={modal1Open}
       />
     </>
   );

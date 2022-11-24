@@ -1,10 +1,13 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
-import {
-  IFlashCards,
-  IFlashCardsResponse,
-} from "@/interfaces/flashCards.interface";
+import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
+import FlashCards from "@/models/flashCards.model";
+import FlashCardsResponse from "@/models/flashCardsResponse.model";
+import User from "@/models/user.model";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
+import { logging } from "googleapis/build/src/apis/logging";
+import { Op,where } from "sequelize";
 
 class FlashCardService {
   private flashCard = DB.flashCards;
@@ -45,8 +48,85 @@ class FlashCardService {
     return createCardData;
   }
 
+  public async getFlashCardResponse(userId: number): Promise<IFlashCardsResponse[] | null> {
+    const where = { created_by: userId }
+    const include = [
+      {
+        model: FlashCards,
+        as: 'flashCard',
+        attributes: [],
+      }
+    ];
+    const options: {
+      raw: boolean;
+      where: any;
+      order: any;
+      limit?: number;
+      offset?: number;
+      include?: any;
+      attributes?: any;
+      logging?: any;
+      nest?: boolean;
+      subQuery: boolean;
+    } = {
+      attributes: [
+        'id', 'response_type', 'flashCard.question', 'flashCard.answer'
+      ],
+      logging: console.log,
+      order: [['id', 'ASC']],
+      where: where,
+      subQuery: false,
+      include: include,
+      nest: true,
+      raw: true,
+    };
+    const getFlashCard: IFlashCardsResponse[] = await this.flashCardsResponse.findAll(options);
+    return getFlashCard;
+  }
+
+
+  public async getFlashCardByBuildId(buildId: number,userId:number): Promise<IFlashCards[] | null> {
+    const where = { build_id  :buildId ,created_by:  "4"}  
+    const include = [
+      {
+        model: User,
+        as: 'created_by_user',
+        attributes: [],
+      }
+    ];
+    const options: {
+      raw: boolean;
+      where: any;
+      order: any;
+      limit?: number;
+      offset?: number;
+      include?: any;
+      attributes?:any ;
+      logging?: any;
+      nest?: boolean;
+      subQuery: boolean;
+       group: any;
+
+    } = {
+      attributes: [
+        'id', 'created_by_user.user_name', 'created_by_user.tag_line', 'created_by_user.email',
+        'question', 'answer'
+      ],
+      logging: console.log,
+      order: [['id', 'ASC']],
+      where: where,
+      subQuery: false,
+      include: include,
+      group: ['created_by','id'],
+      nest: true,
+      raw: true,
+    };
+    const getFlashCardBuildId: IFlashCards[] | any = await this.flashCard.findAll(options);
+    return getFlashCardBuildId;
+  }
+
+  
   public async getFlashCard(userId: number): Promise<IFlashCards[] | null> {
-    console.log("XXXXXXXXXXXXXX", userId);
     const flashCards: IFlashCards[] | null = await this.flashCard.findAll({
       where: { created_by: userId },
       raw: true,
