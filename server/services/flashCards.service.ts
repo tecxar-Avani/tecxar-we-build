@@ -122,7 +122,6 @@ class FlashCardService {
       raw: true,
     };
     const getFlashCardBuildId: IFlashCards[] | any = await this.flashCard.findAll(options);
-    console.log("FFFFFFFFFFFFFFFFFFFFFFFF",getFlashCardBuildId)
     return getFlashCardBuildId;
   }
 
