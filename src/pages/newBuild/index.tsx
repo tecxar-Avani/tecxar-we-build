@@ -31,24 +31,25 @@ const NewBuild = () => {
   const BoxSize = 3;
   const { TextArea } = Input;
   const flashCardArr = [
-    {
-      key: {
-        AL: [
-          { id: 1, question: "how are you?", answer: "fine" },
-          { id: 2, question: "where do you live?", answer: "Ahmadabad" },
-        ],
-
-        AC: [
-          { id: 3, question: "are you working?", answer: "yes" },
-          { id: 4, question: "can you hear us?", answer: "no" },
-        ],
+    [
+      { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
+      {
+        id: 2,
+        question: "where do you live?",
+        answer: "Ahmadabad",
+        user_id: 1,
       },
-    },
+    ],
+
+    [
+      { id: 3, question: "are you working?", answer: "yes", user_id: 2 },
+      { id: 4, question: "can you hear us?", answer: "no", user_id: 2 },
+    ],
   ];
-  const userArr =[
-    {id:1,name:"AL"},
-    {id:2,name:"AC"}
-  ]
+  const userArr = [
+    { id: 1, name: "AL" },
+    { id: 2, name: "AC" },
+  ];
   useEffect(() => {
     dispatch(getFlashCardByBuildId(2));
   }, []);
@@ -144,6 +145,8 @@ const NewBuild = () => {
     },
   ];
   let mapdata = Math.ceil(num.length / 3);
+  console.log("mapdata", mapdata);
+  console.log("num", num);
 
   return (
     <>
@@ -156,6 +159,10 @@ const NewBuild = () => {
             const currentSize = index * BoxSize;
             const remaningBox = num.length - currentSize;
             const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
+
+            console.log("currentSize", currentSize);
+            console.log("remaningBox", remaningBox);
+            console.log("finalSize", finalSize);
             let items;
 
             while (num.length > 0) {

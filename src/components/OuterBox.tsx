@@ -11,7 +11,6 @@ const numOfFields = 3;
 
 const OuterBox = (props: any) => {
   const [form] = Form.useForm();
-
   const handleChange = (event: any) => {
     let textData = event.target.value;
     if (textData.length == 20) {
@@ -61,13 +60,15 @@ const OuterBox = (props: any) => {
   //   }
   // };
 
+  let val = props.id <= 3 ? props.id : 3 + 1;
+
   return (
     <Col sm={4} className="p-0">
       <div className="innerBoxs p-3 w-100 " style={{ height: "170px" }}>
         {props.arr &&
           props.arr.map((ar: any) => {
             return (
-               props.id == ar && (
+              props.id == ar && (
                 <Form form={form} name="formTwo" className="textBoxInner">
                   <div className="position-relative position-relative-example">
                     <TextArea
