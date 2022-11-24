@@ -6,12 +6,12 @@ import VideoCard from "@/components/VideoCard";
 import { Button, Input } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   addFlashCard,
   flashCardSelector,
-  getFlashCard,
+  getFlashCardByBuildId,
 } from "../../store/reducers/flashCard.reducer";
 import { Col, Image, Row } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
@@ -21,6 +21,8 @@ import AwarenessModal from "@/components/AwarenessModal";
 import { Router, useRouter } from "next/router";
 import { Content } from "antd/lib/layout/layout";
 import { Console } from "console";
+import { addAbortSignal } from "stream";
+import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 const NewBuild = () => {
   const router = useRouter();
@@ -28,19 +30,22 @@ const NewBuild = () => {
   const dispatch = useAppDispatch();
   const BoxSize = 3;
   const { TextArea } = Input;
-  const flashCardModalData = {
-    footer: ["save"],
-  };
-  const flashCardList = (data: any) => {  
-     dispatch(getFlashCard())
-  };
-  console.log("################",flashCardData.flashCard)
-  const [modal2Open, setModal2Open] = useState(false);
-  const [modal1Open, setModal1Open] = useState(false);
+  const [buildIds, setBuildIds] = useState<number>();
+
+  
+  
+  useEffect(() => {
+    dispatch(getFlashCardByBuildId(1))
+  },[])
+
+
+  const [addFlashCard, SetAddFlashcard] = useState(false);
+  const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({
-    content: flashCardData.flashCard.question,
+    content: flashCardData?.flashCardList?.rows?.flashBuild?.map((aa:any) => aa.question),
     footer: ["Reveal Answer"],
   });
+  const [modal4Open, setModal4Open] = useState(false);
   const num = [
     {
       id: 1,
@@ -144,7 +149,7 @@ const NewBuild = () => {
               return (<>
                 
                 <NewBuildBoxes
-                  setModal1Open={setModal1Open}
+                  setModal1Open={SetAddFlashcard}
                   item={items}
                   numOfBox={finalSize}
                   key={index}
@@ -160,7 +165,7 @@ const NewBuild = () => {
               alt="flashCards"
               src="../../../img/mkCard.png"
               onClick={() => {
-                setModal1Open(true);
+                setRevealAns(true);
               }}
             />
           </div>
@@ -169,32 +174,39 @@ const NewBuild = () => {
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"
               onClick={() => {
-                setModal2Open(true);
+                SetAddFlashcard(true);
               }}
             />
           </div>
         </div>
       </div>
-      <FlashCardModal
-        modal2Open={modal2Open}
-        flashCard={flashCardModalData}
-        setModal2Open={setModal2Open}
-        visible={modal2Open}
+      <AddFlashCardModal
+        modal2Open={addFlashCard}
+        setModal2Open={SetAddFlashcard}
+        visible={addFlashCard}
       />
       <FlashCardModal
-        modal2Open={modal1Open}
-        flashCard={modal3Open}
-        setModal2Open={setModal1Open}
-        visible={modal1Open}
-        responseCallback={(data: any) => {
-          const newData = {
-            content: data.content,
-            footer: ['Save', 'Cancel']
-          }
-          setModal3Open(newData)
-
-        }}
+        modal={revealAns}
+        // flashCard={modal3Open}
+        setmodalOpen={setRevealAns}
+        modalVisible={revealAns}
+        onClick={modal3Open}
       />
+      <FlashCardModal
+        modal={modal3Open}
+        //flashCard={modal3Open}
+        setmodalOpen={setModal3Open}
+        modalVisible={modal4Open}
+      
+      />
+      <FlashCardModal
+        modal={modal4Open}
+        //flashCard={modal3Open}
+        setmodalOpen={setModal4Open}
+        modalVisible={modal4Open}
+        
+      />
+   
     </>
   );
 };

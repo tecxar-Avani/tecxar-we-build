@@ -20,7 +20,7 @@ const SearchPage = () => {
   const [url, setUrl] = useState("");
   const dispatch = useAppDispatch();
   const { buildList } = useAppSelector(buildSelector);
-console.log("FFFFFFFFFFFFFFFFFFFFFF",buildList)
+
   const videosData: any = [];
   buildList.rows &&
     buildList.rows.length > 0 &&

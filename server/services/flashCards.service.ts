@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 import FlashCards from "@/models/flashCards.model";
@@ -121,6 +122,7 @@ class FlashCardService {
       raw: true,
     };
     const getFlashCardBuildId: IFlashCards[] | any = await this.flashCard.findAll(options);
+    
     return getFlashCardBuildId;
   }
   public async getFlashCard(userId: number): Promise<IFlashCards[] | null> {

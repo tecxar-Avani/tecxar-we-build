@@ -18,7 +18,6 @@ const NewBuildBoxes = (props: any) => {
       <Ractangle />
       <Row className="m-0 px-4 innerBoxMain">
         {props.item?.map((itemData: any, index: any) => {
-          console.log("FFFFFFFFF",itemData.id)
           return (
             <OuterBox
               key={index}
