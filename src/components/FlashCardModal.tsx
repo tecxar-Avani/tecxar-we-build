@@ -14,7 +14,10 @@ const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
   const dispatch = useAppDispatch();
   const handleFlash = (data: any) => {
-    props.responseCallback(data);
+    console.log("&&&&&&&&&&&&&&&&&&&&&&",props)
+    const userId = props.flashCard.userId
+    const questionId = props.flashCard.questionId
+    props.responseCallback(data,userId,questionId);
   };
 
  

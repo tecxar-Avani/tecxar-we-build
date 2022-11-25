@@ -29,9 +29,11 @@ const NewBuild = () => {
   const flashCardData = useAppSelector(flashCardSelector);
   const dispatch = useAppDispatch();
   const BoxSize = 3;
-  const { TextArea } = Input;
+ 
+  const arr = []
+
   const flashCardArr = [
-    [
+    
       { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
       {
         id: 2,
@@ -39,29 +41,47 @@ const NewBuild = () => {
         answer: "Ahmadabad",
         user_id: 1,
       },
-    ],
-
-    [
       { id: 3, question: "are you working?", answer: "yes", user_id: 2 },
       { id: 4, question: "can you hear us?", answer: "no", user_id: 2 },
-    ],
+    
   ];
   const userArr = [
     { id: 1, name: "AL" },
     { id: 2, name: "AC" },
   ];
+ 
+ 
+  const questionData =(data:any)=>{
+    const filterArray = flashCardArr.filter((F) => F.user_id == data)
+ filterArray.map((ar) => {
+  { console.log("AAAAAAAAAAAAAAAAAAA",ar.question)}
+  setModal3Open({
+    content: ar.question,
+    footer: ["Reveal Answer"],
+    userId: ar.user_id,
+    questionId : ar.id,
+  
+  })
+ })
+  setRevealAns(true);
+ }
+
+
+
+
+
+
   useEffect(() => {
     dispatch(getFlashCardByBuildId(2));
   }, []);
   const [addFlashCard, SetAddFlashcard] = useState(false);
   const [revealAns, setRevealAns] = useState(false);
-  const [modal3Open, setModal3Open] = useState({
-    content: flashCardData?.flashCardList?.rows?.flashBuild?.map(
-      (aa: any) => aa.question
-    ),
-    footer: ["Reveal Answer"],
-  });
+  const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
+
+  
+  
+
   const num = [
     {
       id: 1,
@@ -145,8 +165,7 @@ const NewBuild = () => {
     },
   ];
   let mapdata = Math.ceil(num.length / 3);
-  console.log("mapdata", mapdata);
-  console.log("num", num);
+
 
   return (
     <>
@@ -160,13 +179,11 @@ const NewBuild = () => {
             const remaningBox = num.length - currentSize;
             const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
 
-            console.log("currentSize", currentSize);
-            console.log("remaningBox", remaningBox);
-            console.log("finalSize", finalSize);
+      
             let items;
 
             while (num.length > 0) {
-              items = num.splice(0, 3);
+              items = num.splice(0,  3);
               return (
                 <>
                   <NewBuildBoxes
@@ -183,16 +200,18 @@ const NewBuild = () => {
             }
           })}
           <div className="position-absolute mkCard">
-          
             {userArr.length > 0 &&
               userArr.map((data: any, index: number) => {
-                return(
-                <Card className="mt-3">
-                <Card.Body>{data.name}</Card.Body>
-              </Card>
-             
-                )
-             })}
+                return (
+                  <Card
+                    className="mt-3"
+                     onClick={() => {questionData(data.id)}}
+                    
+                  >
+                    <Card.Body>{data.name}</Card.Body>
+                  </Card>
+                );
+              })}
           </div>
           <div className="position-absolute flash">
             <Image
@@ -210,23 +229,28 @@ const NewBuild = () => {
         setModal2Open={SetAddFlashcard}
         visible={addFlashCard}
       />
+   
       <FlashCardModal
         modal={revealAns}
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}
         modalVisible={revealAns}
-        //onClick={modal3Open}
-        responseCallback={(data: any) => {
-          if (data == "Reveal Answer") {
+        
+        responseCallback={(data: any,userId:number,questionId:number) => {
+        
+         flashCardArr.length>0 && flashCardArr.map((d) => {
+          console.log("&&&&&&&&&&&&&&&&&&&&&&&&",d)
+          console.log("#######################",data)
+          if (userId == d.id) {
+         
+        
             const newData = {
-              content: flashCardData?.flashCardList?.rows?.flashBuild?.map(
-                (aa: any) => aa.answer
-              ),
+              content: d.answer,
               footer: ["Again", "Hard", "Good", "Easy"],
               onOk: modal4Open,
-            };
-            setModal3Open(newData);
-          } else {
+          }
+            setModal3Open(newData); 
+        } else {
             const newData = {
               content: "Congratulations! You have finished your deck",
               footer: [],
@@ -234,7 +258,7 @@ const NewBuild = () => {
             };
             setModal3Open(newData);
           }
-        }}
+        })}}
       />
     </>
   );
