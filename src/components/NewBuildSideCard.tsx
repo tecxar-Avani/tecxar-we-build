@@ -72,7 +72,7 @@ const NewBuildSideCard = (props: any) => {
 
         <div className="mx-4">
           <CustomButton title="Group" className="btn1 px-4 py-3 grpbtn" />
-          <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 newrowbtn" />
+          <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 newowbtn" />
         </div>
         <hr className="border-dark" />
 
@@ -268,7 +268,7 @@ const NewBuildSideCard = (props: any) => {
               <Image src='../img/google.png' className="border border-primary googleicon" onClick={() => {
                 console.log("hhhhh")
               }} />
-              <button className="googleclr border border-primary buttonSave text-white fs-3">Sign Up With Google</button>
+              <button className="googlecolor border border-primary buttonSave text-white fs-3">Sign Up With Google</button>
             </div>
             <span className="fs-5">Add Google Sign In Button To Website</span>
 
