@@ -19,8 +19,9 @@ const AwarenessModal = (props: any) => {
         onCancel={() => props.setAwarenessModal(false)}
         footer={props.awareness && props.awareness.footer && props.awareness.footer.length>0 && props.awareness.footer.map((btn: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined) => {return (<Button>{btn}</Button>) })}
         className={`${props.className} awarenessModal`}
+        
       >
-        <div className={`inputbox awarenessModal ${props.className}`}><TextArea rows={2} className="mb-2" value={props.textValue}></TextArea></div>
+        <div className={`inputbox awarenessModal ${props.className}`}><TextArea id={props.id} rows={2} className="mb-2" value={props.textValue}></TextArea></div>
        <div className={`awarenessModal header ${props.className}`}>{props.awareness && props.awareness.content || props.awareness && props.awareness.textbox && props.awareness.textbox.length>0 && props.awareness.textbox.map((btn: { header: any; box: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }) => {return (<div className="header">{btn.header}<TextArea  showCount maxLength={500} rows={5} className="mb-2">{btn.box}</TextArea></div>) })}</div>
       </Modal>
       </div>

@@ -10,7 +10,6 @@ const numOfFields = 3;
 
 const InnerBox = (props: any) => {
   const [form] = Form.useForm();
-  console.log("inner box", props);
   const handleChange = (event: any) => {
     let textData = event.target.value;
     if (textData.length > 100) {

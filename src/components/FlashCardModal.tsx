@@ -19,7 +19,6 @@ const FlashCardModal = (props: any) => {
     const index = props.flashCard.index;
     const arrayLength = props.flashCard.arrayLength;
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
-      console.log("XXXXXXXXXXXX",index,arrayLength)
       //add dispatch API here instead of console
       if (index <= arrayLength) {
         props.questionCallback(userId,index);

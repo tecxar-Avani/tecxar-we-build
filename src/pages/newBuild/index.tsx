@@ -32,8 +32,6 @@ const NewBuild = () => {
   const dispatch = useAppDispatch();
   const BoxSize = 3;
 
-
-
   const flashCardArr = [
     { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
     {
@@ -52,7 +50,7 @@ const NewBuild = () => {
 
   const questionData = (data: any, index?: number) => {
     const filterArray = flashCardArr.filter((F) => F.user_id == data);
-    console.log("filterArray", filterArray);
+   
       setModal3Open({
         content: index ? filterArray[index].question : filterArray[0].question,
         footer: ["Reveal Answer"],
@@ -75,7 +73,7 @@ const NewBuild = () => {
   const num = [
     {
       id: 1,
-      message: "1",
+      message: "hello everyone",
     },
     {
       id: 2,
@@ -156,10 +154,18 @@ const NewBuild = () => {
   ];
   let mapdata = Math.ceil(num.length / 3);
 
+ const hel = num.map((h) => {
+   return(
+    [h.id,
+    h.message]
+  )
+})
+
   return (
     <>
       <div className="d-flex m-0 w-100">
-        <NewBuildSideCard id={router.query.id} />
+        <NewBuildSideCard id={router.query.id} value={hel}/>
+      
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
             const currentSize = index * BoxSize;
@@ -169,8 +175,6 @@ const NewBuild = () => {
 
             while (num.length > 0) {
               items = num.splice(0, 3);
-              console.log("EEEEEEEEEEEEE",num)
-
               if(arr.length > 20){
                 num.push({ id: arr.length + 1, message: "" });
               }
@@ -258,7 +262,7 @@ const NewBuild = () => {
             });
         }}
         questionCallback={(userId: number, index: number) => {
-          console.log("TTTTTTTTTTttt", userId);
+       
           questionData(userId, index);
         }}
       />
