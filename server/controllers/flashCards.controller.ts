@@ -52,7 +52,6 @@ export class FlashController {
     }
   }
 
-
   @Post("/flashcardresponse")
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new build" })
@@ -121,6 +120,24 @@ export class FlashController {
         status: true,
         flashBuild,
       }
+      
+      // let output = []
+      // flashBuild.forEach(function(item) {
+      //   var existing = output.filter(function(v, i) {
+      //      v.user_id == item.user_id;
+      //   });
+      //   if (existing.length) {
+      //     let existingIndex = output.indexOf(existing[0]);
+      //    console.log('>>>>>>>',Object.assign({userId: item.user_id}));
+      //     output[existingIndex].value = output[existingIndex].value.concat(item.user_id);
+      //   } else {
+      //     if (typeof item.user_id == 'number')
+      //       item.user_id = [item.user_id];
+      //     output.push(item);
+      //   }
+      // });
+      // console.log('/////////',output);
+      
     } catch (error) {
       return {
         error: {
