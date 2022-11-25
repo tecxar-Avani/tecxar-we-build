@@ -44,25 +44,19 @@ const AddFlashCardModal = (props: any) => {
           </Button>
         }
       >
-        <Form id="form" form={form} onFinish={handleSubmit}>
-          <div className="inputbox">
-            <Form.Item name={"question"} label={"Front"}>
-              <TextArea
-                showCount
-                maxLength={100}
-                rows={4}
-                className="mb-2"
-              ></TextArea>
-            </Form.Item>
-            <Form.Item name={"answer"} label={"Back"}>
-              <TextArea
-                showCount
-                maxLength={100}
-                rows={4}
-                className="mb-2"
-              ></TextArea>
-            </Form.Item>
-          </div>
+        <Form
+          form={form}
+          id="form"
+          onFinish={handleSubmit}
+          layout="vertical"
+          autoComplete="off"
+        >
+          <Form.Item name="question" label="Front">
+            <TextArea showCount maxLength={100} rows={4} />
+          </Form.Item>
+          <Form.Item name={"answer"} label={"Back"}>
+            <TextArea showCount maxLength={100} rows={4} />
+          </Form.Item>
         </Form>
       </Modal>
     </>

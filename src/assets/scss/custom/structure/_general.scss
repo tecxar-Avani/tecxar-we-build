@@ -596,7 +596,21 @@ textarea.ant-input {
 .mkCard {
   right: 21px;
   bottom: 103px;
+ 
+  .card{
+    border: 1px solid black;
+    border-radius: 6px;
+    height: 64px;
+    width: 46px;
+    font-size: 25px;
+    font-weight: 400;
+    padding: 0px !important;
+  }
+  .card-body{
+    padding: 6px;
 }
+  }
+
 
 .videoCard01 {
   .title {

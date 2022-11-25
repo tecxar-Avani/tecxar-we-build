@@ -12,12 +12,22 @@ import {
 
 const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
+
   const dispatch = useAppDispatch();
   const handleFlash = (data: any) => {
-    props.responseCallback(data);
+    const userId = props.flashCard.userId;
+    const questionId = props.flashCard.questionId;
+    const index = props.flashCard.index;
+    const arrayLength = props.flashCard.arrayLength;
+    if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
+      //add dispatch API here instead of console
+      if (index <= arrayLength) {
+        props.questionCallback(userId, index, questionId);
+      }
+    } else if (data == "Reveal Answer") {
+      props.responseCallback(data, userId, questionId, index, arrayLength);
+    }
   };
-
- 
 
   return (
     <>
@@ -34,7 +44,6 @@ const FlashCardModal = (props: any) => {
           }
           centered
           visible={props.modalVisible}
-          // onOk={form.submit}
           onCancel={() => props.setmodalOpen(false)}
           footer={
             props?.flashCard?.footer &&
