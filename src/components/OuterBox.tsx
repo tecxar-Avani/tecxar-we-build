@@ -18,47 +18,7 @@ const OuterBox = (props: any) => {
       props.responseCallback(value);
     }
   };
-  // const chageInput = (e: {
-  //   target: { maxLength: any; value: any; id: any };
-  // }) => {
-  //   const { maxLength, value, id } = e.target;
-  //   const [fieldName, fieldIndex] = id;
-
-  //   if (value.length >= maxLength) {
-  //     const nextSibling = parseInt(id) + 1;
-  //     if (nextSibling == null) {
-  //       return (
-  //         <>
-  //           <Form name="formTwo" className="textBoxInnerNone">
-  //             <TextArea
-  //               name={`message${props.id}`}
-  //               placeholder=""
-  //               defaultValue={props.boxData}
-  //               //value={props.boxData}
-  //               autoSize={{ minRows: 5, maxRows: 5 }}
-  //               maxLength={15}
-  //               onChange={chageInput}
-  //               id={props.id}
-  //             />
-  //           </Form>
-  //         </>
-  //       );
-  //     } else {
-  //       <Form name="formTwo" className="textBoxInnerBlock">
-  //         <TextArea
-  //           name={`message${props.id}`}
-  //           placeholder=""
-  //           defaultValue={props.boxData}
-  //           //value={props.boxData}
-  //           autoSize={{ minRows: 5, maxRows: 5 }}
-  //           //maxLength={15}
-  //           onChange={handleChange}
-  //           id={props.id}
-  //         />
-  //       </Form>;
-  //     }
-  //   }
-  // };
+  
 
   let val = props.id <= 3 ? props.id : 3 + 1;
 

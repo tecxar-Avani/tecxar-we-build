@@ -17,12 +17,12 @@ const NewBuildSideCard = (props: any) => {
   const typeVideo = useRef(null);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
-  const [inspiration, setInspiration] = useState(false)
-  const [resistance, setResistance] = useState(false)
+  const [inspiration, setInspiration] = useState(false);
+  const [resistance, setResistance] = useState(false);
   const Acceptance = () => {
-    setResistance(false)
-    setInspiration(false)
-    setAccept(true)
+    setResistance(false);
+    setInspiration(false);
+    setAccept(true);
   };
   const Inspiration = () => {
     setAccept(false);
@@ -30,18 +30,15 @@ const NewBuildSideCard = (props: any) => {
     setInspiration(true);
   };
   const Resistance = () => {
-    setAccept(false)
-    setInspiration(false)
-    setResistance(true)
+    setAccept(false);
+    setInspiration(false);
+    setResistance(true);
   };
-
-
-
 
   const { TextArea } = Input;
 
   const awarenessModalData = {
-    title: ["hello"],
+    
     footer: ["save", "Reveal answer", "Delete"],
     textbox: [{ header: "Back", box: "" }],
   };
@@ -66,13 +63,13 @@ const NewBuildSideCard = (props: any) => {
           <CustomButton title="New row" className="btn2  px-4 py-3 ms-2" />
         </div>
         <hr className="border-dark" />
-
+<div>
         <span
           onClick={() => {
             setAwarenessModal(true);
           }}
         >
-          <span onClick={Inspiration} >
+          <span onClick={Inspiration}>
             <CustomButton title="Inspiration" className="inspirationButton " />
           </span>
         </span>
@@ -96,11 +93,13 @@ const NewBuildSideCard = (props: any) => {
             />
           </span>
 
-          <div onClick={() => {
-            setAwarenessModal(true);
-          }}>
-            <span onClick={Acceptance} >
-              < CustomButton title="Acceptance" className="acceptanceButton" />
+          <div
+            onClick={() => {
+              setAwarenessModal(true);
+            }}
+          >
+            <span onClick={Acceptance}>
+              <CustomButton title="Acceptance" className="acceptanceButton" />
             </span>
           </div>
         </div>
@@ -110,7 +109,8 @@ const NewBuildSideCard = (props: any) => {
             setAwarenessModal(true);
           }}
         >
-          <div className="redpolygon" onClick={Resistance} /></span>
+          <div className="redpolygon" onClick={Resistance} />
+        </span>
 
         <span
           onClick={() => {
@@ -120,13 +120,8 @@ const NewBuildSideCard = (props: any) => {
           <span onClick={Resistance}>
             <CustomButton title="Resistance" className="resistanceButton" />
           </span>
-
         </span>
-
-
-
-
-
+        </div>
         <hr className="border-dark" />
 
         <div className="d-flex ml-2 ms-1 threeButton">
@@ -226,25 +221,28 @@ const NewBuildSideCard = (props: any) => {
                 <button className="high-btn">Medium</button>
                 <br></br>
                 <button className="high-btn">High</button>
-                <button className="high-btn3">Very High</button></div>
+                <button className="high-btn3">Very High</button>
+              </div>
             )}
           </Overlay>
         </div>
 
         <hr className="border-dark  ms-2  " />
         <div className="d-flex owd bd-highlight">
-
           <Tooltip
             placement="topLeft"
-            title={<><div className="d-flex  ">
-              <Image src="../img/bulb.png" className="mx-n2 ms-2 pe-2" /> Please make an account to save your build - don't let all your hard work go to waste!
-              Login via Google</div></>}
+            title={
+              <>
+                <div className="d-flex  ">
+                  <Image src="../img/bulb.png" className="mx-n2 ms-2 pe-2" />{" "}
+                  Please make an account to save your build - don't let all your
+                  hard work go to waste! Login via Google
+                </div>
+              </>
+            }
             arrowPointAtCenter
             color="#FAEFAF"
-
-
           >
-
             <div className="save bd-highlight  ">
               <Image src="../img/save.svg" className="ms-2" />
             </div>
@@ -261,7 +259,8 @@ const NewBuildSideCard = (props: any) => {
           <Link href={`../`}>
             <div className=" delt bd-highlight">
               <Image src="../img/delt.svg" className="me-3" />
-            </div></Link>
+            </div>
+          </Link>
         </div>
       </div>
       <AwarenessModal
@@ -269,14 +268,15 @@ const NewBuildSideCard = (props: any) => {
         awareness={awarenessModalData}
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
-        className={`${accept
-          ? "accptanceModalBG"
-          : inspiration
+        className={`${
+          accept
+            ? "accptanceModalBG"
+            : inspiration
             ? "inspirationModalBG"
             : resistance
-              ? "resistanceModalBG"
-              : ""
-          }`}
+            ? "resistanceModalBG"
+            : ""
+        }`}
       />
     </>
   );
