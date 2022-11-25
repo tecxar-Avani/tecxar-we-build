@@ -32,7 +32,7 @@ const NewBuild = () => {
   const dispatch = useAppDispatch();
   const BoxSize = 3;
 
-  const arr = [];
+
 
   const flashCardArr = [
     { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
