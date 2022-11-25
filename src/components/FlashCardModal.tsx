@@ -12,6 +12,7 @@ import {
 
 const FlashCardModal = (props: any) => {
   const flashCardData = useAppSelector(flashCardSelector);
+
   const dispatch = useAppDispatch();
   const handleFlash = (data: any) => {
     const userId = props.flashCard.userId;
@@ -19,13 +20,13 @@ const FlashCardModal = (props: any) => {
     const index = props.flashCard.index;
     const arrayLength = props.flashCard.arrayLength;
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
-      console.log("XXXXXXXXXXXX",index,arrayLength)
       //add dispatch API here instead of console
       if (index <= arrayLength) {
-        props.questionCallback(userId,index);
+        props.questionCallback(userId, index, questionId);
       }
+    } else if (data == "Reveal Answer") {
+      props.responseCallback(data, userId, questionId, index, arrayLength);
     }
-    props.responseCallback(data, userId, questionId, index, arrayLength);
   };
 
   return (

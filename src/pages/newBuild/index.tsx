@@ -31,9 +31,6 @@ const NewBuild = () => {
   const [counter, setCounter] = useState(1);
   const dispatch = useAppDispatch();
   const BoxSize = 3;
-
-  const arr = [];
-
   const flashCardArr = [
     { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
     {
@@ -50,9 +47,18 @@ const NewBuild = () => {
     { id: 2, name: "AC" },
   ];
 
-  const questionData = (data: any, index?: number) => {
+  const questionData = (data: any, index?: number, questionId?: number) => {
     const filterArray = flashCardArr.filter((F) => F.user_id == data);
-    console.log("filterArray", filterArray);
+    const findLastValue = filterArray.slice(-1)[0];
+    const lastQuestionId = findLastValue.id;
+    if (questionId == lastQuestionId) {
+      setModal3Open({
+        content: "Congratulations! You have finished your deck",
+        footer: [],
+        onOk: modal4Open,
+      });
+      setRevealAns(true);
+    } else {
       setModal3Open({
         content: index ? filterArray[index].question : filterArray[0].question,
         footer: ["Reveal Answer"],
@@ -60,8 +66,10 @@ const NewBuild = () => {
         questionId: index ? filterArray[index].id : filterArray[0].id,
         index: index ? index : 1,
         arrayLength: filterArray.length,
+        onOk: modal4Open,
       });
       setRevealAns(true);
+    }
   };
 
   useEffect(() => {
@@ -71,6 +79,7 @@ const NewBuild = () => {
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
+  const [questionModalOpen, setQuestionModalOpen] = useState(false);
 
   const num = [
     {
@@ -169,9 +178,7 @@ const NewBuild = () => {
 
             while (num.length > 0) {
               items = num.splice(0, 3);
-              console.log("EEEEEEEEEEEEE",num)
-
-              if(arr.length > 20){
+              if (arr.length > 20) {
                 num.push({ id: arr.length + 1, message: "" });
               }
               return (
@@ -236,7 +243,6 @@ const NewBuild = () => {
           const questionFilter = filterArray.filter((F) => F.id == questionId);
           questionFilter.length > 0 &&
             questionFilter.map((ans) => {
-              //  if (userId == ans.id) {
               const newData = {
                 content: ans.answer,
                 footer: ["Again", "Hard", "Good", "Easy"],
@@ -247,19 +253,14 @@ const NewBuild = () => {
                 arrayLength: arrayLength,
               };
               setModal3Open(newData);
-              //  } else {
-              //    const newData = {
-              //      content: "Congratulations! You have finished your deck",
-              //      footer: [],
-              //      onOk: modal4Open,
-              //    };
-              //    setModal3Open(newData);
-              //  }
             });
         }}
-        questionCallback={(userId: number, index: number) => {
-          console.log("TTTTTTTTTTttt", userId);
-          questionData(userId, index);
+        questionCallback={(
+          userId: number,
+          index: number,
+          questionId: number
+        ) => {
+          questionData(userId, index, questionId);
         }}
       />
     </>
