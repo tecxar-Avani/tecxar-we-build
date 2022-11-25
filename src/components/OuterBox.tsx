@@ -1,26 +1,19 @@
 import TextArea from "antd/lib/input/TextArea";
-import React, { useState } from "react";
+import React from "react";
 import { Col } from "react-bootstrap";
 import { Form } from "antd";
-import InnerBox from "./InnerBox";
 
-// interface IVideosCard {
-//   VideoCardData: any;
-// }
-const numOfFields = 3;
 
 const OuterBox = (props: any) => {
   const [form] = Form.useForm();
+
   const handleChange = (event: any) => {
     let textData = event.target.value;
-    if (textData.length == 20) {
+    if (textData.length == 2) {
       const value = props.id + 1;
       props.responseCallback(value);
     }
   };
-  
-
-  let val = props.id <= 3 ? props.id : 3 + 1;
 
   return (
     <Col sm={4} className="p-0">
@@ -35,7 +28,7 @@ const OuterBox = (props: any) => {
                       name={`message${props.id}`}
                       placeholder=""
                       defaultValue={props.boxData}
-                      maxLength={20}
+                      maxLength={2}
                       autoSize={{ minRows: 5, maxRows: 5 }}
                       onInput={handleChange}
                       id={props.id}

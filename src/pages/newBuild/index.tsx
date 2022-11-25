@@ -27,49 +27,42 @@ import AddFlashCardModal from "@/components/AddFlashCardModal";
 const NewBuild = () => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
+  const [arr, setArr] = useState([1]);
+  const [counter, setCounter] = useState(1);
   const dispatch = useAppDispatch();
   const BoxSize = 3;
- 
-  const arr = []
+
+  const arr = [];
 
   const flashCardArr = [
-    
-      { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
-      {
-        id: 2,
-        question: "where do you live?",
-        answer: "Ahmadabad",
-        user_id: 1,
-      },
-      { id: 3, question: "are you working?", answer: "yes", user_id: 2 },
-      { id: 4, question: "can you hear us?", answer: "no", user_id: 2 },
-    
+    { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
+    {
+      id: 2,
+      question: "where do you live?",
+      answer: "Ahmadabad",
+      user_id: 1,
+    },
+    { id: 3, question: "are you working?", answer: "yes", user_id: 2 },
+    { id: 4, question: "can you hear us?", answer: "no", user_id: 2 },
   ];
   const userArr = [
     { id: 1, name: "AL" },
     { id: 2, name: "AC" },
   ];
- 
- 
-  const questionData =(data:any)=>{
-    const filterArray = flashCardArr.filter((F) => F.user_id == data)
- filterArray.map((ar) => {
-  { console.log("AAAAAAAAAAAAAAAAAAA",ar.question)}
-  setModal3Open({
-    content: ar.question,
-    footer: ["Reveal Answer"],
-    userId: ar.user_id,
-    questionId : ar.id,
-  
-  })
- })
-  setRevealAns(true);
- }
 
-
-
-
-
+  const questionData = (data: any, index?: number) => {
+    const filterArray = flashCardArr.filter((F) => F.user_id == data);
+    console.log("filterArray", filterArray);
+      setModal3Open({
+        content: index ? filterArray[index].question : filterArray[0].question,
+        footer: ["Reveal Answer"],
+        userId: index ? filterArray[index].user_id : filterArray[0].user_id,
+        questionId: index ? filterArray[index].id : filterArray[0].id,
+        index: index ? index : 1,
+        arrayLength: filterArray.length,
+      });
+      setRevealAns(true);
+  };
 
   useEffect(() => {
     dispatch(getFlashCardByBuildId(2));
@@ -79,13 +72,10 @@ const NewBuild = () => {
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
 
-  
-  
-
   const num = [
     {
       id: 1,
-      message: "Testing Data 1",
+      message: "1",
     },
     {
       id: 2,
@@ -166,34 +156,33 @@ const NewBuild = () => {
   ];
   let mapdata = Math.ceil(num.length / 3);
 
-
   return (
     <>
       <div className="d-flex m-0 w-100">
         <NewBuildSideCard id={router.query.id} />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
-            const [arr, setArr] = useState(3);
-
             const currentSize = index * BoxSize;
             const remaningBox = num.length - currentSize;
             const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
-
-      
             let items;
 
             while (num.length > 0) {
-              items = num.splice(0,  3);
+              items = num.splice(0, 3);
+              console.log("EEEEEEEEEEEEE",num)
+
+              if(arr.length > 20){
+                num.push({ id: arr.length + 1, message: "" });
+              }
               return (
                 <>
                   <NewBuildBoxes
                     setModal1Open={SetAddFlashcard}
                     item={items}
+                    arr={arr}
+                    setArr={setArr}
                     numOfBox={finalSize}
                     key={index}
-                    callback={(value: number) => {
-                      setArr(value);
-                    }}
                   />
                 </>
               );
@@ -205,8 +194,9 @@ const NewBuild = () => {
                 return (
                   <Card
                     className="mt-3"
-                     onClick={() => {questionData(data.id)}}
-                    
+                    onClick={() => {
+                      questionData(data.id);
+                    }}
                   >
                     <Card.Body>{data.name}</Card.Body>
                   </Card>
@@ -229,36 +219,48 @@ const NewBuild = () => {
         setModal2Open={SetAddFlashcard}
         visible={addFlashCard}
       />
-   
+
       <FlashCardModal
         modal={revealAns}
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}
         modalVisible={revealAns}
-        
-        responseCallback={(data: any,userId:number,questionId:number) => {
-        
-         flashCardArr.length>0 && flashCardArr.map((d) => {
-          console.log("&&&&&&&&&&&&&&&&&&&&&&&&",d)
-          console.log("#######################",data)
-          if (userId == d.id) {
-         
-        
-            const newData = {
-              content: d.answer,
-              footer: ["Again", "Hard", "Good", "Easy"],
-              onOk: modal4Open,
-          }
-            setModal3Open(newData); 
-        } else {
-            const newData = {
-              content: "Congratulations! You have finished your deck",
-              footer: [],
-              onOk: modal4Open,
-            };
-            setModal3Open(newData);
-          }
-        })}}
+        responseCallback={(
+          data: any,
+          userId: number,
+          questionId: number,
+          index: number,
+          arrayLength: number
+        ) => {
+          const filterArray = flashCardArr.filter((F) => F.user_id == userId);
+          const questionFilter = filterArray.filter((F) => F.id == questionId);
+          questionFilter.length > 0 &&
+            questionFilter.map((ans) => {
+              //  if (userId == ans.id) {
+              const newData = {
+                content: ans.answer,
+                footer: ["Again", "Hard", "Good", "Easy"],
+                onOk: modal4Open,
+                userId: userId,
+                questionId: questionId,
+                index: index,
+                arrayLength: arrayLength,
+              };
+              setModal3Open(newData);
+              //  } else {
+              //    const newData = {
+              //      content: "Congratulations! You have finished your deck",
+              //      footer: [],
+              //      onOk: modal4Open,
+              //    };
+              //    setModal3Open(newData);
+              //  }
+            });
+        }}
+        questionCallback={(userId: number, index: number) => {
+          console.log("TTTTTTTTTTttt", userId);
+          questionData(userId, index);
+        }}
       />
     </>
   );
