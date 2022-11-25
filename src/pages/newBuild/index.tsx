@@ -27,6 +27,8 @@ import AddFlashCardModal from "@/components/AddFlashCardModal";
 const NewBuild = () => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
+  const [arr, setArr] = useState([1]);
+  const [counter, setCounter] = useState(1);
   const dispatch = useAppDispatch();
   const BoxSize = 3;
   const { TextArea } = Input;
@@ -65,7 +67,7 @@ const NewBuild = () => {
   const num = [
     {
       id: 1,
-      message: "Testing Data 1",
+      message: "1",
     },
     {
       id: 2,
@@ -145,8 +147,6 @@ const NewBuild = () => {
     },
   ];
   let mapdata = Math.ceil(num.length / 3);
-  console.log("mapdata", mapdata);
-  console.log("num", num);
 
   return (
     <>
@@ -154,29 +154,27 @@ const NewBuild = () => {
         <NewBuildSideCard id={router.query.id} />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
-            const [arr, setArr] = useState(3);
-
             const currentSize = index * BoxSize;
             const remaningBox = num.length - currentSize;
             const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
-
-            console.log("currentSize", currentSize);
-            console.log("remaningBox", remaningBox);
-            console.log("finalSize", finalSize);
             let items;
 
             while (num.length > 0) {
               items = num.splice(0, 3);
+              console.log("EEEEEEEEEEEEE",num)
+
+              if(arr.length > 20){
+                num.push({ id: arr.length + 1, message: "" });
+              }
               return (
                 <>
                   <NewBuildBoxes
                     setModal1Open={SetAddFlashcard}
                     item={items}
+                    arr={arr}
+                    setArr={setArr}
                     numOfBox={finalSize}
                     key={index}
-                    callback={(value: number) => {
-                      setArr(value);
-                    }}
                   />
                 </>
               );
@@ -185,7 +183,6 @@ const NewBuild = () => {
           <div className="position-absolute mkCard">
             {userArr.length > 0 &&
               userArr.map((data: any, index: number) => {
-                console.log("DDDD", data.id);
                 // <span>{data.name}</span>;
                 <Image
                   alt="flashCards"
