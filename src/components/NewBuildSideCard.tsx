@@ -71,8 +71,8 @@ const NewBuildSideCard = (props: any) => {
         <hr className="border-dark" />
 
         <div className="mx-4">
-          <CustomButton title="Group" className="btn1 px-4 py-3 grpbtn" />
-          <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 newowbtn" />
+          <CustomButton title="Group" className="btn1 px-4 py-3 " />
+          <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 " />
         </div>
         <hr className="border-dark" />
 
