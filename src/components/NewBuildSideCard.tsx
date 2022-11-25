@@ -42,15 +42,18 @@ const NewBuildSideCard = (props: any) => {
 
   const awarenessModalData = {
 
-    footer: ["save", "Reveal answer", "Delete"],
+    footer: ["Add"],
     textbox: [{ header: "Back", box: "" }],
   };
+
+
+  const BoxValue = props.value.map((val: any) => { return (val) })
 
   const [modal5Open, setModal5Open] = useState(false);
   const togglemodal = () => {
     setModal5Open(!modal5Open);
   }
-
+  console.log("AAAAAAAAAAAAAAAAA", BoxValue)
   return (
     <>
       <div>
@@ -295,6 +298,8 @@ const NewBuildSideCard = (props: any) => {
         awareness={awarenessModalData}
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
+        textValue={BoxValue}
+        id={BoxValue}
         className={`${accept
           ? "accptanceModalBG"
           : inspiration

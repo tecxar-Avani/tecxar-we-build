@@ -28,10 +28,12 @@ const OuterBox = (props: any) => {
                       name={`message${props.id}`}
                       placeholder=""
                       defaultValue={props.boxData}
-                      maxLength={2}
+                      maxLength={150}
                       autoSize={{ minRows: 5, maxRows: 5 }}
                       onInput={handleChange}
                       id={props.id}
+                    
+                      onClick={props.onClick}
                     />
                   </div>
                 </Form>

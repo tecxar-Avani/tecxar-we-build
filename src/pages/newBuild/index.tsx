@@ -84,7 +84,7 @@ const NewBuild = () => {
   const num = [
     {
       id: 1,
-      message: "1",
+      message: "hello everyone",
     },
     {
       id: 2,
@@ -165,10 +165,18 @@ const NewBuild = () => {
   ];
   let mapdata = Math.ceil(num.length / 3);
 
+  const hel = num.map((h) => {
+    return (
+      [h.id,
+      h.message]
+    )
+  })
+
   return (
     <>
       <div className="d-flex m-0 w-100">
-        <NewBuildSideCard id={router.query.id} />
+        <NewBuildSideCard id={router.query.id} value={hel} />
+
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
             const currentSize = index * BoxSize;

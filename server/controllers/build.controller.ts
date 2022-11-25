@@ -23,7 +23,7 @@ import { updateVideoBuildDto, videoBuildDto } from "@/dtos/videobuilds.dto";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import { google } from "googleapis";
 import config from "@/configs";
-
+import moment from "moment-duration-format";
 @Controller("/build")
 export class BuildController {
   private buildService = new BuildService();
@@ -109,6 +109,47 @@ export class BuildController {
         q:
           userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
       });
+      let finalDuration;
+      const durationCalculation = (duration) => {
+        var a = duration.match(/\d+/g);
+        if (
+          duration.indexOf("M") >= 0 &&
+          duration.indexOf("H") == -1 &&
+          duration.indexOf("S") == -1
+        ) {
+          a = [0, a[0], 0];
+        }
+        if (duration.indexOf("H") >= 0 && duration.indexOf("M") == -1) {
+          a = [a[0], 0, a[1]];
+        }
+        if (
+          duration.indexOf("H") >= 0 &&
+          duration.indexOf("M") == -1 &&
+          duration.indexOf("S") == -1
+        ) {
+          a = [a[0], 0, 0];
+        }
+        duration = 0;
+
+        if (a.length == 3) {
+          duration = duration + parseInt(a[0]) * 3600;
+          duration = duration + parseInt(a[1]) * 60;
+          duration = duration + parseInt(a[2]);
+        }
+        if (a.length == 2) {
+          duration = duration + parseInt(a[0]) * 60;
+          duration = duration + parseInt(a[1]);
+        }
+        if (a.length == 1) {
+          duration = duration + parseInt(a[0]);
+        }
+        let minutes = Math.floor(duration / 60);
+        duration = duration % 60;
+        let hours = Math.floor(minutes / 60);
+        minutes = minutes % 60;
+        finalDuration = `${hours}:${minutes}:${duration}`;
+        return finalDuration;
+      };
 
       const titles = [];
       for (let i = 0; i < response.data.items.length; i++) {
@@ -121,14 +162,17 @@ export class BuildController {
           id: array1[0],
           part: ["contentDetails"],
         });
-      
+        const youTubeFormatDuration =
+          duration1.data.items[0].contentDetails.duration;
+        durationCalculation(youTubeFormatDuration);
+
         let data = {
           videoId: item.id.videoId,
           thumbnails: item.snippet.thumbnails.default,
           description: item.snippet.description,
           title: item.snippet.title,
           publishedAt: item.snippet.publishedAt,
-          duration: duration1.data.items[0].contentDetails.duration,
+          duration: finalDuration,
           test: array1[0],
           url: `https://www.youtube.com/embed/${array1[0]}`,
         };
