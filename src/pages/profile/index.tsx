@@ -2385,14 +2385,48 @@ const Profile = () => {
       deleteIcon: "delete.svg",
     },
   ];
-  const flashCardModalData = {
-    //title:["hello"],
-    headerIcon: ["deleteFlash.svg", "edit.svg"],
-    footer: ["save", "Reveal answer", "Delete"],
-    textbox: [
-      { header: "Front", box: "" },
-      { header: "Back", box: "" },
-    ],
+  const [revealAns, setRevealAns] = useState(false);
+  const [modal3Open, setModal3Open] = useState({});
+  const [modal4Open, setModal4Open] = useState(false);
+  const flashCardArr = [
+    { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
+    {
+      id: 2,
+      question: "where do you live?",
+      answer: "Ahmadabad",
+      user_id: 1,
+    },
+    { id: 3, question: "are you working?", answer: "yes", user_id: 2 },
+    { id: 4, question: "can you hear us?", answer: "no", user_id: 2 },
+  ];
+  const userArr = [
+    { id: 1, name: "AL" },
+    { id: 2, name: "AC" },
+  ];
+
+  const questionData = (data: any, index?: number, questionId?: number) => {
+    const filterArray = flashCardArr.filter((F) => F.user_id == data);
+    const findLastValue = filterArray.slice(-1)[0];
+    const lastQuestionId = findLastValue.id;
+    if (questionId == lastQuestionId) {
+      setModal3Open({
+        content: "Congratulations! You have finished your deck",
+        footer: [],
+        onOk: modal4Open,
+      });
+      setRevealAns(true);
+    } else {
+      setModal3Open({
+        content: index ? filterArray[index].question : filterArray[0].question,
+        footer: ["Reveal Answer"],
+        userId: index ? filterArray[index].user_id : filterArray[0].user_id,
+        questionId: index ? filterArray[index].id : filterArray[0].id,
+        index: index ? index : 1,
+        arrayLength: filterArray.length,
+        onOk: modal4Open,
+      });
+      setRevealAns(true);
+    }
   };
 
   return (
@@ -2401,7 +2435,10 @@ const Profile = () => {
         <ProfileCard
           className="pt-2"
           profile={profiledata}
-          setModal2Open={setModal1Open}
+          // setModal2Open={ 
+          //   questionData()
+          // }
+          
         />
         {/* <div className="py-4"> */}
         <div className="m-0 pb-2 overflow-x-scroll">
@@ -2460,10 +2497,40 @@ const Profile = () => {
       </div>
 
       <FlashCardModal
-        modal3Open={modal1Open}
-        flashCard={flashCardModalData}
-        setModal3Open={setModal1Open}
-        visible={modal1Open}
+        modal={revealAns}
+        flashCard={modal3Open}
+        setmodalOpen={setRevealAns}
+        modalVisible={revealAns}
+        responseCallback={(
+          data: any,
+          userId: number,
+          questionId: number,
+          index: number,
+          arrayLength: number
+        ) => {
+          const filterArray = flashCardArr.filter((F) => F.user_id == userId);
+          const questionFilter = filterArray.filter((F) => F.id == questionId);
+          questionFilter.length > 0 &&
+            questionFilter.map((ans) => {
+              const newData = {
+                content: ans.answer,
+                footer: ["Again", "Hard", "Good", "Easy"],
+                onOk: modal4Open,
+                userId: userId,
+                questionId: questionId,
+                index: index,
+                arrayLength: arrayLength,
+              };
+              setModal3Open(newData);
+            });
+        }}
+        questionCallback={(
+          userId: number,
+          index: number,
+          questionId: number
+        ) => {
+          questionData(userId, index, questionId);
+        }}
       />
     </>
   );

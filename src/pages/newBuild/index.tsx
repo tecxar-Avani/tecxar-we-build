@@ -63,6 +63,7 @@ const NewBuild = () => {
     } else {
       setModal3Open({
         content: index ? filterArray[index].question : filterArray[0].question,
+        header:["deleteFlash.svg","edit.svg"],
         footer: ["Reveal Answer"],
         userId: index ? filterArray[index].user_id : filterArray[0].user_id,
         questionId: index ? filterArray[index].id : filterArray[0].id,
@@ -171,7 +172,6 @@ const NewBuild = () => {
  
   const handleChange = (e:any) => {
     setIndex(e.target.value);
-    console.log("Fruit Selected!!",e.target.value);
   
   }
 
