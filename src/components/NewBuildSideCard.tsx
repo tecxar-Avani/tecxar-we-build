@@ -40,14 +40,14 @@ const NewBuildSideCard = (props: any) => {
   const awarenessModalData = {
     
     footer: ["Add"],
-    textbox: [{ header: "Back", box: "" }],
+   
   };
 
 
-const BoxValue = props.value.map((val:any) => {return(val)})
 
 
-console.log("AAAAAAAAAAAAAAAAA",BoxValue)
+
+
   return (
     <>
       <div>
@@ -273,8 +273,10 @@ console.log("AAAAAAAAAAAAAAAAA",BoxValue)
         awareness={awarenessModalData}
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
-        textValue={BoxValue}
-        id={BoxValue}
+        textValue={props.value}
+        title={`${accept ? "Acceptance" : inspiration ? "Inspiration" : resistance ? "Resistance" : ""}`}
+        header={`Maria's ${accept ? "Acceptance" : inspiration ? "Inspiration" : resistance ? "Resistance" : ""}`}
+       
         className={`${
           accept
             ? "accptanceModalBG"

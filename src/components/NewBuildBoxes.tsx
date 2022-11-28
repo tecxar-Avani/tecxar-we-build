@@ -17,6 +17,7 @@ const NewBuildBoxes = (props: any) => {
                 boxData={itemData.message}
                 counter={props.counter}
                 arr={props.arr}
+                onFocus={props.onFocus}
                 responseCallback={(value: number) => {
                   props.setArr([...props.arr, value]);
                 }}

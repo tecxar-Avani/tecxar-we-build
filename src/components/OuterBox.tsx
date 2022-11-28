@@ -9,7 +9,7 @@ const OuterBox = (props: any) => {
 
   const handleChange = (event: any) => {
     let textData = event.target.value;
-    if (textData.length == 2) {
+    if (textData.length == 150) {
       const value = props.id + 1;
       props.responseCallback(value);
     }
@@ -26,14 +26,13 @@ const OuterBox = (props: any) => {
                   <div className="position-relative position-relative-example">
                     <TextArea
                       name={`message${props.id}`}
-                      placeholder=""
+                      placeholder="Enter text here..."
                       defaultValue={props.boxData}
                       maxLength={150}
                       autoSize={{ minRows: 5, maxRows: 5 }}
                       onInput={handleChange}
                       id={props.id}
-                    
-                      onClick={props.onClick}
+                      onFocus={props.onFocus}
                     />
                   </div>
                 </Form>

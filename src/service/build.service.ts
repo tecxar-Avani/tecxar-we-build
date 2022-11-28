@@ -6,5 +6,11 @@ class BuildService {
   ) {
     return API.get(`/build/url?url=${url}`);
   }
+
+  addBuildBox(
+    buildData :any,
+  ){
+    return API.get(`/build/create`,buildData)
+  }
 }
 export default new BuildService();

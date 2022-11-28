@@ -23,10 +23,12 @@ import { Content } from "antd/lib/layout/layout";
 import { Console } from "console";
 import { addAbortSignal } from "stream";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
+import { addBuildBox, buildSelector } from "../../store/reducers/build.reducer";
 
 const NewBuild = () => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
+  const boxData = useAppSelector(buildSelector)
   const [arr, setArr] = useState([1]);
   const [counter, setCounter] = useState(1);
   const dispatch = useAppDispatch();
@@ -80,11 +82,13 @@ const NewBuild = () => {
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
   const [questionModalOpen, setQuestionModalOpen] = useState(false);
+  const [Index, setIndex] = useState(false);
+  //dispatch(addBuildBox(data));
 
   const num = [
     {
       id: 1,
-      message: "hello everyone",
+      message: "",
     },
     {
       id: 2,
@@ -164,18 +168,18 @@ const NewBuild = () => {
     },
   ];
   let mapdata = Math.ceil(num.length / 3);
+ 
+  const handleChange = (e:any) => {
+    setIndex(e.target.value);
+    console.log("Fruit Selected!!",e.target.value);
+  
+  }
 
- const hel = num.map((h) => {
-   return(
-    [h.id,
-    h.message]
-  )
-})
 
   return (
     <>
       <div className="d-flex m-0 w-100">
-        <NewBuildSideCard id={router.query.id} value={hel}/>
+        <NewBuildSideCard id={router.query.id} value={Index}/>
       
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
@@ -198,6 +202,7 @@ const NewBuild = () => {
                     setArr={setArr}
                     numOfBox={finalSize}
                     key={index}
+                    onFocus={handleChange}
                   />
                 </>
               );
