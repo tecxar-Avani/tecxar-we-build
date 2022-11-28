@@ -48,7 +48,7 @@ const OuterBox = (props: any) => {
                       autoSize={{ minRows: 5, maxRows: 5 }}
                       onInput={handleChange}
                       id={props.id}
-                      onClick={props.onClick}
+                      onFocus={props.onFocus}
                     />
                   </div>
                 </Form>
