@@ -93,21 +93,34 @@ export class BuildController {
   async getUsersBuildByUrl(
     @Req() req: Request | any,
     @Res() res: Response,
-    @QueryParam("url") url: string
-    // @Body()url:any
+    @QueryParam("url") url: string,
+    @QueryParam("search")search?:string
   ) {
     try {
+      const urlStore = [];   
       const videoUrl = url;
       const youtube = google.youtube({
         version: "v3",
         auth: config.youtubeApiKey,
       });
-      const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl);
+      const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl,search);
+       const urlMatch = userBuild.map( async url=>{
+          const response:any = await youtube.search.list({
+            part: ["id,snippet"],
+            q:url.video_url
+          })
+          urlStore.push(response)
+        })
+        console.log('>>>>',urlStore);
+        console.log('>>>>',urlMatch);
+        
+      
       const response: any = await youtube.search.list({
         part: ["id,snippet"],
         q:
           userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
       });
+
       let finalDuration;
       const durationCalculation = (duration) => {
         var a = duration.match(/\d+/g);

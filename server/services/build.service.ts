@@ -1,8 +1,10 @@
 
 import { HttpException } from "@/exceptions/HttpException";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
+import VideoBuilds from "@/models/videoBuilds.model ";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
+import { Op } from "sequelize";
 
 
 class BuildService {
@@ -34,17 +36,52 @@ class BuildService {
   }
 
   public async getUsersBuildByUrl(
-    url: string
+    url: string,
+    search?: string
   ): Promise<IVideoBuild[] | null> {
-    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll({
-      where: { video_url: url },
-      raw: true,
-    });
-    if (!videoBuilds) {
-      return null;
-    } else {
-      return videoBuilds;
+    const searchFilter = [];
+    const where = [];
+    if (search != '' && search != 'undefine' && search != undefined) {
+      search = search.toLowerCase();
+      searchFilter.push({
+        difficulty_level: {
+          [Op.like]: `%${search}%`,
+        }
+      }, {
+        potential_polarization: {
+          [Op.like]: `%${search}%`,
+        }
+      })
+      if (search === 'low' || search === 'medium' || search === 'high' || search === 'very_high') {
+        search = search.toLowerCase();
+        searchFilter.push({
+          potential_polarization: {
+            [Op.eq]: `${search}`
+          }
+        })
+      }
+      where.push({[Op.or]:searchFilter})
     }
+    const option: {
+      nest?: boolean;
+      subQuery: boolean;
+      attributes:any,
+      where:any,
+      raw:boolean,
+      order:any
+    } = {
+      attributes: [
+       'id','video_url','type_of_video','created_by', 'difficulty_level', 'potential_polarization'],
+      nest: true,
+      where:where,
+      order: [['id', 'ASC']],
+      raw: true,
+      subQuery: false,
+    }
+    
+    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(option);
+    return videoBuilds;
+
   }
 
   public async updateBuild(id: number, data): Promise<IVideoBuild | null> {
@@ -60,7 +97,7 @@ class BuildService {
 
   public async deleteBuild(id: number): Promise<IVideoBuild[] | null> {
     const videoBuildsDelete: any | null = await this.videoBuild.destroy({
-       where: { id: id },
+      where: { id: id },
     });
     if (!videoBuildsDelete) {
       return null;
