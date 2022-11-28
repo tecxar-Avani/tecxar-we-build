@@ -47,13 +47,13 @@ const NewBuildSideCard = (props: any) => {
   };
 
 
-  const BoxValue = props.value.map((val: any) => { return (val) })
-
+  const BoxValue = props.value
+console.log("SSSSSSSSSSSSSS",props.value)
   const [modal5Open, setModal5Open] = useState(false);
   const togglemodal = () => {
     setModal5Open(!modal5Open);
   }
-  console.log("AAAAAAAAAAAAAAAAA", BoxValue)
+  
   return (
     <>
       <div>
