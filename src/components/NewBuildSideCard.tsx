@@ -45,9 +45,6 @@ const NewBuildSideCard = (props: any) => {
 
 
 
-
-
-
   return (
     <>
       <div>
