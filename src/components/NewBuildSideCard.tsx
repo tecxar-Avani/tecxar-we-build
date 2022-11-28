@@ -46,8 +46,6 @@ const NewBuildSideCard = (props: any) => {
 
 const BoxValue = props.value.map((val:any) => {return(val)})
 
-
-console.log("AAAAAAAAAAAAAAAAA",BoxValue)
   return (
     <>
       <div>

@@ -19,6 +19,17 @@ const NewBuildBoxes = (props: any) => {
                 arr={props.arr}
                 responseCallback={(value: number) => {
                   props.setArr([...props.arr, value]);
+                  if (props.arr.length > 20) {
+                    const arrData = {
+                      id: value + 1,
+                      message: "",
+                    };
+                    // props.setNum(arrData);
+                  }
+                }}
+                setNum={(data) => {
+                  console.log("data",data)
+                  props.setNum(data);
                 }}
               />
             </>
