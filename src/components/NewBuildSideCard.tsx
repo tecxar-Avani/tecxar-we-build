@@ -262,9 +262,7 @@ const NewBuildSideCard = (props: any) => {
             className="btnrv .ant-modal-close-x"
           >
             <div className="mb-n3">
-              <Image src='../img/google.png' className="border border-primary googleicon" onClick={() => {
-                console.log("hhhhh")
-              }} />
+              <Image src='../img/google.png' className="border border-primary googleicon" />
               <button className="googlecolor border border-primary buttonSave text-white fs-3">Sign Up With Google</button>
               <br />
               <span className="fs-5">Add Google Sign In Button To Website</span>

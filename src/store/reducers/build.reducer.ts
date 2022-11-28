@@ -11,7 +11,7 @@ import BuildService from "../../service/build.service";
 import Router from "next/router";
 import { toast } from "react-toastify";
 import { IBuildRowsCountResponse } from "../../../@types/responses";
-import { IVideoBuild } from "../../../@types/common";
+import { IBoxReviews, IVideoBuild } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -26,6 +26,19 @@ export const getBuildByUrl: any = createAsyncThunk(
   }
 );
 
+// export const addBoxReviews = createAsyncThunk(
+//   `boxReviews/add`,
+//   async (createboxReviewsData: IBoxReviews, { dispatch }) => {
+//     const { status, data } = await BuildService.addBoxReviews(
+//       createboxReviewsData
+//     );
+//     return { status, data };
+//   }
+// );
+
+
+
+    
 interface State {
   id: number;
   build: IVideoBuild;
