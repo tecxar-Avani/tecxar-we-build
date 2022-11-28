@@ -12,6 +12,7 @@ import {
   Delete,
   Put,
   Param,
+  UploadedFile,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import FlashCardService from "@/services/flashCards.service";
@@ -19,9 +20,8 @@ import authMiddleware from "@/middlewares/auth.middleware";
 import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos/flashcards.dto";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 
-
 @Controller("/flashcard")
-//@UseBefore(authMiddleware)
+@UseBefore(authMiddleware)
 export class FlashController {
   private flashCardService = new FlashCardService();
 
@@ -53,7 +53,7 @@ export class FlashController {
 
   @Post("/flashcardresponse")
   @HttpCode(201)
-  @OpenAPI({ summary: "Create a new build" })
+  @OpenAPI({ summary: "Create a new FlashCard Response" })
   async flashcardResponse(
     @Body() flashcardResponseData: flashCardResponseDto,
     @Req() req: Request | any,
@@ -66,7 +66,7 @@ export class FlashController {
       return {
         status: true,
         data: createFlashCardResponseData,
-        message: "Video Build created successfully.",
+        message: "FlashCard Response created successfully.",
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -110,26 +110,10 @@ export class FlashController {
   }
 
   @Get("/flashcardbybuild/:id")
-  @OpenAPI({ summary: "Get all build of users" })
+  @OpenAPI({ summary: "Get FlashCard Response by Id" })
   async getFlashCardByBuildId(@Req() req: Request | any,@Param('id') id:number, @Res() res: Response) {
     try {
       const flashBuild = await this.flashCardService.getFlashCardByBuildId(id); 
-      // let output = []
-      // flashBuild.forEach(function(item) {
-      //   var existing = output.filter(function(v, i) {
-      //      v.user_id == item.user_id;
-      //   });
-      //   if (existing.length) {
-      //     let existingIndex = output.indexOf(existing[0]);
-      //    console.log('>>>>>>>',Object.assign({userId: item.user_id}));
-      //     output[existingIndex].value = output[existingIndex].value.concat(item.user_id);
-      //   } else {
-      //     if (typeof item.user_id == 'number')
-      //       item.user_id = [item.user_id];
-      //     output.push(item);
-      //   }
-      // });
-      // console.log('/////////',output);
        return flashBuild;
     } catch (error) {
       return {
@@ -202,7 +186,7 @@ export class FlashController {
       if (flashByDeleteId === null) {
         return res.send({
           status: 404,
-          message: "Flash Card with this Id not found",
+          message: "FlashCard with this Id not found",
         });
       }
       return { status: true, data: flashByDeleteId };

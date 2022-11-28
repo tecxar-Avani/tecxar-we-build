@@ -27,7 +27,7 @@ export class UserController {
   }
 
   @Get("/userByEmail")
-  @OpenAPI({ summary: "Get all users" })
+  @OpenAPI({ summary: "Get all users by Email" })
   async getUserByEmail(
     @Req() req: RequestWithUser | any,
     @Res() res: Response

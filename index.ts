@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 
 import app from './server';
-
+                                                
 const handle = nextApp.getRequestHandler();
 
 (async () => {

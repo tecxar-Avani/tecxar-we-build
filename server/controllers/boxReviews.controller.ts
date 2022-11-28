@@ -22,7 +22,7 @@ export class FlashController {
 
   @Post("/create")
   @HttpCode(201)
-  @OpenAPI({ summary: "Create a new flash card" })
+  @OpenAPI({ summary: "Create a new BoxReviews" })
   async createReview(
     @Body() reviewData: BoxreviewDto,
     @Req() req: Request | any,

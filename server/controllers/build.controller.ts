@@ -23,7 +23,6 @@ import { updateVideoBuildDto, videoBuildDto } from "@/dtos/videobuilds.dto";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import { google } from "googleapis";
 import config from "@/configs";
-import moment from "moment-duration-format";
 @Controller("/build")
 export class BuildController {
   private buildService = new BuildService();
@@ -90,7 +89,7 @@ export class BuildController {
   }
 
   @Get("/url")
-  @OpenAPI({ summary: "Get all build of users" })
+  @OpenAPI({ summary: "Get all build of users by Url" })
   async getUsersBuildByUrl(
     @Req() req: Request | any,
     @Res() res: Response,
