@@ -23,10 +23,12 @@ import { Content } from "antd/lib/layout/layout";
 import { Console } from "console";
 import { addAbortSignal } from "stream";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
+import { addBuildBox, buildSelector } from "../../store/reducers/build.reducer";
 
 const NewBuild = () => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
+  const boxData = useAppSelector(buildSelector)
   const [arr, setArr] = useState([1]);
   const num = [
     {
@@ -112,11 +114,8 @@ const NewBuild = () => {
   ];
   // const [newNumber, setNewNumber] = useState(num);
   const setNum = (data:any) => {
-    console.log("RRRRRRRRRRRRR", data);
-
     num.push(data);
   };
-console.log("RRRRRRRRRRRRR",num.length)
   const dispatch = useAppDispatch();
   const BoxSize = 3;
   const flashCardArr = [
@@ -168,6 +167,12 @@ console.log("RRRRRRRRRRRRR",num.length)
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
   let mapdata = Math.ceil(num.length / 3);
+ 
+  const handleChange = (e:any) => {
+    setIndex(e.target.value);
+    console.log("Fruit Selected!!",e.target.value);
+  
+  }
 
   const hel = num.map((h) => {
     return [h.id, h.message];
@@ -212,6 +217,7 @@ console.log("RRRRRRRRRRRRR",num.length)
                     // }}
                     numOfBox={finalSize}
                     key={index}
+                    onFocus={handleChange}
                   />
                 </>
               );

@@ -42,7 +42,7 @@ const OuterBox = (props: any) => {
                   <div className="position-relative position-relative-example">
                     <TextArea
                       name={`message${props.id}`}
-                      placeholder=""
+                      placeholder="Enter text here..."
                       defaultValue={props.boxData}
                       maxLength={3}
                       autoSize={{ minRows: 5, maxRows: 5 }}

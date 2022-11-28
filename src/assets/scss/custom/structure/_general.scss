@@ -444,7 +444,14 @@ body {
   align-items: center;
   text-align: center;
 }
+.ant-modal-header {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
 
+}
 .awarenessModal {
 
   .ant-modal-content {
@@ -452,14 +459,7 @@ body {
     width: 440px;
   }
 
-  .ant-modal-header {
-    font-family: 'Arimo';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 21px;
-
-  }
+  
 
   textarea.ant-input {
     border-radius: 5px;
