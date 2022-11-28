@@ -240,6 +240,7 @@ const NewBuildSideCard = (props: any) => {
 
         <hr className="border-dark  ms-2  " />
         <div className="d-flex owd bd-highlight">
+
           <Tooltip
             placement="topLeft"
             title={<><div className="d-flex  ">
@@ -288,7 +289,6 @@ const NewBuildSideCard = (props: any) => {
           </Link>
         </div>
       </div>
-
 
 
       <AwarenessModal

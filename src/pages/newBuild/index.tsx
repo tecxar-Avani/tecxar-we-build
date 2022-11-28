@@ -23,68 +23,17 @@ import { Content } from "antd/lib/layout/layout";
 import { Console } from "console";
 import { addAbortSignal } from "stream";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
+import { addBuildBox, buildSelector } from "../../store/reducers/build.reducer";
 
 const NewBuild = () => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
+  const boxData = useAppSelector(buildSelector)
   const [arr, setArr] = useState([1]);
-  const [counter, setCounter] = useState(1);
-  const dispatch = useAppDispatch();
-  const BoxSize = 3;
-  const flashCardArr = [
-    { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
-    {
-      id: 2,
-      question: "where do you live?",
-      answer: "Ahmadabad",
-      user_id: 1,
-    },
-    { id: 3, question: "are you working?", answer: "yes", user_id: 2 },
-    { id: 4, question: "can you hear us?", answer: "no", user_id: 2 },
-  ];
-  const userArr = [
-    { id: 1, name: "AL" },
-    { id: 2, name: "AC" },
-  ];
-
-  const questionData = (data: any, index?: number, questionId?: number) => {
-    const filterArray = flashCardArr.filter((F) => F.user_id == data);
-    const findLastValue = filterArray.slice(-1)[0];
-    const lastQuestionId = findLastValue.id;
-    if (questionId == lastQuestionId) {
-      setModal3Open({
-        content: "Congratulations! You have finished your deck",
-        footer: [],
-        onOk: modal4Open,
-      });
-      setRevealAns(true);
-    } else {
-      setModal3Open({
-        content: index ? filterArray[index].question : filterArray[0].question,
-        footer: ["Reveal Answer"],
-        userId: index ? filterArray[index].user_id : filterArray[0].user_id,
-        questionId: index ? filterArray[index].id : filterArray[0].id,
-        index: index ? index : 1,
-        arrayLength: filterArray.length,
-        onOk: modal4Open,
-      });
-      setRevealAns(true);
-    }
-  };
-
-  useEffect(() => {
-    dispatch(getFlashCardByBuildId(2));
-  }, []);
-  const [addFlashCard, SetAddFlashcard] = useState(false);
-  const [revealAns, setRevealAns] = useState(false);
-  const [modal3Open, setModal3Open] = useState({});
-  const [modal4Open, setModal4Open] = useState(false);
-  const [questionModalOpen, setQuestionModalOpen] = useState(false);
-
   const num = [
     {
       id: 1,
-      message: "hello everyone",
+      message: "h",
     },
     {
       id: 2,
@@ -163,14 +112,71 @@ const NewBuild = () => {
       message: "",
     },
   ];
+  // const [newNumber, setNewNumber] = useState(num);
+  const setNum = (data: any) => {
+    num.push(data);
+  };
+  const dispatch = useAppDispatch();
+  const BoxSize = 3;
+  const flashCardArr = [
+    { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
+    {
+      id: 2,
+      question: "where do you live?",
+      answer: "Ahmadabad",
+      user_id: 1,
+    },
+    { id: 3, question: "are you working?", answer: "yes", user_id: 2 },
+    { id: 4, question: "can you hear us?", answer: "no", user_id: 2 },
+  ];
+  const userArr = [
+    { id: 1, name: "AL" },
+    { id: 2, name: "AC" },
+  ];
+
+  const questionData = (data: any, index?: number, questionId?: number) => {
+    const filterArray = flashCardArr.filter((F) => F.user_id == data);
+    const findLastValue = filterArray.slice(-1)[0];
+    const lastQuestionId = findLastValue.id;
+    if (questionId == lastQuestionId) {
+      setModal3Open({
+        content: "Congratulations! You have finished your deck",
+        footer: [],
+        onOk: modal4Open,
+      });
+      setRevealAns(true);
+    } else {
+      setModal3Open({
+        content: index ? filterArray[index].question : filterArray[0].question,
+        footer: ["Reveal Answer"],
+        userId: index ? filterArray[index].user_id : filterArray[0].user_id,
+        questionId: index ? filterArray[index].id : filterArray[0].id,
+        index: index ? index : 1,
+        arrayLength: filterArray.length,
+        onOk: modal4Open,
+      });
+      setRevealAns(true);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getFlashCardByBuildId(2));
+  }, []);
+  const [addFlashCard, SetAddFlashcard] = useState(false);
+  const [revealAns, setRevealAns] = useState(false);
+  const [modal3Open, setModal3Open] = useState({});
+  const [modal4Open, setModal4Open] = useState(false);
   let mapdata = Math.ceil(num.length / 3);
 
+  const handleChange = (e: any) => {
+    setIndex(e.target.value);
+    console.log("Fruit Selected!!", e.target.value);
+
+  }
+
   const hel = num.map((h) => {
-    return (
-      [h.id,
-      h.message]
-    )
-  })
+    return [h.id, h.message];
+  });
 
   return (
     <>
@@ -185,10 +191,13 @@ const NewBuild = () => {
             let items;
 
             while (num.length > 0) {
+              // if (arr.length > 20) {
+              //   console.log("arr.length", arr.length);
+
+              //   num.push({ id: arr.length + 1, message: "" });
+              //   console.log("DDDDDDDDDDDnumDDDDDDDDDDD", num.length);
+              // }
               items = num.splice(0, 3);
-              if (arr.length > 20) {
-                num.push({ id: arr.length + 1, message: "" });
-              }
               return (
                 <>
                   <NewBuildBoxes
@@ -196,8 +205,18 @@ const NewBuild = () => {
                     item={items}
                     arr={arr}
                     setArr={setArr}
+                    setNum={(data: any) => {
+                      console.log("SSSSSSSSS", data)
+                      setNum(data);
+                    }}
+                    // setNum={(data: any) => {
+                    //   console.log("DDDDDDDDDDDDD", data);
+                    //   num.push(data);
+                    //   setNewNumber([...newNumber, data]);
+                    // }}
                     numOfBox={finalSize}
                     key={index}
+                    onFocus={handleChange}
                   />
                 </>
               );

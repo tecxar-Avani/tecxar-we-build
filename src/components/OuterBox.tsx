@@ -3,15 +3,31 @@ import React from "react";
 import { Col } from "react-bootstrap";
 import { Form } from "antd";
 
-
 const OuterBox = (props: any) => {
   const [form] = Form.useForm();
 
   const handleChange = (event: any) => {
     let textData = event.target.value;
-    if (textData.length == 2) {
-      const value = props.id + 1;
-      props.responseCallback(value);
+    const value = props.id == 20 ? props.id + 2 : props.id + 1;
+    console.log("props.id", props.id);
+    if (props.arr.length > 20) {
+      console.log("arr.length", props.arr.length);
+      const data = { id: props.arr.length + 1, message: "" };
+      props.setNum(data);
+    }
+    if (props.id > 20) {
+      if (textData.length + 1 == 3 && !props.arr.includes(value)) {
+        props.responseCallback(value);
+      }
+    } else {
+      if (textData.length == 3 && !props.arr.includes(value)) {
+        props.responseCallback(value);
+        // if (props.arr.length == 21) {
+        //   console.log("^^^^^^^^^^^^^^^^^^^^");
+        //   setArr([...arr, arr.length + 1]);
+        //   console.log("^^^^^^^^^^^^^^^^^^^^", arr);
+        // }
+      }
     }
   };
 
@@ -26,13 +42,12 @@ const OuterBox = (props: any) => {
                   <div className="position-relative position-relative-example">
                     <TextArea
                       name={`message${props.id}`}
-                      placeholder=""
+                      placeholder="Enter text here..."
                       defaultValue={props.boxData}
-                      maxLength={150}
+                      maxLength={3}
                       autoSize={{ minRows: 5, maxRows: 5 }}
                       onInput={handleChange}
                       id={props.id}
-                    
                       onClick={props.onClick}
                     />
                   </div>

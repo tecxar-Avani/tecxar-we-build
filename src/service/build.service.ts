@@ -7,8 +7,10 @@ class BuildService {
     return API.get(`/build/url?url=${url}`);
   }
 
-  // addBoxReviews(boxData: any) {
-  //   return API.post(`/build/create`, boxData);
-  // }
+  addBuildBox(
+    buildData :any,
+  ){
+    return API.get(`/build/create`,buildData)
+  }
 }
 export default new BuildService();

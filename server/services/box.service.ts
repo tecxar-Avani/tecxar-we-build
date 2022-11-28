@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IBoxes } from "@/interfaces/boxes.interface";
 import DB from "@databases";

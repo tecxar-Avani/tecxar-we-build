@@ -11,7 +11,7 @@ import BuildService from "../../service/build.service";
 import Router from "next/router";
 import { toast } from "react-toastify";
 import { IBuildRowsCountResponse } from "../../../@types/responses";
-import { IBoxReviews, IVideoBuild } from "../../../@types/common";
+import { IBoxes, IVideoBuild } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -26,26 +26,26 @@ export const getBuildByUrl: any = createAsyncThunk(
   }
 );
 
-// export const addBoxReviews = createAsyncThunk(
-//   `boxReviews/add`,
-//   async (createboxReviewsData: IBoxReviews, { dispatch }) => {
-//     const { status, data } = await BuildService.addBoxReviews(
-//       createboxReviewsData
-//     );
-//     return { status, data };
-//   }
-// );
+export const addBuildBox = createAsyncThunk(
+  `build/add`,
+  async (createFlashCardData: IBoxes, { dispatch }) => {
+    const { status, data } = await BuildService.addBuildBox(
+      createFlashCardData
+    );
+   
 
+    // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
+    return { status, data };
+  }
+);
 
-
-    
 interface State {
   id: number;
   build: IVideoBuild;
   loading: boolean;
   error: string | undefined;
   buildList: IBuildRowsCountResponse;
-  // box:IVideoBuild[];
+   box:IBoxes;
 }
 
 const initialState: State = {
@@ -63,6 +63,9 @@ const initialState: State = {
   loading: false,
   error: undefined,
   id: 0,
+  box:{
+    description:"",
+  }
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -100,6 +103,16 @@ const buildSlice = createSlice({
             loading: false,
             buildList: initialState.buildList,
           };
+        }
+      })
+      .addCase(addBuildBox.fulfilled, (state, action) => {
+        if (action.payload.data.status) {   
+            
+         toast.success(action.payload.data.message);
+          return { ...state, loading: false,addBuildBoxData: action.payload.data  };
+        } else {
+          toast.error(action.payload.data.error.message);
+          return { ...state, loading: false,addBuildBoxData: initialState.box };
         }
       })
       .addMatcher(isPendingAction, (state) => {
