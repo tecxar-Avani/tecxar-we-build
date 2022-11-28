@@ -460,7 +460,11 @@ body {
     width: 440px;
   }
 
-  
+  .ant-modal-body {
+    text-align: center;
+    margin: 9px;
+   
+  }
 
   textarea.ant-input {
     border-radius: 5px;
@@ -863,10 +867,11 @@ height: 50px;}
   .ant-btn{
     display: none !important;
   }
-}
-.ant-modal-close-x{
+  .ant-modal-close-x{
 display: none;
 }
+}
+
 .ant-modal-content{
   margin:  60px;
 }

@@ -26,11 +26,11 @@ export const getBuildByUrl: any = createAsyncThunk(
   }
 );
 
-export const addBuildBox = createAsyncThunk(
+export const addBuild = createAsyncThunk(
   `build/add`,
-  async (createFlashCardData: IBoxes, { dispatch }) => {
-    const { status, data } = await BuildService.addBuildBox(
-      createFlashCardData
+  async (createBuildData: IBoxes, { dispatch }) => {
+    const { status, data } = await BuildService.addBuild(
+      createBuildData
     );
    
 
@@ -45,7 +45,7 @@ interface State {
   loading: boolean;
   error: string | undefined;
   buildList: IBuildRowsCountResponse;
-   box:IBoxes;
+  box:IBoxes;
 }
 
 const initialState: State = {
@@ -64,7 +64,7 @@ const initialState: State = {
   error: undefined,
   id: 0,
   box:{
-    description:"",
+    description:""
   }
 };
 
@@ -105,14 +105,14 @@ const buildSlice = createSlice({
           };
         }
       })
-      .addCase(addBuildBox.fulfilled, (state, action) => {
+      .addCase(addBuild.fulfilled, (state, action) => {
         if (action.payload.data.status) {   
             
          toast.success(action.payload.data.message);
-          return { ...state, loading: false,addBuildBoxData: action.payload.data  };
+          return { ...state, loading: false,addBuildData: action.payload.data  };
         } else {
           toast.error(action.payload.data.error.message);
-          return { ...state, loading: false,addBuildBoxData: initialState.box };
+          return { ...state, loading: false,addBuildData: initialState.build };
         }
       })
       .addMatcher(isPendingAction, (state) => {

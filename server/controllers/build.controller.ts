@@ -45,12 +45,14 @@ export class BuildController {
       videoBuildData.updated_by = req.user.id;
       const createBuildData: IVideoBuild | null =
         await this.buildService.createBuild(videoBuildData);
+      
       if (createBuildData && createBuildData.id && videoBuildData.boxes) {
         const newArr = videoBuildData.boxes.map((box) => ({
           ...box,
           build_id: createBuildData.id,
         }));
         await this.boxService.createBox(newArr);
+       
       }
       if (createBuildData && createBuildData.id && videoBuildData.flashCards) {
         const newArr = videoBuildData.flashCards.map((card) => ({

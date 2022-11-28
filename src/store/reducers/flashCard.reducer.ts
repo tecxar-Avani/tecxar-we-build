@@ -103,7 +103,7 @@ const flashCardSlice = createSlice({
       // })
       .addCase(getFlashCardByBuildId.fulfilled, (state, action) => {
         if (action.payload.status) {
-          
+         
           return {
             ...state,
             loading: false,

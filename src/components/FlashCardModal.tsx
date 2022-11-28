@@ -21,11 +21,16 @@ const FlashCardModal = (props: any) => {
     const arrayLength = props.flashCard.arrayLength;
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       //add dispatch API here instead of console
+    
+    
       if (index <= arrayLength) {
+       
         props.questionCallback(userId, index, questionId);
+        
       }
     } else if (data == "Reveal Answer") {
       props.responseCallback(data, userId, questionId, index, arrayLength);
+     
     }
   };
 

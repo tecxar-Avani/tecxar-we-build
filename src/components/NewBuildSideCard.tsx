@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Image } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Overlay from "react-bootstrap/Overlay";
@@ -8,6 +8,9 @@ import { Input } from "antd";
 import AwarenessModal from "./AwarenessModal";
 import Link from "next/link";
 import modal from "antd/lib/modal";
+
+import { addBuild, buildSelector } from "../store/reducers/build.reducer";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
 
 
@@ -22,6 +25,10 @@ const NewBuildSideCard = (props: any) => {
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
+  const [videoType , setVideoType] = useState(false);
+  const [polarisationLevel , setPolarisationLevel] = useState(false);
+  const [difficultyLevel , setDifficultyLevel] = useState(false);
+  
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -48,12 +55,26 @@ const NewBuildSideCard = (props: any) => {
 
 
   const BoxValue = props.value
-console.log("SSSSSSSSSSSSSS",props.value)
+
   const [modal5Open, setModal5Open] = useState(false);
   const togglemodal = () => {
     setModal5Open(!modal5Open);
   }
-  
+  const handleVideoTypeClick = (e:any) =>{  
+    setVideoType(e.target.name)
+      }
+      const handlePolarisationClick = (e:any) =>{
+        setPolarisationLevel(e.target.name)
+      
+      }
+      const handleDifficultyClick = (e:any) => {
+        setDifficultyLevel(e.target.name)
+      }
+  const onSave = () =>{
+    console.log("TTTTTTTTTTTTTTTTTTTTTTTT",videoType)
+    console.log("PPPPPPPPPPPPPPPPPPPPPPPP",polarisationLevel)
+    console.log("BBBBBBBBBBBBBBBBBBBBBBBB",difficultyLevel)
+  }
   return (
     <>
       <div>
@@ -158,9 +179,9 @@ console.log("SSSSSSSSSSSSSS",props.value)
                 }}
                 className="tooltipOfImages"
               >
-                <button className="high-btn2">Practical</button>
+                <button className="high-btn2" name="Practical" onClick={handleVideoTypeClick}>Practical</button>
                 <br></br>
-                <button className="high-btn2">Theoretical</button>
+                <button className="high-btn2" name="Theoretical" onClick={handleVideoTypeClick}>Theoretical</button>
                 <br></br>
               </div>
             )}
@@ -195,11 +216,11 @@ console.log("SSSSSSSSSSSSSS",props.value)
                 }}
                 className="tooltipOfImages"
               >
-                <button className="high-btn">Low</button>
-                <button className="high-btn">Medium</button>
+                <button className="high-btn" name="Low" onClick={handlePolarisationClick} >Low</button>
+                <button className="high-btn" name="Medium" onClick={handlePolarisationClick}>Medium</button>
                 <br></br>
-                <button className="high-btn">High</button>
-                <button className="high-btn3 mt-0">Very High</button>
+                <button className="high-btn" name="High" onClick={handlePolarisationClick}>High</button>
+                <button className="high-btn3 mt-0" name="VeryHigh" onClick={handlePolarisationClick}>Very High</button>
               </div>
             )}
           </Overlay>
@@ -228,11 +249,11 @@ console.log("SSSSSSSSSSSSSS",props.value)
                 }}
                 className="tooltipOfImages"
               >
-                <button className="high-btn">Low</button>
-                <button className="high-btn">Medium</button>
+                <button className="high-btn" name="Low" onClick={handleDifficultyClick}>Low</button>
+                <button className="high-btn" name="Medium" onClick={handleDifficultyClick}>Medium</button>
                 <br></br>
-                <button className="high-btn">High</button>
-                <button className="high-btn3">Very High</button>
+                <button className="high-btn" name="High" onClick={handleDifficultyClick}>High</button>
+                <button className="high-btn3" name="VeryHigh" onClick={handleDifficultyClick}>Very High</button>
               </div>
             )}
           </Overlay>
@@ -249,8 +270,9 @@ console.log("SSSSSSSSSSSSSS",props.value)
             arrowPointAtCenter
             color="#FAEFAF"
           >
-            <div className="save bd-highlight  ">
-              <Image src="../img/save.svg" className="ms-2" alt="no image" onClick={() => setModal5Open(true)} />
+            {/* if user are loged out then  onClick={() => setModal5Open(true)} */}
+            <div className="save bd-highlight" onClick={onSave}>
+              <Image src="../img/save.svg" className="ms-2" alt="no image"/>
             </div>
 
           </Tooltip>
@@ -260,7 +282,7 @@ console.log("SSSSSSSSSSSSSS",props.value)
             title=""
             centered
             open={modal5Open}
-            className="btnrv .ant-modal-close-x"
+            className="btnrv"
           >
             <div className="mb-n3">
               <Image src='../img/google.png' className="border border-primary googleicon" />
