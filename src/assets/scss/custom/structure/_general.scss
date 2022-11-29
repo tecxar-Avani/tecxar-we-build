@@ -457,13 +457,20 @@ body,
   text-align: none !important;
 
 }
+.ant-modal{
+  width: 440px !important;
+  height: 473px !important;
+  border-radius: 7px;
+  // margin-left: 754px;
+ }
 .awarenessModal {
- 
- 
+
+ .ant-modal{
+  margin-left: 754px !important;
+ }
   .ant-modal-content {
     color: #000000;
-    width: 440px;
-    height: 473px;
+  
   }
 
   .ant-modal-body {
@@ -495,13 +502,13 @@ body,
   .ant-modal-footer{
     margin-top: 50px;
   }
-  .ant-modal-title {
-    font-weight: 700px;
-    font-family: 'Arimo';
-font-style: normal;
-  }
+  
 }
-
+.ant-modal-title {
+ font-weight: 700px !important;
+  font-family: 'Arimo';
+font-style: normal;
+}
 .userGuide {
   font-family: 'Arimo';
   font-style: normal;
@@ -775,7 +782,8 @@ textarea.ant-input {
 }
 
 .accptanceModalBG {
-
+  .ant-modal{
+margin-left: 754px;}
   .ant-modal-content,
   .ant-modal-header {
     background-color: #B2B5ED;

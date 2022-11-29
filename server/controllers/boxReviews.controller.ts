@@ -1,37 +1,40 @@
+/* eslint-disable prettier/prettier */
 import { Response } from "express";
 import {
-    Controller,
-    Req,
-    UseBefore,
-    Res,
-    Get,
-    Body,
-    HttpCode,
-    Post,
+  Controller,
+  Req,
+  UseBefore,
+  Res,
+  Get,
+  Body,
+  HttpCode,
+  Post,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BoxReviewService from "@/services/boxReview.service";
 import authMiddleware from "@/middlewares/auth.middleware";
-import { IBoxReviews  } from "@/interfaces/boxreviews.interface";
+import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import { BoxreviewDto } from "@/dtos/boxreviews.dto";
 
 @Controller("/reviews")
-@UseBefore(authMiddleware)
+//@UseBefore(authMiddleware)
 export class FlashController {
   private reviewService = new BoxReviewService();
 
   @Post("/create")
   @HttpCode(201)
-  @OpenAPI({ summary: "Create a new flash card" })
+  @OpenAPI({ summary: "Add a box review" })
   async createReview(
     @Body() reviewData: BoxreviewDto,
     @Req() req: Request | any,
     @Res() res: Response
   ) {
     try {
-      reviewData.created_by = req.user.id;
+      reviewData.created_by = 5;
       const createReviewData: IBoxReviews | null =
         await this.reviewService.createBoxReview(reviewData);
+   
+
       return {
         status: true,
         data: createReviewData,

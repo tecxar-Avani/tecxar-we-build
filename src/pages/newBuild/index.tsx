@@ -163,17 +163,19 @@ useEffect(() => {
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
+  const [awarenessBoxId ,setAwarenessBoxId] = useState(false);
   let mapdata = Math.ceil(num.length / 3);
 
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
+    setAwarenessBoxId(e.target.id);
   };
 
 
   return (
     <>
       <div className="d-flex m-0 w-100">
-        <NewBuildSideCard id={router.query.id} value={awarenessIndex} />
+        <NewBuildSideCard id={router.query.id} value={awarenessIndex} BoxId={awarenessBoxId}/>
 
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {

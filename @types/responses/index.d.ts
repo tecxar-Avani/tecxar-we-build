@@ -27,5 +27,6 @@ interface IFailedResponse extends IResponseBase {
 
 interface IBuildRowsCountResponse extends ISuccessPaginatedData<IVideoBuild> {}
 
-interface IFlashCardRowsCountResponse
-  extends ISuccessPaginatedData<IFlashCard> {}
+interface IFlashCardRowsCountResponse extends ISuccessPaginatedData<IFlashCard> {}
+
+interface IBuildReviewRowsCountResponse extends ISuccessPaginatedData<IBoxReviews>{}

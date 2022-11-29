@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -22,6 +23,7 @@ export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
   updatedAt:"updatedAt",
   timestamps: true,
 })
+// eslint-disable-next-line prettier/prettier
 export default class BoxReviews
   extends Model<IBoxReviews, Box_ReviewsGroupAttributes>
   implements IBoxReviews

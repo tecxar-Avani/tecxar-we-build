@@ -11,10 +11,17 @@ import modal from "antd/lib/modal";
 
 import { addBuild, buildSelector } from "../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import { addAwareness, awarenessSelector } from "../store/reducers/awareness.reducer";
 
 
 
 const NewBuildSideCard = (props: any) => {
+
+  const awarenessData = useAppSelector(awarenessSelector);
+  const dispatch = useAppDispatch();
+ 
+
+
   const [polarisation, setPolarisation] = useState(false);
   const polarisations = useRef(null);
   const [difficulty, setDifficulty] = useState(false);
@@ -45,17 +52,22 @@ const NewBuildSideCard = (props: any) => {
     setResistance(true);
   };
 
-  const { TextArea } = Input;
 
-  const awarenessModalData = {
-
-    footer: ["Add"],
-    textbox: [{ box: "" }],
-  };
-
-
+  
+  const handleData = (comment:any,review:any) =>{
+    console.log("GGGGGGGGGGGGGGGGGGG",awarenessData)
+    const data = {
+      comment:comment.comment,
+      review_type:review,
+      box_id:props.BoxId
+    }
+    dispatch(addAwareness(data))
+   
+   }
+ 
   const BoxValue = props.value
 
+   
   const [modal5Open, setModal5Open] = useState(false);
   const togglemodal = () => {
     setModal5Open(!modal5Open);
@@ -315,10 +327,11 @@ const NewBuildSideCard = (props: any) => {
 
       <AwarenessModal
         awarenessModal={awarenessModal}
-        awareness={awarenessModalData}
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
         textValue={BoxValue}
+        handleSubmit={(comment:any,review:any)=>{handleData(comment,review)}}
+        footer= "Add"
         id={BoxValue}
         title={`${accept
           ? "Acceptance"
@@ -343,8 +356,9 @@ const NewBuildSideCard = (props: any) => {
             : resistance
               ? "resistanceModalBG"
               : ""
-          }`}
+          } `}
       />
+     
     </>
   );
 };

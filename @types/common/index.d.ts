@@ -6,6 +6,8 @@ interface ICustomerCredentials {
 type difficultyLevelEnumType = "low" | "medium" | "high" | "very_high";
 type VideoTypeEnumType = "theory" | "practical";
 type ResponseEnumType = "good"| "hard"| "easy"| "again"
+type ReviewTypeEnumType = "acceptance" | "resistance" | "inspiration"
+
 
 export interface IVideoBuild {
   id?: number;
@@ -31,11 +33,11 @@ export interface IFlashCard {
 }
 
 export interface IBoxReviews {
-  id: number;
+  id?: number;
   box_id: number;
   review_type: ReviewTypeEnumType;
   comment: string;
-  created_by: number;
+  created_by?: number;
   createdAt?: Date;
 }
 export interface ICreateFlashCard{
