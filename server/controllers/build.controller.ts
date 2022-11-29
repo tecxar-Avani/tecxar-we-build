@@ -94,34 +94,17 @@ export class BuildController {
     @Req() req: Request | any,
     @Res() res: Response,
     @QueryParam("url") url: string,
-    @QueryParam("search")search?:string
+    @QueryParam("search") search?: string
   ) {
     try {
-      const urlStore = [];   
+      let urlStore = [];
+      const searchedData = [];
       const videoUrl = url;
       const youtube = google.youtube({
         version: "v3",
         auth: config.youtubeApiKey,
       });
-      const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl,search);
-       const urlMatch = userBuild.map( async url=>{
-          const response:any = await youtube.search.list({
-            part: ["id,snippet"],
-            q:url.video_url
-          })
-          urlStore.push(response)
-        })
-        console.log('>>>>',urlStore);
-        console.log('>>>>',urlMatch);
-        
-      
-      const response: any = await youtube.search.list({
-        part: ["id,snippet"],
-        q:
-          userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
-      });
-
-      let finalDuration;
+      const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl, search);
       const durationCalculation = (duration) => {
         var a = duration.match(/\d+/g);
         if (
@@ -163,34 +146,123 @@ export class BuildController {
         return finalDuration;
       };
 
-      const titles = [];
-      for (let i = 0; i < response.data.items.length; i++) {
-        let item = response.data.items[i];
-        const videoUrl = item.snippet.thumbnails.default.url;
-        const splittedUrl = videoUrl.split("vi/");
-        const result = splittedUrl.pop();
-        const array1 = result.split("/de");
-        const duration1 = await youtube.videos.list({
-          id: array1[0],
-          part: ["contentDetails"],
+      let youtubeData;
+      let finalDuration;
+      if(userBuild && userBuild.length > 0){
+        urlStore =userBuild && userBuild.length > 0 && userBuild.map(async url => {
+        // userBuild && userBuild.length > 0 && userBuild.map(async url => {
+          youtubeData = await youtube.search.list({
+            part: ["id,snippet"],
+            q: url.video_url
+          });
+          for (let i = 0; i < youtubeData.data.items.length; i++) {
+            // let item = youtubeData.data.items[i];
+            // const videoUrl = item.snippet.thumbnails.default.url;
+            // const splittedUrl = videoUrl.split("vi/");
+            // const result = splittedUrl.pop();
+            // const array1 = result.split("/de");
+            // const duration1 = await youtube.videos.list({
+            //   id: array1[0],
+            //   part: ["contentDetails"],
+            // });
+            // const youTubeFormatDuration =
+            //   duration1.data.items[0].contentDetails.duration;
+            // durationCalculation(youTubeFormatDuration);
+  
+            // let Filter = {
+            //   videoId: item.id.videoId,
+            //   thumbnails: item.snippet.thumbnails.default,
+            //   description: item.snippet.description,
+            //   title: item.snippet.title,
+            //   publishedAt: item.snippet.publishedAt,
+            //   duration: finalDuration,
+            //   newVideoId: array1[0],
+            //   url: `https://www.youtube.com/embed/${array1[0]}`,
+            // };
+            let Filter = {
+              videoId:111,
+              thumbnails: 1,
+              description: 'youtube',
+              title:'youtube',
+              publishedAt: 1222,
+              newVideoId: 4,
+            };
+            console.log('/////SEARCHDATA  ',searchedData)
+            searchedData.push(Filter);
+            console.log('SEARCHDATA  ',searchedData)
+          }
+           return searchedData;
+        }); 
+      }else if(videoUrl && !search){
+        const response: any = await youtube.search.list({
+          part: ["id,snippet"],
+          q: videoUrl,
         });
-        const youTubeFormatDuration =
-          duration1.data.items[0].contentDetails.duration;
-        durationCalculation(youTubeFormatDuration);
-
-        let data = {
-          videoId: item.id.videoId,
-          thumbnails: item.snippet.thumbnails.default,
-          description: item.snippet.description,
-          title: item.snippet.title,
-          publishedAt: item.snippet.publishedAt,
-          duration: finalDuration,
-          test: array1[0],
-          url: `https://www.youtube.com/embed/${array1[0]}`,
-        };
-        titles.push(data);
+      for (let i = 0; i < response.data.items.length; i++) {
+            let item = response.data.items[i];
+            const videoUrl = item.snippet.thumbnails.default.url;
+            const splittedUrl = videoUrl.split("vi/");
+            const result = splittedUrl.pop();
+            const array1 = result.split("/de");
+            const duration1 = await youtube.videos.list({
+              id: array1[0],
+              part: ["contentDetails"],
+            });
+            const youTubeFormatDuration =
+              duration1.data.items[0].contentDetails.duration;
+            durationCalculation(youTubeFormatDuration);
+  
+            let data = {
+              videoId: item.id.videoId,
+              thumbnails: item.snippet.thumbnails.default,
+              description: item.snippet.description,
+              title: item.snippet.title,
+              publishedAt: item.snippet.publishedAt,
+              duration: finalDuration,
+              newVideoId: array1[0],
+              url: `https://www.youtube.com/embed/${array1[0]}`,
+            };
+            console.log('SEARCH_DATA = ',searchedData)
+            searchedData.push(data);
+          }
       }
-      return { data: titles, box: userBuild, status: true };
+
+      const response: any = await youtube.search.list({
+        part: ["id,snippet"],
+        q:
+          userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
+      });
+
+    
+
+      // const titles = [];
+      // for (let i = 0; i < response.data.items.length; i++) {
+      //   let item = response.data.items[i];
+      //   const videoUrl = item.snippet.thumbnails.default.url;
+      //   const splittedUrl = videoUrl.split("vi/");
+      //   const result = splittedUrl.pop();
+      //   const array1 = result.split("/de");
+      //   const duration1 = await youtube.videos.list({
+      //     id: array1[0],
+      //     part: ["contentDetails"],
+      //   });
+      //   const youTubeFormatDuration =
+      //     duration1.data.items[0].contentDetails.duration;
+      //   durationCalculation(youTubeFormatDuration);
+
+      //   let data = {
+      //     videoId: item.id.videoId,
+      //     thumbnails: item.snippet.thumbnails.default,
+      //     description: item.snippet.description,
+      //     title: item.snippet.title,
+      //     publishedAt: item.snippet.publishedAt,
+      //     duration: finalDuration,
+      //     test: array1[0],
+      //     url: `https://www.youtube.com/embed/${array1[0]}`,
+      //   };
+      //   titles.push(data);
+      // }
+      return { data: searchedData, box: userBuild, status: true };
     } catch (error) {
       return {
         error: {

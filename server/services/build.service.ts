@@ -52,7 +52,7 @@ class BuildService {
           [Op.like]: `%${search}%`,
         }
       })
-      if (search === 'low' || search === 'medium' || search === 'high' || search === 'very_high') {
+      if (search === 'low' || search === 'medium' || search === 'high' || search === 'very_high') {        
         search = search.toLowerCase();
         searchFilter.push({
           potential_polarization: {
@@ -61,6 +61,9 @@ class BuildService {
         })
       }
       where.push({[Op.or]:searchFilter})
+      if(url){
+        where.push({video_url:url})
+      }
     }
     const option: {
       nest?: boolean;
