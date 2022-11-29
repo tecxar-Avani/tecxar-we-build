@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { IFlashCardRowsCountResponse } from "../../../@types/responses";
 import { ICreateFlashCard, IFlashCard } from "../../../@types/common";
 import flashCardService from "../../service/flashCard.service";
+
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -22,19 +23,29 @@ export const addFlashCard = createAsyncThunk(
     const { status, data } = await flashCardService.addFlashCard(
       createFlashCardData
     );
-   
 
     // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
     return { status, data };
   }
 );
 
-export const getFlashCardByBuildId = createAsyncThunk(`flashcard/flashcardbybuild`, async (buildId:number) => {
-  const { status, data } = await flashCardService.getFlashCardByBuildId(buildId);
-  // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
- 
-  return { status: data.status, rows: data };
-});
+export const getFlashCardByBuildId = createAsyncThunk(
+  `flashcard/flashCardByBuild`,
+  async (buildId: number) => {
+    const { status, data } = await flashCardService.getFlashCardByBuildId(
+      buildId
+    );
+    return { status: data.status, rows: data };
+  }
+);
+
+export const getFlashCardByUser = createAsyncThunk(
+  `get/flashcard`,
+  async (): Promise<IFlashCardRowsCountResponse> => {
+    const { status, data } = await flashCardService.getFlashCardByUser();
+    return { status: data.status, rows: data.data };
+  }
+);
 
 interface State {
   id: number;
@@ -42,6 +53,7 @@ interface State {
   loading: boolean;
   error: string | undefined;
   flashCardList: IFlashCardRowsCountResponse;
+  flashCardUserList: IFlashCardRowsCountResponse;
 }
 
 const initialState: State = {
@@ -53,6 +65,7 @@ const initialState: State = {
     status: true,
     rows: [],
   },
+  flashCardUserList: { status: true, rows: [] },
   loading: false,
   error: undefined,
   id: 0,
@@ -72,9 +85,6 @@ const flashCardSlice = createSlice({
     updateFlashCardData: (state: State, action: PayloadAction<IFlashCard>) => {
       return { ...state, flashCardData: action.payload };
     },
-    flashCard: (state: State, action: PayloadAction<IFlashCard>) => {
-      return { ...state, flashCard: action.payload };
-    },
     flashCardData: (state: State, action: PayloadAction<IFlashCard>) => {
       return { ...state, flashCardData: action.payload };
     },
@@ -82,33 +92,43 @@ const flashCardSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addFlashCard.fulfilled, (state, action) => {
-        if (action.payload.data.status) {   
-            
-         toast.success(action.payload.data.message);
-          return { ...state, loading: false,flashCardData: action.payload.data  };
+        if (action.payload.data.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            flashCardData: action.payload.data,
+          };
         } else {
           toast.error(action.payload.data.error.message);
-          return { ...state, loading: false,flashCardData: initialState.flashCard };
+          return {
+            ...state,
+            loading: false,
+            flashCardData: initialState.flashCard,
+          };
         }
       })
-      // .addCase(addAnnouncement.fulfilled, (state, action) => {
-      //   if (action.payload.data.status) {
-      //     toast.success(action.payload.data.message);
-      //     Router.back();
-      //     return { ...state, loading: false, announcementData: action.payload.data };
-      //   } else {
-      //     toast.error(action.payload.data.error.message);
-      //     return { ...state, loading: false, announcementData: initialState.announcementData };
-      //   }
-      // })
+      .addCase(getFlashCardByUser.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          return {
+            ...state,
+            loading: false,
+            flashCardUserList: action.payload.rows,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            flashCardUserList: initialState.flashCardUserList,
+          };
+        }
+      })
       .addCase(getFlashCardByBuildId.fulfilled, (state, action) => {
         if (action.payload.status) {
-         
           return {
             ...state,
             loading: false,
             flashCardList: action.payload,
-          
           };
         } else {
           return {
@@ -129,5 +149,4 @@ const flashCardSlice = createSlice({
 
 export const flashCardReducer = flashCardSlice.reducer;
 export const flashCardSelector = (state: RootState) => state.flashCards;
-export const { updateFlashCardData, flashCardData, flashCard } =
-  flashCardSlice.actions;
+export const { updateFlashCardData, flashCardData } = flashCardSlice.actions;

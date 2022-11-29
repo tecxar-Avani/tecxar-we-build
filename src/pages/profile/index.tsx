@@ -1,26 +1,32 @@
-import AddFlashCardModal from "@/components/AddFlashCardModal";
-import FlashCardModal from "@/components/FlashCardModal";
 import HeaderTitle from "@/components/headerTitle";
 import ProfileCard from "@/components/Profile";
 import VideoCard from "@/components/VideoCard";
-import { Button } from "antd";
-import { useAppDispatch } from "hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-// import { getVideoCard } from "../../store/reducers/videoCard.reducer";
+import {
+  getFlashCardByUser,
+  flashCardSelector,
+} from "../../store/reducers/flashCard.reducer";
+import FlashCardModal from "@/components/FlashCardModal";
+import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 const Profile = () => {
-  const [modal1Open, setModal1Open] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const [revealAns, setRevealAns] = useState(false);
+  const [modal3Open, setModal3Open] = useState({});
+  const [modal4Open, setModal4Open] = useState(false);
+  const [addFlashCard, setAddFlashcard] = useState(false);
+  const [editFlashCardData, setEditFlashCardData] = useState({});
 
-  // useEffect(() => {
-  //   dispatch(getVideoCard());
-  // });
-  const role = "user"
+  const { flashCardUserList } = useAppSelector(flashCardSelector);
+  const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
+  useEffect(() => {
+    dispatch(getFlashCardByUser());
+  }, []);
+  const role = "user";
   const videosData = [
-  
     {
       type: "video",
       title: "Justin Bieber - Sorry (PURPOSE : The Movement)",
@@ -1332,7 +1338,7 @@ const Profile = () => {
       uploadedAt: "6 months ago",
     },
   ];
-  const profiledata = {
+  const profileData = {
     title: "Mazza Konny",
     editIcon: "editIcon.svg",
     dateOfJoined: "Date joined: Oct 2022",
@@ -1345,7 +1351,7 @@ const Profile = () => {
     flashCardProfile: "flashCardProfile.svg",
     flashCardsNumber: 38,
   };
-  const profiledatas = [
+  const profileDatas = [
     {
       id: 1,
       title: "Mazza Konny",
@@ -1403,28 +1409,10 @@ const Profile = () => {
       deleteIcon: "delete.svg",
     },
   ];
-  const [revealAns, setRevealAns] = useState(false);
-  const [modal3Open, setModal3Open] = useState({});
-  const [modal4Open, setModal4Open] = useState(false);
-  const flashCardArr = [
-    { id: 1, question: "how are you?", answer: "fine", user_id: 1 },
-    {
-      id: 2,
-      question: "where do you live?",
-      answer: "Ahmadabad",
-      user_id: 1,
-    },
-    { id: 3, question: "are you working?", answer: "yes", user_id: 2 },
-    { id: 4, question: "can you hear us?", answer: "no", user_id: 2 },
-  ];
-  const userArr = [
-    { id: 1, name: "AL" },
-    { id: 2, name: "AC" },
-  ];
 
-  const questionData = (userId: any, index?: number, questionId?: number) => {
-    const filterArray = flashCardArr.filter((F: any) => F.user_id == userId);
-    const findLastValue = filterArray.slice(-1)[0];
+  const headerImg = ["deleteFlash.svg", "edit.svg"];
+  const questionData = (index?: number, questionId?: number) => {
+    const findLastValue = flashCardArr.slice(-1)[0];
     const lastQuestionId = findLastValue.id;
 
     if (questionId == lastQuestionId) {
@@ -1436,12 +1424,13 @@ const Profile = () => {
       setRevealAns(true);
     } else {
       setModal3Open({
-        content: index ? filterArray[index].question : filterArray[0].question,
+        content: index
+          ? flashCardArr[index].question
+          : flashCardArr[0].question,
         footer: ["Reveal Answer"],
-        userId: index ? filterArray[index].user_id : filterArray[0].user_id,
-        questionId: index ? filterArray[index].id : filterArray[0].id,
+        questionId: index ? flashCardArr[index].id : flashCardArr[0].id,
         index: index ? index + 1 : 1,
-        arrayLength: filterArray.length,
+        arrayLength: flashCardArr.length,
         onOk: modal4Open,
       });
       setRevealAns(true);
@@ -1453,20 +1442,17 @@ const Profile = () => {
       <div className="profile-main">
         <ProfileCard
           className="pt-2"
-          profile={profiledata}
-          // setModal2Open={ 
-          //   questionData()
-          // }
-          
+          profile={profileData}
+          flashCardUserList={flashCardUserList}
+          questionData={questionData}
         />
-        {/* <div className="py-4"> */}
         <div className="m-0 pb-2 overflow-x-scroll">
           <HeaderTitle
             title="Your builds"
             className="title-list-of-profile py-2 my-2"
           />
           <div className="builds-Main overflow-auto">
-            <div className="d-flex overflow-auto">
+            {/* <div className="d-flex overflow-auto">
               {videosData.length > 0 &&
                 videosData.map((videoData, index) => (
                   <Col md={4} className="videoProfile px-2" key={index}>
@@ -1477,7 +1463,7 @@ const Profile = () => {
                     </Link>
                   </Col>
                 ))}
-            </div>
+            </div> */}
           </div>
         </div>
         {/* </div> */}
@@ -1487,7 +1473,7 @@ const Profile = () => {
             className="title-list-of-profile py-2 my-2"
           />
           <Row className="m-0">
-            {videosData.length > 0 &&
+            {/* {videosData.length > 0 &&
               videosData.map((videoData, index) => (
                 <Col md={4} key={index} className="videoProfile">
                   <Link href={`/newBuild?id=${videoData.id}`}>
@@ -1496,25 +1482,30 @@ const Profile = () => {
                     </a>
                   </Link>
                 </Col>
-              ))}
+              ))} */}
           </Row>
         </div>
-        {role == 'admin' ?(
-        <div className="pb-2">
-          <HeaderTitle
-            title="Total list of Profiles"
-            className="title-list-of-profile py-2 mt-4 mb-3"
-          />
-          <Row className="m-0">
-            {profiledatas.length > 0 &&
-              profiledatas.map((profiledatas, index) => (
-                <Col md={3} key={index}>
-                  <ProfileCard className="AllProfile" profile={profiledatas} />
-                </Col>
-              ))}
-          </Row>
-        </div>
-        ):[]}
+        {role == "admin" ? (
+          <div className="pb-2">
+            <HeaderTitle
+              title="Total list of Profiles"
+              className="title-list-of-profile py-2 mt-4 mb-3"
+            />
+            <Row className="m-0">
+              {profileDatas.length > 0 &&
+                profileDatas.map((profileDatas, index) => (
+                  <Col md={3} key={index}>
+                    <ProfileCard
+                      className="AllProfile"
+                      profile={profileDatas}
+                    />
+                  </Col>
+                ))}
+            </Row>
+          </div>
+        ) : (
+          []
+        )}
       </div>
 
       <FlashCardModal
@@ -1522,22 +1513,21 @@ const Profile = () => {
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}
         modalVisible={revealAns}
+        headerIcon={headerImg}
         responseCallback={(
-          data: any,
-          userId: number,
           questionId: number,
           index: number,
           arrayLength: number
         ) => {
-          const filterArray = flashCardArr.filter((F) => F.user_id == userId);
-          const questionFilter = filterArray.filter((F) => F.id == questionId);
+          const questionFilter = flashCardArr.filter(
+            (F: any) => F.id == questionId
+          );
           questionFilter.length > 0 &&
-            questionFilter.map((ans) => {
+            questionFilter.map((ans: any) => {
               const newData = {
                 content: ans.answer,
                 footer: ["Again", "Hard", "Good", "Easy"],
                 onOk: modal4Open,
-                userId: userId,
                 questionId: questionId,
                 index: index,
                 arrayLength: arrayLength,
@@ -1545,14 +1535,22 @@ const Profile = () => {
               setModal3Open(newData);
             });
         }}
-        questionCallback={(
-          userId: number,
-          index: number,
-          questionId: number
-        ) => {
-          questionData(userId, index, questionId);
+        
+        questionCallback={(index: number, questionId: number) => {
+          questionData(index, questionId);
         }}
+        setAddFlashcard={setAddFlashcard}
+        setEditFlashCardData={setEditFlashCardData}
+        flashCardArr={flashCardArr}
+        addFlashCard={addFlashCard}
+        editFlashCardData={editFlashCardData}
       />
+      {/* <AddFlashCardModal
+        modal2Open={addFlashCard}
+        setModal2Open={setAddFlashcard}
+        visible={addFlashCard}
+        flashCardData={editFlashCardData}
+      /> */}
     </>
   );
 };
