@@ -271,7 +271,7 @@ const NewBuildSideCard = (props: any) => {
             color="#FAEFAF"
           >
             {/* if user are loged out then  onClick={() => setModal5Open(true)} */}
-            <div className="save bd-highlight" onClick={onSave}>
+            <div className="save bd-highlight" onClick={() => setModal5Open(true)}>
               <Image src="../img/save.svg" className="ms-2" alt="no image"/>
             </div>
 
