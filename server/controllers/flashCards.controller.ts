@@ -82,7 +82,10 @@ export class FlashController {
     try {
       const user = 4;
       const flashBuild = await this.flashCardService.getFlashCard(user);
-      return flashBuild;
+     return {
+       status: true,
+       data: flashBuild,
+     };
     } catch (error) {
       return {
         error: {
@@ -110,7 +113,7 @@ export class FlashController {
     }
   }
 
-  @Get("/flashcardbybuild/:id")
+  @Get("/flashcardByBuild/:id")
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCardByBuildId(@Req() req: Request | any,@Param('id') id:number ,@Res() res: Response) {
     try {

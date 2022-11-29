@@ -9,7 +9,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
-  addFlashCard,
   flashCardSelector,
   getFlashCardByBuildId,
 } from "../../store/reducers/flashCard.reducer";
@@ -132,6 +131,8 @@ useEffect(() => {
   const BoxSize = 3;
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
+
+  
   const questionData = (userId: any, index?: number, questionId?: number) => {
     const filterArray = flashCardArr.filter((F: any) => F.user_id == userId);
     const findLastValue = filterArray.slice(-1)[0];
