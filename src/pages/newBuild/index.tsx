@@ -193,7 +193,7 @@ useEffect(() => {
              
               return (
                 <>
-                {console.log("____________________",arr)}
+              
                   <NewBuildBoxes
                     setModal1Open={SetAddFlashcard}
                     item={items}

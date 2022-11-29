@@ -59,9 +59,10 @@ const ProfileCard = (props: any) => {
       {props.profile && props.profile.flashCardsNumber && (
       <div className="flashCardsContent">{props.profile.flashCardsNumber} Cards</div>
       )}
-      {props.profile && props.profile.flashCardProfile && (
+     {props.profile && props.profile.flashCardProfile && (
         <div className="flashCards" onClick= {() => {
-          props.setModal2Open(true)
+          props.setmodalOpen;
+        
         }}>
           
           <Image
