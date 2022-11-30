@@ -11,7 +11,7 @@ import {
 } from "sequelize-typescript";
 import { IVideoBuild,VideoTypeEnumType,difficultyLevelEnumType } from "@/interfaces/videoBuilds.interface";
 import User from "@/models/user.model";
-
+import Boxes from "./boxes.model";
 export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 @Table({
   tableName: "video_builds",
@@ -47,12 +47,14 @@ export default class VideoBuilds
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
   public created_by: number;
+
   @BelongsTo(() => User)
   public created_by_user: User;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
   public updated_by: number;
+
   @BelongsTo(() => User)
   public updated_by_user: User;
 

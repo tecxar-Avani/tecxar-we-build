@@ -97,7 +97,6 @@ export class BuildController {
     @QueryParam("search") search?: string
   ) {
     try {
-      let urlStore = [];
       const searchedData = [];
       const videoUrl = url;
       const youtube = google.youtube({
@@ -149,51 +148,44 @@ export class BuildController {
       let youtubeData;
       let finalDuration;
       if(userBuild && userBuild.length > 0){
-        urlStore =userBuild && userBuild.length > 0 && userBuild.map(async url => {
-        // userBuild && userBuild.length > 0 && userBuild.map(async url => {
+       userBuild && userBuild.length > 0 && userBuild.forEach(async url => {
           youtubeData = await youtube.search.list({
             part: ["id,snippet"],
             q: url.video_url
           });
           for (let i = 0; i < youtubeData.data.items.length; i++) {
-            // let item = youtubeData.data.items[i];
-            // const videoUrl = item.snippet.thumbnails.default.url;
-            // const splittedUrl = videoUrl.split("vi/");
-            // const result = splittedUrl.pop();
-            // const array1 = result.split("/de");
-            // const duration1 = await youtube.videos.list({
-            //   id: array1[0],
-            //   part: ["contentDetails"],
-            // });
-            // const youTubeFormatDuration =
-            //   duration1.data.items[0].contentDetails.duration;
-            // durationCalculation(youTubeFormatDuration);
+            let item = youtubeData.data.items[i];
+            const videoUrl = item.snippet.thumbnails.default.url;
+            const splittedUrl = videoUrl.split("vi/");
+            const result = splittedUrl.pop();
+            const array1 = result.split("/de");
+            const duration1 = await youtube.videos.list({
+              id: array1[0],
+              part: ["contentDetails"],
+            });
+            const youTubeFormatDuration =
+              duration1.data.items[0].contentDetails.duration;
+            durationCalculation(youTubeFormatDuration);
   
-            // let Filter = {
-            //   videoId: item.id.videoId,
-            //   thumbnails: item.snippet.thumbnails.default,
-            //   description: item.snippet.description,
-            //   title: item.snippet.title,
-            //   publishedAt: item.snippet.publishedAt,
-            //   duration: finalDuration,
-            //   newVideoId: array1[0],
-            //   url: `https://www.youtube.com/embed/${array1[0]}`,
-            // };
             let Filter = {
-              videoId:111,
-              thumbnails: 1,
-              description: 'youtube',
-              title:'youtube',
-              publishedAt: 1222,
-              newVideoId: 4,
+              videoId: item.id.videoId,
+              thumbnails: item.snippet.thumbnails.default,
+              description: item.snippet.description,
+              title: item.snippet.title,
+              publishedAt: item.snippet.publishedAt,
+              duration: finalDuration,
+              newVideoId: array1[0],
+              url: `https://www.youtube.com/embed/${array1[0]}`,
             };
-            console.log('/////SEARCHDATA  ',searchedData)
-            searchedData.push(Filter);
-            console.log('SEARCHDATA  ',searchedData)
+            searchedData.push(Filter)
+             console.log('/////',searchedData)
+            console.log('181>>>',Filter);
           }
-           return searchedData;
-        }); 
+           console.log('???????',searchedData) 
+        });
       }else if(videoUrl && !search){
+        console.log('SEARCHDATA',searchedData);
+        
         const response: any = await youtube.search.list({
           part: ["id,snippet"],
           q: videoUrl,
@@ -225,15 +217,13 @@ export class BuildController {
             console.log('SEARCH_DATA = ',searchedData)
             searchedData.push(data);
           }
-      }
+      }      
 
       const response: any = await youtube.search.list({
         part: ["id,snippet"],
         q:
           userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
       });
-
-    
 
       // const titles = [];
       // for (let i = 0; i < response.data.items.length; i++) {
@@ -273,6 +263,22 @@ export class BuildController {
     }
   }
 
+  @Get("/:id")
+  @OpenAPI({ summary: "Get all build of users by Id" })
+  async getBuildById(@Req() req: Request | any,@Param('id') id:number, @Res() res: Response) {
+    try {
+      const BuildById = await this.buildService.getBuildById(id); 
+       return BuildById;
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
   @Put("/:id")
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
@@ -283,7 +289,7 @@ export class BuildController {
     @Res() res: Response
   ) {
     try {
-      data.updated_by = req.user.id;
+      data. created_by_user = req.user.id;
       const userBuild = await this.buildService.updateBuild(id, data);
       return userBuild;
     } catch (error) {

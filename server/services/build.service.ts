@@ -1,15 +1,17 @@
 
 import { HttpException } from "@/exceptions/HttpException";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
+import Boxes from "@/models/boxes.model";
 import VideoBuilds from "@/models/videoBuilds.model ";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
-import { Op } from "sequelize";
+import { Op, QueryTypes } from "sequelize";
 
 
 class BuildService {
   private videoBuild = DB.videoBuild;
-
+  sql: any;
+  
   public async createBuild(
     buildData: IVideoBuild
   ): Promise<IVideoBuild | null> {
@@ -33,6 +35,15 @@ class BuildService {
     } else {
       return videoBuilds;
     }
+  }
+
+  public async getBuildById(id: number): Promise<IVideoBuild[] | null> {
+    const query = `SELECT vb.*,box.description
+    FROM video_builds AS vb
+    LEFT JOIN boxes box on vb.id = box.build_id
+    where vb.id = ${id} `;
+    const BuildById: IVideoBuild[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
+    return BuildById;
   }
 
   public async getUsersBuildByUrl(
