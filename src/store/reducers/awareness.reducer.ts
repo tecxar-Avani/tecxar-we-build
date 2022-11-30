@@ -47,7 +47,7 @@ interface State {
 
 const initialState: State = {
     awareness: {
-      review_type: "inspiration" ,
+      review_type: "Inspiration" ,
     comment: "",
     box_id:0
   },

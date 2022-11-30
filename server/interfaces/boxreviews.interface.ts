@@ -1,19 +1,19 @@
 /* eslint-disable prettier/prettier */
 
 export enum ReviewTypeEnumType {
-  acceptance = "acceptance",
-  resistance = "resistance",
-  inspiration = "inspiration",
+  acceptance = "Acceptance",
+  resistance = "Resistance",
+  inspiration = "Inspiration",
 }
 
 export interface IBoxReviews {
 
-  id: number;
+  id?: number;
   box_id: number;
   review_type: ReviewTypeEnumType;
   comment: string;
-  created_by: number;
-  createdAt: Date;
+  created_by?: number;
+  createdAt?: Date;
 
 }
 

@@ -6,7 +6,7 @@ interface ICustomerCredentials {
 type difficultyLevelEnumType = "low" | "medium" | "high" | "very_high";
 type VideoTypeEnumType = "theory" | "practical";
 type ResponseEnumType = "good"| "hard"| "easy"| "again"
-type ReviewTypeEnumType = "acceptance" | "resistance" | "inspiration"
+type ReviewTypeEnumType = "Acceptance" | "Resistance" | "Inspiration"
 
 
 export interface IVideoBuild {

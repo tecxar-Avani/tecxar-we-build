@@ -21,6 +21,9 @@ const ProfileCard = (props: any) => {
             <Image
               className="px-2 mb-2"
               src={`/img/${props.profile.editIcon}`}
+              onClick={() => {
+                props.showModal();
+              }}
             />
           )}
         </div>

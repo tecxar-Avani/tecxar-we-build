@@ -13,10 +13,10 @@ const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
   const handleSubmit = (data: any) => {
     dispatch(addFlashCard(data));
-   
 
     form.resetFields();
   };
+
   return (
     <>
       <Modal
@@ -49,7 +49,7 @@ const AddFlashCardModal = (props: any) => {
               showCount
               maxLength={100}
               rows={4}
-              defaultValue={props.flashCardData.question}
+              defaultValue={props?.flashCardData?.question}
             />
           </Form.Item>
           <Form.Item name={"answer"} label={"Back"}>
@@ -57,7 +57,7 @@ const AddFlashCardModal = (props: any) => {
               showCount
               maxLength={100}
               rows={4}
-              defaultValue={props.flashCardData.answer}
+             defaultValue={props?.flashCardData?.answer}
             />
           </Form.Item>
         </Form>

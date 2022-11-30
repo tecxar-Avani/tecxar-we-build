@@ -59,7 +59,7 @@ const NewBuildSideCard = (props: any) => {
     const data = {
       comment:comment.comment,
       review_type:review,
-      box_id:props.BoxId
+      box_id:Number(props.BoxId)
     }
     dispatch(addAwareness(data))
    

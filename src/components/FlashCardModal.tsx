@@ -4,6 +4,30 @@ import Image from "react-bootstrap/Image";
 import AddFlashCardModal from "./AddFlashCardModal";
 
 const FlashCardModal = (props: any) => {
+  const headerIcon = ["deleteFlash.svg" ,"edit.svg"]
+  const title = headerIcon && headerIcon?.length > 0 && headerIcon?.map((btn: any) => {
+        return (
+          <Image
+            src={`/img/${btn}`}
+            className="mx-1"
+            style={{ height: "31.61px", width: "26.22px" }}
+            onClick={() => {
+              if (btn == "edit.svg") {
+                const indexValue = index;
+                const flashCardData = {
+                  question: props.flashCardArr[indexValue].question,
+                  answer: props.flashCardArr[indexValue].answer,
+                };
+               
+
+                props.setEditFlashCardData(flashCardData);
+               
+                props.setAddFlashcard(true);
+              }
+            }}
+          />
+        );
+      })
   const userId = props.flashCard.userId;
   const questionId = props.flashCard.questionId;
   const index = props.flashCard.index;
@@ -11,6 +35,7 @@ const FlashCardModal = (props: any) => {
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       //add dispatch API here instead of console
+     
 
       if (index <= arrayLength) {
         if (userId) {
@@ -21,50 +46,45 @@ const FlashCardModal = (props: any) => {
       }
     } else if (data == "Reveal Answer") {
       if (userId) {
-        props.responseCallback(data, userId, questionId, index, arrayLength);
+        props.responseCallback(data, userId, questionId, index, arrayLength,title);
       } else {
-        props.responseCallback(questionId, index, arrayLength);
+        props.responseCallback(questionId, index, arrayLength,title );
       }
     }
   };
 
-  {
-    console.log(
-      "props.editFlashCardDataprops.editFlashCardData",
-      props.editFlashCardData
-    );
-  }
+
   return (
     <>
       {
         <Modal
           open={props.modal}
           title={
-            props?.flashCard?.title ||
-            (props?.headerIcon &&
-              props?.headerIcon?.length > 0 &&
-              props?.headerIcon.map((btn: any) => {
-                return (
-                  <Image
-                    src={`/img/${btn}`}
-                    className="mx-1"
-                    style={{ height: "31.61px", width: "26.22px" }}
-                    onClick={() => {
-                      if (btn == "edit.svg") {
-                        const indexValue = index - 1;
-                        const flashCardData = {
-                          question: props.flashCardArr[indexValue].question,
-                          answer: props.flashCardArr[indexValue].answer,
-                        };
-                        console.log("!!!!!!!!!!!!!!!!", flashCardData);
+            props?.flashCard?.title 
+            // (headerIcon &&
+            //   headerIcon?.length > 0 &&
+            //   headerIcon.map((btn: any) => {
+            //     return (
+            //       <Image
+            //         src={`/img/${btn}`}
+            //         className="mx-1"
+            //         style={{ height: "31.61px", width: "26.22px" }}
+            //         onClick={() => {
+            //           if (btn == "edit.svg") {
+            //             const indexValue = index - 1;
+            //             const flashCardData = {
+            //               question: props.flashCardArr[indexValue].question,
+            //               answer: props.flashCardArr[indexValue].answer,
+            //             };
+            //             console.log("!!!!!!!!!!!!!!!!", flashCardData);
 
-                        props.setEditFlashCardData(flashCardData);
-                        props.setAddFlashcard(true);
-                      }
-                    }}
-                  />
-                );
-              }))
+            //             props.setEditFlashCardData(flashCardData);
+            //             props.setAddFlashcard(true);
+            //           }
+            //         }}
+            //       />
+            //     );
+            //   }))
           }
           centered
           visible={props.modalVisible}

@@ -11,6 +11,7 @@ import {
 } from "../../store/reducers/flashCard.reducer";
 import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
+import { Input, Modal } from "antd";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ const Profile = () => {
   const [modal4Open, setModal4Open] = useState(false);
   const [addFlashCard, setAddFlashcard] = useState(false);
   const [editFlashCardData, setEditFlashCardData] = useState({});
+  const [editName , setEditName] = useState(false);
 
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
@@ -1410,11 +1412,22 @@ const Profile = () => {
     },
   ];
 
-  const headerImg = ["deleteFlash.svg", "edit.svg"];
+ 
+  const showModal = () => {
+    setEditName(true);
+  };
+
+  const handleOk = () => {
+    setEditName(false);
+  };
+
+  const handleCancel = () => {
+    setEditName(false);
+  };
+
   const questionData = (index?: number, questionId?: number) => {
     const findLastValue = flashCardArr.slice(-1)[0];
     const lastQuestionId = findLastValue.id;
-
     if (questionId == lastQuestionId) {
       setModal3Open({
         content: "Congratulations! You have finished your deck",
@@ -1445,6 +1458,7 @@ const Profile = () => {
           profile={profileData}
           flashCardUserList={flashCardUserList}
           questionData={questionData}
+          showModal={showModal}
         />
         <div className="m-0 pb-2 overflow-x-scroll">
           <HeaderTitle
@@ -1512,12 +1526,12 @@ const Profile = () => {
         modal={revealAns}
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}
-        modalVisible={revealAns}
-        headerIcon={headerImg}
+        modalVisible={revealAns}      
         responseCallback={(
           questionId: number,
           index: number,
-          arrayLength: number
+          arrayLength: number,
+          title:any
         ) => {
           const questionFilter = flashCardArr.filter(
             (F: any) => F.id == questionId
@@ -1531,6 +1545,7 @@ const Profile = () => {
                 questionId: questionId,
                 index: index,
                 arrayLength: arrayLength,
+                title: title,
               };
               setModal3Open(newData);
             });
@@ -1545,12 +1560,14 @@ const Profile = () => {
         addFlashCard={addFlashCard}
         editFlashCardData={editFlashCardData}
       />
-      {/* <AddFlashCardModal
-        modal2Open={addFlashCard}
-        setModal2Open={setAddFlashcard}
-        visible={addFlashCard}
-        flashCardData={editFlashCardData}
-      /> */}
+      <Modal 
+      title="Edit Your Name" 
+      open={editName} 
+      onOk={handleOk} 
+      onCancel={handleCancel}
+      >
+      <Input defaultValue={profileData.title}></Input>
+      </Modal>
     </>
   );
 };

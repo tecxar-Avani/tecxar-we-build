@@ -3,9 +3,9 @@ import { IBoxReviews, ReviewTypeEnumType ,IUpdateBoxReviews} from '@/interfaces/
 import { IsNumber, IsString, IsDate, IsOptional } from 'class-validator';
 
 export class BoxreviewDto implements IBoxReviews {
-    createdAt: Date;
+    @IsOptional()
     @IsNumber()
-    id: number;
+    id?: number;
 
     @IsNumber()
     box_id: number;
@@ -16,11 +16,13 @@ export class BoxreviewDto implements IBoxReviews {
     @IsString()
     comment: string;
 
+    @IsOptional()
     @IsNumber()
-    created_by: number;
+    created_by?: number;
 
+    @IsOptional()
     @IsDate()
-    created_at: Date;
+    createdAt?: Date;
 }
 
 export class updateBoxreviewDto implements IUpdateBoxReviews {
