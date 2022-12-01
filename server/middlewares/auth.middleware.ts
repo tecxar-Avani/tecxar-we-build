@@ -1,4 +1,4 @@
-import config from "configs/index";
+import config from "@/configs/index";
 import { DataStoredInToken, RequestWithUser } from "@interfaces/auth.interface";
 import { NextFunction, Response } from "express";
 import httpStatus from "http-status";

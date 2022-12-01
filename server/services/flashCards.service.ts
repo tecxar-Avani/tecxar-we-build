@@ -176,7 +176,7 @@ class FlashCardService {
 
   public async updateFlashCardId(
     id: number,
-    data
+    data:any
   ): Promise<IFlashCards | null> {
     const flashCardByUpdate: any | null = await this.flashCard.update(
       { ...data },

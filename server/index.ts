@@ -37,11 +37,11 @@ class App {
     this.initializeMiddlewares();
 
     this.initializeRoutes();
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser(function (user: any, done) {
       done(null, user);
     });
 
-    passport.deserializeUser(function (user, done) {
+    passport.deserializeUser(function (user:any, done) {
       done(null, user);
     });
   }

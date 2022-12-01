@@ -1,5 +1,4 @@
-// import 'tailwindcss/tailwind.css';
-// import '../styles/globals.css';
+
 import "regenerator-runtime/runtime";
 import "../assets/scss/Theme.scss";
 import { Provider } from "react-redux";

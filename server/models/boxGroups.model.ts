@@ -8,11 +8,11 @@ import {
     BelongsTo,
     Table,
 } from "sequelize-typescript";
-import { IBoxes_Groups } from "@/interfaces/boxesgroups.interface";
+import { IBoxesGroups } from "@/interfaces/boxesgroups.interface";
 import Group from "@/models/groups.model";
 import Box from "@/models/boxes.model";
 
-export type Boxes_GroupAttributes = Optional<IBoxes_Groups, "id">;
+export type Boxes_GroupAttributes = Optional<IBoxesGroups, "id">;
 @Table({
   tableName: "boxes_groups",
   createdAt: "createdAt",
@@ -20,8 +20,8 @@ export type Boxes_GroupAttributes = Optional<IBoxes_Groups, "id">;
   timestamps: true,
 })
 export default class Boxes_Groups
-  extends Model<IBoxes_Groups, Boxes_GroupAttributes>
-  implements IBoxes_Groups
+  extends Model<IBoxesGroups, Boxes_GroupAttributes>
+  implements IBoxesGroups
 {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;

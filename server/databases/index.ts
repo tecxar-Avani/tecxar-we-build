@@ -1,4 +1,4 @@
-import config from 'configs/index';
+import config from '@/configs/index';
 import { dbConfig } from '@interfaces/db.interface';
 import { logger } from '@utils/logger';
 import { Sequelize } from 'sequelize-typescript';

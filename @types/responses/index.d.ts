@@ -9,7 +9,7 @@ interface ISuccessResponseData<T> extends IResponseBase {
   data: T;
 }
 
-interface ISuccessPaginatedData<T> extends IResponseBase {
+interface ISuccessPaginatedData<any> extends IResponseBase {
   rows: T;
   // box:T
 }

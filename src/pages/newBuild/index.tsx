@@ -154,13 +154,12 @@ useEffect(() => {
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
 
-  console.log("!!!!!!!!!!!!!",flashCardData)
   const questionData = (userId: any, index?: number, questionId?: number) => {
-    const filterArray = flashCardArr.filter((F: any) => F.user_id == userId);
-    const findLastValue = filterArray.slice(-1)[0];
-    const lastQuestionId = findLastValue.id;
+    const filterArray = flashCardArr?.filter((F: any) => F.user_id == userId);
+    const findLastValue = filterArray?.slice(-1)[0];
+    const lastQuestionId = findLastValue?.id;
 
-    if (questionId == lastQuestionId) {
+   if(filterArray && filterArray.length > 0 ){ if (questionId == lastQuestionId) {
       setModal3Open({
         content: "Congratulations! You have finished your deck",
         footer: [],
@@ -178,7 +177,7 @@ useEffect(() => {
         onOk: modal4Open,
       });
       setRevealAns(true);
-    }
+    }}
   };
 
   const [addFlashCard, SetAddFlashcard] = useState(false);
@@ -242,7 +241,7 @@ useEffect(() => {
           />
 
           <div className="position-absolute mkCard">
-            {userArr?.length > 0 &&
+            {userArr && userArr?.length > 0 &&
               userArr?.map((data: any, index: number) => {
                 return (
                   <Card
@@ -289,13 +288,13 @@ useEffect(() => {
           index: number,
           arrayLength: number,
         ) => {
-          const filterArray = flashCardArr.filter(
+          const filterArray = flashCardArr?.filter(
             (F: any) => F.user_id == userId
           );
-          const questionFilter = filterArray.filter(
+          const questionFilter = filterArray?.filter(
             (F: any) => F.id == questionId
           );
-          questionFilter.length > 0 &&
+          questionFilter && questionFilter.length > 0 &&
             questionFilter.map((ans: any) => {
               const newData = {
                 content: ans.answer,

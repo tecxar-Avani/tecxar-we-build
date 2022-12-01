@@ -24,7 +24,6 @@ import { updateVideoBuildDto, videoBuildDto } from "@/dtos/videobuilds.dto";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import { google } from "googleapis";
 import config from "@/configs";
-import moment from "moment-duration-format";
 @Controller("/build")
 export class BuildController {
   private buildService = new BuildService();
@@ -47,7 +46,7 @@ export class BuildController {
         await this.buildService.createBuild(videoBuildData);
       
       if (createBuildData && createBuildData.id && videoBuildData.boxes) {
-        const newArr = videoBuildData.boxes.map((box) => ({
+        const newArr = videoBuildData.boxes.map((box:any) => ({
           ...box,
           build_id: createBuildData.id,
         }));
@@ -55,7 +54,7 @@ export class BuildController {
        
       }
       if (createBuildData && createBuildData.id && videoBuildData.flashCards) {
-        const newArr = videoBuildData.flashCards.map((card) => ({
+        const newArr = videoBuildData.flashCards.map((card:any) => ({
           ...card,
           created_by: req.user.id,
           updated_by: req.user.id,
@@ -113,8 +112,8 @@ export class BuildController {
           userBuild && userBuild.length > 0 ? userBuild[0].video_url : videoUrl,
       });
       let finalDuration;
-      const durationCalculation = (duration) => {
-        var a = duration.match(/\d+/g);
+      const durationCalculation = (duration:any) => {
+        let a = duration.match(/\d+/g);
         if (
           duration.indexOf("M") >= 0 &&
           duration.indexOf("H") == -1 &&
@@ -148,7 +147,7 @@ export class BuildController {
         }
         let minutes = Math.floor(duration / 60);
         duration = duration % 60;
-        let hours = Math.floor(minutes / 60);
+        const hours = Math.floor(minutes / 60);
         minutes = minutes % 60;
         finalDuration = `${hours}:${minutes}:${duration}`;
         return finalDuration;
@@ -156,7 +155,7 @@ export class BuildController {
 
       const titles = [];
       for (let i = 0; i < response.data.items.length; i++) {
-        let item = response.data.items[i];
+        const item = response.data.items[i];
         const videoUrl = item.snippet.thumbnails.default.url;
         const splittedUrl = videoUrl.split("vi/");
         const result = splittedUrl.pop();
@@ -166,10 +165,10 @@ export class BuildController {
           part: ["contentDetails"],
         });
         const youTubeFormatDuration =
-          duration1.data.items[0].contentDetails.duration;
+        duration1 && duration1.data && duration1.data?.items && duration1.data?.items.length > 0 && duration1.data?.items[0]?.contentDetails?.duration;
         durationCalculation(youTubeFormatDuration);
 
-        let data = {
+        const data = {
           videoId: item.id.videoId,
           thumbnails: item.snippet.thumbnails.default,
           description: item.snippet.description,

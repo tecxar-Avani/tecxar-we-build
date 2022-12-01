@@ -11,7 +11,7 @@ class UserService {
     return userCreated;
   }
 
-  public async getUserByEmail(email: string): Promise<ICreateUser | null> {
+  public async getUserByEmail(email: string): Promise<ICreateUser | undefined> {
     if (isEmpty(email)) {
       throw new HttpException(400, "Enter ID");
     }

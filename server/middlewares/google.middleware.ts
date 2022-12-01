@@ -4,7 +4,7 @@ import {
   UnauthorizedError,
 } from "routing-controllers";
 import passport from "passport";
-import { googleStrategy } from "configs/passport";
+import { googleStrategy } from "@/configs/passport";
 
 export class Authenticate implements ExpressMiddlewareInterface {
   use(req: Request, res: Response, next: NextFunction): any {
