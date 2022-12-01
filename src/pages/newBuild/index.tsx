@@ -218,7 +218,6 @@ useEffect(() => {
     }
   ]
 const valueOfDotAware = acceptanceData.map((des) => des.description) && num.filter((ids) => ids.id == 1)
-console.log("#######",valueOfDotAware)
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -380,9 +379,8 @@ console.log("#######",valueOfDotAware)
         awarenessModal={awarenessDotModal}
         setAwarenessModal={setAwarenessDotModal}
         visible={awarenessDotModal}
-        
+        footer={"challenge"}
         //handleSubmit={(comment:any,review:any)=>{handleData(comment,review)}}
-        btnName="challenge"
         value={valueOfDotAware}
         id={awarenessIndex}
         title={`${accept

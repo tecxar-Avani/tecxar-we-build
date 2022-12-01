@@ -916,5 +916,47 @@ display: none;
  height: 160px;
  width:413px;
 }
+.awarenessDotModal {
 
+   .ant-modal-content {
+     color: #000000;
+   height:370px;
+   }
+ 
+   .ant-modal-body {
+     text-align: center;
+     margin: -10px;
+     margin-bottom: -62px;
+    
+   }
+ 
+   textarea.ant-input {
+     border-radius: 2px;
+   }
+ 
+   .ant-btn {
+     width: 111px;
+     height: -24px;
+     background-color: #3a5e3d;
+     text-align: center;
+     margin-left: 301px;
+
+     .ant-btn-default{
+       display: none;
+     }
+   }
+ 
+   .header {
+     font-family: 'Arimo';
+     font-style: normal;
+     font-weight: 700;
+     font-size: 8px;
+     line-height: 9px;
+     text-align: left;
+   }
+   .ant-modal-footer{
+     margin-top: 0;
+   }
+  
+ }
 
