@@ -92,7 +92,6 @@ const FlashCardModal = (props: any) => {
       >
         <div className="p-4">{props?.flashCard?.content}</div>
       </Modal>
-      {console.log(JSON.stringify(props.editFlashCardData))}
       <AddFlashCardModal
         modal2Open={props.addFlashCard}
         setModal2Open={() => props.setAddFlashcard()}

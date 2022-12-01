@@ -68,11 +68,7 @@ const NewBuildSideCard = (props: any) => {
       const handleDifficultyClick = (e:any) => {
         setDifficultyLevel(e.target.name)
       }
-  const onSave = () =>{
-    console.log("TTTTTTTTTTTTTTTTTTTTTTTT",videoType)
-    console.log("PPPPPPPPPPPPPPPPPPPPPPPP",polarisationLevel)
-    console.log("BBBBBBBBBBBBBBBBBBBBBBBB",difficultyLevel)
-  }
+
 
   return (
     <>
@@ -110,7 +106,7 @@ const NewBuildSideCard = (props: any) => {
                 props.setAwarenessModal(true);
               }}
             >
-              <Image src="../img/polygon 22.png" onClick={props.Inspiration} />
+              <Image src="../img/polygon22.png" onClick={props.Inspiration} />
             </span>
             <span
               onClick={() => {
@@ -118,7 +114,7 @@ const NewBuildSideCard = (props: any) => {
               }}
             >
               <Image
-                src="../img/polygon 24.png"
+                src="../img/polygon24.png"
                 onClick={props.Acceptance}
                 className="blue"
               />

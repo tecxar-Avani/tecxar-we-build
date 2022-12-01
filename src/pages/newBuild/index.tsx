@@ -1,28 +1,18 @@
-import CustomButton from "@/components/Button";
-import OuterBox from "@/components/OuterBox";
-import ProfileCard from "@/components/Profile";
-import Ractangle from "@/components/Ractangle";
-import VideoCard from "@/components/VideoCard";
-import { Button, Input } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   flashCardSelector,
   getFlashCardByBuildId,
 } from "../../store/reducers/flashCard.reducer";
-import { Card, Col, Image, Row } from "react-bootstrap";
+import { Card, Image } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
 import NewBuildBoxes from "@/components/NewBuildBoxes";
 import FlashCardModal from "@/components/FlashCardModal";
 import AwarenessModal from "@/components/AwarenessModal";
-import { Router, useRouter } from "next/router";
-import { Content } from "antd/lib/layout/layout";
-import { Console } from "console";
-import { addAbortSignal } from "stream";
+import { useRouter } from "next/router";
+
 import AddFlashCardModal from "@/components/AddFlashCardModal";
-import { addBuild, buildSelector } from "../../store/reducers/build.reducer";
+import { buildSelector } from "../../store/reducers/build.reducer";
 import { addAwareness, awarenessSelector, getAwarenessByBoxId } from "../../store/reducers/awareness.reducer";
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 
@@ -223,7 +213,6 @@ useEffect(() => {
             item={dataArray}
             arr={arr}
             setArr={(value:any) => {
-              console.log("valuevaluevalue", value);
               setArr(value);
               if (value.length > 20) {
                 setDataArray([

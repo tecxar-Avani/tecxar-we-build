@@ -8,8 +8,7 @@ import HeaderTitle from "./headerTitle";
 const { Sider } = Layout;
 
 const SideBar = (toggle: any) => {
-  console.log("AAAAAAAA", toggle);
-  // console.log('AAAAAAAA',toggle.router.state.route)
+
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   // const url = window.location.origin;
@@ -41,10 +40,7 @@ const SideBar = (toggle: any) => {
 
   return (
     <>
-      {console.log(
-        "toggle.router?.state?.pathname",
-        toggle.router?.state?.pathname
-      )}
+      
       <div
         className={
           toggle.router?.state?.pathname == "/newBuild"

@@ -19,7 +19,6 @@ type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
 export const addAwareness = createAsyncThunk(
   `reviews/add`,
   async (createAwarenessData: IBoxReviews, { dispatch }) => {
-    console.log("CCCCCCCCCCCCCCCCCCCCCC",createAwarenessData)
     const { status, data } = await AwarenessService.addAwareness(
         createAwarenessData
     );

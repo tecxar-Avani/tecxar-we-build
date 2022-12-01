@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 const { Search } = Input;
-const onSearch = (value: any) => console.log(value);
+
 
 const SearchBar = (props:any) => {
  
