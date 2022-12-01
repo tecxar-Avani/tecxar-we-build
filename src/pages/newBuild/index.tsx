@@ -154,7 +154,7 @@ useEffect(() => {
   };
   const dispatch = useAppDispatch();
   const BoxSize = 3;
-  const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
+  const flashCardArr = flashCardData?.flashCardList?.rows[0].flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
 
   console.log("!!!!!!!!!!!!!",flashCardData)
