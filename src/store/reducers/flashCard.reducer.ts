@@ -54,6 +54,7 @@ interface State {
   error: string | undefined;
   flashCardList: IFlashCardRowsCountResponse;
   flashCardUserList: IFlashCardRowsCountResponse;
+  flashBuild:IFlashCard
 }
 
 const initialState: State = {
@@ -66,6 +67,10 @@ const initialState: State = {
     rows: [],
   },
   flashCardUserList: { status: true, rows: [] },
+  flashBuild :{
+    question: "",
+    answer: "",
+  },
   loading: false,
   error: undefined,
   id: 0,

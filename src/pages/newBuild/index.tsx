@@ -157,7 +157,7 @@ useEffect(() => {
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
 
-  
+  console.log("!!!!!!!!!!!!!",flashCardData)
   const questionData = (userId: any, index?: number, questionId?: number) => {
     const filterArray = flashCardArr.filter((F: any) => F.user_id == userId);
     const findLastValue = filterArray.slice(-1)[0];
