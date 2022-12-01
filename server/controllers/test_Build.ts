@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Response } from "express";
 import {
   Controller,
@@ -6,33 +5,30 @@ import {
   UseBefore,
   Res,
   Get,
-  Body,
-  HttpCode,
   Post,
+  HttpCode,
+  Body,
+  Param,
   Delete,
   Put,
-  Param,
-  UploadedFile,
   QueryParam,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
+import BuildService from "@/services/build.service";
+import BoxService from "@/services/box.service";
 import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
-import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos/flashcards.dto";
-import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
-import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
+import { RequestWithUser } from "@/interfaces/auth.interface";
 import { updateVideoBuildDto, videoBuildDto } from "@/dtos/videobuilds.dto";
-import BuildService from "@/services/build.service"
+import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import { google } from "googleapis";
 import config from "@/configs";
-import { RequestWithUser } from "@/interfaces/auth.interface";
 
-@Controller("/build")
-@UseBefore(authMiddleware)
-export class FlashController {
+@Controller("/build1")
+export class BuildController {
   private buildService = new BuildService();
+  private boxService = new BoxService();
   private flashCardService = new FlashCardService();
-  boxService: any;
 
   @Post("/create")
   @UseBefore(authMiddleware)
@@ -44,7 +40,7 @@ export class FlashController {
     @Res() res: Response
   ) {
     try {
-      videoBuildData.created_by = req.user.id;
+      videoBuildData.created_by = req.user.id;            
       videoBuildData.updated_by = req.user.id;
       const createBuildData: IVideoBuild | null =
         await this.buildService.createBuild(videoBuildData);
@@ -77,13 +73,10 @@ export class FlashController {
   }
 
   @Get("/")
-  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
   async getUsersBuild(@Req() req: Request | any, @Res() res: Response) {
     try {
       const user = req.user.id;
-      console.log('>>>>>', user);
-
       const userBuild = await this.buildService.getBuildByUserId(user);
       return userBuild;
     } catch (error) {
@@ -95,13 +88,14 @@ export class FlashController {
       };
     }
   }
+
   @Get("/userInteractedBuild")
   @OpenAPI({ summary: "Get all users by Email" })
   async getUserInteractedBuild(
     @Req() req: RequestWithUser | any,
     @Res() res: Response
   ) {
-    try {
+    try {      
       const userId = req.user.id;
       const user = await this.buildService.getUserInteractedBuild(userId);
       return user;
@@ -248,7 +242,7 @@ export class FlashController {
       };
     }
   }
-
+  
   @Get("/:id")
   @OpenAPI({ summary: "Get all build of users by Id" })
   async getBuildById(@Req() req: Request | any, @Param('id') id: number, @Res() res: Response) {
@@ -312,6 +306,3 @@ export class FlashController {
 function ApiTags() {
   throw new Error("Function not implemented.");
 }
-
-
-

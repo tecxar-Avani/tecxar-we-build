@@ -11,7 +11,6 @@ import { Op, QueryTypes } from "sequelize";
 class BuildService {
   private videoBuild = DB.videoBuild;
   sql: any;
-  
   public async createBuild(
     buildData: IVideoBuild
   ): Promise<IVideoBuild | null> {
@@ -25,7 +24,7 @@ class BuildService {
     return createBuildData;
   }
 
-  public async getBuild(userId: number): Promise<IVideoBuild[] | null> {
+  public async getBuildByUserId(userId: number): Promise<IVideoBuild[] | null> {
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll({
       where: { created_by: userId },
       raw: true,
@@ -44,6 +43,17 @@ class BuildService {
     where vb.id = ${id} `;
     const BuildById: IVideoBuild[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
     return BuildById;
+  }
+
+  public async getUserInteractedBuild(userId:number): Promise<IVideoBuild[] | null> {
+    const query = `SELECT vb.video_url
+    FROM video_builds AS vb
+    LEFT JOIN flash_cards fc on vb.id = fc.build_id
+    LEFT JOIN boxes box on vb.id = box.build_id
+    LEFT JOIN box_reviews br on box.id = br.box_id
+    where br.created_by = ${userId} OR fc.created_by =${userId} `;
+    const UserInteractedId: IVideoBuild[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
+    return UserInteractedId;
   }
 
   public async getUsersBuildByUrl(
