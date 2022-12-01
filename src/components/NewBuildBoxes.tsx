@@ -10,16 +10,17 @@ const NewBuildBoxes = (props: any) => {
       <Ractangle />
       <Row className="m-0 px-4 innerBoxMain">
         {props.item?.map((itemData: any, index: any) => {
-        
+       
           return (
             <>
               <OuterBox
                 key={index}
                 id={itemData.id}
-              
+                review={props.review}
                 counter={props.counter}
                 arr={props.arr}
                 onFocus={props.onFocus}
+                acceptanceData={props.acceptanceData}
                 responseCallback={(value: number,BoxData:any) => {
                   props.setArr([...props.arr, value,BoxData]);
                   if (props.arr.length > 20) {
@@ -30,11 +31,11 @@ const NewBuildBoxes = (props: any) => {
                     // props.setNum(arrData);
                   }
                 }}
-                setNum={(data) => {
+                setNum={(data:any) => {
                 
                   props.setNum(data);
                 }}
-             
+                modalDot={props.modalDot}
 
               />
             </>

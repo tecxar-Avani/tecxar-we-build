@@ -9,7 +9,7 @@ const { Search } = Input;
 
 
 
-const AwarenessModal = (props: any) => {
+const AwarenessDotModal = (props: any) => {
   const [form] = Form.useForm();
   form.resetFields();
     return (
@@ -19,12 +19,9 @@ const AwarenessModal = (props: any) => {
         visible={props.awarenessModal}
         onOk={() => props.setAwarenessModal(false)}
         onCancel={() => props.setAwarenessModal(false)}
-        footer={props.footer && props.footer.length>0 && props.footer ? <Button  form="form"
-        key="submit"
-        htmlType="submit"
-        className="openmodal">Add</Button> : []}
+        footer={props.footer && props.footer.length>0 && props.footer} 
         className={`${props.className} awarenessModal`}
-        okText="Add"
+        okText={props.btnName}
       >
          <Form
           form={form}
@@ -33,11 +30,10 @@ const AwarenessModal = (props: any) => {
           layout="vertical"
           autoComplete="off"
         >
-           <Form.Item>
-        <div className={`inputbox awarenessModal AwareInput ${props.className}`}><TextArea id={props.id} rows={3} className="mb-2 AwareInput" value={props.textValue}></TextArea></div></Form.Item>
+        
         <div className="header mt-2">{props.header}</div>
         <Form.Item name="comment">
-       <div className={`awarenessModal header ${props.className}`}><TextArea  showCount maxLength={500} rows={5} className="mb-2 AwareInputFirst"></TextArea></div>
+       <div className={`awarenessModal header ${props.className}`}><TextArea  showCount maxLength={500} rows={5} className="mb-2 AwareInputFirst" defaultValue={props.value}></TextArea></div>
        </Form.Item>
        </Form>
 </Modal>
@@ -45,4 +41,4 @@ const AwarenessModal = (props: any) => {
     );
   };
   
-  export default AwarenessModal;
+  export default AwarenessDotModal;

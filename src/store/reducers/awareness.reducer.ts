@@ -30,12 +30,14 @@ export const addAwareness = createAsyncThunk(
   }
 );
 
-// export const getFlashCardByBuildId = createAsyncThunk(`flashcard/flashcardbybuild`, async (buildId:number) => {
-//   const { status, data } = await flashCardService.getFlashCardByBuildId(buildId);
-//   // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
+export const getAwarenessByBoxId = createAsyncThunk(`reviews/`, async (boxData: { boxId: number; reviewType: string; }) => {
+  const { status, data } = await AwarenessService.getAwarenessByBoxId(boxData.boxId,boxData.reviewType);
+  // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
  
-//   return { status: data.status, rows: data };
-// });
+  return { status,data};
+});
+
+
 
 interface State {
   id: number;
@@ -92,17 +94,17 @@ const awarenessSlice = createSlice({
           return { ...state, loading: false,awarenessData: initialState.awareness };
         }
       })
-      // .addCase(addAnnouncement.fulfilled, (state, action) => {
-      //   if (action.payload.data.status) {
-      //     toast.success(action.payload.data.message);
-      //     Router.back();
-      //     return { ...state, loading: false, announcementData: action.payload.data };
-      //   } else {
-      //     toast.error(action.payload.data.error.message);
-      //     return { ...state, loading: false, announcementData: initialState.announcementData };
-      //   }
-      // })
-    
+      .addCase(getAwarenessByBoxId.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          // toast.success(action.payload.data.message);
+          // Router.back();
+          return { ...state, loading: false, awarenessList: action.payload.data };
+        } else {
+          // toast.error(action.payload.data.error.message);
+          return { ...state, loading: false, awarenessList: initialState.awarenessList };
+        }
+      })
+     
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
       })

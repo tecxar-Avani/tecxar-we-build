@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import DB from "@databases";
@@ -25,6 +26,18 @@ class BoxService {
       return null;
     } else {
       return reviews;
+    }
+  }
+
+  public async getReviewsByBox(boxId: number,reviewType:string): Promise<IBoxReviews[] | null> {
+    const reviewsById: IBoxReviews[] | null = await this.reviews.findAll({
+      where: { box_id: boxId , review_type:reviewType },
+      raw: true,
+    });
+    if (!reviewsById) {
+      return null;
+    } else {
+      return reviewsById;
     }
   }
 }

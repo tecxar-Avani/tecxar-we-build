@@ -9,6 +9,9 @@ import {
   Body,
   HttpCode,
   Post,
+  Param,
+  QueryParams,
+  QueryParam,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BoxReviewService from "@/services/boxReview.service";
@@ -49,7 +52,7 @@ export class FlashController {
 
   @Get("/")
   @OpenAPI({ summary: "Get all reviews of users" })
-  async getFlashCard(@Req() req: Request | any, @Res() res: Response) {
+  async getBoxReviews(@Req() req: Request | any, @Res() res: Response) {
     try {
       const user = req.user.id;
       const reviewData = await this.reviewService.getReviews(user);
@@ -63,4 +66,21 @@ export class FlashController {
       };
     }
   }
+
+  @Get("/getReviewsByBoxId")
+  @OpenAPI({ summary: "Get all reviews of users" })
+  async getReviewsByBoxId(@Req() req: Request | any, @QueryParam('boxId')  boxId: number, @QueryParam('reviewType') type:string ,@Res() res: Response) {
+    try {
+      const reviewDataByBox = await this.reviewService.getReviewsByBox(boxId,type);
+      return reviewDataByBox;
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
 }

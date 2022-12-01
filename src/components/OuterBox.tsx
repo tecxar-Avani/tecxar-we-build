@@ -35,6 +35,7 @@ const OuterBox = (props: any) => {
     }
   };
 
+ 
   return (
     <Col sm={4} className="p-0">
       <div className="innerBoxs p-3 w-100 " style={{ height: "170px" }}>
@@ -53,6 +54,15 @@ const OuterBox = (props: any) => {
                       id={props.id}
                       onFocus={props.onFocus}
                     />
+                  { props.review == "inspiration" ? (<span className="position-absolute bg-primary px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle">
+              I
+            </span>) : props.acceptanceData && props.acceptanceData.length>0 && props.id == 1 ?(<span className="position-absolute bg-danger px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle" onClick={props.modalDot}>
+              A
+            </span>): props.review == "resistance" ?(<span className="position-absolute bg-warning px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle">
+              R
+            </span>):[]
+          
+              }
                   </div>
                 </Form>
               )

@@ -23,23 +23,48 @@ import { Console } from "console";
 import { addAbortSignal } from "stream";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 import { addBuild, buildSelector } from "../../store/reducers/build.reducer";
+import { addAwareness, awarenessSelector, getAwarenessByBoxId } from "../../store/reducers/awareness.reducer";
+import AwarenessDotModal from "@/components/AwarenessDotModal";
 
 
 const NewBuild = () => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const BuildData = useAppSelector(buildSelector);
+  const awarenessList = useAppSelector(awarenessSelector);
   const [arr, setArr] = useState([1]);
-  const [videoType , setVideoType] = useState(false);
-  const [polarisation , setPolarisation] = useState(false);
-  const [difficulty , setDifficulty] = useState(false);
+  const [awarenessModal, setAwarenessModal] = useState(false);
+  const [awarenessDotModal ,setAwarenessDotModal] = useState(false);
+  const [accept, setAccept] = useState(false);
+  const [inspiration, setInspiration] = useState(false);
+  const [resistance, setResistance] = useState(false);
+  const [review , setReview] = useState<string>("");
+ 
+  const Acceptance = () => {
+    setResistance(false);
+    setInspiration(false);
+    setAccept(true);
+  };
+  const Inspiration = () => {
+    setAccept(false);
+    setResistance(false);
+    setInspiration(true);
+  };
+  const Resistance = () => {
+    setAccept(false);
+    setInspiration(false);
+    setResistance(true);
+  };
 
   useEffect(() => {
     dispatch(getFlashCardByBuildId(2));
   }, []);
-
 useEffect(() => {
-  dispatch(addBuild());
+  const boxData={
+    boxId:awarenessBoxId,
+    reviewType:review
+  }
+  dispatch(getAwarenessByBoxId(boxData));
 },[])
   const num = [
     {
@@ -164,7 +189,7 @@ useEffect(() => {
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
-  const [awarenessBoxId ,setAwarenessBoxId] = useState(false);
+  const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
   let mapdata = Math.ceil(num.length / 3);
 
   const handleChange = (e: any) => {
@@ -172,12 +197,33 @@ useEffect(() => {
     setAwarenessBoxId(e.target.id);
   };
 
-
+  const handleData = (comment:any,review:any) =>{
+    const data = {
+      comment:comment.comment,
+      review_type:review,
+      box_id:Number(awarenessBoxId)
+    }
+    dispatch(addAwareness(data))
+    setReview(review)
+   }
+   const acceptanceData = [
+    {
+  "id":1,
+  "description":"hello",
+  "boxId":1,
+    },
+    {"id":2,
+    "description":"hello world",
+    "boxId":1,
+    }
+  ]
+const valueOfDotAware = acceptanceData.map((des) => des.description) && num.filter((ids) => ids.id == 1)
+console.log("#######",valueOfDotAware)
   return (
     <>
       <div className="d-flex m-0 w-100">
-        <NewBuildSideCard id={router.query.id} value={awarenessIndex} BoxId={awarenessBoxId}/>
-
+        <NewBuildSideCard id={router.query.id} value={awarenessIndex} Resistance={Resistance} Acceptance={Acceptance} Inspiration={Inspiration} setAwarenessModal={setAwarenessModal} />
+      
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           {[...Array(mapdata)].map((item, index) => {
             const currentSize = index * BoxSize;
@@ -213,6 +259,9 @@ useEffect(() => {
                     numOfBox={finalSize}
                     key={index}
                     onFocus={handleChange}
+                    modalDot={setAwarenessDotModal}
+                    acceptanceData={acceptanceData}
+                   // review={}
                   />
                 </>
               );
@@ -293,6 +342,73 @@ useEffect(() => {
         ) => {
           questionData(userId, index, questionId);
         }}
+      />
+       <AwarenessModal
+        awarenessModal={awarenessModal}
+        setAwarenessModal={setAwarenessModal}
+        visible={awarenessModal}
+        textValue={awarenessIndex}
+        handleSubmit={(comment:any,review:any)=>{handleData(comment,review)}}
+        footer= "Add"
+        id={awarenessIndex}
+        title={`${accept
+          ? "Acceptance"
+          : inspiration
+            ? "Inspiration"
+            : resistance
+              ? "Resistance"
+              : ""
+          }`}
+        header={`Maria's ${accept
+          ? "Acceptance"
+          : inspiration
+            ? "Inspiration"
+            : resistance
+              ? "Resistance"
+              : ""
+          }`}
+        className={`${accept
+          ? "accptanceModalBG"
+          : inspiration
+            ? "inspirationModalBG"
+            : resistance
+              ? "resistanceModalBG"
+              : ""
+          } `}
+      />
+       <AwarenessDotModal
+        awarenessModal={awarenessDotModal}
+        setAwarenessModal={setAwarenessDotModal}
+        visible={awarenessDotModal}
+        
+        //handleSubmit={(comment:any,review:any)=>{handleData(comment,review)}}
+        btnName="challenge"
+        value={valueOfDotAware}
+        id={awarenessIndex}
+        title={`${accept
+          ? "Acceptance"
+          : inspiration
+            ? "Inspiration"
+            : resistance
+              ? "Resistance"
+              : ""
+          }`}
+        header={`Maria's ${accept
+          ? "Acceptance"
+          : inspiration
+            ? "Inspiration"
+            : resistance
+              ? "Resistance"
+              : ""
+          }`}
+        className={`${accept
+          ? "accptanceModalBG"
+          : inspiration
+            ? "inspirationModalBG"
+            : resistance
+              ? "resistanceModalBG"
+              : ""
+          } `}
       />
     </>
   );

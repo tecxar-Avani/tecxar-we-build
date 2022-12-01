@@ -17,9 +17,6 @@ import { addAwareness, awarenessSelector } from "../store/reducers/awareness.red
 
 const NewBuildSideCard = (props: any) => {
 
-  const awarenessData = useAppSelector(awarenessSelector);
-  const dispatch = useAppDispatch();
- 
 
 
   const [polarisation, setPolarisation] = useState(false);
@@ -28,7 +25,6 @@ const NewBuildSideCard = (props: any) => {
   const target2 = useRef(null);
   const [type, setType] = useState(false);
   const typeVideo = useRef(null);
-  const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
@@ -36,34 +32,24 @@ const NewBuildSideCard = (props: any) => {
   const [polarisationLevel , setPolarisationLevel] = useState(false);
   const [difficultyLevel , setDifficultyLevel] = useState(false);
   
-  const Acceptance = () => {
-    setResistance(false);
-    setInspiration(false);
-    setAccept(true);
-  };
-  const Inspiration = () => {
-    setAccept(false);
-    setResistance(false);
-    setInspiration(true);
-  };
-  const Resistance = () => {
-    setAccept(false);
-    setInspiration(false);
-    setResistance(true);
-  };
-
+  // const Acceptance = () => {
+  //   setResistance(false);
+  //   setInspiration(false);
+  //   setAccept(true);
+  // };
+  // const Inspiration = () => {
+  //   setAccept(false);
+  //   setResistance(false);
+  //   setInspiration(true);
+  // };
+  // const Resistance = () => {
+  //   setAccept(false);
+  //   setInspiration(false);
+  //   setResistance(true);
+  // };
 
   
-  const handleData = (comment:any,review:any) =>{
-    console.log("GGGGGGGGGGGGGGGGGGG",awarenessData)
-    const data = {
-      comment:comment.comment,
-      review_type:review,
-      box_id:Number(props.BoxId)
-    }
-    dispatch(addAwareness(data))
-   
-   }
+
  
   const BoxValue = props.value
 
@@ -87,6 +73,7 @@ const NewBuildSideCard = (props: any) => {
     console.log("PPPPPPPPPPPPPPPPPPPPPPPP",polarisationLevel)
     console.log("BBBBBBBBBBBBBBBBBBBBBBBB",difficultyLevel)
   }
+
   return (
     <>
       <div>
@@ -110,39 +97,39 @@ const NewBuildSideCard = (props: any) => {
         <div>
           <span
             onClick={() => {
-              setAwarenessModal(true);
+              props.setAwarenessModal(true);
             }}
           >
-            <span onClick={Inspiration}>
+            <span onClick={props.Inspiration}>
               <CustomButton title="Inspiration" className="inspirationButton " />
             </span>
           </span>
           <div>
             <span
               onClick={() => {
-                setAwarenessModal(true);
+                props.setAwarenessModal(true);
               }}
             >
-              <Image src="../img/polygon 22.png" onClick={Inspiration} />
+              <Image src="../img/polygon 22.png" onClick={props.Inspiration} />
             </span>
             <span
               onClick={() => {
-                setAwarenessModal(true);
+                props.setAwarenessModal(true);
               }}
             >
               <Image
                 src="../img/polygon 24.png"
-                onClick={Acceptance}
+                onClick={props.Acceptance}
                 className="blue"
               />
             </span>
 
             <div
               onClick={() => {
-                setAwarenessModal(true);
+                props.setAwarenessModal(true);
               }}
             >
-              <span onClick={Acceptance}>
+              <span onClick={props.Acceptance}>
                 <CustomButton title="Acceptance" className="acceptanceButton" />
               </span>
             </div>
@@ -150,18 +137,18 @@ const NewBuildSideCard = (props: any) => {
 
           <span
             onClick={() => {
-              setAwarenessModal(true);
+              props.setAwarenessModal(true);
             }}
           >
-            <div className="redpolygon" onClick={Resistance} />
+            <div className="redpolygon" onClick={props.Resistance} />
           </span>
 
           <span
             onClick={() => {
-              setAwarenessModal(true);
+              props.setAwarenessModal(true);
             }}
           >
-            <span onClick={Resistance}>
+            <span onClick={props.Resistance}>
               <CustomButton title="Resistance" className="resistanceButton" />
             </span>
           </span>
@@ -325,7 +312,7 @@ const NewBuildSideCard = (props: any) => {
       </div>
 
 
-      <AwarenessModal
+      {/* <AwarenessModal
         awarenessModal={awarenessModal}
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
@@ -357,7 +344,7 @@ const NewBuildSideCard = (props: any) => {
               ? "resistanceModalBG"
               : ""
           } `}
-      />
+      /> */}
      
     </>
   );

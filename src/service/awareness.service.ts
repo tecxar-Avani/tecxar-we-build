@@ -4,9 +4,9 @@ class AwarenessService {
     return API.post(`/reviews/create`, awareness);
   }
 
-//   getFlashCardByBuildId(id: number) {
-    
-//     return API.get(`/flashcard/flashcardbybuild/${id}`);
-//   }
+  getAwarenessByBoxId(boxId:number,reviewType:string) {
+   
+    return API.get(`/reviews/getReviewsByBoxId?boxId=${boxId}&reviewType=${reviewType}`);
+  }
  }
 export default new AwarenessService();
