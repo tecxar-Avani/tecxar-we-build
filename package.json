@@ -21,7 +21,7 @@
     "lint:next": "next lint",
     "lint:server": "eslint --ignore-path .gitignore --ext .ts server/",
     "lint:fix": "npm run lint:next -- --fix && npm run lint:server -- --fix",
-    "deploy:prod": "pm2 start ecosystem.config.js --only prod",
+    "deploy:prod": "pm2 start ecosystem.config.js --only we-build",
     "deploy:dev": "pm2 start ecosystem.config.js --only dev",
     "resolve": "tsc --traceResolution"
   },
