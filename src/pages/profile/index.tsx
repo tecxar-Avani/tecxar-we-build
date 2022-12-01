@@ -20,14 +20,14 @@ const Profile = () => {
   const [modal4Open, setModal4Open] = useState(false);
   const [addFlashCard, setAddFlashcard] = useState(false);
   const [editFlashCardData, setEditFlashCardData] = useState({});
-  const [editName , setEditName] = useState(false);
+  const [editName, setEditName] = useState(false);
 
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
   useEffect(() => {
     dispatch(getFlashCardByUser());
   }, []);
-  const role = "user";
+  const role = "admin";
   const videosData = [
     {
       type: "video",
@@ -1412,7 +1412,6 @@ const Profile = () => {
     },
   ];
 
- 
   const showModal = () => {
     setEditName(true);
   };
@@ -1426,7 +1425,7 @@ const Profile = () => {
   };
 
   const questionData = (index?: number, questionId?: number) => {
-    const findLastValue = flashCardArr.slice(-1)[0];
+    const findLastValue = flashCardArr?.slice(-1)[0];
     const lastQuestionId = findLastValue.id;
     if (questionId == lastQuestionId) {
       setModal3Open({
@@ -1436,6 +1435,7 @@ const Profile = () => {
       });
       setRevealAns(true);
     } else {
+      alert(index);
       setModal3Open({
         content: index
           ? flashCardArr[index].question
@@ -1466,7 +1466,7 @@ const Profile = () => {
             className="title-list-of-profile py-2 my-2"
           />
           <div className="builds-Main overflow-auto">
-            {/* <div className="d-flex overflow-auto">
+            <div className="d-flex overflow-auto">
               {videosData.length > 0 &&
                 videosData.map((videoData, index) => (
                   <Col md={4} className="videoProfile px-2" key={index}>
@@ -1477,7 +1477,7 @@ const Profile = () => {
                     </Link>
                   </Col>
                 ))}
-            </div> */}
+            </div>
           </div>
         </div>
         {/* </div> */}
@@ -1487,7 +1487,7 @@ const Profile = () => {
             className="title-list-of-profile py-2 my-2"
           />
           <Row className="m-0">
-            {/* {videosData.length > 0 &&
+            {videosData.length > 0 &&
               videosData.map((videoData, index) => (
                 <Col md={4} key={index} className="videoProfile">
                   <Link href={`/newBuild?id=${videoData.id}`}>
@@ -1496,7 +1496,7 @@ const Profile = () => {
                     </a>
                   </Link>
                 </Col>
-              ))} */}
+              ))}
           </Row>
         </div>
         {role == "admin" ? (
@@ -1526,12 +1526,12 @@ const Profile = () => {
         modal={revealAns}
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}
-        modalVisible={revealAns}      
+        modalVisible={revealAns}
         responseCallback={(
           questionId: number,
           index: number,
           arrayLength: number,
-          title:any
+          title: any
         ) => {
           const questionFilter = flashCardArr.filter(
             (F: any) => F.id == questionId
@@ -1543,14 +1543,13 @@ const Profile = () => {
                 footer: ["Again", "Hard", "Good", "Easy"],
                 onOk: modal4Open,
                 questionId: questionId,
-                index: index,
+                index: index ? index+1 : 1,
                 arrayLength: arrayLength,
                 title: title,
               };
               setModal3Open(newData);
             });
         }}
-        
         questionCallback={(index: number, questionId: number) => {
           questionData(index, questionId);
         }}
@@ -1560,13 +1559,13 @@ const Profile = () => {
         addFlashCard={addFlashCard}
         editFlashCardData={editFlashCardData}
       />
-      <Modal 
-      title="Edit Your Name" 
-      open={editName} 
-      onOk={handleOk} 
-      onCancel={handleCancel}
+      <Modal
+        title="Edit Your Name"
+        open={editName}
+        onOk={handleOk}
+        onCancel={handleCancel}
       >
-      <Input defaultValue={profileData.title}></Input>
+        <Input defaultValue={profileData.title}></Input>
       </Modal>
     </>
   );

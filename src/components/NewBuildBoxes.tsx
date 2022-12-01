@@ -4,46 +4,32 @@ import OuterBox from "./OuterBox";
 import Ractangle from "./Ractangle";
 
 const NewBuildBoxes = (props: any) => {
-  
   return (
-    <div className="boxesMain">
-      <Ractangle />
-      <Row className="m-0 px-4 innerBoxMain">
-        {props.item?.map((itemData: any, index: any) => {
-       
-          return (
-            <>
-              <OuterBox
-                key={index}
-                id={itemData.id}
-                review={props.review}
-                counter={props.counter}
-                arr={props.arr}
-                onFocus={props.onFocus}
-                acceptanceData={props.acceptanceData}
-                responseCallback={(value: number,BoxData:any) => {
-                  props.setArr([...props.arr, value,BoxData]);
-                  if (props.arr.length > 20) {
-                    const arrData = {
-                      id: value + 1,
-                      BoxData: "",
-                    };
-                    // props.setNum(arrData);
-                  }
-                }}
-                setNum={(data:any) => {
-                
-                  props.setNum(data);
-                }}
-                modalDot={props.modalDot}
-
-              />
-            </>
-          );
-        })}
-      </Row>
-    </div>
-  );
+    <>
+    {[...Array(Math.ceil(props.item.length / 3))].map((_rows, index) => {
+    const subArray = props.item.slice(index * 3, index * 3 + 3);
+    return (
+        <div className="boxesMain">
+        <div className="h-30 border border-color-25" />
+     <Row className="m-0 px-4 innerBoxMain">
+          {subArray.map((itemData: any, index: any) => (
+            <OuterBox
+              key={index}
+              id={itemData.id}
+              counter={props.counter}
+              arr={props.arr}
+              onFocus={props.onFocus}
+              visible={props.arr.includes(itemData.id)}
+              responseCallback={(value: number) =>
+                props.setArr([...props.arr, value])
+              }
+            />
+          ))}
+        </Row>
+      </div> 
+    );
+  })}</>)
+ 
 };
 
 export default NewBuildBoxes;

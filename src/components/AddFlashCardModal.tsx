@@ -1,9 +1,7 @@
 import { Input, Modal, Button, Form } from "antd";
 import { useAppDispatch } from "../hooks";
-import React, {  } from "react";
-import {
-  addFlashCard,
-} from "../store/reducers/flashCard.reducer";
+import React from "react";
+import { addFlashCard } from "../store/reducers/flashCard.reducer";
 
 const { Search } = Input;
 const { TextArea } = Input;
@@ -29,7 +27,7 @@ const AddFlashCardModal = (props: any) => {
         footer={
           <Button
             form="form"
-             key="submit1"
+            key="submit1"
             htmlType="submit"
             className="openmodal"
           >
@@ -57,7 +55,7 @@ const AddFlashCardModal = (props: any) => {
               showCount
               maxLength={100}
               rows={4}
-             defaultValue={props?.flashCardData?.answer}
+              defaultValue={props?.flashCardData?.answer}
             />
           </Form.Item>
         </Form>

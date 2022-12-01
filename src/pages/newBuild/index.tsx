@@ -39,34 +39,7 @@ const NewBuild = () => {
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
   const [review , setReview] = useState<string>("");
- 
-  const Acceptance = () => {
-    setResistance(false);
-    setInspiration(false);
-    setAccept(true);
-  };
-  const Inspiration = () => {
-    setAccept(false);
-    setResistance(false);
-    setInspiration(true);
-  };
-  const Resistance = () => {
-    setAccept(false);
-    setInspiration(false);
-    setResistance(true);
-  };
-
-  useEffect(() => {
-    dispatch(getFlashCardByBuildId(2));
-  }, []);
-useEffect(() => {
-  const boxData={
-    boxId:awarenessBoxId,
-    reviewType:review
-  }
-  dispatch(getAwarenessByBoxId(boxData));
-},[])
-  const num = [
+  const [dataArray, setDataArray] = useState([
     {
       id: 1,
       boxData: "",
@@ -147,13 +120,37 @@ useEffect(() => {
       id: 20,
       message: "",
     },
-  ];
+  ]);
 
-  const setNum = (data: any) => {
-    num.push(data);
+  const Acceptance = () => {
+    setResistance(false);
+    setInspiration(false);
+    setAccept(true);
   };
+  const Inspiration = () => {
+    setAccept(false);
+    setResistance(false);
+    setInspiration(true);
+  };
+  const Resistance = () => {
+    setAccept(false);
+    setInspiration(false);
+    setResistance(true);
+  };
+
+  useEffect(() => {
+    dispatch(getFlashCardByBuildId(2));
+  }, []);
+useEffect(() => {
+  const boxData={
+    boxId:awarenessBoxId,
+    reviewType:review
+  }
+  dispatch(getAwarenessByBoxId(boxData));
+},[])
+
+
   const dispatch = useAppDispatch();
-  const BoxSize = 3;
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
 
@@ -190,7 +187,6 @@ useEffect(() => {
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
-  let mapdata = Math.ceil(num.length / 3);
 
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
@@ -217,55 +213,34 @@ useEffect(() => {
     "boxId":1,
     }
   ]
-const valueOfDotAware = acceptanceData.map((des) => des.description) && num.filter((ids) => ids.id == 1)
   return (
     <>
       <div className="d-flex m-0 w-100">
         <NewBuildSideCard id={router.query.id} value={awarenessIndex} Resistance={Resistance} Acceptance={Acceptance} Inspiration={Inspiration} setAwarenessModal={setAwarenessModal} />
       
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
-          {[...Array(mapdata)].map((item, index) => {
-            const currentSize = index * BoxSize;
-            const remaningBox = num.length - currentSize;
-            const finalSize = remaningBox > BoxSize ? BoxSize : remaningBox;
-            let items;
+          <NewBuildBoxes
+            setModal1Open={SetAddFlashcard}
+            item={dataArray}
+            arr={arr}
+            setArr={(value:any) => {
+              console.log("valuevaluevalue", value);
+              setArr(value);
+              if (value.length > 20) {
+                setDataArray([
+                  ...dataArray,
+                  {
+                    id: value.length,
+                    boxData: "",
+                  },
+                ]);
+              }
+            }}
+            onFocus={handleChange}
+            modalDot={setAwarenessDotModal}
+            acceptanceData={acceptanceData}
+          />
 
-            while (num.length > 0) {
-              // if (arr.length > 20) {
-              //   console.log("arr.length", arr.length);
-
-              //   num.push({ id: arr.length + 1, message: "" });
-              //   console.log("DDDDDDDDDDDnumDDDDDDDDDDD", num.length);
-              // }
-              items = num.splice(0, 3);
-             
-              return (
-                <>
-              
-                  <NewBuildBoxes
-                    setModal1Open={SetAddFlashcard}
-                    item={items}
-                    arr={arr}
-                    setArr={setArr}
-                    setNum={(data: any) => {
-                      setNum(data);
-                    }}
-                    // setNum={(data: any) => {
-                    //   console.log("DDDDDDDDDDDDD", data);
-                    //   num.push(data);
-                    //   setNewNumber([...newNumber, data]);
-                    // }}
-                    numOfBox={finalSize}
-                    key={index}
-                    onFocus={handleChange}
-                    modalDot={setAwarenessDotModal}
-                    acceptanceData={acceptanceData}
-                   // review={}
-                  />
-                </>
-              );
-            }
-          })}
           <div className="position-absolute mkCard">
             {userArr?.length > 0 &&
               userArr?.map((data: any, index: number) => {
@@ -379,9 +354,7 @@ const valueOfDotAware = acceptanceData.map((des) => des.description) && num.filt
         awarenessModal={awarenessDotModal}
         setAwarenessModal={setAwarenessDotModal}
         visible={awarenessDotModal}
-        footer={"challenge"}
-        //handleSubmit={(comment:any,review:any)=>{handleData(comment,review)}}
-        value={valueOfDotAware}
+        footer={"challenge"}        
         id={awarenessIndex}
         title={`${accept
           ? "Acceptance"
