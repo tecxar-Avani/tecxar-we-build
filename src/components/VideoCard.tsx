@@ -18,14 +18,26 @@ const VideoCard = (props: any) => {
                 className="img-fluid w-100"
                 src={`${props.VideoCardData.thumbnails[1].url}`}
               />
-              <iframe
+              {/* <iframe
                 className="iframs"
                 width="100%"
                 height="215"
-                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=1&mute=1`}
+                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=false&mute=1`}
                 name="youtube embed"
                 allow="autoplay; encrypted-media"
-              ></iframe>
+              ></iframe> */}
+
+              {/* <video
+                src={props.VideoCardData.url}
+                controls
+                muted
+                autoPlay={true}
+                preload="auto"
+                loop
+              >
+                {" "}
+              </video> */}
+              
             </>
           ) : (
             <>
@@ -33,14 +45,26 @@ const VideoCard = (props: any) => {
                 className="img-fluid w-100"
                 src={`https://i.ytimg.com/vi/Fp8msa5uYsc/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBy5JMMfllCtppR2CS4kx_WHgzEZg`}
               />
-              <iframe
+              {/* <iframe
                 className="iframs"
                 width="100%"
                 height="215"
-                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=1&mute=1`}
+                
+                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=false&mute=1`}
                 name="youtube embed"
                 allow="autoplay; encrypted-media"
-              ></iframe>
+              ></iframe> */}
+              <video
+                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=false&mute=1`}
+                // src={props.VideoCardData.url}
+                controls
+                muted
+                autoPlay={true}
+                preload="auto"
+                loop
+              >
+                {" "}
+              </video>
             </>
           )}
 
@@ -53,8 +77,8 @@ const VideoCard = (props: any) => {
             {props.VideoCardData.title}
           </Card.Header>
         )}
-        </Card.Body>
-     </Card>
+      </Card.Body>
+    </Card>
 
     // <Card className="p-0 border-0 rounded-0 mx-2">
     //   {props.VideoCardData.title && (
