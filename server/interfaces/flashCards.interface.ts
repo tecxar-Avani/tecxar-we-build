@@ -18,7 +18,7 @@ export interface IFlashCardsResponse {
 
 export interface IFlashCards {
   id?: number;
-  build_id: number;
+  build_id?: number;
   question: string;
   answer: string;
   created_by?: number;

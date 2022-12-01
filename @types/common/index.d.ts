@@ -28,9 +28,11 @@ export interface IFlashCard {
   question: string;
   answer: string;
   created_by?: number;
-  updated_by?:number;
+  updated_by?: number;
   updatedAt?: Date;
+  user_id?:number
 }
+
 
 export interface IBoxReviews {
   id?: number;
