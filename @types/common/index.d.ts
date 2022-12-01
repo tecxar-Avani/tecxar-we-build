@@ -22,6 +22,20 @@ export interface IVideoBuild {
   updatedAt?: Date;
 }
 
+export interface IBuild {
+  answer?:string
+  email?: string
+  id?: number
+  question?:string
+  tag_line?: string
+  user_id?: number
+  user_name?: string
+}
+
+export interface IBuildUser {
+user_id: number
+user_name: string
+}
 export interface IFlashCard {
   id?: number;
   build_id?: number;
@@ -31,6 +45,10 @@ export interface IFlashCard {
   updated_by?: number;
   updatedAt?: Date;
   user_id?:number
+  flashBuild?: {
+    build: IBuild[],
+    users: IBuildUser[]
+  }
 }
 
 
