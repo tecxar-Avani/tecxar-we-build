@@ -8,48 +8,69 @@ import HeaderTitle from "./headerTitle";
 const { Sider } = Layout;
 
 const SideBar = (toggle: any) => {
+  console.log("AAAAAAAA", toggle);
+  // console.log('AAAAAAAA',toggle.router.state.route)
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   // const url = window.location.origin;
   const [IsSelfLearning, setIsSelfLearning] = useState(false);
-  const [IsOtherLearning ,setIsOtherLearning ] = useState(false)
-  const [IsProfile , setIsProfile] = useState(false)
-  const [IsUserGuide , setIsUserGuide] = useState(false)
+  const [IsOtherLearning, setIsOtherLearning] = useState(false);
+  const [IsProfile, setIsProfile] = useState(false);
+  const [IsUserGuide, setIsUserGuide] = useState(false);
   const selfLearning = () => {
-    setIsSelfLearning(true)
+    setIsSelfLearning(true);
   };
   const otherLearnning = () => {
-    setIsSelfLearning(false)
-    setIsUserGuide(false)
-    setIsProfile(false)
-    setIsOtherLearning(true)
+    setIsSelfLearning(false);
+    setIsUserGuide(false);
+    setIsProfile(false);
+    setIsOtherLearning(true);
   };
   const profile = () => {
-    setIsSelfLearning(false)
-    setIsOtherLearning(false)
-    setIsUserGuide(false)
-    setIsProfile(true)
+    setIsSelfLearning(false);
+    setIsOtherLearning(false);
+    setIsUserGuide(false);
+    setIsProfile(true);
   };
   const userGuide = () => {
-    setIsSelfLearning(false)
-    setIsOtherLearning(false)
-    setIsProfile(false)
-    setIsUserGuide(true)
+    setIsSelfLearning(false);
+    setIsOtherLearning(false);
+    setIsProfile(false);
+    setIsUserGuide(true);
   };
-  
+
   return (
     <>
-      <div className="sidbar" >
+      {console.log(
+        "toggle.router?.state?.pathname",
+        toggle.router?.state?.pathname
+      )}
+      <div
+        className={
+          toggle.router?.state?.pathname == "/newBuild"
+            ? `sidbar sssssss d-none`
+            : "sidbar sssssss"
+        }
+      >
         <Sider
           trigger={null}
           collapsible
           collapsed={collapsed}
-          className={`h-full d-flex px-3 flex-column justify-content-center align-items-center mySidebar ${IsSelfLearning ? 'SelfLearningBG' : IsOtherLearning ? 'ThingsLearningBG' : IsUserGuide ? 'UserGuideBG' :  IsProfile ? 'bg-white' : 'bg-white'}`}
+          className={`h-full d-flex px-3 flex-column justify-content-center align-items-center mySidebar ${
+            IsSelfLearning
+              ? "SelfLearningBG"
+              : IsOtherLearning
+              ? "ThingsLearningBG"
+              : IsUserGuide
+              ? "UserGuideBG"
+              : IsProfile
+              ? "bg-white"
+              : "bg-white"
+          }`}
         >
-          
           <div className="d-flex flex-column justify-content-between align-items-center">
             <Link href={"/search?selfLearning=true"}>
-              <a onClick={selfLearning} >
+              <a onClick={selfLearning}>
                 <Image src={`/img/user-pre.png`} className="img-fluid" />
               </a>
             </Link>
