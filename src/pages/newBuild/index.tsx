@@ -239,7 +239,7 @@ useEffect(() => {
                       questionData(data.user_id);
                     }}
                   >
-                    <Card.Body>
+                    <Card.Body className="d-flex justify-content-center align-items-center">
                       {data.user_name
                         .split(" ")
                         .map((a: any) => a.charAt(0).toUpperCase())}
