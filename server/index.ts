@@ -41,7 +41,7 @@ class App {
       done(null, user);
     });
 
-    passport.deserializeUser(function (user:any, done) {
+    passport.deserializeUser(function (user: any, done) {
       done(null, user);
     });
   }
