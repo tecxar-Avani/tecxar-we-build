@@ -5,12 +5,13 @@ import { buildReducer } from "./build.reducer";
 import { flashCardReducer } from "./flashCard.reducer";
 import { videoCardReducer } from "./videoCard.reducer";
 import { awarenessReducer } from "./awareness.reducer";
-
+import { userReducer } from "./user.reducer";
 const rootReducer = combineReducers({
   builds: buildReducer,
   flashCards: flashCardReducer,
   VideoCards: videoCardReducer,
-  boxReviews : awarenessReducer,
+  boxReviews: awarenessReducer,
+  users: userReducer,
 });
 
 export default rootReducer;

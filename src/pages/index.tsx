@@ -2,6 +2,7 @@ import React from "react";
 import type { NextPage } from "next";
 import { Layout } from "antd";
 import Head from "next/head";
+import GoogleButton from "react-google-button";
 const { Content } = Layout;
 
 const Home: NextPage = () => {
@@ -31,6 +32,7 @@ const Home: NextPage = () => {
           <h1>
             We<span className="text-white">Build</span>
           </h1>
+        
         </div>
       </div>
     </>

@@ -12,6 +12,7 @@ import modal from "antd/lib/modal";
 import { addBuild, buildSelector } from "../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { addAwareness, awarenessSelector } from "../store/reducers/awareness.reducer";
+import GoogleButton from "react-google-button";
 
 
 
@@ -97,7 +98,10 @@ const NewBuildSideCard = (props: any) => {
             }}
           >
             <span onClick={props.Inspiration}>
-              <CustomButton title="Inspiration" className="inspirationButton " />
+              <CustomButton
+                title="Inspiration"
+                className="inspirationButton "
+              />
             </span>
           </span>
           <div>
@@ -174,9 +178,21 @@ const NewBuildSideCard = (props: any) => {
                 }}
                 className="tooltipOfImages"
               >
-                <button className="high-btn2" name="Practical" onClick={handleVideoTypeClick}>Practical</button>
+                <button
+                  className="high-btn2"
+                  name="Practical"
+                  onClick={handleVideoTypeClick}
+                >
+                  Practical
+                </button>
                 <br></br>
-                <button className="high-btn2" name="Theoretical" onClick={handleVideoTypeClick}>Theoretical</button>
+                <button
+                  className="high-btn2"
+                  name="Theoretical"
+                  onClick={handleVideoTypeClick}
+                >
+                  Theoretical
+                </button>
                 <br></br>
               </div>
             )}
@@ -211,11 +227,35 @@ const NewBuildSideCard = (props: any) => {
                 }}
                 className="tooltipOfImages"
               >
-                <button className="high-btn" name="Low" onClick={handlePolarisationClick} >Low</button>
-                <button className="high-btn" name="Medium" onClick={handlePolarisationClick}>Medium</button>
+                <button
+                  className="high-btn"
+                  name="Low"
+                  onClick={handlePolarisationClick}
+                >
+                  Low
+                </button>
+                <button
+                  className="high-btn"
+                  name="Medium"
+                  onClick={handlePolarisationClick}
+                >
+                  Medium
+                </button>
                 <br></br>
-                <button className="high-btn" name="High" onClick={handlePolarisationClick}>High</button>
-                <button className="high-btn3 mt-0" name="VeryHigh" onClick={handlePolarisationClick}>Very High</button>
+                <button
+                  className="high-btn"
+                  name="High"
+                  onClick={handlePolarisationClick}
+                >
+                  High
+                </button>
+                <button
+                  className="high-btn3 mt-0"
+                  name="VeryHigh"
+                  onClick={handlePolarisationClick}
+                >
+                  Very High
+                </button>
               </div>
             )}
           </Overlay>
@@ -244,11 +284,35 @@ const NewBuildSideCard = (props: any) => {
                 }}
                 className="tooltipOfImages"
               >
-                <button className="high-btn" name="Low" onClick={handleDifficultyClick}>Low</button>
-                <button className="high-btn" name="Medium" onClick={handleDifficultyClick}>Medium</button>
+                <button
+                  className="high-btn"
+                  name="Low"
+                  onClick={handleDifficultyClick}
+                >
+                  Low
+                </button>
+                <button
+                  className="high-btn"
+                  name="Medium"
+                  onClick={handleDifficultyClick}
+                >
+                  Medium
+                </button>
                 <br></br>
-                <button className="high-btn" name="High" onClick={handleDifficultyClick}>High</button>
-                <button className="high-btn3" name="VeryHigh" onClick={handleDifficultyClick}>Very High</button>
+                <button
+                  className="high-btn"
+                  name="High"
+                  onClick={handleDifficultyClick}
+                >
+                  High
+                </button>
+                <button
+                  className="high-btn3"
+                  name="VeryHigh"
+                  onClick={handleDifficultyClick}
+                >
+                  Very High
+                </button>
               </div>
             )}
           </Overlay>
@@ -256,39 +320,48 @@ const NewBuildSideCard = (props: any) => {
 
         <hr className="border-dark  ms-2  " />
         <div className="d-flex owd bd-highlight">
-
           <Tooltip
             placement="topLeft"
-            title={<><div className="d-flex  ">
-              <Image src="../img/bulb.png" className="mx-n2 ms-2 pe-2 bulb" /> Please make an account to save your build - don't let all your hard work go to waste!
-              Login via Google</div></>}
+            title={
+              <>
+                <div className="d-flex  ">
+                  <Image
+                    src="../img/bulb.png"
+                    className="mx-n2 ms-2 pe-2 bulb"
+                  />{" "}
+                  Please make an account to save your build - don't let all your
+                  hard work go to waste! Login via Google
+                </div>
+              </>
+            }
             arrowPointAtCenter
             color="#FAEFAF"
           >
             {/* if user are loged out then  onClick={() => setModal5Open(true)} */}
-            <div className="save bd-highlight" onClick={() => setModal5Open(true)}>
-              <Image src="../img/save.svg" className="ms-2" alt="no image"/>
+            <div
+              className="save bd-highlight"
+              // onClick={() => setModal5Open(true)}
+            >
+              <a href={`/api/google`}>
+                <GoogleButton className="m-auto googleButton" />
+              </a>
+              {/* <Image src="../img/save.svg" className="ms-2" alt="no image"/> */}
             </div>
-
           </Tooltip>
 
-
-          <Modal
-            title=""
-            centered
-            open={modal5Open}
-            className="btnrv"
-          >
+          <Modal title="" centered open={modal5Open} className="btnrv">
             <div className="mb-n3">
-              <Image src='../img/google.png' className="border border-primary googleicon" />
-              <button className="googlecolor border border-primary buttonSave text-white fs-3">Sign Up With Google</button>
+              <Image
+                src="../img/google.png"
+                className="border border-primary googleicon"
+              />
+              <button className="googlecolor border border-primary buttonSave text-white fs-3">
+                Sign Up With Google
+              </button>
               <br />
               <span className="fs-5">Add Google Sign In Button To Website</span>
             </div>
-
           </Modal>
-
-
 
           {/* <div className="save bd-highlight  ">
           <Image src="../img/save.svg" className="ms-2" onClick={warning} />
@@ -306,7 +379,6 @@ const NewBuildSideCard = (props: any) => {
           </Link>
         </div>
       </div>
-
 
       {/* <AwarenessModal
         awarenessModal={awarenessModal}
@@ -341,7 +413,6 @@ const NewBuildSideCard = (props: any) => {
               : ""
           } `}
       /> */}
-     
     </>
   );
 };

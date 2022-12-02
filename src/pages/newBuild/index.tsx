@@ -15,13 +15,15 @@ import AddFlashCardModal from "@/components/AddFlashCardModal";
 import { buildSelector } from "../../store/reducers/build.reducer";
 import { addAwareness, awarenessSelector, getAwarenessByBoxId } from "../../store/reducers/awareness.reducer";
 import AwarenessDotModal from "@/components/AwarenessDotModal";
+import { userSelector } from "../../store/reducers/user.reducer";
 
 
-const NewBuild = () => {
+const NewBuild = (props) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
-  const BuildData = useAppSelector(buildSelector);
+  const buildData = useAppSelector(buildSelector);
   const awarenessList = useAppSelector(awarenessSelector);
+  const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [awarenessDotModal ,setAwarenessDotModal] = useState(false);
@@ -112,6 +114,7 @@ const NewBuild = () => {
     },
   ]);
 
+  console.log("DDDDDDDDDDDDDD",props)
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
