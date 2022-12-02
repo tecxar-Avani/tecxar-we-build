@@ -16,8 +16,7 @@ export type GroupAttributes = Optional<IGroups, "id">;
 })
 export default class Groups
   extends Model<IGroups, GroupAttributes>
-  implements IGroups
-{
+  implements IGroups {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 

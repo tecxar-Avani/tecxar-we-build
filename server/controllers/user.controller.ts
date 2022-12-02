@@ -14,7 +14,7 @@ export class UserController {
   @Get("/")
   @OpenAPI({ summary: "Get all users" })
   async getAllUsers(@Req() req: Request | any, @Res() res: Response) {
-    try {    
+    try {
       const user = await this.userService.getUsers();
       return user;
     } catch (error) {
@@ -55,9 +55,9 @@ export class UserController {
     @Param("id") id: number,
     @Body() data: UpdateUserDto,
     @Res() res: Response
-  ) {    
+  ) {
     try {
-      const userBuild = await this.userService.updateUserProfile(id,data);
+      const userBuild = await this.userService.updateUserProfile(id, data);
       return userBuild;
     } catch (error) {
       return {

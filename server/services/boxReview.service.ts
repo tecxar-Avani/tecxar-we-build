@@ -27,6 +27,6 @@ class BoxService {
       return reviews;
     }
   }
+  
 }
-
 export default BoxService;

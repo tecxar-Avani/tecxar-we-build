@@ -11,14 +11,13 @@ export type RoleAttributes = Optional<IRole, "id">;
 
 @Table({
   tableName: "roles",
-  createdAt:"createdAt",
-  updatedAt:"updatedAt",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
   timestamps: true,
 })
 export default class Role
   extends Model<IRole, RoleAttributes>
-  implements IRole
-{
+  implements IRole {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 

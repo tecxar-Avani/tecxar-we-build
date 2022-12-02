@@ -1,18 +1,18 @@
 import { Response } from "express";
 import {
-    Controller,
-    Req,
-    UseBefore,
-    Res,
-    Get,
-    Body,
-    HttpCode,
-    Post,
+  Controller,
+  Req,
+  UseBefore,
+  Res,
+  Get,
+  Body,
+  HttpCode,
+  Post,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BoxReviewService from "@/services/boxReview.service";
 import authMiddleware from "@/middlewares/auth.middleware";
-import { IBoxReviews  } from "@/interfaces/boxreviews.interface";
+import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import { BoxreviewDto } from "@/dtos/boxreviews.dto";
 
 @Controller("/reviews")

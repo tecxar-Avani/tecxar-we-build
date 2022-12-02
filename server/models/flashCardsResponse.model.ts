@@ -32,7 +32,7 @@ export default class FlashCardsResponse
     @ForeignKey(() => FlashCards)
     @Column(DataType.INTEGER)
     public flash_card_id: number;
-    
+
     @BelongsTo(() => FlashCards)
     public flashCard: FlashCards;
 

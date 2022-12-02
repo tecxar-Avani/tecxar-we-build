@@ -95,6 +95,7 @@ export class FlashController {
       };
     }
   }
+
   @Get("/userInteractedBuild")
   @OpenAPI({ summary: "Get all users by Email" })
   async getUserInteractedBuild(
@@ -124,13 +125,37 @@ export class FlashController {
     @QueryParam("search") search?: string
   ) {
     try {
+      const userBuild = await this.buildService.getUsersBuildByUrl(url, search);
+      console.log('>>userBuild>>> ', userBuild, search);
+      const searchedData = this.youtubeApiCall(url, userBuild, search).then(result => {
+        console.log('///// ', result);
+        return result;
+      })
+      console.log('SEARCHDATA', searchedData);
+      return { data: searchedData, box: userBuild, status: true };
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
+  @OpenAPI({ summary: "YouTube Api Call" })
+  async youtubeApiCall(url, userBuild, search) {
+    try {
+      console.log('URL* ', url);
+      console.log('userBuild ', userBuild);
+      console.log('search* ', search);
       const searchedData = [];
       const videoUrl = url;
       const youtube = google.youtube({
         version: "v3",
         auth: config.youtubeApiKey,
       });
-      const userBuild = await this.buildService.getUsersBuildByUrl(videoUrl, search);
+      let finalDuration;
       const durationCalculation = (duration) => {
         var a = duration.match(/\d+/g);
         if (
@@ -171,9 +196,7 @@ export class FlashController {
         finalDuration = `${hours}:${minutes}:${duration}`;
         return finalDuration;
       };
-
       let youtubeData;
-      let finalDuration;
       if (userBuild && userBuild.length > 0) {
         await Promise.all(userBuild.map(async url => {
           youtubeData = await youtube.search.list({
@@ -206,7 +229,7 @@ export class FlashController {
             searchedData.push(Filter)
           }))
         }));
-      } else if (videoUrl && !search) {
+      } else if (videoUrl || search) {
         const response: any = await youtube.search.list({
           part: ["id,snippet"],
           q: videoUrl,
@@ -238,7 +261,8 @@ export class FlashController {
           searchedData.push(data);
         }
       }
-      return { data: searchedData, box: userBuild, status: true };
+      console.log('SEARCHDATA ', searchedData);
+      return searchedData;
     } catch (error) {
       return {
         error: {
@@ -308,10 +332,9 @@ export class FlashController {
       };
     }
   }
+
 }
-function ApiTags() {
-  throw new Error("Function not implemented.");
-}
+
 
 
 

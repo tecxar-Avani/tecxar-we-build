@@ -20,8 +20,7 @@ export type UsersAttributes = Optional<ICreateUser, "id">;
 })
 export default class User
   extends Model<ICreateUser, UsersAttributes>
-  implements ICreateUser
-{
+  implements ICreateUser {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
@@ -63,5 +62,5 @@ export default class User
 
   @Column(DataType.DATE)
   public readonly updatedAt!: Date;
-  
+
 }

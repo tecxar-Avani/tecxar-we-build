@@ -7,7 +7,6 @@ import DB from "@databases";
 import { isEmpty } from "class-validator";
 import { Op, QueryTypes } from "sequelize";
 
-
 class BuildService {
   private videoBuild = DB.videoBuild;
   sql: any;
@@ -45,7 +44,7 @@ class BuildService {
     return BuildById;
   }
 
-  public async getUserInteractedBuild(userId:number): Promise<IVideoBuild[] | null> {
+  public async getUserInteractedBuild(userId: number): Promise<IVideoBuild[] | null> {
     const query = `SELECT vb.video_url
     FROM video_builds AS vb
     LEFT JOIN flash_cards fc on vb.id = fc.build_id
@@ -73,7 +72,7 @@ class BuildService {
           [Op.like]: `%${search}%`,
         }
       })
-      if (search === 'low' || search === 'medium' || search === 'high' || search === 'very_high') {        
+      if (search === 'low' || search === 'medium' || search === 'high' || search === 'very_high') {
         search = search.toLowerCase();
         searchFilter.push({
           potential_polarization: {
@@ -81,28 +80,28 @@ class BuildService {
           }
         })
       }
-      where.push({[Op.or]:searchFilter})
-      if(url){
-        where.push({video_url:url})
+      where.push({ [Op.or]: searchFilter })
+      if (url) {
+        where.push({ video_url: url })
       }
     }
     const option: {
       nest?: boolean;
       subQuery: boolean;
-      attributes:any,
-      where:any,
-      raw:boolean,
-      order:any
+      attributes: any,
+      where: any,
+      raw: boolean,
+      order: any
     } = {
       attributes: [
-       'id','video_url','type_of_video','created_by', 'difficulty_level', 'potential_polarization'],
+        'id', 'video_url', 'type_of_video', 'created_by', 'difficulty_level', 'potential_polarization'],
       nest: true,
-      where:where,
+      where: where,
       order: [['id', 'ASC']],
       raw: true,
       subQuery: false,
     }
-    
+
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(option);
     return videoBuilds;
 
@@ -131,5 +130,4 @@ class BuildService {
   }
 
 }
-
 export default BuildService;
