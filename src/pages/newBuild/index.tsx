@@ -205,14 +205,21 @@ useEffect(() => {
   return (
     <>
       <div className="d-flex m-0 w-100">
-        <NewBuildSideCard id={router.query.id} value={awarenessIndex} Resistance={Resistance} Acceptance={Acceptance} Inspiration={Inspiration} setAwarenessModal={setAwarenessModal} />
-      
+        <NewBuildSideCard
+          id={router.query.id}
+          value={awarenessIndex}
+          Resistance={Resistance}
+          Acceptance={Acceptance}
+          Inspiration={Inspiration}
+          setAwarenessModal={setAwarenessModal}
+        />
+
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           <NewBuildBoxes
             setModal1Open={SetAddFlashcard}
             item={dataArray}
             arr={arr}
-            setArr={(value:any) => {
+            setArr={(value: any) => {
               setArr(value);
               if (value.length > 20) {
                 setDataArray([
@@ -230,7 +237,8 @@ useEffect(() => {
           />
 
           <div className="position-absolute mkCard">
-            {userArr && userArr?.length > 0 &&
+            {userArr &&
+              userArr?.length > 0 &&
               userArr?.map((data: any, index: number) => {
                 return (
                   <Card
@@ -275,7 +283,7 @@ useEffect(() => {
           userId: number,
           questionId: number,
           index: number,
-          arrayLength: number,
+          arrayLength: number
         ) => {
           const filterArray = flashCardArr?.filter(
             (F: any) => F.user_id == userId
@@ -283,7 +291,8 @@ useEffect(() => {
           const questionFilter = filterArray?.filter(
             (F: any) => F.id == questionId
           );
-          questionFilter && questionFilter.length > 0 &&
+          questionFilter &&
+            questionFilter.length > 0 &&
             questionFilter.map((ans: any) => {
               const newData = {
                 content: ans.answer,
@@ -305,69 +314,77 @@ useEffect(() => {
           questionData(userId, index, questionId);
         }}
       />
-       <AwarenessModal
+      <AwarenessModal
         awarenessModal={awarenessModal}
         setAwarenessModal={setAwarenessModal}
         visible={awarenessModal}
         textValue={awarenessIndex}
-        handleSubmit={(comment:any,review:any)=>{handleData(comment,review)}}
-        footer= "Add"
+        handleSubmit={(comment: any, review: any) => {
+          handleData(comment, review);
+        }}
+        footer="Add"
         id={awarenessIndex}
-        title={`${accept
-          ? "Acceptance"
-          : inspiration
+        title={`${
+          accept
+            ? "Acceptance"
+            : inspiration
             ? "Inspiration"
             : resistance
-              ? "Resistance"
-              : ""
-          }`}
-        header={`Maria's ${accept
-          ? "Acceptance"
-          : inspiration
+            ? "Resistance"
+            : ""
+        }`}
+        header={`Maria's ${
+          accept
+            ? "Acceptance"
+            : inspiration
             ? "Inspiration"
             : resistance
-              ? "Resistance"
-              : ""
-          }`}
-        className={`${accept
-          ? "accptanceModalBG"
-          : inspiration
+            ? "Resistance"
+            : ""
+        }`}
+        className={`${
+          accept
+            ? "accptanceModalBG"
+            : inspiration
             ? "inspirationModalBG"
             : resistance
-              ? "resistanceModalBG"
-              : ""
-          } `}
+            ? "resistanceModalBG"
+            : ""
+        } `}
       />
-       <AwarenessDotModal
+      <AwarenessDotModal
         awarenessModal={awarenessDotModal}
         setAwarenessModal={setAwarenessDotModal}
         visible={awarenessDotModal}
-        footer={"challenge"}        
+        footer={"challenge"}
         id={awarenessIndex}
-        title={`${accept
-          ? "Acceptance"
-          : inspiration
+        title={`${
+          accept
+            ? "Acceptance"
+            : inspiration
             ? "Inspiration"
             : resistance
-              ? "Resistance"
-              : ""
-          }`}
-        header={`Maria's ${accept
-          ? "Acceptance"
-          : inspiration
+            ? "Resistance"
+            : ""
+        }`}
+        header={`Maria's ${
+          accept
+            ? "Acceptance"
+            : inspiration
             ? "Inspiration"
             : resistance
-              ? "Resistance"
-              : ""
-          }`}
-        className={`${accept
-          ? "accptanceModalBG"
-          : inspiration
+            ? "Resistance"
+            : ""
+        }`}
+        className={`${
+          accept
+            ? "accptanceModalBG"
+            : inspiration
             ? "inspirationModalBG"
             : resistance
-              ? "resistanceModalBG"
-              : ""
-          } `}
+            ? "resistanceModalBG"
+            : ""
+        } `}
       />
     </>
   );

@@ -45,7 +45,7 @@ interface State {
   build: IVideoBuild;
   loading: boolean;
   error: string | undefined;
-  buildList: IBuildRowsCountResponse;
+  buildList: IBuildRowsCountResponse | any;
   box:IBoxes;
 }
 

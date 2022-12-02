@@ -20,7 +20,7 @@ const SearchPage = () => {
   const [url, setUrl] = useState("node js tutorial");
   const dispatch = useAppDispatch();
   const { buildList } = useAppSelector(buildSelector);
-   const videosData: any = [];
+  const videosData: any = [];
   buildList.rows &&
     buildList.rows.length > 0 &&
     buildList.rows.map((video: any) => {
@@ -30,7 +30,7 @@ const SearchPage = () => {
       });
     });
   // const videosData = [
-  
+
   //   {
   //     type: "video",
   //     title: "Justin Bieber - Sorry (PURPOSE : The Movement)",
@@ -1344,7 +1344,7 @@ const SearchPage = () => {
   // ];
   const searchResult = (url: string) => {
     // if (url !== "") {
-      dispatch(getBuildByUrl(url));
+    dispatch(getBuildByUrl(url));
     // }
   };
 
@@ -1352,7 +1352,6 @@ const SearchPage = () => {
     dispatch(getBuildByUrl());
   }, [url]);
 
-  
   return (
     <>
       <SearchBar searchResult={searchResult} />
@@ -1367,18 +1366,23 @@ const SearchPage = () => {
           className="title-list-of-profile py-4 Search"
         />
       )}
-      
+
       <Row className="Search m-0">
-        {buildList.length > 0 &&
-          buildList.map((videoData: any, index: number) => (
-            <Col lg={4} className="videoProfile pb-2" key={index}>
-              <Link href="/newBuild">
-                <a>
-                  <VideoCard VideoCardData={videoData} />
-                </a>
-              </Link>
-            </Col>
-          ))}
+        {buildList &&
+          buildList.length > 0 &&
+          buildList.map(
+            (videoData: any, index: number) =>
+              index < 9 &&
+              videoData.id && (
+                <Col lg={4} className="videoProfile pb-2" key={index}>
+                  <Link href={`/newBuild?id=${videoData.id}`}>
+                    <a>
+                      <VideoCard VideoCardData={videoData} />
+                    </a>
+                  </Link>
+                </Col>
+              )
+          )}
       </Row>
     </>
   );
