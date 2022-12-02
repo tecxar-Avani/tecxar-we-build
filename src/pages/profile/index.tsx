@@ -11,7 +11,8 @@ import {
 } from "../../store/reducers/flashCard.reducer";
 import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
-import { Input, Modal } from "antd";
+
+import { Input, Modal, Button, Form } from "antd";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -21,9 +22,11 @@ const Profile = () => {
   const [addFlashCard, setAddFlashcard] = useState(false);
   const [editFlashCardData, setEditFlashCardData] = useState({});
   const [editName, setEditName] = useState(false);
+  const [name , setName] = useState("avani");
 
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
+  const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
   }, []);
@@ -1435,7 +1438,6 @@ const Profile = () => {
       });
       setRevealAns(true);
     } else {
-      alert(index);
       setModal3Open({
         content: index
           ? flashCardArr[index].question
@@ -1450,6 +1452,10 @@ const Profile = () => {
     }
   };
 
+  const handleEditName = (e:any) =>{
+   const name = e.name
+   setName(name)
+  }
   return (
     <>
       <div className="profile-main">
@@ -1459,6 +1465,7 @@ const Profile = () => {
           flashCardUserList={flashCardUserList}
           questionData={questionData}
           showModal={showModal}
+          title={name}
         />
         <div className="m-0 pb-2 overflow-x-scroll">
           <HeaderTitle
@@ -1562,10 +1569,30 @@ const Profile = () => {
       <Modal
         title="Edit Your Name"
         open={editName}
-        onOk={handleOk}
+        onOk={form.submit}
         onCancel={handleCancel}
+        footer={
+          <Button
+            form="form"
+            key="submit1"
+            htmlType="submit"
+            className="openmodal"
+          >
+          Submit
+          </Button>
+        }
       >
+         <Form
+          form={form}
+          id="form"
+          onFinish={handleEditName}
+          layout="vertical"
+          autoComplete="off"
+        >
+          <Form.Item name="name" label="Name">
         <Input defaultValue={profileData.title}></Input>
+        </Form.Item>
+        </Form>
       </Modal>
     </>
   );

@@ -200,8 +200,13 @@ useEffect(() => {
     {"id":2,
     "description":"hello world",
     "boxId":1,
+    },
+    {"id":3,
+    "description":"hello tecxar",
+    "boxId":1,
     }
   ]
+const acceptanceValue = acceptanceData.filter((A) => A.description)
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -344,6 +349,7 @@ useEffect(() => {
         visible={awarenessDotModal}
         footer={"challenge"}        
         id={awarenessIndex}
+        acceptanceValue={acceptanceValue}
         title={`${accept
           ? "Acceptance"
           : inspiration

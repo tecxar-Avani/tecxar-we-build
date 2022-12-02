@@ -13,7 +13,7 @@ const OuterBox = (props: any) => {
    let BoxData = {id , value}
 
    if (value.length === 150 && !props.arr.includes(propsId)) {
-     props.responseCallback(propsId);
+     props.responseCallback(propsId, value,id);
    }
   };
 

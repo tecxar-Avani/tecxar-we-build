@@ -20,6 +20,8 @@ const NewBuildBoxes = (props: any) => {
               arr={props.arr}
               onFocus={props.onFocus}
               visible={props.arr.includes(itemData.id)}
+              acceptanceData={props.acceptanceData}
+              modalDot={props.modalDot}
               responseCallback={(value: number) =>
                 props.setArr([...props.arr, value])
               }

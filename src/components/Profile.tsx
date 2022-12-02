@@ -11,7 +11,7 @@ const ProfileCard = (props: any) => {
         <div className="d-flex justify-content-center align-items-center">
           <div>
             {props.profile && props.profile.title && (
-              <h4 className="title">{props.profile.title}</h4>
+              <h4 className="title">{props.title}</h4>
             )}
             {props.profile && props.profile.dateOfJoined && (
               <h5 className="subTitle py-1">{props.profile.dateOfJoined}</h5>

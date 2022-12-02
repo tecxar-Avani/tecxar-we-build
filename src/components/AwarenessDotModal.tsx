@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space,Modal } from 'antd';
+import { Button, Form, Input, Space,Modal,Affix } from 'antd';
 import TextArea from "antd/lib/input/TextArea";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -10,22 +10,18 @@ const { Search } = Input;
 
 
 const AwarenessDotModal = (props: any) => {
+  console.log("!!!!!!!!!!!!",props)
   const [form] = Form.useForm();
   form.resetFields();
     return (
       <div className="awarenessModal">
         <Modal
-        title={props.title }
+        title={props.title}
         visible={props.awarenessModal}
-        onOk={() => props.setAwarenessModal(false)}
+      
         onCancel={() => props.setAwarenessModal(false)}
-        footer={props.footer && props.footer.length>0 && props.footer  ? <Button  form="form"
-        key="submit"
-        htmlType="submit"
-        className="openmodal"
-       >Challenge</Button> : []}
-        className={`${props.className} awarenessDotModal`}
-        okText="Challenge"
+       
+        className={`${props.className} awarenessDotModal `}
       > 
       
          <Form
@@ -35,13 +31,50 @@ const AwarenessDotModal = (props: any) => {
           layout="vertical"
           autoComplete="off"
         >
-        
+         
+        {props.acceptanceValue && props.acceptanceValue.length > 0 && props.acceptanceValue.map((Data:any) => 
+      {  return(
+          <>
+           
         <div className="header mt-2">{props.header}</div>
         <Form.Item name="comment">
-       <div className={`awarenessDotModal header ${props.className}`}><TextArea maxLength={500} rows={5} className="mb-2 AwareInputFirst" defaultValue={props.value}></TextArea></div>
+       <div className={` header ${props.className}`}><TextArea maxLength={500} rows={5} className="mb-2 AwareInputFirst" defaultValue={Data.description}></TextArea></div>
 
        </Form.Item>
-   
+      <Form.Item>
+      <Button  form="form"
+        key="submit"
+        htmlType="submit"
+        className="openmodal"
+        onClick={() => add()}
+       >Challenge</Button> 
+      </Form.Item>
+        {(fields, { add }) => (
+          <>
+            {fields.map(({ key, name, ...restField }) => (
+              <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                <Form.Item
+                  {...restField}
+                  name={[name, 'first']}
+                  rules={[{ required: true, message: 'Missing first name' }]}
+                >
+                  <Input placeholder="First Name" />
+                </Form.Item>
+                <Form.Item
+                  {...restField}
+                  name={[name, 'last']}
+                  rules={[{ required: true, message: 'Missing last name' }]}
+                >
+                  <Input placeholder="Last Name" />
+                </Form.Item>
+              
+              </Space>
+            ))}
+            </>
+             )} 
+       </>
+   );})}
+    
        {/* {(fields, { add }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
