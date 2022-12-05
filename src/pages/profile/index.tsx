@@ -1466,7 +1466,7 @@ const Profile = () => {
             className="title-list-of-profile py-2 my-2"
           />
           <div className="builds-Main overflow-auto">
-            <div className="d-flex overflow-auto">
+            {/* <div className="d-flex overflow-auto">
               {videosData.length > 0 &&
                 videosData.map((videoData, index) => (
                   <Col md={4} className="videoProfile px-2" key={index}>
@@ -1477,7 +1477,7 @@ const Profile = () => {
                     </Link>
                   </Col>
                 ))}
-            </div>
+            </div> */}
           </div>
         </div>
         {/* </div> */}
@@ -1487,7 +1487,7 @@ const Profile = () => {
             className="title-list-of-profile py-2 my-2"
           />
           <Row className="m-0">
-            {videosData.length > 0 &&
+            {/* {videosData.length > 0 &&
               videosData.map((videoData, index) => (
                 <Col md={4} key={index} className="videoProfile">
                   <Link href={`/newBuild?id=${videoData.id}`}>
@@ -1496,7 +1496,7 @@ const Profile = () => {
                     </a>
                   </Link>
                 </Col>
-              ))}
+              ))} */}
           </Row>
         </div>
         {role == "admin" ? (
