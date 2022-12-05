@@ -74,3 +74,13 @@ export interface IBoxes {
   createdAt?:Date;
   updatedAt?:Date
 }
+
+
+export interface ICurrentUser {
+  id?: number;
+  first_name?: string | null;
+  last_name?: string;
+  email?: string;
+  role_id?: number;
+  profile_image?: string | File | null;
+}

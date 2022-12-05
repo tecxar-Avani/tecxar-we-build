@@ -4,6 +4,7 @@ import { NextFunction, Response } from "express";
 import httpStatus from "http-status";
 import jwt from "jsonwebtoken";
 import USerService from "@services/users.service";
+
 const authMiddleware = async (
   req: RequestWithUser,
   res: Response,
@@ -17,7 +18,6 @@ const authMiddleware = async (
       req.header("authorization")?.split("Bearer ")[1] ||
       null;
     const apiKey =  req.header("api_key");
-
     if (apiKey == config.apiKey) {
       const user = await userService.getUserByEmail(config.apiKeyUser);
       if (user) {

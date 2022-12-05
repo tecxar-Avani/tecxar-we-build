@@ -22,10 +22,23 @@ const VideoCard = (props: any) => {
                 className="iframs"
                 width="100%"
                 height="215"
-                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=1&mute=1`}
+                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=false&mute=1`}
                 name="youtube embed"
                 allow="autoplay; encrypted-media"
+                
               ></iframe>
+
+              {/* <video
+                src={props.VideoCardData.url}
+                controls
+                muted
+                autoPlay={true}
+                preload="auto"
+                loop
+              >
+                {" "}
+              </video> */}
+              
             </>
           ) : (
             <>
@@ -37,10 +50,22 @@ const VideoCard = (props: any) => {
                 className="iframs"
                 width="100%"
                 height="215"
-                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=1&mute=1`}
+                
+                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=false&mute=1`}
                 name="youtube embed"
                 allow="autoplay; encrypted-media"
               ></iframe>
+              {/* <video
+                src={`//www.youtube.com/embed/${props.VideoCardData.id}?autoplay=false&mute=1`}
+                // src={props.VideoCardData.url}
+                controls
+                muted
+                autoPlay={true}
+                preload="auto"
+                loop
+              >
+                {" "}
+              </video> */}
             </>
           )}
 
@@ -53,8 +78,8 @@ const VideoCard = (props: any) => {
             {props.VideoCardData.title}
           </Card.Header>
         )}
-        </Card.Body>
-     </Card>
+      </Card.Body>
+    </Card>
 
     // <Card className="p-0 border-0 rounded-0 mx-2">
     //   {props.VideoCardData.title && (

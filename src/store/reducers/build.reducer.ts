@@ -20,9 +20,10 @@ export const getBuildByUrl: any = createAsyncThunk(
   `build/get/url`,
   async (url?: string): Promise<IBuildRowsCountResponse> => {
     const { data } = await BuildService.listBuilds(url);
+  
     const dataBox = {box:data.box,
     rows:data.data}
-    return { status: data.status, rows: dataBox };
+    return { status: data.status, rows: data.items };
   }
 );
 
@@ -44,7 +45,7 @@ interface State {
   build: IVideoBuild;
   loading: boolean;
   error: string | undefined;
-  buildList: IBuildRowsCountResponse;
+  buildList: IBuildRowsCountResponse | any;
   box:IBoxes;
 }
 
