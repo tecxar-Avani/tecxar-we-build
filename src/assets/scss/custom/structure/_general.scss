@@ -941,7 +941,7 @@ display: none;
      height: -24px;
      background-color: #3a5e3d;
      text-align: center;
-     margin-left: 282px;
+     margin-left: 230px;
    
      .ant-btn-default{
       display: none;
@@ -963,7 +963,30 @@ display: none;
    .ant-modal-footer{
     display: none;
    }
+  .ant-form-item{
+    margin-top: 11px;
+    margin-bottom: 10px;
+  }
+  .ant-btn .challenge{
+    width: 111px;
+    height: -24px;
+    background-color: #000000;
+    text-align: center;
   
  }
-
-
+}
+ .acceptDotBg{
+  background-color: #1235AE  ;
+ }
+.resistanceDotBg{
+  background-color: #D91919 ;
+}
+.inspirationDotBg{
+  background-color: #7D1597;
+}
+*{
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}

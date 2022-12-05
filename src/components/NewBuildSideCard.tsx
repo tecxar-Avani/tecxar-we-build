@@ -25,9 +25,6 @@ const NewBuildSideCard = (props: any) => {
   const target2 = useRef(null);
   const [type, setType] = useState(false);
   const typeVideo = useRef(null);
-  const [accept, setAccept] = useState(false);
-  const [inspiration, setInspiration] = useState(false);
-  const [resistance, setResistance] = useState(false);
   const [videoType , setVideoType] = useState(false);
   const [polarisationLevel , setPolarisationLevel] = useState(false);
   const [difficultyLevel , setDifficultyLevel] = useState(false);
@@ -308,39 +305,7 @@ const NewBuildSideCard = (props: any) => {
       </div>
 
 
-      {/* <AwarenessModal
-        awarenessModal={awarenessModal}
-        setAwarenessModal={setAwarenessModal}
-        visible={awarenessModal}
-        textValue={BoxValue}
-        handleSubmit={(comment:any,review:any)=>{handleData(comment,review)}}
-        footer= "Add"
-        id={BoxValue}
-        title={`${accept
-          ? "Acceptance"
-          : inspiration
-            ? "Inspiration"
-            : resistance
-              ? "Resistance"
-              : ""
-          }`}
-        header={`Maria's ${accept
-          ? "Acceptance"
-          : inspiration
-            ? "Inspiration"
-            : resistance
-              ? "Resistance"
-              : ""
-          }`}
-        className={`${accept
-          ? "accptanceModalBG"
-          : inspiration
-            ? "inspirationModalBG"
-            : resistance
-              ? "resistanceModalBG"
-              : ""
-          } `}
-      /> */}
+     
      
     </>
   );

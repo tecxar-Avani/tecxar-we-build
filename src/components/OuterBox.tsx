@@ -33,13 +33,13 @@ const OuterBox = (props: any) => {
               id={props.id}
               onFocus={props.onFocus}
             />
-                  { props.review == "inspiration" ? (<span className="position-absolute bg-primary px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle">
+                  { props.review == "inspiration" ? (<span onClick={props.modalDot}><span className="position-absolute bg-primary px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg" onClick={props.Inspiration}>
               I
-            </span>) : props.acceptanceData && props.acceptanceData.length>0 && props.id == 1 ?(<span className="position-absolute bg-danger px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle" onClick={props.modalDot}>
+            </span></span>) : props.acceptanceData && props.acceptanceData.length>0 && props.id == 1 ?(<span onClick={props.modalDot} ><span className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg" onClick={props.Acceptance} >
               A
-            </span>): props.review == "resistance" ?(<span className="position-absolute bg-warning px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle">
+            </span></span>): props.review == "resistance" ?(<span onClick={props.modalDot}><span className="position-absolute bg-warning px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg" onClick={props.Resistance}>
               R
-            </span>):[]
+            </span></span>):[]
           
               }
                   </div>

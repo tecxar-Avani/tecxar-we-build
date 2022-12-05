@@ -28,7 +28,14 @@ const NewBuild = () => {
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
+  const [modalChallenge , setModalChallenge] = useState({});
   const [review , setReview] = useState<string>("");
+  const [addFlashCard, SetAddFlashcard] = useState(false);
+  const [revealAns, setRevealAns] = useState(false);
+  const [modal3Open, setModal3Open] = useState({});
+  const [modal4Open, setModal4Open] = useState(false);
+  const [awarenessIndex, setAwarenessIndex] = useState(false);
+  const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
   const [dataArray, setDataArray] = useState([
     {
       id: 1,
@@ -112,6 +119,7 @@ const NewBuild = () => {
     },
   ]);
 
+  {console.log("@@@@@@@ssssssssss@@@@@@",awarenessList) 
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -170,12 +178,7 @@ useEffect(() => {
     }}
   };
 
-  const [addFlashCard, SetAddFlashcard] = useState(false);
-  const [revealAns, setRevealAns] = useState(false);
-  const [modal3Open, setModal3Open] = useState({});
-  const [modal4Open, setModal4Open] = useState(false);
-  const [awarenessIndex, setAwarenessIndex] = useState(false);
-  const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
+
 
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
@@ -202,6 +205,14 @@ useEffect(() => {
     "boxId":1,
     },
     {"id":3,
+    "description":"hello tecxar",
+    "boxId":1,
+    },
+    {"id":4,
+    "description":"hello tecxar",
+    "boxId":1,
+    },
+    {"id":5,
     "description":"hello tecxar",
     "boxId":1,
     }
@@ -232,6 +243,9 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
             onFocus={handleChange}
             modalDot={setAwarenessDotModal}
             acceptanceData={acceptanceData}
+            Acceptance={Acceptance}
+            Resistance={Resistance}
+            Inspiration={Inspiration}
           />
 
           <div className="position-absolute mkCard">
@@ -345,9 +359,10 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
       />
        <AwarenessDotModal
         awarenessModal={awarenessDotModal}
+        challenge={modalChallenge}
         setAwarenessModal={setAwarenessDotModal}
         visible={awarenessDotModal}
-        footer={"challenge"}        
+        btnName="challenge"     
         id={awarenessIndex}
         acceptanceValue={acceptanceValue}
         title={`${accept
@@ -358,6 +373,21 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
               ? "Resistance"
               : ""
           }`}
+        // setModalChallenge ={setModalChallenge}
+        callBack={(title:any ,content:any,header:any,awareLabel:any,challengeLabel:any,awareValue:any,id:any) =>
+         { const newData = {
+            title : `${title == "challenge" ? "challenge" : title == "Resolve" ? "Resolve" : title}`,
+            content:content,
+            header:header,
+             awareLabel:"maria's acceptance",
+            challengeLabel:"maria's challenge",
+            awareValue:"hello"
+          }
+            setModalChallenge(newData);
+            // setModalChallenge(true)
+          }}
+         
+        
         header={`Maria's ${accept
           ? "Acceptance"
           : inspiration
@@ -378,5 +408,5 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
     </>
   );
 };
-
+}
 export default NewBuild;
