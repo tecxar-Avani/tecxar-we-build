@@ -107,6 +107,49 @@ class BuildService {
 
   }
 
+  public async getAllBuilds(
+    search?: any
+  ): Promise<IVideoBuild[] | null> {
+    const searchFilter = [];
+    if (search != '' && search != 'undefine' && search != undefined) {
+      search = search.toLowerCase();
+      searchFilter.push({
+        difficulty_level: {
+          [Op.like]: `%${search}%`,
+        }
+      }, {
+        potential_polarization: {
+          [Op.like]: `%${search}%`,
+        }
+      })
+      if (search === 'low' || search === 'medium' || search === 'high' || search === 'very_high') {
+        search = search.toLowerCase();
+        searchFilter.push({
+          potential_polarization: {
+            [Op.eq]: `${search}`
+          }
+        })
+      }
+    }
+    const option: {
+      nest?: boolean;
+      subQuery: boolean;
+      attributes: any,
+      raw: boolean,
+      limit:number
+      order: any
+    } = {
+      attributes: [
+        'id', 'video_url', 'type_of_video', 'created_by', 'difficulty_level', 'potential_polarization'],
+      nest: true,
+      order: [['id', 'DESC']],
+      raw: true,
+      limit:10,
+      subQuery: false,
+    }
+    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(option);
+    return videoBuilds;
+  }
   public async updateBuild(id: number, data): Promise<IVideoBuild | null> {
     const videoBuildsUpdate: any | null = await this.videoBuild.update({ ...data },
       { where: { id: id } }

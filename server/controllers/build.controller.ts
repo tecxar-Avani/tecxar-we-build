@@ -127,7 +127,27 @@ export class FlashController {
     try {
       const userBuild = await this.buildService.getUsersBuildByUrl(url, search);
       let searchedResult
-      const searchedData = await this.youtubeApiCall(url, userBuild, search).then(result => {
+      const searchedData = await this.youtubeApiCall(search, url, userBuild).then(result => {
+        searchedResult = result
+      })
+      return { data: searchedResult, box: userBuild }
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
+  @Get("/getAllBuilds")
+  @OpenAPI({ summary: "Get all build " })
+  async getAllBuilds(@Req() req: Request | any, @Res() res: Response, @QueryParam("search") search?: string) {
+    try {      
+      const userBuild = await this.buildService.getAllBuilds(search);
+      let searchedResult
+      const searchedData = await this.youtubeApiCall(search, userBuild).then(result => {
         searchedResult = result
       })
       return { data: searchedResult, box: userBuild }
@@ -142,7 +162,7 @@ export class FlashController {
   }
 
   @OpenAPI({ summary: "YouTube Api Call" })
-  async youtubeApiCall(url, userBuild, search) {
+  async youtubeApiCall(search?: any, url?: any, userBuild?: any) {
     try {
       const searchedData = [];
       const videoUrl = url;
@@ -326,7 +346,6 @@ export class FlashController {
       };
     }
   }
-
 }
 
 
