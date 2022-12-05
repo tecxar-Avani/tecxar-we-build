@@ -163,7 +163,7 @@ class BuildService {
 
   public async deleteBuild(id: number): Promise<IVideoBuild[] | null> {
     const videoBuildsDelete: any | null = await this.videoBuild.destroy({
-      where: { id: id },
+      where: { id: id }
     });
     if (!videoBuildsDelete) {
       return null;

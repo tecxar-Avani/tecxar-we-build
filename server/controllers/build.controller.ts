@@ -82,8 +82,6 @@ export class FlashController {
   async getUsersBuild(@Req() req: Request | any, @Res() res: Response) {
     try {
       const user = req.user.id;
-      console.log('>>>>>', user);
-
       const userBuild = await this.buildService.getBuildByUserId(user);
       return userBuild;
     } catch (error) {
@@ -304,7 +302,7 @@ export class FlashController {
   }
 
   @Put("/:id")
-  @UseBefore(authMiddleware)
+  // @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
   async UpdateUsersBuild(
     @Req() req: Request | any,
@@ -327,7 +325,7 @@ export class FlashController {
   }
 
   @Delete("/:id")
-  @UseBefore(authMiddleware)
+   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Delete build id of users" })
   async DeleteUsersBuild(
     @Req() req: Request | any,

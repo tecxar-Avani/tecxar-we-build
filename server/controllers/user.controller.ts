@@ -7,7 +7,6 @@ import { RequestWithUser } from "@/interfaces/auth.interface";
 import { UpdateUserDto } from "@/dtos/users.dto";
 
 @Controller("/users")
-@UseBefore(authMiddleware)
 export class UserController {
   private userService = new UserService();
 
@@ -28,6 +27,7 @@ export class UserController {
   }
 
   @Get("/userByEmail")
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all users by Email" })
   async getUserByEmail(
     @Req() req: RequestWithUser | any,

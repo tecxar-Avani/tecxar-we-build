@@ -21,7 +21,6 @@ import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 
 @Controller("/flashcard")
-@UseBefore(authMiddleware)
 export class FlashController {
   private flashCardService = new FlashCardService();
 
@@ -76,6 +75,7 @@ export class FlashController {
   }
 
   @Get("/")
+  // @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCard(@Req() req: Request | any, @Res() res: Response) {
     try {
@@ -93,6 +93,7 @@ export class FlashController {
   }
 
   @Get("/flashcardresponse")
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCardResponse(@Req() req: Request | any, @Res() res: Response) {
     try {
@@ -151,6 +152,7 @@ export class FlashController {
   }
 
   @Put("/:id")
+  // @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
   async updateFlashCard(
     @Req() req: Request | any,
@@ -172,6 +174,7 @@ export class FlashController {
   }
 
   @Delete("/:id")
+   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "delete all build of users" })
   async deleteFlashCardById(
     @Req() req: Request | any,
@@ -190,6 +193,8 @@ export class FlashController {
       }
       return { status: true, data: flashByDeleteId };
     } catch (error) {
+      console.log('--ERROR--',error);
+      
       if (error instanceof Error) {
         return { status: false, error: { code: 500, message: error.message } };
       }
