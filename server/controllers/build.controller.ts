@@ -126,13 +126,11 @@ export class FlashController {
   ) {
     try {
       const userBuild = await this.buildService.getUsersBuildByUrl(url, search);
-      console.log('>>userBuild>>> ', userBuild, search);
-      const searchedData = this.youtubeApiCall(url, userBuild, search).then(result => {
-        console.log('///// ', result);
-        return result;
+      let searchedResult
+      const searchedData = await this.youtubeApiCall(url, userBuild, search).then(result => {
+        searchedResult = result
       })
-      console.log('SEARCHDATA', searchedData);
-      return { data: searchedData, box: userBuild, status: true };
+      return { data: searchedResult, box: userBuild }
     } catch (error) {
       return {
         error: {
@@ -146,9 +144,6 @@ export class FlashController {
   @OpenAPI({ summary: "YouTube Api Call" })
   async youtubeApiCall(url, userBuild, search) {
     try {
-      console.log('URL* ', url);
-      console.log('userBuild ', userBuild);
-      console.log('search* ', search);
       const searchedData = [];
       const videoUrl = url;
       const youtube = google.youtube({
@@ -261,7 +256,6 @@ export class FlashController {
           searchedData.push(data);
         }
       }
-      console.log('SEARCHDATA ', searchedData);
       return searchedData;
     } catch (error) {
       return {
