@@ -13,9 +13,11 @@ import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 import { Input, Modal, Button, Form } from "antd";
+import { userSelector } from "store/reducers/user.reducer";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
+  const userData = useAppSelector(userSelector);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
