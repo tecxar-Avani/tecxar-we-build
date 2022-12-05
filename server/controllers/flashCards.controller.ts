@@ -20,9 +20,10 @@ import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 import { google } from "googleapis";
 import config from "@/configs";
+import { RequestWithUser } from "@/interfaces/auth.interface";
 
 @Controller("/flashcard")
-//@UseBefore(authMiddleware)
+@UseBefore(authMiddleware)
 export class FlashController {
   private flashCardService = new FlashCardService();
 
@@ -78,9 +79,9 @@ export class FlashController {
 
   @Get("/")
   @OpenAPI({ summary: "Get all build of users" })
-  async getFlashCard(@Req() req: Request | any, @Res() res: Response) {
+  async getFlashCard(@Req() req: RequestWithUser | any, @Res() res: Response) {
     try {
-      const user = 4;
+      const user = req.user.id
       const flashBuild = await this.flashCardService.getFlashCard(user);
      return {
        status: true,
