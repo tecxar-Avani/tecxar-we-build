@@ -8,6 +8,8 @@ import { Col, Image, Row } from "react-bootstrap";
 import {
   getFlashCardByUser,
   flashCardSelector,
+  updateFlashCardId,
+  flashCardData,
 } from "../../store/reducers/flashCard.reducer";
 import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
@@ -18,6 +20,7 @@ import { getUserByEmail, userSelector } from "../../store/reducers/user.reducer"
 const Profile = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
+  const editFlashCard  = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
@@ -1457,7 +1460,11 @@ const Profile = () => {
       setRevealAns(true);
     }
   };
-
+const handleSubmit  = (data:any) =>{
+dispatch(updateFlashCardId(data))
+  {console.log("hello",editFlashCard)};
+}
+console.log("::::::::::",editFlashCard)
   return (
     <>
       <div className="profile-main">
@@ -1566,6 +1573,7 @@ const Profile = () => {
         flashCardArr={flashCardArr}
         addFlashCard={addFlashCard}
         editFlashCardData={editFlashCardData}
+        handleSubmit={handleSubmit}
       />
       <Modal
         title="Edit Your Name"

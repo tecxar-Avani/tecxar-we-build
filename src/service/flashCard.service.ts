@@ -11,5 +11,9 @@ class FlashCardService {
   getFlashCardByBuildId(id: number) {
     return API.get(`/flashcard/flashcardByBuild/${id}`);
   }
+
+  updateFlashCardById(id:number) {
+    return API.post(`/flashcard/${id}`);
+  }
 }
 export default new FlashCardService();

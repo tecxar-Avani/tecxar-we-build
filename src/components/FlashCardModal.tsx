@@ -98,6 +98,7 @@ const FlashCardModal = (props: any) => {
         setModal2Open={() => props.setAddFlashcard()}
         visible={props.addFlashCard}
         flashCardData={props.editFlashCardData}
+        handleSubmit={props.handleSubmit}
       />
     </>
   );

@@ -10,7 +10,7 @@ import {
 import Router from "next/router";
 import { toast } from "react-toastify";
 import { IFlashCardRowsCountResponse } from "../../../@types/responses";
-import { ICreateFlashCard, IFlashCard } from "../../../@types/common";
+import { ICreateFlashCard, IFlashCard ,IUpdateFlashCards} from "../../../@types/common";
 import flashCardService from "../../service/flashCard.service";
 
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
@@ -46,6 +46,13 @@ export const getFlashCardByUser = createAsyncThunk(
     return { status: data.status, rows: data.data };
   }
 );
+export const updateFlashCardId = createAsyncThunk(`flashcard`, async (updateFlashCard: IFlashCard, { dispatch }) => {
+  const id = Number(updateFlashCard.id);
+  const { status, data } = await flashCardService.updateFlashCardById(id);
+ 
+  return { status,data };
+});
+
 
 interface State {
   id: number;
@@ -54,7 +61,7 @@ interface State {
   error: string | undefined;
   flashCardList: IFlashCardRowsCountResponse;
   flashCardUserList: IFlashCardRowsCountResponse;
- 
+  editFlashCard:IUpdateFlashCards;
 }
 
 const initialState: State = {
@@ -67,7 +74,7 @@ const initialState: State = {
     rows: [],
   },
   flashCardUserList: { status: true, rows: [] },
- 
+  editFlashCard : {},
   loading: false,
   error: undefined,
   id: 0,
@@ -137,6 +144,21 @@ const flashCardSlice = createSlice({
             ...state,
             loading: false,
             flashCardList: action.payload,
+          };
+        }
+      })
+      .addCase(updateFlashCardId.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          return {
+            ...state,
+            loading: false,
+            editFlashCard: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            editFlashCard: action.payload.data,
           };
         }
       })

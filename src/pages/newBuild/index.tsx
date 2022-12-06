@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
+  addFlashCard,
   flashCardSelector,
   getFlashCardByBuildId,
 } from "../../store/reducers/flashCard.reducer";
@@ -33,7 +34,7 @@ console.log('props props',props)
   const [resistance, setResistance] = useState(false);
   const [modalChallenge , setModalChallenge] = useState({});
   const [review , setReview] = useState<string>("");
-  const [addFlashCard, SetAddFlashcard] = useState(false);
+  const [addFlashCardData, SetAddFlashcard] = useState(false);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
@@ -122,7 +123,9 @@ console.log('props props',props)
       message: "",
     },
   ]);
-
+  const handleSubmit = (data: any) => {
+    dispatch(addFlashCard(data));
+  };
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -149,6 +152,7 @@ useEffect(() => {
   }
   dispatch(getAwarenessByBoxId(boxData));
 },[])
+
 console.log("buildData",buildData)
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
@@ -313,9 +317,10 @@ console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id
         </div>
       </div>
       <AddFlashCardModal
-        modal2Open={addFlashCard}
+        modal2Open={addFlashCardData}
         setModal2Open={SetAddFlashcard}
-        visible={addFlashCard}
+        visible={addFlashCardData}
+        handleSubmit={handleSubmit}
       />
 
       <FlashCardModal

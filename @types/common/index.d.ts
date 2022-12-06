@@ -52,6 +52,15 @@ export interface IFlashCard {
   }
 }
 
+export interface IUpdateFlashCards {
+  id?: number;
+  build_id?: number;
+  question?: string;
+  answer?: string;
+  created_by?: number;
+  updatedAt?: Date;
+}
+
 
 export interface IBoxReviews {
   id?: number;
