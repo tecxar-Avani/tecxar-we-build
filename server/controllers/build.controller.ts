@@ -39,7 +39,7 @@ export class FlashController {
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new build" })
   async createBuild(
-    @Body() videoBuildData: videoBuildDto,
+    @Body() videoBuildData: any,
     @Req() req: Request | any,
     @Res() res: Response
   ) {
@@ -48,14 +48,16 @@ export class FlashController {
       videoBuildData.updated_by = req.user.id;
       const createBuildData: IVideoBuild | null =
         await this.buildService.createBuild(videoBuildData);
-      
+       
+
+
       if (createBuildData && createBuildData.id && videoBuildData.boxes) {
         const newArr = videoBuildData.boxes.map((box:any) => ({
           ...box,
           build_id: createBuildData.id,
         }));
         await this.boxService.createBox(newArr);
-       
+        
       }
       if (createBuildData && createBuildData.id && videoBuildData.flashCards) {
         const newArr = videoBuildData.flashCards.map((card:any) => ({
@@ -72,7 +74,9 @@ export class FlashController {
         message: "Video Build created successfully.",
       };
     } catch (error) {
+     
       if (error instanceof Error) {
+      
         return { error: { code: 500, message: error.message } };
       }
     }

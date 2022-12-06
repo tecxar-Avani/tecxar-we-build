@@ -7,7 +7,7 @@ import {
   AnyAction,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
-import { ICurrentUser } from "../../../@types/common";
+import { ICreateUser, ICurrentUser } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -20,15 +20,25 @@ export const getUserAuth = createAsyncThunk(
   }
 );
 
+export const getUserByEmail = createAsyncThunk(
+  `users/userByEmail`,
+  async (): Promise<ICurrentUser> => {
+    const { data } = await userService.getUserByMail();
+    return data;
+  }
+);
+
 interface State {
   id: number;
   loading: boolean;
   error: string | undefined;
   loggedInUser: ICurrentUser;
+  userData:ICreateUser;
 }
 
 const initialState: State = {
   loggedInUser: {},
+  userData:{},
   loading: false,
   error: undefined,
   id: 0,
@@ -67,6 +77,21 @@ const userSlice = createSlice({
            };
          }
       })
+      .addCase(getUserByEmail.fulfilled, (state, action) => {
+        if (action.payload) {
+          return {
+            ...state,
+            loading: false,
+            userData: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            userData: initialState.userData,
+          };
+        }
+     })
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
       })

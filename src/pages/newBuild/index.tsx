@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
+  addFlashCard,
   flashCardSelector,
   getFlashCardByBuildId,
   createFlashCard,
@@ -13,17 +14,15 @@ import AwarenessModal from "@/components/AwarenessModal";
 import { useRouter } from "next/router";
 
 import AddFlashCardModal from "@/components/AddFlashCardModal";
-import { buildSelector } from "../../store/reducers/build.reducer";
-import {
-  addAwareness,
-  awarenessSelector,
-  getAwarenessByBoxId,
-} from "../../store/reducers/awareness.reducer";
+import { addBuild, buildSelector } from "../../store/reducers/build.reducer";
+import { addAwareness, awarenessSelector, getAwarenessByBoxId } from "../../store/reducers/awareness.reducer";
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
 import { IFlashCard } from "../../../@types/common";
 
-const NewBuild = (props: any) => {
+
+const NewBuild = (props:any) => {
+console.log('props props',props)
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const buildData = useAppSelector(buildSelector);
@@ -35,7 +34,16 @@ const NewBuild = (props: any) => {
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
-  const [review, setReview] = useState<string>("");
+  const [modalChallenge , setModalChallenge] = useState({});
+  const [review , setReview] = useState<string>("");
+  const [addFlashCardData, setAddFlashcard] = useState(false);
+  const [revealAns, setRevealAns] = useState(false);
+  const [modal3Open, setModal3Open] = useState({});
+  const [modal4Open, setModal4Open] = useState(false);
+  const [awarenessIndex, setAwarenessIndex] = useState(false);
+  const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
+
+  const [boxData , setBoxData] = useState([])
   const [dataArray, setDataArray] = useState([
     {
       id: 1,
@@ -118,8 +126,9 @@ const NewBuild = (props: any) => {
       message: "",
     },
   ]);
-
-  console.log("DDDDDDDDDDDDDD", props);
+  const handleSubmit = (data: any) => {
+    dispatch(addFlashCard(data));
+  };
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -135,18 +144,19 @@ const NewBuild = (props: any) => {
     setInspiration(false);
     setResistance(true);
   };
-
   useEffect(() => {
+   
     dispatch(getFlashCardByBuildId(2));
   }, []);
-  useEffect(() => {
-    const boxData = {
-      boxId: awarenessBoxId,
-      reviewType: review,
-    };
-    dispatch(getAwarenessByBoxId(boxData));
-  }, []);
+useEffect(() => {
+  const boxData={
+    boxId:awarenessBoxId,
+    reviewType:review
+  }
+  dispatch(getAwarenessByBoxId(boxData));
+},[])
 
+console.log("buildData",buildData)
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
@@ -181,19 +191,33 @@ const NewBuild = (props: any) => {
     }
   };
 
-  const [addFlashCard, SetAddFlashcard] = useState(false);
-  const [revealAns, setRevealAns] = useState(false);
-  const [modal3Open, setModal3Open] = useState({});
-  const [modal4Open, setModal4Open] = useState(false);
-  const [awarenessIndex, setAwarenessIndex] = useState(false);
-  const [awarenessBoxId, setAwarenessBoxId] = useState<number>(0);
+  // useEffect(() => {
+   
+  //   setBoxData({ ...boxData, [awarenessBoxId]: awarenessIndex });
+  // }, []);
 
+  
+const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:string) => {
+  const saveData = {
+  type_of_video: videoType,
+  potential_polarization: polarisationLevel,
+  difficulty_level: difficultyLevel,
+  boxes : boxData,
+  video_url : url
+  }
+  dispatch(addBuild(saveData))
+  
+  console.log("#############",saveData)
+
+}
+console.log("++=====================",buildData)
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
+    
   };
-
-  const handleData = (comment: any, review: any) => {
+console.log("===============",boxData)
+  const handleData = (comment:any,review:any) =>{
     const data = {
       comment: comment.comment,
       review_type: review,
@@ -208,8 +232,25 @@ const NewBuild = (props: any) => {
       description: "hello",
       boxId: 1,
     },
-    { id: 2, description: "hello world", boxId: 1 },
-  ];
+    {"id":2,
+    "description":"hello world",
+    "boxId":1,
+    },
+    {"id":3,
+    "description":"hello tecxar",
+    "boxId":1,
+    },
+    {"id":4,
+    "description":"hello tecxar",
+    "boxId":1,
+    },
+    {"id":5,
+    "description":"hello tecxar",
+    "boxId":1,
+    }
+  ]
+const acceptanceValue = acceptanceData.filter((A) => A.description)
+console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id}",router)
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -220,11 +261,13 @@ const NewBuild = (props: any) => {
           Acceptance={Acceptance}
           Inspiration={Inspiration}
           setAwarenessModal={setAwarenessModal}
+          isLoggedIn={props.isLoggedIn}
+          onSave={(videoType:any,polarisationLevel:any,difficultyLevel:any,url:string) => onSave(videoType,polarisationLevel,difficultyLevel,url)}
         />
 
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           <NewBuildBoxes
-            setModal1Open={SetAddFlashcard}
+            setModal1Open={setAddFlashcard}
             item={dataArray}
             arr={arr}
             setArr={(value: any) => {
@@ -242,6 +285,11 @@ const NewBuild = (props: any) => {
             onFocus={handleChange}
             modalDot={setAwarenessDotModal}
             acceptanceData={acceptanceData}
+            Acceptance={Acceptance}
+            Resistance={Resistance}
+            Inspiration={Inspiration}
+            boxData = {boxData}
+            setBoxData ={setBoxData}
           />
 
           <div className="position-absolute mkCard">
@@ -269,19 +317,17 @@ const NewBuild = (props: any) => {
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"
               onClick={() => {
-                SetAddFlashcard(true);
+                setAddFlashcard(true);
               }}
             />
           </div>
         </div>
       </div>
       <AddFlashCardModal
-        modal2Open={addFlashCard}
-        setModal2Open={SetAddFlashcard}
-        visible={addFlashCard}
-        flashCardSubmit={(data: IFlashCard) => {
-          dispatch(createFlashCard(data));
-        }}
+        modal2Open={addFlashCardData}
+        setModal2Open={setAddFlashcard}
+        visible={addFlashCardData}
+        handleSubmit={handleSubmit}
       />
 
       <FlashCardModal
@@ -365,23 +411,38 @@ const NewBuild = (props: any) => {
       />
       <AwarenessDotModal
         awarenessModal={awarenessDotModal}
+        challenge={modalChallenge}
         setAwarenessModal={setAwarenessDotModal}
         visible={awarenessDotModal}
-        footer={"challenge"}
+        btnName="challenge"     
         id={awarenessIndex}
-        title={`${
-          accept
-            ? "Acceptance"
-            : inspiration
+        acceptanceValue={acceptanceValue}
+        title={`${accept
+          ? "Acceptance"
+          : inspiration
             ? "Inspiration"
             : resistance
-            ? "Resistance"
-            : ""
-        }`}
-        header={`Maria's ${
-          accept
-            ? "Acceptance"
-            : inspiration
+              ? "Resistance"
+              : ""
+          }`}
+        // setModalChallenge ={setModalChallenge}
+        callBack={(title:any ,content:any,header:any,awareLabel:any,challengeLabel:any,awareValue:any,id:any) =>
+         { const newData = {
+            title : `${title == "challenge" ? "challenge" : title == "Resolve" ? "Resolve" : title}`,
+            content:content,
+            header:header,
+             awareLabel:"maria's acceptance",
+            challengeLabel:"maria's challenge",
+            awareValue:"hello"
+          }
+            setModalChallenge(newData);
+            // setModalChallenge(true)
+          }}
+         
+        
+        header={`Maria's ${accept
+          ? "Acceptance"
+          : inspiration
             ? "Inspiration"
             : resistance
             ? "Resistance"

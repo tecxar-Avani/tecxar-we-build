@@ -46,7 +46,7 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
     <Provider store={store}>
       <Layout className="h-full">
         {/* <SideBar router={router}/> */}
-        {r.pathname != "/newBuild" && <SideBar />}
+        {r.pathname != "/newBuild" && <SideBar isLoggedIn={isLoggedIn} />}
 
         <Layout className="site-layout">
           <div className="mainPage">

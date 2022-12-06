@@ -13,9 +13,9 @@ export interface IVideoBuild {
   id?: number;
   video_url?: string;
   provider?: string;
-  type_of_video?: VideoTypeEnumType;
-  potential_polarization?: difficultyLevelEnumType;
-  difficulty_level?: difficultyLevelEnumType;
+  type_of_video?: any;
+  potential_polarization?: any;
+  difficulty_level?: any;
   created_by?: number;
   updated_by?: number;
   createdAt?: Date;
@@ -52,6 +52,15 @@ export interface IFlashCard {
   }
 }
 
+export interface IUpdateFlashCards {
+  id?: number;
+  build_id?: number;
+  question?: string;
+  answer?: string;
+  created_by?: number;
+  updatedAt?: Date;
+}
+
 
 export interface IBoxReviews {
   id?: number;
@@ -69,7 +78,7 @@ export interface ICreateFlashCard{
 export interface IBoxes {
   id?: number;
   build_id?: number;
-  description: string;
+  description?: string;
   sorting_order?: number;
   createdAt?:Date;
   updatedAt?:Date
@@ -83,4 +92,18 @@ export interface ICurrentUser {
   email?: string;
   role_id?: number;
   profile_image?: string | File | null;
+}
+
+export interface ICreateUser {
+  id?: number;
+  role_id?: number;
+  user_name?: string;
+  tag_line?: string;
+  email?: string;
+  profile_id?: string;
+  is_blocked?: number;
+  profile_image?: any;
+  updated_by?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

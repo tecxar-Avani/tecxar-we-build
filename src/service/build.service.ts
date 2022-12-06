@@ -25,7 +25,7 @@ class BuildService {
   }
 
   addBuild(buildData: any) {
-    return API.get(`/build/create`, buildData);
+    return API.post(`/build/create`, buildData);
   }
 }
 export default new BuildService();

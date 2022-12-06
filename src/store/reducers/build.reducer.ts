@@ -29,12 +29,11 @@ export const getBuildByUrl: any = createAsyncThunk(
 
 export const addBuild = createAsyncThunk(
   `build/add`,
-  async (createBuildData: IBoxes, { dispatch }) => {
+  async (createBuildData: IVideoBuild) => {
     const { status, data } = await BuildService.addBuild(
       createBuildData
     );
    
-
     // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
     return { status, data };
   }
@@ -46,16 +45,13 @@ interface State {
   loading: boolean;
   error: string | undefined;
   buildList: IBuildRowsCountResponse | any;
-  box:IBoxes;
+  boxes:IBoxes;
 }
 
 const initialState: State = {
   build: {
     video_url: "",
     provider: "youtube",
-    type_of_video: "practical",
-    potential_polarization: "high",
-    difficulty_level: "high",
   },
   buildList: {
     status: true,
@@ -64,7 +60,8 @@ const initialState: State = {
   loading: false,
   error: undefined,
   id: 0,
-  box:{
+  boxes:{
+    id:0,
     description:""
   }
 };
@@ -96,7 +93,7 @@ const buildSlice = createSlice({
             ...state,
             loading: false,
             buildList: action.payload.rows,
-            box: action.payload.box,
+            boxes: action.payload.boxes,
           };
         } else {
           return {

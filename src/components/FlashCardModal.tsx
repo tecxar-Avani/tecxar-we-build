@@ -25,8 +25,9 @@ const FlashCardModal = (props: any) => {
       );
     });
   const userId = props.flashCard.userId;
-  const questionId = props.flashCard.questionId;
+  const questionId = props.flashCard?.questionId;
   const index = props.flashCard.index;
+  // const editIndex = props.flashCardArr.index;
   const arrayLength = props.flashCard.arrayLength;
   const editQuestion = props.flashCard.editQuestion;
   console.log("BBBBBBBBBBBBBBBBBB", editQuestion);
@@ -115,6 +116,7 @@ const FlashCardModal = (props: any) => {
             });
         }}
         flashCardData={props.editFlashCardData}
+        handleSubmit={props.handleSubmit}
       />
     </>
   );

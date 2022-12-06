@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Response } from "express";
 import { Controller, Req, UseBefore, Res, Get, Put, Body, Param } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";

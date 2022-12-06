@@ -8,13 +8,19 @@ import { Col, Image, Row } from "react-bootstrap";
 import {
   getFlashCardByUser,
   flashCardSelector,
+  updateFlashCardId,
+  flashCardData,
 } from "../../store/reducers/flashCard.reducer";
 import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
-import { Input, Modal } from "antd";
+
+import { Input, Modal, Button, Form } from "antd";
+import { getUserByEmail, userSelector } from "../../store/reducers/user.reducer";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
+  const userData = useAppSelector(userSelector);
+  const editFlashCard  = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState<any>({});
   const [modal4Open, setModal4Open] = useState(false);
@@ -24,9 +30,13 @@ const Profile = () => {
 
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
+  const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
+    dispatch(getUserByEmail());
   }, []);
+  console.log("OOOOOOOOOOOOOOOOOO",userData.userData
+  )
   const role = "admin";
   const videosData = [
     {
@@ -1341,7 +1351,7 @@ const Profile = () => {
     },
   ];
   const profileData = {
-    title: "Mazza Konny",
+    title: userData.userData.user_name,
     editIcon: "editIcon.svg",
     dateOfJoined: "Date joined: Oct 2022",
     boxLeftTitle: "Boxes",
@@ -1438,11 +1448,12 @@ const Profile = () => {
     } else {
       setModal3Open({
         content: index
-          ? flashCardArr[index].question
-          : flashCardArr[0].question,
+          ? flashCardArr[index]?.question
+          : flashCardArr[0]?.question,
         footer: ["Reveal Answer"],
-        questionId: index ? flashCardArr[index].id : flashCardArr[0].id,
-        index: index ? index + 1 : 1,
+        questionId: index ? flashCardArr[index]?.id : flashCardArr[0].id,
+        index: index ? index : 1,
+     
         arrayLength: flashCardArr.length,
         onOk: modal4Open,
         editQuestion: editQuestion,
@@ -1450,7 +1461,11 @@ const Profile = () => {
       setRevealAns(true);
     }
   };
-
+const handleSubmit  = (data:any) =>{
+dispatch(updateFlashCardId(data))
+  {console.log("hello",editFlashCard)};
+}
+console.log("::::::::::",editFlashCard)
   return (
     <>
       <div className="profile-main">
@@ -1574,14 +1589,34 @@ const Profile = () => {
         flashCardArr={flashCardArr}
         addFlashCard={addFlashCard}
         editFlashCardData={editFlashCardData}
+        handleSubmit={handleSubmit}
       />
       <Modal
         title="Edit Your Name"
         open={editName}
-        onOk={handleOk}
+        onOk={form.submit}
         onCancel={handleCancel}
+        footer={
+          <Button
+            form="form"
+            key="submit1"
+            htmlType="submit"
+            className="openmodal"
+          >
+          Submit
+          </Button>
+        }
       >
+         <Form
+          form={form}
+          id="form"
+          layout="vertical"
+          autoComplete="off"
+        >
+          <Form.Item name="name" label="Name">
         <Input defaultValue={profileData.title}></Input>
+        </Form.Item>
+        </Form>
       </Modal>
 
      

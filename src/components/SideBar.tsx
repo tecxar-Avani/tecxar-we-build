@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Image, OverlayTrigger } from "react-bootstrap";
-import { Layout, Menu, Tooltip } from "antd";
+import { Layout, Menu, Modal, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import HeaderTitle from "./headerTitle";
+import GoogleButton from "react-google-button";
 
 const { Sider } = Layout;
 
 const SideBar = (toggle: any) => {
-
+console.log("###################",toggle.isLoggedIn)
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   // const url = window.location.origin;
@@ -16,6 +17,8 @@ const SideBar = (toggle: any) => {
   const [IsOtherLearning, setIsOtherLearning] = useState(false);
   const [IsProfile, setIsProfile] = useState(false);
   const [IsUserGuide, setIsUserGuide] = useState(false);
+  const [modal5Open, setModal5Open] = useState(false);
+
   const selfLearning = () => {
     setIsSelfLearning(true);
   };
@@ -75,8 +78,8 @@ const SideBar = (toggle: any) => {
                 <Image src={`/img/book.png`} className="img-fluid" />
               </a>
             </Link>
-            <Link href="/profile">
-              <a onClick={profile}>
+            <Link href={toggle.isLoggedIn ? "/profile" : ""}>
+              <a onClick={()=>{toggle.isLoggedIn ? profile : setModal5Open(true)} }>
                 <Image src={`/img/profile.png`} className="img-fluid" />
               </a>
             </Link>
@@ -88,6 +91,16 @@ const SideBar = (toggle: any) => {
           </div>
         </Sider>
       </div>
+      <Modal title="" centered open={modal5Open} className="btnrv">
+            <div className="mb-n3">
+             
+               <a href={`/api/google`}>
+                <GoogleButton className="m-auto googleButton" />
+              </a>
+              <br />
+              <span className="fs-5">Add Google Sign In Button To Website</span>
+            </div>
+          </Modal>
     </>
   );
 };
