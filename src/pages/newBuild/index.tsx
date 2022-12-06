@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   flashCardSelector,
   getFlashCardByBuildId,
+  createFlashCard,
 } from "../../store/reducers/flashCard.reducer";
 import { Card, Image } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
@@ -13,12 +14,16 @@ import { useRouter } from "next/router";
 
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 import { buildSelector } from "../../store/reducers/build.reducer";
-import { addAwareness, awarenessSelector, getAwarenessByBoxId } from "../../store/reducers/awareness.reducer";
+import {
+  addAwareness,
+  awarenessSelector,
+  getAwarenessByBoxId,
+} from "../../store/reducers/awareness.reducer";
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
+import { IFlashCard } from "../../../@types/common";
 
-
-const NewBuild = (props) => {
+const NewBuild = (props: any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const buildData = useAppSelector(buildSelector);
@@ -26,11 +31,11 @@ const NewBuild = (props) => {
   const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
-  const [awarenessDotModal ,setAwarenessDotModal] = useState(false);
+  const [awarenessDotModal, setAwarenessDotModal] = useState(false);
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
-  const [review , setReview] = useState<string>("");
+  const [review, setReview] = useState<string>("");
   const [dataArray, setDataArray] = useState([
     {
       id: 1,
@@ -114,7 +119,7 @@ const NewBuild = (props) => {
     },
   ]);
 
-  console.log("DDDDDDDDDDDDDD",props)
+  console.log("DDDDDDDDDDDDDD", props);
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -134,14 +139,13 @@ const NewBuild = (props) => {
   useEffect(() => {
     dispatch(getFlashCardByBuildId(2));
   }, []);
-useEffect(() => {
-  const boxData={
-    boxId:awarenessBoxId,
-    reviewType:review
-  }
-  dispatch(getAwarenessByBoxId(boxData));
-},[])
-
+  useEffect(() => {
+    const boxData = {
+      boxId: awarenessBoxId,
+      reviewType: review,
+    };
+    dispatch(getAwarenessByBoxId(boxData));
+  }, []);
 
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
@@ -152,25 +156,29 @@ useEffect(() => {
     const findLastValue = filterArray?.slice(-1)[0];
     const lastQuestionId = findLastValue?.id;
 
-   if(filterArray && filterArray.length > 0 ){ if (questionId == lastQuestionId) {
-      setModal3Open({
-        content: "Congratulations! You have finished your deck",
-        footer: [],
-        onOk: modal4Open,
-      });
-      setRevealAns(true);
-    } else {
-      setModal3Open({
-        content: index ? filterArray[index].question : filterArray[0].question,
-        footer: ["Reveal Answer"],
-        userId: index ? filterArray[index].user_id : filterArray[0].user_id,
-        questionId: index ? filterArray[index].id : filterArray[0].id,
-        index: index ? index + 1 : 1,
-        arrayLength: filterArray.length,
-        onOk: modal4Open,
-      });
-      setRevealAns(true);
-    }}
+    if (filterArray && filterArray.length > 0) {
+      if (questionId == lastQuestionId) {
+        setModal3Open({
+          content: "Congratulations! You have finished your deck",
+          footer: [],
+          onOk: modal4Open,
+        });
+        setRevealAns(true);
+      } else {
+        setModal3Open({
+          content: index
+            ? filterArray[index].question
+            : filterArray[0].question,
+          footer: ["Reveal Answer"],
+          userId: index ? filterArray[index].user_id : filterArray[0].user_id,
+          questionId: index ? filterArray[index].id : filterArray[0].id,
+          index: index ? index + 1 : 1,
+          arrayLength: filterArray.length,
+          onOk: modal4Open,
+        });
+        setRevealAns(true);
+      }
+    }
   };
 
   const [addFlashCard, SetAddFlashcard] = useState(false);
@@ -178,33 +186,30 @@ useEffect(() => {
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
-  const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
+  const [awarenessBoxId, setAwarenessBoxId] = useState<number>(0);
 
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
   };
 
-  const handleData = (comment:any,review:any) =>{
+  const handleData = (comment: any, review: any) => {
     const data = {
-      comment:comment.comment,
-      review_type:review,
-      box_id:Number(awarenessBoxId)
-    }
-    dispatch(addAwareness(data))
-    setReview(review)
-   }
-   const acceptanceData = [
+      comment: comment.comment,
+      review_type: review,
+      box_id: Number(awarenessBoxId),
+    };
+    dispatch(addAwareness(data));
+    setReview(review);
+  };
+  const acceptanceData = [
     {
-  "id":1,
-  "description":"hello",
-  "boxId":1,
+      id: 1,
+      description: "hello",
+      boxId: 1,
     },
-    {"id":2,
-    "description":"hello world",
-    "boxId":1,
-    }
-  ]
+    { id: 2, description: "hello world", boxId: 1 },
+  ];
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -274,6 +279,9 @@ useEffect(() => {
         modal2Open={addFlashCard}
         setModal2Open={SetAddFlashcard}
         visible={addFlashCard}
+        flashCardSubmit={(data: IFlashCard) => {
+          dispatch(createFlashCard(data));
+        }}
       />
 
       <FlashCardModal

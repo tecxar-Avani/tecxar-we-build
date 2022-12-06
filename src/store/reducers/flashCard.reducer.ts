@@ -17,7 +17,7 @@ type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
 
-export const addFlashCard = createAsyncThunk(
+export const createFlashCard = createAsyncThunk(
   `flashcard/add`,
   async (createFlashCardData: IFlashCard, { dispatch }) => {
     const { status, data } = await flashCardService.addFlashCard(
@@ -93,7 +93,7 @@ const flashCardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addFlashCard.fulfilled, (state, action) => {
+      .addCase(createFlashCard.fulfilled, (state, action) => {
         if (action.payload.data.status) {
           toast.success(action.payload.data.message);
           return {

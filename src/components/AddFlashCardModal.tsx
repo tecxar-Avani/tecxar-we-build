@@ -1,20 +1,15 @@
-import { Input, Modal, Button, Form } from "antd";
-import { useAppDispatch } from "../hooks";
+import { Input, Modal, Button, Form, } from "antd";
 import React from "react";
-import { addFlashCard } from "../store/reducers/flashCard.reducer";
 
 const { Search } = Input;
 const { TextArea } = Input;
 
 const AddFlashCardModal = (props: any) => {
-  const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const handleSubmit = (data: any) => {
-    dispatch(addFlashCard(data));
-
+    props.flashCardSubmit && props.flashCardSubmit(data);
     form.resetFields();
   };
-
   return (
     <>
       <Modal
@@ -23,7 +18,10 @@ const AddFlashCardModal = (props: any) => {
         centered
         visible={props.modal2Open}
         onOk={form.submit}
-        onCancel={() => props.setModal2Open(false)}
+        onCancel={() => {
+          props.setEditFlashCardData && props.setEditFlashCardData();
+          props.setModal2Open(false);
+        }}
         footer={
           <Button
             form="form"
