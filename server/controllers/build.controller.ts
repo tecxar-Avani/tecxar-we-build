@@ -249,7 +249,7 @@ export class FlashController {
                   .contentDetails.duration;
                 durationCalculation(youTubeFormatDuration);
 
-                let Filter = {
+                const Filter = {
                   videoId: item.id.videoId,
                   thumbnails: item.snippet.thumbnails.default,
                   description: item.snippet.description,
@@ -270,7 +270,7 @@ export class FlashController {
           q: videoUrl,
         });
         for (let i = 0; i < response.data.items.length; i++) {
-          let item = response.data.items[i];
+          const item = response.data.items[i];
           const videoUrl = item.snippet.thumbnails.default.url;
           const splittedUrl = videoUrl.split("vi/");
           const result = splittedUrl.pop();
@@ -283,7 +283,7 @@ export class FlashController {
             duration1.data.items[0].contentDetails.duration;
           durationCalculation(youTubeFormatDuration);
 
-          let data = {
+          const data = {
             videoId: item.id.videoId,
             thumbnails: item.snippet.thumbnails.default,
             description: item.snippet.description,
