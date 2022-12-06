@@ -22,7 +22,7 @@ import {
 import {
   buildSelector,
   getUserInteractedBuild,
-} from "store/reducers/build.reducer";
+} from "../../store/reducers/build.reducer";
 
 const Profile = () => {
   const dispatch = useAppDispatch();

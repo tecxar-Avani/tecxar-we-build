@@ -175,7 +175,7 @@ const NewBuild = (props:any) => {
         });
       console.log(data);
       setDataArray(data);
-      setArr(data.map((d) => d.id));
+      setArr(data.map((d:any) => d.id));
     }
   }, [buildById]);
 

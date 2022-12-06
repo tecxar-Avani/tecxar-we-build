@@ -192,7 +192,7 @@ export class FlashController {
         version: "v3",
         auth: config.youtubeApiKey,
       });
-      let finalDuration;
+      let finalDuration:any;
       const durationCalculation = (duration: any) => {
         let a = duration.match(/\d+/g);
         if (
@@ -243,33 +243,35 @@ export class FlashController {
               q: url.video_url,
             });
             await Promise.all(
-              youtubeData.data.items.map(async (item) => {
-                const videoUrl = item.snippet.thumbnails.default.url;
-                const splittedUrl = videoUrl.split("vi/");
+              
+                youtubeData?.data?.items && youtubeData.data.items.length > 0 ? youtubeData.data.items.map(async (item:any) => {
+                const videoUrl = item?.snippet?.thumbnails?.default?.url;
+                const splittedUrl = videoUrl?.split("vi/");
                 const result = splittedUrl.pop();
-                const array1 = result.split("/de");
+                const array1 = result?.split("/de");
                 const duration1 = await youtube.videos.list({
                   id: array1[0],
                   part: ["contentDetails"],
                 });
-                const youTubeFormatDuration = await duration1.data.items[0]
-                  .contentDetails.duration;
+                const youTubeFormatDuration = await duration1 && duration1.data && duration1.data.items && duration1.data.items.length > 0
+                 && duration1.data.items[0]?.contentDetails?.duration
+                  ;
                 durationCalculation(youTubeFormatDuration);
 
-                let Filter = {
+                const Filter = {
                   id: url.id,
-                  videoId: item.id.videoId,
-                  thumbnails: item.snippet.thumbnails.default,
-                  description: item.snippet.description,
-                  title: item.snippet.title,
-                  publishedAt: item.snippet.publishedAt,
+                  videoId: item?.id?.videoId,
+                  thumbnails: item?.snippet?.thumbnails?.default,
+                  description: item?.snippet?.description,
+                  title: item?.snippet?.title,
+                  publishedAt: item?.snippet?.publishedAt,
                   duration: finalDuration,
                   newVideoId: array1[0],
                   url: `https://www.youtube.com/embed/${array1[0]}`,
                 };
 
                 searchedData.push(Filter);
-              })
+              }):[]
             );
           })
         );
@@ -289,7 +291,7 @@ export class FlashController {
             part: ["contentDetails"],
           });
           const youTubeFormatDuration =
-            duration1.data.items[0].contentDetails.duration;
+          duration1?.data?.items &&  duration1.data.items.length > 0 &&  duration1.data.items[0].contentDetails?.duration;
           durationCalculation(youTubeFormatDuration);
 
           const data = {

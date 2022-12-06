@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import {
   IVideoBuild,
@@ -187,7 +188,7 @@ class BuildService {
     );
     return videoBuilds;
   }
-  public async updateBuild(id: number, data): Promise<IVideoBuild | null> {
+  public async updateBuild(id: number, data:any): Promise<IVideoBuild | null> {
     const videoBuildsUpdate: any | null = await this.videoBuild.update(
       { ...data },
       { where: { id: id } }

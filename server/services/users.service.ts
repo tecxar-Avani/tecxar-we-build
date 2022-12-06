@@ -37,7 +37,7 @@ class UserService {
     }
   }
   
-  public async updateUserProfile(id: number, data): Promise<IUpdateUser | null> {
+  public async updateUserProfile(id: number, data:any): Promise<IUpdateUser | null> {
     const updateuserProfile: any| null = await this.users.update(data ,
       { where: { id : id } }
     );

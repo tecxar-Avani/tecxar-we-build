@@ -57,10 +57,10 @@ export const addBuild = createAsyncThunk(
   }
 );
 
-export const boxDataByUserId = createAsyncThunk(`users/`,async (box : IBoxes ) => {
-  const {status,data } = await BuildService.boxDataByUserId();
-  return { status,data };
-})
+// export const boxDataByUserId = createAsyncThunk(`users/`,async (box : IBoxes ) => {
+//   const {status,data } = await BuildService.boxDataByUserId();
+//   return { status,data };
+// })
 
 
 interface State {
