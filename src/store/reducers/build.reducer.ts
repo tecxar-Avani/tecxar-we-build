@@ -16,24 +16,21 @@ type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
 
-export const getBuildByUrl: any = createAsyncThunk(
+export const getBuilds: any = createAsyncThunk(
   `build/get/url`,
-  async (url?: string): Promise<IBuildRowsCountResponse> => {
-    const { data } = await BuildService.listBuilds(url);
-  
-    const dataBox = {box:data.box,
-    rows:data.data}
-    return { status: data.status, rows: data.items };
+  async (): Promise<IBuildRowsCountResponse> => {
+    const { data } = await BuildService.listBuilds();
+    const dataBox = { box: data.box, rows: data.data };
+
+    return { status: data.status, rows: dataBox };
   }
 );
 
 export const addBuild = createAsyncThunk(
   `build/add`,
   async (createBuildData: IVideoBuild) => {
-    const { status, data } = await BuildService.addBuild(
-      createBuildData
-    );
-   
+    const { status, data } = await BuildService.addBuild(createBuildData);
+
     // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
     return { status, data };
   }
@@ -45,7 +42,7 @@ interface State {
   loading: boolean;
   error: string | undefined;
   buildList: IBuildRowsCountResponse | any;
-  boxes:IBoxes;
+  boxes: IBoxes;
 }
 
 const initialState: State = {
@@ -55,15 +52,15 @@ const initialState: State = {
   },
   buildList: {
     status: true,
-    rows: []
-    },
+    rows: [],
+  },
   loading: false,
   error: undefined,
   id: 0,
-  boxes:{
-    id:0,
-    description:""
-  }
+  boxes: {
+    id: 0,
+    description: "",
+  },
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -87,7 +84,8 @@ const buildSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getBuildByUrl.fulfilled, (state, action) => {
+      .addCase(getBuilds.fulfilled, (state, action) => {
+        console.log("DDDDDDDDDDDDDDDD", action);
         if (action.payload.status) {
           return {
             ...state,
@@ -104,13 +102,16 @@ const buildSlice = createSlice({
         }
       })
       .addCase(addBuild.fulfilled, (state, action) => {
-        if (action.payload.data.status) {   
-            
-         toast.success(action.payload.data.message);
-          return { ...state, loading: false,addBuildData: action.payload.data  };
+        if (action.payload.data.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            addBuildData: action.payload.data,
+          };
         } else {
           toast.error(action.payload.data.error.message);
-          return { ...state, loading: false,addBuildData: initialState.build };
+          return { ...state, loading: false, addBuildData: initialState.build };
         }
       })
       .addMatcher(isPendingAction, (state) => {
