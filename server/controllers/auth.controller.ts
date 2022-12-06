@@ -27,7 +27,7 @@ export class AuthController {
     @Res() res: Response
   ) {
     try {
-      let lastPage = "/";
+      let lastPage = '/';
       const userEmail = req.user._json.email;
       const userName = req.user._json.name;
       const googleProfileId = req.user._json.sub;
@@ -54,13 +54,7 @@ export class AuthController {
           .cookie("authorization", token, {
             expires: new Date(Date.now() + 2700000),
           })
-          .redirect(`${config.urlHost}${lastPage}`);
-        // .redirect(`http://localhost:3000/api/users`);
-        // return {
-        //   status: true,
-        //   user: req.user,
-        //   message: "You have logged in successfully.",
-        // };
+         .redirect(`${config.urlHost}${lastPage}`);
       } else {
         const data = {
           user_name: userName,

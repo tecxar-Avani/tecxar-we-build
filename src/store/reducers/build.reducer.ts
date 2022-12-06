@@ -17,7 +17,7 @@ type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
 
 export const getBuilds: any = createAsyncThunk(
-  `build/get/url`,
+  `build/get/`,
   async (): Promise<IBuildRowsCountResponse> => {
     const { data } = await BuildService.listBuilds();
     const dataBox = { box: data.box, rows: data.data };
@@ -31,6 +31,14 @@ export const getUserInteractedBuild: any = createAsyncThunk(
     const { data } = await BuildService.getUserInteractedBuild();
     const dataBox = { box: data.box, rows: data.data };
     return { status: data.status, rows: dataBox };
+  }
+);
+
+export const getBuildByUrl: any = createAsyncThunk(
+  `build/get/url`,
+  async (url:string): Promise<IBuildRowsCountResponse> => {
+    const { data } = await BuildService.getBuildByUrl(url);
+    return { status: data.status, rows: data };
   }
 );
 export const getBuildById: any = createAsyncThunk(
@@ -56,6 +64,7 @@ interface State {
   error: string | undefined;
   buildList: IBuildRowsCountResponse | any;
   userBuildList: IBuildRowsCountResponse | any;
+  buildListByUrl: IBuildRowsCountResponse | any;
   buildById: IBuildRowsCountResponse | any;
   boxes: IBoxes;
 }
@@ -71,6 +80,10 @@ const initialState: State = {
   },
   userBuildList:{
     status:true,
+    rows:[]
+  },
+  buildListByUrl:{
+     status:true,
     rows:[]
   },
   buildById:{
@@ -136,6 +149,22 @@ const buildSlice = createSlice({
             ...state,
             loading: false,
             userBuildList: initialState.userBuildList,
+          };
+        }
+      })
+      .addCase(getBuildByUrl.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          return {
+            ...state,
+            loading: false,
+            buildList: action.payload.rows,
+            boxes: action.payload.boxes,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            buildList: initialState.buildList,
           };
         }
       })

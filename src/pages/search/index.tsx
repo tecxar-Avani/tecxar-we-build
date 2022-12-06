@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import {
   buildSelector,
   getBuilds,
+  getBuildByUrl,
 } from "../../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
@@ -17,7 +18,7 @@ import { IVideoBuild } from "../../../@types/common";
 
 const SearchPage = () => {
   const router = useRouter();
-  const [url, setUrl] = useState("node js tutorial");
+  const [url, setUrl] = useState();
   const dispatch = useAppDispatch();
   const { buildList } = useAppSelector(buildSelector);
   const videosData: any = [];
@@ -29,10 +30,13 @@ const SearchPage = () => {
         videoUrl: video.url,
       });
     });
-   const searchResult = (url: string) => {
-    // if (url !== "") {
-    // dispatch(getBuildByUrl(url));
-    // }
+
+    
+ 
+  const searchResult = (url: string) => {
+    if (url !== "") {
+      dispatch(getBuildByUrl(url));
+    }
   };
 
   useEffect(() => {
@@ -59,17 +63,19 @@ const SearchPage = () => {
           buildList.rows &&
           buildList.rows.length > 0 &&
           buildList.rows.map(
-            (videoData: any, index: number) => 
-            index < 9 &&
-            videoData.videoId && (
-              <Col lg={4} className="videoProfile pb-2" key={index}>
-                <Link href={`/newBuild?id=${videoData.videoId}&&videoId=${videoData.id}`}>
-                  <a>
-                    <VideoCard VideoCardData={videoData} />
-                  </a>
-                </Link>
-              </Col>
-            )
+            (videoData: any, index: number) =>
+              index < 9 &&
+              videoData.videoId && (
+                <Col lg={4} className="videoProfile pb-2" key={index}>
+                  <Link
+                    href={`/newBuild?id=${videoData.videoId}&&videoId=${videoData.id}`}
+                  >
+                    <a>
+                      <VideoCard VideoCardData={videoData} />
+                    </a>
+                  </Link>
+                </Col>
+              )
           )}
       </Row>
     </>

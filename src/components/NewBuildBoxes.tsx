@@ -12,7 +12,7 @@ const NewBuildBoxes = (props: any) => {
           <div className="boxesMain">
             <div className="h-30 border border-color-25" />
             <Row className="m-0 px-4 innerBoxMain">
-              {subArray.map((itemData: any, index: any) => (
+              {subArray.map((itemData: any, index: any) =>
                 <OuterBox
                   key={index}
                   id={itemData.id}
@@ -31,9 +31,9 @@ const NewBuildBoxes = (props: any) => {
                   setBoxData={(data: any) => {
                     props.setBoxData([...props.boxData, data]);
                   }}
-                  buildById={props.buildById}
+                  description ={itemData.message}
                 />
-              ))}
+              )}
             </Row>
           </div>
         );

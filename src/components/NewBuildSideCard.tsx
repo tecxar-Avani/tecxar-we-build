@@ -7,11 +7,8 @@ import { Modal, Tooltip } from "antd";
 import Link from "next/link";
 import GoogleButton from "react-google-button";
 
-
-
 const NewBuildSideCard = (props: any) => {
-console.log('props',props)
-
+  console.log("props", props);
 
   const [polarisation, setPolarisation] = useState(false);
   const polarisations = useRef(null);
@@ -19,26 +16,24 @@ console.log('props',props)
   const target2 = useRef(null);
   const [type, setType] = useState(false);
   const typeVideo = useRef(null);
-  const [videoType , setVideoType] = useState<any>('theory');
-  const [polarisationLevel , setPolarisationLevel] = useState<any>('low');
-  const [difficultyLevel , setDifficultyLevel] = useState<any>('low');
-  const url = `https://www.youtube.com/watch?v=${props.id}`
-  
- 
+  const [videoType, setVideoType] = useState<any>("theory");
+  const [polarisationLevel, setPolarisationLevel] = useState<any>("low");
+  const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
+  const url = `https://www.youtube.com/watch?v=${props.id}`;
+
   const [modal5Open, setModal5Open] = useState(false);
   const togglemodal = () => {
     setModal5Open(!modal5Open);
-  }
-  const handleVideoTypeClick = (e:any) =>{  
-    setVideoType(e.target.name)
-      }
-      const handlePolarisationClick = (e:any) =>{
-        setPolarisationLevel(e.target.name)
-      
-      }
-      const handleDifficultyClick = (e:any) => {
-        setDifficultyLevel(e.target.name)
-      }
+  };
+  const handleVideoTypeClick = (e: any) => {
+    setVideoType(e.target.name);
+  };
+  const handlePolarisationClick = (e: any) => {
+    setPolarisationLevel(e.target.name);
+  };
+  const handleDifficultyClick = (e: any) => {
+    setDifficultyLevel(e.target.name);
+  };
 
   return (
     <>
@@ -309,29 +304,31 @@ console.log('props',props)
             {/* if user are loged out then  onClick={() => setModal5Open(true)} */}
             <div
               className="save bd-highlight"
-               onClick={() => props.isLoggedIn ? props.onSave(videoType,polarisationLevel,difficultyLevel,url) : setModal5Open(true)}
+              onClick={() =>
+               props.buildId ? props.isLoggedIn
+                  ? props.onSave(
+                      videoType,
+                      polarisationLevel,
+                      difficultyLevel,
+                      url
+                    )
+                  : setModal5Open(true)
+                  :''
+              }
             >
-              {/* <a href={`/api/google`}>
-                <GoogleButton className="m-auto googleButton" />
-              </a> */}
-              <Image src="../img/save.svg" className="ms-2" alt="no image"/>
+              <Image src="../img/save.svg" className="ms-2" alt="no image" />
             </div>
           </Tooltip>
 
           <Modal title="" centered open={modal5Open} className="btnrv">
             <div className="mb-n3">
-             
-               <a href={`/api/google`}>
+              <a href={`/api/google`}>
                 <GoogleButton className="m-auto googleButton" />
               </a>
               <br />
               <span className="fs-5">Add Google Sign In Button To Website</span>
             </div>
           </Modal>
-
-          {/* <div className="save bd-highlight  ">
-          <Image src="../img/save.svg" className="ms-2" onClick={warning} />
-        </div> */}
           <div className="backward bd-highlight">
             <Image src="../img/backward.svg" className="ms-5 me-1" />
           </div>
@@ -345,8 +342,6 @@ console.log('props',props)
           </Link>
         </div>
       </div>
-
-    
     </>
   );
 };

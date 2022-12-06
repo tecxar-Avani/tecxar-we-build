@@ -10,8 +10,12 @@ class BuildService {
     return API.get(`/build/userInteractedBuild`);
   }
 
-  getBuildById(id:number) {
+  getBuildById(id: number) {
     return API.get(`/build/${id}`);
+  }
+
+  getBuildByUrl(url: string) {
+    return API.get(`/build/url?url=${url}`);
   }
   // listBuilds(url: any) {
   //   const urlData = url ? url : "node js tutorial";

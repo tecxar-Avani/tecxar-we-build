@@ -19,11 +19,11 @@ export class Authenticate implements ExpressMiddlewareInterface {
 }
 
 export class GoogleAuthentication implements ExpressMiddlewareInterface {
-
   authenticate = (callback: any) =>
     passport.authenticate(
       "google",
       { failureRedirect: "/google_fail", session: false },
+
       callback
     );
 
@@ -38,4 +38,3 @@ export class GoogleAuthentication implements ExpressMiddlewareInterface {
     })(req, res, next);
   }
 }
-

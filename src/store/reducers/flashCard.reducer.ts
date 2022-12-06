@@ -10,7 +10,11 @@ import {
 import Router from "next/router";
 import { toast } from "react-toastify";
 import { IFlashCardRowsCountResponse } from "../../../@types/responses";
-import { ICreateFlashCard, IFlashCard ,IUpdateFlashCards} from "../../../@types/common";
+import {
+  ICreateFlashCard,
+  IFlashCard,
+  IUpdateFlashCards,
+} from "../../../@types/common";
 import flashCardService from "../../service/flashCard.service";
 
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
@@ -24,14 +28,14 @@ export const createFlashCard = createAsyncThunk(
       createFlashCardData
     );
 
-    // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
+    dispatch(getFlashCardByBuildId(createFlashCardData.build_id));
     return { status, data };
   }
 );
 
 export const getFlashCardByBuildId = createAsyncThunk(
   `flashcard/flashCardByBuild`,
-  async (buildId: number) => {
+  async (buildId: any) => {
     const { status, data } = await flashCardService.getFlashCardByBuildId(
       buildId
     );
@@ -46,19 +50,31 @@ export const getFlashCardByUser = createAsyncThunk(
     return { status: data.status, rows: data.data };
   }
 );
-export const updateFlashCardId = createAsyncThunk(`flashcard/`, async (updateFlashCard: IUpdateFlashCards, { dispatch }) => {
-  const id = Number(updateFlashCard.id);
-  const editData = {id:Number(updateFlashCard.id) ,question : updateFlashCard.answer, answer : updateFlashCard.question}
-  const { status, data } = await flashCardService.updateFlashCardById(id,editData);
+export const updateFlashCardId = createAsyncThunk(
+  `flashcard/`,
+  async (updateFlashCard: IUpdateFlashCards, { dispatch }) => {
+    const id = Number(updateFlashCard.id);
+    const editData = {
+      id: Number(updateFlashCard.id),
+      question: updateFlashCard.answer,
+      answer: updateFlashCard.question,
+    };
+    const { status, data } = await flashCardService.updateFlashCardById(
+      id,
+      editData
+    );
 
+    return { status, data };
+  }
+);
+export const deleteFlashCardById = createAsyncThunk(
+  `flashcard/`,
+  async (Id: number, { dispatch }) => {
+    const { status, data } = await flashCardService.deleteFlashCardById(Id);
 
-  return { status,data };
-});
-export const deleteFlashCardById = createAsyncThunk(`flashcard/`, async (Id: number, { dispatch }) => {
-  const { status, data } = await flashCardService.deleteFlashCardById(Id);
- 
-  return { status, data };
-});
+    return { status, data };
+  }
+);
 
 interface State {
   id: number;
@@ -67,7 +83,7 @@ interface State {
   error: string | undefined;
   flashCardList: IFlashCardRowsCountResponse;
   flashCardUserList: IFlashCardRowsCountResponse;
-  editFlashCard:IUpdateFlashCards;
+  editFlashCard: IUpdateFlashCards;
 }
 
 const initialState: State = {
@@ -80,7 +96,7 @@ const initialState: State = {
     rows: [],
   },
   flashCardUserList: { status: true, rows: [] },
-  editFlashCard : {},
+  editFlashCard: {},
   loading: false,
   error: undefined,
   id: 0,

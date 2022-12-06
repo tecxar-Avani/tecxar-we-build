@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
-  addFlashCard,
   flashCardSelector,
   getFlashCardByBuildId,
   createFlashCard,
@@ -21,18 +20,15 @@ import {
 } from "../../store/reducers/build.reducer";
 import {
   addAwareness,
-  awarenessSelector,
   getAwarenessByBoxId,
 } from "../../store/reducers/awareness.reducer";
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
-import { IFlashCard } from "../../../@types/common";
 
 const NewBuild = (props: any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const { buildById } = useAppSelector(buildSelector);
-  const awarenessList = useAppSelector(awarenessSelector);
   const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
@@ -48,12 +44,11 @@ const NewBuild = (props: any) => {
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(0);
-
   const [boxData, setBoxData] = useState([]);
   const [dataArray, setDataArray] = useState([
     {
       id: 1,
-      boxData: "",
+      message: "",
     },
     {
       id: 2,
@@ -132,9 +127,16 @@ const NewBuild = (props: any) => {
       message: "",
     },
   ]);
+
   const handleSubmit = (data: any) => {
-    dispatch(addFlashCard(data));
+    const flashCardData = {
+      question: data.question,
+      answer: data.answer,
+      build_id: buildId,
+    };
+    dispatch(createFlashCard(flashCardData));
   };
+
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -156,7 +158,6 @@ const NewBuild = (props: any) => {
     dispatch(getFlashCardByBuildId(buildId));
     dispatch(getBuildById(buildId));
   }, []);
-
   useEffect(() => {
     const boxData = {
       boxId: awarenessBoxId,
@@ -164,6 +165,19 @@ const NewBuild = (props: any) => {
     };
     dispatch(getAwarenessByBoxId(boxData));
   }, []);
+  useEffect(() => {
+    if (buildById.data) {
+      const data =
+        buildById &&
+        buildById.data &&
+        buildById.data.map((box: any) => {
+          return { id: box.sorting_order, message: box.description };
+        });
+      console.log(data);
+      setDataArray(data);
+      setArr(data.map((d) => d.id));
+    }
+  }, [buildById]);
 
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
@@ -263,6 +277,7 @@ const NewBuild = (props: any) => {
             difficultyLevel: any,
             url: string
           ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
+          buildId ={buildId}
         />
 
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
@@ -277,7 +292,7 @@ const NewBuild = (props: any) => {
                   ...dataArray,
                   {
                     id: value.length,
-                    boxData: "",
+                    message: "",
                   },
                 ]);
               }
@@ -292,7 +307,6 @@ const NewBuild = (props: any) => {
             setBoxData={setBoxData}
             buildById={buildById}
           />
-
           <div className="position-absolute mkCard">
             {userArr &&
               userArr?.length > 0 &&
@@ -329,6 +343,7 @@ const NewBuild = (props: any) => {
         setModal2Open={setAddFlashcard}
         visible={addFlashCardData}
         handleSubmit={handleSubmit}
+        isLoggedIn={props.isLoggedIn}
       />
 
       <FlashCardModal

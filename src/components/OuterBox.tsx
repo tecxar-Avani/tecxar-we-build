@@ -2,11 +2,9 @@ import TextArea from "antd/lib/input/TextArea";
 import React from "react";
 import { Col } from "react-bootstrap";
 import { Form } from "antd";
-import { text } from "node:stream/consumers";
 
 const OuterBox = (props: any) => {
   const [form] = Form.useForm();
-  console.log("WWWWWWWWWWWW", props.buildById?.data);
   const handleChange = (event: any) => {
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
@@ -26,12 +24,14 @@ const OuterBox = (props: any) => {
             <div className="position-relative position-relative-example">
               <TextArea
                 name={`message${props.id}`}
-                placeholder="Enter text here..."
+                placeholder={props.description}
                 maxLength={150}
                 autoSize={{ minRows: 5, maxRows: 5 }}
+                defaultValue={props.description}
                 onInput={handleChange}
                 id={props.id}
                 onFocus={props.onFocus}
+                readOnly={props.description ? true : false}
               />
               {props.review == "inspiration" ? (
                 <span onClick={props.modalDot}>

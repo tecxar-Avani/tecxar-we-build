@@ -1,11 +1,13 @@
 import { Input, Modal, Button, Form, } from "antd";
-import React from "react";
+import React, { useState } from "react";
+import GoogleButton from "react-google-button";
 
 const { Search } = Input;
 const { TextArea } = Input;
 
 const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
+  const [modal5Open, setModal5Open] = useState(false);
 
   return (
     <>
@@ -33,8 +35,12 @@ const AddFlashCardModal = (props: any) => {
         <Form
           form={form}
           id="form"
-          onFinish={(data) =>
-            props.handleSubmit({ ...data, id: props.flashCardData.id })
+          onFinish={
+            (data) =>
+            {
+               props.isLoggedIn ? props.handleSubmit(data) : setModal5Open(true);
+            form.resetFields()}
+           
           }
           layout="vertical"
           autoComplete="off"
@@ -56,6 +62,15 @@ const AddFlashCardModal = (props: any) => {
             />
           </Form.Item>
         </Form>
+      </Modal>
+      <Modal title="" centered open={modal5Open} className="btnrv">
+        <div className="mb-n3">
+          <a href={`/api/google`}>
+            <GoogleButton className="m-auto googleButton" />
+          </a>
+          <br />
+          <span className="fs-5">Add Google Sign In Button To Website</span>
+        </div>
       </Modal>
     </>
   );
