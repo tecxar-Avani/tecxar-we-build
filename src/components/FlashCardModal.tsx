@@ -30,8 +30,6 @@ const FlashCardModal = (props: any) => {
   // const editIndex = props.flashCardArr.index;
   const arrayLength = props.flashCard.arrayLength;
   const editQuestion = props.flashCard.editQuestion;
-  console.log("BBBBBBBBBBBBBBBBBB", editQuestion);
-
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       // add dispatch API here instead of console

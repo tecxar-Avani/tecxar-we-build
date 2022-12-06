@@ -14,18 +14,24 @@ import AwarenessModal from "@/components/AwarenessModal";
 import { useRouter } from "next/router";
 
 import AddFlashCardModal from "@/components/AddFlashCardModal";
-import { addBuild, buildSelector } from "../../store/reducers/build.reducer";
-import { addAwareness, awarenessSelector, getAwarenessByBoxId } from "../../store/reducers/awareness.reducer";
+import {
+  addBuild,
+  buildSelector,
+  getBuildById,
+} from "../../store/reducers/build.reducer";
+import {
+  addAwareness,
+  awarenessSelector,
+  getAwarenessByBoxId,
+} from "../../store/reducers/awareness.reducer";
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
 import { IFlashCard } from "../../../@types/common";
 
-
-const NewBuild = (props:any) => {
-console.log('props props',props)
+const NewBuild = (props: any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
-  const buildData = useAppSelector(buildSelector);
+  const { buildById } = useAppSelector(buildSelector);
   const awarenessList = useAppSelector(awarenessSelector);
   const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
@@ -34,16 +40,16 @@ console.log('props props',props)
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
-  const [modalChallenge , setModalChallenge] = useState({});
-  const [review , setReview] = useState<string>("");
+  const [modalChallenge, setModalChallenge] = useState({});
+  const [review, setReview] = useState<string>("");
   const [addFlashCardData, setAddFlashcard] = useState(false);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
-  const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
+  const [awarenessBoxId, setAwarenessBoxId] = useState<number>(0);
 
-  const [boxData , setBoxData] = useState([])
+  const [boxData, setBoxData] = useState([]);
   const [dataArray, setDataArray] = useState([
     {
       id: 1,
@@ -144,19 +150,21 @@ console.log('props props',props)
     setInspiration(false);
     setResistance(true);
   };
-  useEffect(() => {
-   
-    dispatch(getFlashCardByBuildId(2));
-  }, []);
-useEffect(() => {
-  const boxData={
-    boxId:awarenessBoxId,
-    reviewType:review
-  }
-  dispatch(getAwarenessByBoxId(boxData));
-},[])
 
-console.log("buildData",buildData)
+  const buildId = Number(router.query.videoId);
+  useEffect(() => {
+    dispatch(getFlashCardByBuildId(buildId));
+    dispatch(getBuildById(buildId));
+  }, []);
+
+  useEffect(() => {
+    const boxData = {
+      boxId: awarenessBoxId,
+      reviewType: review,
+    };
+    dispatch(getAwarenessByBoxId(boxData));
+  }, []);
+
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
@@ -192,32 +200,31 @@ console.log("buildData",buildData)
   };
 
   // useEffect(() => {
-   
+
   //   setBoxData({ ...boxData, [awarenessBoxId]: awarenessIndex });
   // }, []);
 
-  
-const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:string) => {
-  const saveData = {
-  type_of_video: videoType,
-  potential_polarization: polarisationLevel,
-  difficulty_level: difficultyLevel,
-  boxes : boxData,
-  video_url : url
-  }
-  dispatch(addBuild(saveData))
-  
-  console.log("#############",saveData)
-
-}
-console.log("++=====================",buildData)
+  const onSave = (
+    videoType: any,
+    polarisationLevel: any,
+    difficultyLevel: any,
+    url: string
+  ) => {
+    const saveData = {
+      type_of_video: videoType,
+      potential_polarization: polarisationLevel,
+      difficulty_level: difficultyLevel,
+      boxes: boxData,
+      video_url: url,
+    };
+    dispatch(addBuild(saveData));
+  };
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
-    
   };
-console.log("===============",boxData)
-  const handleData = (comment:any,review:any) =>{
+
+  const handleData = (comment: any, review: any) => {
     const data = {
       comment: comment.comment,
       review_type: review,
@@ -232,25 +239,13 @@ console.log("===============",boxData)
       description: "hello",
       boxId: 1,
     },
-    {"id":2,
-    "description":"hello world",
-    "boxId":1,
-    },
-    {"id":3,
-    "description":"hello tecxar",
-    "boxId":1,
-    },
-    {"id":4,
-    "description":"hello tecxar",
-    "boxId":1,
-    },
-    {"id":5,
-    "description":"hello tecxar",
-    "boxId":1,
-    }
-  ]
-const acceptanceValue = acceptanceData.filter((A) => A.description)
-console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id}",router)
+    { id: 2, description: "hello world", boxId: 1 },
+    { id: 3, description: "hello tecxar", boxId: 1 },
+    { id: 4, description: "hello tecxar", boxId: 1 },
+    { id: 5, description: "hello tecxar", boxId: 1 },
+  ];
+
+  const acceptanceValue = acceptanceData.filter((A) => A.description);
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -262,7 +257,12 @@ console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id
           Inspiration={Inspiration}
           setAwarenessModal={setAwarenessModal}
           isLoggedIn={props.isLoggedIn}
-          onSave={(videoType:any,polarisationLevel:any,difficultyLevel:any,url:string) => onSave(videoType,polarisationLevel,difficultyLevel,url)}
+          onSave={(
+            videoType: any,
+            polarisationLevel: any,
+            difficultyLevel: any,
+            url: string
+          ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
         />
 
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
@@ -288,8 +288,9 @@ console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id
             Acceptance={Acceptance}
             Resistance={Resistance}
             Inspiration={Inspiration}
-            boxData = {boxData}
-            setBoxData ={setBoxData}
+            boxData={boxData}
+            setBoxData={setBoxData}
+            buildById={buildById}
           />
 
           <div className="position-absolute mkCard">
@@ -414,35 +415,49 @@ console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id
         challenge={modalChallenge}
         setAwarenessModal={setAwarenessDotModal}
         visible={awarenessDotModal}
-        btnName="challenge"     
+        btnName="challenge"
         id={awarenessIndex}
         acceptanceValue={acceptanceValue}
-        title={`${accept
-          ? "Acceptance"
-          : inspiration
+        title={`${
+          accept
+            ? "Acceptance"
+            : inspiration
             ? "Inspiration"
             : resistance
-              ? "Resistance"
-              : ""
-          }`}
+            ? "Resistance"
+            : ""
+        }`}
         // setModalChallenge ={setModalChallenge}
-        callBack={(title:any ,content:any,header:any,awareLabel:any,challengeLabel:any,awareValue:any,id:any) =>
-         { const newData = {
-            title : `${title == "challenge" ? "challenge" : title == "Resolve" ? "Resolve" : title}`,
-            content:content,
-            header:header,
-             awareLabel:"maria's acceptance",
-            challengeLabel:"maria's challenge",
-            awareValue:"hello"
-          }
-            setModalChallenge(newData);
-            // setModalChallenge(true)
-          }}
-         
-        
-        header={`Maria's ${accept
-          ? "Acceptance"
-          : inspiration
+        callBack={(
+          title: any,
+          content: any,
+          header: any,
+          awareLabel: any,
+          challengeLabel: any,
+          awareValue: any,
+          id: any
+        ) => {
+          const newData = {
+            title: `${
+              title == "challenge"
+                ? "challenge"
+                : title == "Resolve"
+                ? "Resolve"
+                : title
+            }`,
+            content: content,
+            header: header,
+            awareLabel: "maria's acceptance",
+            challengeLabel: "maria's challenge",
+            awareValue: "hello",
+          };
+          setModalChallenge(newData);
+          // setModalChallenge(true)
+        }}
+        header={`Maria's ${
+          accept
+            ? "Acceptance"
+            : inspiration
             ? "Inspiration"
             : resistance
             ? "Resistance"

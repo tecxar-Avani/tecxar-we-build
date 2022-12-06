@@ -21,8 +21,23 @@ export const getBuilds: any = createAsyncThunk(
   async (): Promise<IBuildRowsCountResponse> => {
     const { data } = await BuildService.listBuilds();
     const dataBox = { box: data.box, rows: data.data };
-
     return { status: data.status, rows: dataBox };
+  }
+);
+
+export const getUserInteractedBuild: any = createAsyncThunk(
+  `build/get/userInteractedBuild`,
+  async (): Promise<IBuildRowsCountResponse> => {
+    const { data } = await BuildService.getUserInteractedBuild();
+    const dataBox = { box: data.box, rows: data.data };
+    return { status: data.status, rows: dataBox };
+  }
+);
+export const getBuildById: any = createAsyncThunk(
+  `build/get/id`,
+  async (id:number): Promise<IBuildRowsCountResponse> => {
+    const { data } = await BuildService.getBuildById(id);
+    return { status: data.status, rows: data };
   }
 );
 
@@ -30,8 +45,6 @@ export const addBuild = createAsyncThunk(
   `build/add`,
   async (createBuildData: IVideoBuild) => {
     const { status, data } = await BuildService.addBuild(createBuildData);
-
-    // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
     return { status, data };
   }
 );
@@ -42,6 +55,8 @@ interface State {
   loading: boolean;
   error: string | undefined;
   buildList: IBuildRowsCountResponse | any;
+  userBuildList: IBuildRowsCountResponse | any;
+  buildById: IBuildRowsCountResponse | any;
   boxes: IBoxes;
 }
 
@@ -53,6 +68,14 @@ const initialState: State = {
   buildList: {
     status: true,
     rows: [],
+  },
+  userBuildList:{
+    status:true,
+    rows:[]
+  },
+  buildById:{
+    status:true,
+    rows:[]
   },
   loading: false,
   error: undefined,
@@ -85,7 +108,6 @@ const buildSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getBuilds.fulfilled, (state, action) => {
-        console.log("DDDDDDDDDDDDDDDD", action);
         if (action.payload.status) {
           return {
             ...state,
@@ -98,6 +120,38 @@ const buildSlice = createSlice({
             ...state,
             loading: false,
             buildList: initialState.buildList,
+          };
+        }
+      })
+      .addCase(getUserInteractedBuild.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          return {
+            ...state,
+            loading: false,
+            userBuildList: action.payload.rows,
+            boxes: action.payload.boxes,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            userBuildList: initialState.userBuildList,
+          };
+        }
+      })
+      .addCase(getBuildById.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          return {
+            ...state,
+            loading: false,
+            buildById: action.payload.rows,
+            boxes: action.payload.boxes,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            buildById: initialState.buildById,
           };
         }
       })

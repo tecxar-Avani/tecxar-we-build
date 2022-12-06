@@ -21,12 +21,12 @@ import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interf
 import { RequestWithUser } from "@/interfaces/auth.interface";
 
 @Controller("/flashcard")
-@UseBefore(authMiddleware)
 export class FlashController {
   private flashCardService = new FlashCardService();
 
   @Post("/create")
   @HttpCode(201)
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Create a new flash card" })
   async createFlashCard(
     @Body() cardData: flashcardsDto,
@@ -62,7 +62,9 @@ export class FlashController {
     try {
       flashcardResponseData.created_by = req.user.id;
       const createFlashCardResponseData: IFlashCardsResponse | null =
-        await this.flashCardService.createFlashCardResponse(flashcardResponseData);
+        await this.flashCardService.createFlashCardResponse(
+          flashcardResponseData
+        );
       return {
         status: true,
         data: createFlashCardResponseData,
@@ -76,16 +78,15 @@ export class FlashController {
   }
 
   @Get("/")
-  // @UseBefore(authMiddleware)
-  @OpenAPI({ summary: "Get all build of users" })
+  @OpenAPI({ summary: "Get all flashCard of users" })
   async getFlashCard(@Req() req: RequestWithUser | any, @Res() res: Response) {
     try {
-      const user = req.user.id
+      const user = req.user.id;
       const flashBuild = await this.flashCardService.getFlashCard(user);
-     return {
-       status: true,
-       data: flashBuild,
-     };
+      return {
+        status: true,
+        data: flashBuild,
+      };
     } catch (error) {
       return {
         error: {
@@ -97,12 +98,13 @@ export class FlashController {
   }
 
   @Get("/flashcardresponse")
-  @UseBefore(authMiddleware)
-  @OpenAPI({ summary: "Get all build of users" })
+  @OpenAPI({ summary: "Get flashcard response" })
   async getFlashCardResponse(@Req() req: Request | any, @Res() res: Response) {
     try {
       const userId = req.user.id;
-      const flashBuild = await this.flashCardService.getFlashCardResponse(userId);
+      const flashBuild = await this.flashCardService.getFlashCardResponse(
+        userId
+      );
       return flashBuild;
     } catch (error) {
       return {
@@ -115,16 +117,20 @@ export class FlashController {
   }
 
   @Get("/flashcardByBuild/:id")
-  @OpenAPI({ summary: "Get all build of users" })
-  async getFlashCardByBuildId(@Req() req: Request | any,@Param('id') id:number ,@Res() res: Response) {
+  @OpenAPI({ summary: "Get all flash card by build" })
+  async getFlashCardByBuildId(
+    @Req() req: Request | any,
+    @Param("id") id: number,
+    @Res() res: Response
+  ) {
     try {
       const flashBuild = await this.flashCardService.getFlashCardByBuildId(id);
-      
+
       return {
         status: true,
         flashBuild,
-      }
-      
+      };
+
       // let output = []
       // flashBuild.forEach(function(item) {
       //   var existing = output.filter(function(v, i) {
@@ -141,7 +147,6 @@ export class FlashController {
       //   }
       // });
       // console.log('/////////',output);
-      
     } catch (error) {
       return {
         error: {
@@ -178,7 +183,7 @@ export class FlashController {
   }
 
   @Put("/:id")
-  // @UseBefore(authMiddleware)
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
   async updateFlashCard(
     @Req() req: Request | any,
@@ -200,7 +205,7 @@ export class FlashController {
   }
 
   @Delete("/:id")
-   @UseBefore(authMiddleware)
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "delete all build of users" })
   async deleteFlashCardById(
     @Req() req: Request | any,
@@ -219,8 +224,8 @@ export class FlashController {
       }
       return { status: true, data: flashByDeleteId };
     } catch (error) {
-      console.log('--ERROR--',error);
-      
+      console.log("--ERROR--", error);
+
       if (error instanceof Error) {
         return { status: false, error: { code: 500, message: error.message } };
       }

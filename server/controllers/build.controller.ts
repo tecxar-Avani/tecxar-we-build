@@ -110,8 +110,14 @@ export class FlashController {
   ) {
     try {
       const userId = req.user.id;
-      const user = await this.buildService.getUserInteractedBuild(userId);
-      return user;
+      const userBuild = await this.buildService.getUserInteractedBuild(userId);
+       let searchedResult;
+       const searchedData = await this.youtubeApiCall(
+         userBuild
+       ).then((result) => {
+         searchedResult = result;
+       });
+       return { data: searchedResult, box: userBuild };
     } catch (error) {
       return {
         error: {
@@ -134,9 +140,9 @@ export class FlashController {
       const userBuild = await this.buildService.getUsersBuildByUrl(url, search);
       let searchedResult;
       const searchedData = await this.youtubeApiCall(
+        userBuild,
         search,
-        url,
-        userBuild
+        url
       ).then((result) => {
         searchedResult = result;
       });
@@ -161,7 +167,7 @@ export class FlashController {
     try {
       const userBuild = await this.buildService.getAllBuilds(search);
       let searchedResult;
-      const searchedData = await this.youtubeApiCall(search, userBuild).then(
+      const searchedData = await this.youtubeApiCall(userBuild, search).then(
         (result) => {
           searchedResult = result;
         }
@@ -178,7 +184,7 @@ export class FlashController {
   }
 
   @OpenAPI({ summary: "YouTube Api Call" })
-  async youtubeApiCall(search?: any, url?: any, userBuild?: any) {
+  async youtubeApiCall(userBuild?: any, search?: any, url?: any) {
     try {
       const searchedData = [];
       const videoUrl = url;
@@ -228,9 +234,10 @@ export class FlashController {
         return finalDuration;
       };
       let youtubeData;
+
       if (userBuild && userBuild.length > 0) {
         await Promise.all(
-          userBuild.map(async (url) => {
+          userBuild.map(async (url: any) => {
             youtubeData = await youtube.search.list({
               part: ["id,snippet"],
               q: url.video_url,
@@ -250,6 +257,7 @@ export class FlashController {
                 durationCalculation(youTubeFormatDuration);
 
                 let Filter = {
+                  id: url.id,
                   videoId: item.id.videoId,
                   thumbnails: item.snippet.thumbnails.default,
                   description: item.snippet.description,
@@ -259,6 +267,7 @@ export class FlashController {
                   newVideoId: array1[0],
                   url: `https://www.youtube.com/embed/${array1[0]}`,
                 };
+
                 searchedData.push(Filter);
               })
             );
@@ -308,15 +317,15 @@ export class FlashController {
   }
 
   @Get("/:id")
-  @OpenAPI({ summary: "Get all build of users by Id" })
+  @OpenAPI({ summary: "Get build by Id" })
   async getBuildById(
     @Req() req: Request | any,
     @Param("id") id: number,
     @Res() res: Response
   ) {
     try {
-      const BuildById = await this.buildService.getBuildById(id);
-      return BuildById;
+      const buildById = await this.buildService.getBuildById(id);
+      return {status:true,data:buildById};
     } catch (error) {
       return {
         error: {

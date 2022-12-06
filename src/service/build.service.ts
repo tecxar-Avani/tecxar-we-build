@@ -6,6 +6,13 @@ class BuildService {
     return API.get(`/build/getAllBuilds`);
   }
 
+  getUserInteractedBuild() {
+    return API.get(`/build/userInteractedBuild`);
+  }
+
+  getBuildById(id:number) {
+    return API.get(`/build/${id}`);
+  }
   // listBuilds(url: any) {
   //   const urlData = url ? url : "node js tutorial";
   //   return axios.get(
