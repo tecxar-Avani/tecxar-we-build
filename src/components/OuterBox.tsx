@@ -10,9 +10,10 @@ const OuterBox = (props: any) => {
   const handleChange = (event: any) => {
    const { value,id } = event.target;
    const propsId= Number(props.id + 1);
-   let BoxData = {id , value}
+   let BoxData = {sorting_order:id , description:value}
 
    if (value.length === 150 && !props.arr.includes(propsId)) {
+    props.setBoxData(BoxData);
      props.responseCallback(propsId, value,id);
    }
   };

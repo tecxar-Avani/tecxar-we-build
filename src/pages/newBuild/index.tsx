@@ -12,13 +12,14 @@ import AwarenessModal from "@/components/AwarenessModal";
 import { useRouter } from "next/router";
 
 import AddFlashCardModal from "@/components/AddFlashCardModal";
-import { buildSelector } from "../../store/reducers/build.reducer";
+import { addBuild, buildSelector } from "../../store/reducers/build.reducer";
 import { addAwareness, awarenessSelector, getAwarenessByBoxId } from "../../store/reducers/awareness.reducer";
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
 
 
-const NewBuild = (props) => {
+const NewBuild = (props:any) => {
+console.log('props props',props)
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const buildData = useAppSelector(buildSelector);
@@ -38,6 +39,7 @@ const NewBuild = (props) => {
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
+  const [boxData , setBoxData] = useState([])
   const [dataArray, setDataArray] = useState([
     {
       id: 1,
@@ -121,8 +123,6 @@ const NewBuild = (props) => {
     },
   ]);
 
-  {console.log("@@@@@@@ssssssssss@@@@@@",awarenessList) 
-  console.log("DDDDDDDDDDDDDD",props)
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -138,8 +138,8 @@ const NewBuild = (props) => {
     setInspiration(false);
     setResistance(true);
   };
-
   useEffect(() => {
+   
     dispatch(getFlashCardByBuildId(2));
   }, []);
 useEffect(() => {
@@ -149,8 +149,7 @@ useEffect(() => {
   }
   dispatch(getAwarenessByBoxId(boxData));
 },[])
-
-
+console.log("buildData",buildData)
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
@@ -181,13 +180,32 @@ useEffect(() => {
     }}
   };
 
+  // useEffect(() => {
+   
+  //   setBoxData({ ...boxData, [awarenessBoxId]: awarenessIndex });
+  // }, []);
 
+  
+const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:string) => {
+  const saveData = {
+  type_of_video: videoType,
+  potential_polarization: polarisationLevel,
+  difficulty_level: difficultyLevel,
+  boxes : boxData,
+  video_url : url
+  }
+  dispatch(addBuild(saveData))
+  
+  console.log("#############",saveData)
 
+}
+console.log("++=====================",buildData)
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
+    
   };
-
+console.log("===============",boxData)
   const handleData = (comment:any,review:any) =>{
     const data = {
       comment:comment.comment,
@@ -221,6 +239,7 @@ useEffect(() => {
     }
   ]
 const acceptanceValue = acceptanceData.filter((A) => A.description)
+console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id}",router)
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -231,6 +250,8 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
           Acceptance={Acceptance}
           Inspiration={Inspiration}
           setAwarenessModal={setAwarenessModal}
+          isLoggedIn={props.isLoggedIn}
+          onSave={(videoType:any,polarisationLevel:any,difficultyLevel:any,url:string) => onSave(videoType,polarisationLevel,difficultyLevel,url)}
         />
 
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
@@ -256,6 +277,8 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
             Acceptance={Acceptance}
             Resistance={Resistance}
             Inspiration={Inspiration}
+            boxData = {boxData}
+            setBoxData ={setBoxData}
           />
 
           <div className="position-absolute mkCard">
@@ -426,5 +449,5 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
     </>
   );
 };
-}
+
 export default NewBuild;

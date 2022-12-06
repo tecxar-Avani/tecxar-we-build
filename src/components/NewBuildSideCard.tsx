@@ -4,20 +4,13 @@ import Button from "react-bootstrap/Button";
 import Overlay from "react-bootstrap/Overlay";
 import CustomButton from "./Button";
 import { Modal, Tooltip } from "antd";
-import { Input } from "antd";
-import AwarenessModal from "./AwarenessModal";
 import Link from "next/link";
-import modal from "antd/lib/modal";
-
-import { addBuild, buildSelector } from "../store/reducers/build.reducer";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { addAwareness, awarenessSelector } from "../store/reducers/awareness.reducer";
 import GoogleButton from "react-google-button";
 
 
 
 const NewBuildSideCard = (props: any) => {
-
+console.log('props',props)
 
 
   const [polarisation, setPolarisation] = useState(false);
@@ -26,32 +19,12 @@ const NewBuildSideCard = (props: any) => {
   const target2 = useRef(null);
   const [type, setType] = useState(false);
   const typeVideo = useRef(null);
-  const [videoType , setVideoType] = useState(false);
-  const [polarisationLevel , setPolarisationLevel] = useState(false);
-  const [difficultyLevel , setDifficultyLevel] = useState(false);
+  const [videoType , setVideoType] = useState<any>('theory');
+  const [polarisationLevel , setPolarisationLevel] = useState<any>('low');
+  const [difficultyLevel , setDifficultyLevel] = useState<any>('low');
+  const url = `https://www.youtube.com/watch?v=${props.id}`
   
-  // const Acceptance = () => {
-  //   setResistance(false);
-  //   setInspiration(false);
-  //   setAccept(true);
-  // };
-  // const Inspiration = () => {
-  //   setAccept(false);
-  //   setResistance(false);
-  //   setInspiration(true);
-  // };
-  // const Resistance = () => {
-  //   setAccept(false);
-  //   setInspiration(false);
-  //   setResistance(true);
-  // };
-
-  
-
  
-  const BoxValue = props.value
-
-   
   const [modal5Open, setModal5Open] = useState(false);
   const togglemodal = () => {
     setModal5Open(!modal5Open);
@@ -66,7 +39,6 @@ const NewBuildSideCard = (props: any) => {
       const handleDifficultyClick = (e:any) => {
         setDifficultyLevel(e.target.name)
       }
-
 
   return (
     <>
@@ -337,24 +309,21 @@ const NewBuildSideCard = (props: any) => {
             {/* if user are loged out then  onClick={() => setModal5Open(true)} */}
             <div
               className="save bd-highlight"
-              // onClick={() => setModal5Open(true)}
+               onClick={() => props.isLoggedIn ? props.onSave(videoType,polarisationLevel,difficultyLevel,url) : setModal5Open(true)}
             >
-              <a href={`/api/google`}>
+              {/* <a href={`/api/google`}>
                 <GoogleButton className="m-auto googleButton" />
-              </a>
-              {/* <Image src="../img/save.svg" className="ms-2" alt="no image"/> */}
+              </a> */}
+              <Image src="../img/save.svg" className="ms-2" alt="no image"/>
             </div>
           </Tooltip>
 
           <Modal title="" centered open={modal5Open} className="btnrv">
             <div className="mb-n3">
-              <Image
-                src="../img/google.png"
-                className="border border-primary googleicon"
-              />
-              <button className="googlecolor border border-primary buttonSave text-white fs-3">
-                Sign Up With Google
-              </button>
+             
+               <a href={`/api/google`}>
+                <GoogleButton className="m-auto googleButton" />
+              </a>
               <br />
               <span className="fs-5">Add Google Sign In Button To Website</span>
             </div>
@@ -377,39 +346,7 @@ const NewBuildSideCard = (props: any) => {
         </div>
       </div>
 
-      {/* <AwarenessModal
-        awarenessModal={awarenessModal}
-        setAwarenessModal={setAwarenessModal}
-        visible={awarenessModal}
-        textValue={BoxValue}
-        handleSubmit={(comment:any,review:any)=>{handleData(comment,review)}}
-        footer= "Add"
-        id={BoxValue}
-        title={`${accept
-          ? "Acceptance"
-          : inspiration
-            ? "Inspiration"
-            : resistance
-              ? "Resistance"
-              : ""
-          }`}
-        header={`Maria's ${accept
-          ? "Acceptance"
-          : inspiration
-            ? "Inspiration"
-            : resistance
-              ? "Resistance"
-              : ""
-          }`}
-        className={`${accept
-          ? "accptanceModalBG"
-          : inspiration
-            ? "inspirationModalBG"
-            : resistance
-              ? "resistanceModalBG"
-              : ""
-          } `}
-      /> */}
+    
     </>
   );
 };

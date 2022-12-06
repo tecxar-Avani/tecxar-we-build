@@ -8,10 +8,12 @@ class BoxService {
   private box = DB.box;
 
   public async createBox(boxData: IBoxes | any): Promise<IBoxes[] | null> {
+
     if (isEmpty(boxData)) {
       throw new HttpException(400, "Enter the build data");
     }
     const createBuildData: IBoxes[] = await this.box.bulkCreate(boxData);
+    console.log("QQQQQQQQQQQQQQQQQQQQQQQQ",createBuildData)
     return createBuildData;
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -34,14 +35,14 @@ export default class VideoBuilds
   @Column(DataType.STRING)
   public provider: string;
 
-  @Column(DataType.ENUM("theory", "practical"))
-  public type_of_video: VideoTypeEnumType;
+  @Column(DataType.STRING)
+  public type_of_video: any;
 
-  @Column(DataType.ENUM("low", "medium", "high", "very_high"))
-  public potential_polarization: difficultyLevelEnumType;
+  @Column(DataType.STRING)
+  public potential_polarization: any;
 
-  @Column(DataType.ENUM("low", "medium", "high", "very_high"))
-  public difficulty_level: difficultyLevelEnumType;
+  @Column(DataType.STRING)
+  public difficulty_level: any;
 
   @AllowNull(false)
   @ForeignKey(() => User)

@@ -7,7 +7,7 @@ import {
   AnyAction,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
-import { ICurrentUser } from "../../../@types/common";
+import { ICreateUser, ICurrentUser } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -33,7 +33,7 @@ interface State {
   loading: boolean;
   error: string | undefined;
   loggedInUser: ICurrentUser;
-  userData:ICurrentUser;
+  userData:ICreateUser;
 }
 
 const initialState: State = {

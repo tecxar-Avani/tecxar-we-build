@@ -8,7 +8,6 @@ import Image from 'react-bootstrap/Image'
 const { Search } = Input;
 
 const AwarenessDotModal = (props: any) => {
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!!",props)
   const [form] = Form.useForm();
   const handleFlash = () => {
     const title=props.title
@@ -23,7 +22,6 @@ const AwarenessDotModal = (props: any) => {
      
     }
   
- console.log("$$$$$$$$$$$$$$$$$$$$$",props)
    
     return (
       

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IBoxes } from "@/interfaces/boxes.interface";
 import {
   IVideoBuild,
@@ -13,6 +14,7 @@ import {
   IsString,
 } from "class-validator";
 
+// eslint-disable-next-line prettier/prettier
 export class videoBuildDto implements IVideoBuild {
   @IsString()
   video_url: string;
@@ -21,14 +23,17 @@ export class videoBuildDto implements IVideoBuild {
   @IsString()
   provider?: string;
 
+  @IsOptional()
   @IsString()
-  type_of_video: VideoTypeEnumType;
+  type_of_video: any;
 
+  @IsOptional()
   @IsString()
-  potential_polarization: difficultyLevelEnumType;
+  potential_polarization: any;
 
+  @IsOptional()
   @IsString()
-  difficulty_level: difficultyLevelEnumType;
+  difficulty_level: any;
 
   @IsOptional()
   @IsArray()
@@ -57,16 +62,16 @@ export class updateVideoBuildDto implements IUpdateVideoBuild {
   provider?: string;
 
   @IsOptional()
-   @IsString()
-  type_of_video?: VideoTypeEnumType;
-
-  @IsOptional()
-   @IsString()
-  potential_polarization?: difficultyLevelEnumType;
+  @IsString()
+  type_of_video?: any;
 
   @IsOptional()
   @IsString()
-  difficulty_level?: difficultyLevelEnumType;
+  potential_polarization?: any;
+
+  @IsOptional()
+  @IsString()
+  difficulty_level?: any;
 
   @IsOptional()
   @IsArray()

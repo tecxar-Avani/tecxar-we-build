@@ -13,7 +13,7 @@ import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 import { Input, Modal, Button, Form } from "antd";
-import { userSelector } from "store/reducers/user.reducer";
+import { getUserByEmail, userSelector } from "../../store/reducers/user.reducer";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -24,14 +24,16 @@ const Profile = () => {
   const [addFlashCard, setAddFlashcard] = useState(false);
   const [editFlashCardData, setEditFlashCardData] = useState({});
   const [editName, setEditName] = useState(false);
-  const [name , setName] = useState("avani");
 
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
   const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
+    dispatch(getUserByEmail());
   }, []);
+  console.log("OOOOOOOOOOOOOOOOOO",userData.userData
+  )
   const role = "admin";
   const videosData = [
     {
@@ -1346,7 +1348,7 @@ const Profile = () => {
     },
   ];
   const profileData = {
-    title: "Mazza Konny",
+    title: userData.userData.user_name,
     editIcon: "editIcon.svg",
     dateOfJoined: "Date joined: Oct 2022",
     boxLeftTitle: "Boxes",
@@ -1430,7 +1432,7 @@ const Profile = () => {
   };
 
   const questionData = (index?: number, questionId?: number) => {
-    const findLastValue = flashCardArr?.slice(-1)[0];
+    const findLastValue = flashCardArr.slice(-1)[0];
     const lastQuestionId = findLastValue.id;
     if (questionId == lastQuestionId) {
       setModal3Open({
@@ -1440,13 +1442,15 @@ const Profile = () => {
       });
       setRevealAns(true);
     } else {
+
       setModal3Open({
         content: index
-          ? flashCardArr[index].question
-          : flashCardArr[0].question,
+          ? flashCardArr[index]?.question
+          : flashCardArr[0]?.question,
         footer: ["Reveal Answer"],
-        questionId: index ? flashCardArr[index].id : flashCardArr[0].id,
-        index: index ? index + 1 : 1,
+        questionId: index ? flashCardArr[index]?.id : flashCardArr[0].id,
+        index: index ? index : 1,
+     
         arrayLength: flashCardArr.length,
         onOk: modal4Open,
       });
@@ -1454,10 +1458,6 @@ const Profile = () => {
     }
   };
 
-  const handleEditName = (e:any) =>{
-   const name = e.name
-   setName(name)
-  }
   return (
     <>
       <div className="profile-main">
@@ -1467,7 +1467,6 @@ const Profile = () => {
           flashCardUserList={flashCardUserList}
           questionData={questionData}
           showModal={showModal}
-          title={name}
         />
         <div className="m-0 pb-2 overflow-x-scroll">
           <HeaderTitle
@@ -1587,7 +1586,6 @@ const Profile = () => {
          <Form
           form={form}
           id="form"
-          onFinish={handleEditName}
           layout="vertical"
           autoComplete="off"
         >

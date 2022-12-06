@@ -28,6 +28,9 @@ const NewBuildBoxes = (props: any) => {
               responseCallback={(value: number) =>
                 props.setArr([...props.arr, value])
               }
+            setBoxData={(data:any)=>{
+              props.setBoxData([...props.boxData,data])
+            }}
             />
           ))}
         </Row>

@@ -32,8 +32,9 @@ const FlashCardModal = (props: any) => {
       );
     });
   const userId = props.flashCard.userId;
-  const questionId = props.flashCard.questionId;
+  const questionId = props.flashCard?.questionId;
   const index = props.flashCard.index;
+  // const editIndex = props.flashCardArr.index;
   const arrayLength = props.flashCard.arrayLength;
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
