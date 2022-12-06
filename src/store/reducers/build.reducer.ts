@@ -57,6 +57,12 @@ export const addBuild = createAsyncThunk(
   }
 );
 
+export const boxDataByUserId = createAsyncThunk(`users/`,async (box : IBoxes ) => {
+  const {status,data } = await BuildService.boxDataByUserId();
+  return { status,data };
+})
+
+
 interface State {
   id: number;
   build: IVideoBuild;
@@ -153,18 +159,19 @@ const buildSlice = createSlice({
         }
       })
       .addCase(getBuildByUrl.fulfilled, (state, action) => {
+        console.log("buildListByUrl",action);
         if (action.payload.status) {
           return {
             ...state,
             loading: false,
-            buildList: action.payload.rows,
+            buildListByUrl: action.payload.rows,
             boxes: action.payload.boxes,
           };
         } else {
           return {
             ...state,
             loading: false,
-            buildList: initialState.buildList,
+            buildListByUrl: initialState.buildListByUrl,
           };
         }
       })

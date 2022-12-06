@@ -25,7 +25,7 @@ import {
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
 
-const NewBuild = (props: any) => {
+const NewBuild = (props:any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const { buildById } = useAppSelector(buildSelector);
@@ -218,27 +218,24 @@ const NewBuild = (props: any) => {
   //   setBoxData({ ...boxData, [awarenessBoxId]: awarenessIndex });
   // }, []);
 
-  const onSave = (
-    videoType: any,
-    polarisationLevel: any,
-    difficultyLevel: any,
-    url: string
-  ) => {
-    const saveData = {
-      type_of_video: videoType,
-      potential_polarization: polarisationLevel,
-      difficulty_level: difficultyLevel,
-      boxes: boxData,
-      video_url: url,
-    };
-    dispatch(addBuild(saveData));
-  };
+  
+const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:string) => {
+  const saveData = {
+  type_of_video: videoType,
+  potential_polarization: polarisationLevel,
+  difficulty_level: difficultyLevel,
+  boxes : boxData,
+  video_url : url
+  }
+  dispatch(addBuild(saveData))
+  
+
+}
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
   };
-
-  const handleData = (comment: any, review: any) => {
+  const handleData = (comment:any,review:any) =>{
     const data = {
       comment: comment.comment,
       review_type: review,
@@ -253,13 +250,24 @@ const NewBuild = (props: any) => {
       description: "hello",
       boxId: 1,
     },
-    { id: 2, description: "hello world", boxId: 1 },
-    { id: 3, description: "hello tecxar", boxId: 1 },
-    { id: 4, description: "hello tecxar", boxId: 1 },
-    { id: 5, description: "hello tecxar", boxId: 1 },
-  ];
-
-  const acceptanceValue = acceptanceData.filter((A) => A.description);
+    {"id":2,
+    "description":"hello world",
+    "boxId":1,
+    },
+    {"id":3,
+    "description":"hello tecxar",
+    "boxId":1,
+    },
+    {"id":4,
+    "description":"hello tecxar",
+    "boxId":1,
+    },
+    {"id":5,
+    "description":"hello tecxar",
+    "boxId":1,
+    }
+  ]
+const acceptanceValue = acceptanceData.filter((A) => A.description)
   return (
     <>
       <div className="d-flex m-0 w-100">

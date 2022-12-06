@@ -32,10 +32,9 @@ export const updateUserById = createAsyncThunk(`users/`, async (updateUser: IUpd
   const id = Number(updateUser.id);
   const user_name =  updateUser.user_name;
   const { status, data } = await userService.updateUserById(id,user_name);
- 
-
   return { status,data };
 });
+
 
 interface State {
   id: number;

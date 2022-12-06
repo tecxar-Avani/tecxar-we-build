@@ -111,13 +111,13 @@ export class FlashController {
     try {
       const userId = req.user.id;
       const userBuild = await this.buildService.getUserInteractedBuild(userId);
-       let searchedResult;
-       const searchedData = await this.youtubeApiCall(
-         userBuild
-       ).then((result) => {
-         searchedResult = result;
-       });
-       return { data: searchedResult, box: userBuild };
+      let searchedResult;
+      const searchedData = await this.youtubeApiCall(userBuild).then(
+        (result) => {
+          searchedResult = result;
+        }
+      );
+      return { data: searchedResult, box: userBuild };
     } catch (error) {
       return {
         error: {
@@ -146,7 +146,7 @@ export class FlashController {
       ).then((result) => {
         searchedResult = result;
       });
-      return { data: searchedResult, box: userBuild };
+      return { status: true, data: searchedResult, box: userBuild };
     } catch (error) {
       return {
         error: {
@@ -325,7 +325,7 @@ export class FlashController {
   ) {
     try {
       const buildById = await this.buildService.getBuildById(id);
-      return {status:true,data:buildById};
+      return { status: true, data: buildById };
     } catch (error) {
       return {
         error: {

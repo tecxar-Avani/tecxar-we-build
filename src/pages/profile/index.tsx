@@ -34,16 +34,18 @@ const Profile = () => {
   const [addFlashCard, setAddFlashcard] = useState(false);
   const [editFlashCardData, setEditFlashCardData] = useState({});
   const [editName, setEditName] = useState<any>();
+  const [defaultQuestionIndex, setDefaultQuestionIndex] = useState(0);
 
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const { userBuildList } = useAppSelector(buildSelector);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
+
+  useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
     dispatch(getUserByEmail());
-   
   }, []);
   console.log("OOOOOOOOOOOOOOOOOO", userData.userData);
   const role = "admin";
@@ -119,44 +121,45 @@ const Profile = () => {
       deleteIcon: "delete.svg",
     },
   ];
-  
-  const onEdit = (e:any) => {
-  const data = {
-    id:userData.userData.id,
-    user_name:e
-  }
-    dispatch(updateUserById(data))
-  }
+  const onEdit = (e: any) => {
+    const data = {
+      id: userData.userData.id,
+      user_name: e,
+    };
+    dispatch(updateUserById(data));
+  };
 
   const showModal = () => {
     setEditName(true);
   };
 
-  
-
   const handleCancel = () => {
     setEditName(false);
   };
 
-  useEffect(() => {
-    dispatch(getUserInteractedBuild());
-  }, []);
-
+   useEffect(() => {
+     dispatch(getUserInteractedBuild());
+   }, []);
+   
   const questionData = (index?: number, questionId?: number) => {
     const findLastValue = flashCardArr[flashCardArr.length - 1];
     const lastQuestionId = findLastValue && findLastValue.id;
-    const editQuestion = index
-      ? flashCardArr[index + 1]?.id
-      : flashCardArr[0].id;
-    if (questionId == lastQuestionId) {
+    // const editQuestion = index
+    //   ? flashCardArr[index + 1].id
+    //   : flashCardArr[0].id;
+
+    if (defaultQuestionIndex == flashCardArr.length) {
       setModal3Open({
         content: "Congratulations! You have finished your deck",
         footer: [],
         onOk: modal4Open,
+        qaData: flashCardArr,
       });
       setRevealAns(true);
     } else {
-      setModal3Open({
+      const editQuestion = flashCardArr[defaultQuestionIndex].id;
+      setDefaultQuestionIndex(defaultQuestionIndex + 1);
+      /* setModal3Open({
         content: index
           ? flashCardArr[index]?.question
           : flashCardArr[0]?.question,
@@ -167,13 +170,25 @@ const Profile = () => {
         arrayLength: flashCardArr.length,
         onOk: modal4Open,
         editQuestion: editQuestion,
+        qaData: flashCardArr,
+      }); */
+      setModal3Open({
+        content: flashCardArr[defaultQuestionIndex]?.question,
+        footer: ["Reveal Answer"],
+        questionId: flashCardArr[defaultQuestionIndex]?.id,
+        index: defaultQuestionIndex,
+        arrayLength: flashCardArr.length,
+        onOk: modal4Open,
+        editQuestion: editQuestion,
+        qaData: flashCardArr,
       });
       setRevealAns(true);
     }
   };
- 
+
   const handleSubmit = (data: any) => {
-     dispatch(updateFlashCardId(data));
+    console.log("ffffffffffff",data)
+    dispatch(updateFlashCardId(data));
   };
   return (
     <>
@@ -228,7 +243,7 @@ const Profile = () => {
               ))}
           </Row>
         </div>
-        { userData.userData.role_id == 1 ? (
+        {userData.userData.role_id == 1 ? (
           <div className="pb-2">
             <HeaderTitle
               title="Total list of Profiles"
@@ -282,35 +297,41 @@ const Profile = () => {
             });
         }}
         questionCallback={(index: number, questionId: number) => {
-          const indexVal = index > 1 ? index - 1 : index;
-          questionData(indexVal, questionId);
+          // index = index -1;
+          // alert(index)
+          // const indexVal = index > 1 ? index - 1 : index;
+          questionData(defaultQuestionIndex, questionId);
         }}
         setAddFlashcard={setAddFlashcard}
-        setEditFlashCardData={(questionId: number) => {
+        setEditFlashCardData={(questionId: any) => {
           const questionFilter = flashCardArr.filter(
-            (F: any) => F.id == questionId
+            (F: any) => F.id == Number(questionId.id)
           );
+
           questionFilter.length > 0 &&
             questionFilter.map((ans: any) => {
               const newData = {
                 answer: ans.answer,
                 question: ans.question,
               };
+
               setEditFlashCardData(newData);
             });
         }}
         flashCardArr={flashCardArr}
         addFlashCard={addFlashCard}
         editFlashCardData={editFlashCardData}
-        handleSubmit={(data:any) => {
+        handleSubmit={(data: any) => {
           handleSubmit(data);
         }}
+        defaultQuestionIndex={defaultQuestionIndex}
       />
+      {console.log("++++++++++++++++", editFlashCardData)}
 
       <Modal
         title="Edit Your Name"
         open={editName}
-         onOk={form.submit}
+        onOk={form.submit}
         onCancel={handleCancel}
         footer={
           <Button
@@ -318,14 +339,18 @@ const Profile = () => {
             key="submit1"
             htmlType="submit"
             className="openmodal"
-           
           >
             Submit
           </Button>
         }
       >
-        <Form form={form} id="form" layout="vertical" autoComplete="off"
-          onFinish={onEdit}>
+        <Form
+          form={form}
+          id="form"
+          layout="vertical"
+          autoComplete="off"
+          onFinish={onEdit}
+        >
           <Form.Item name="user_name" label="Name">
             <Input defaultValue={profileData.title}></Input>
           </Form.Item>

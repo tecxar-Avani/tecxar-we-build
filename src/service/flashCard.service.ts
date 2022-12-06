@@ -15,8 +15,10 @@ class FlashCardService {
   updateFlashCardById(id: number, data: any) {
     return API.put(`/flashcard/${id}`, data);
   }
-  deleteFlashCardById(id: any) {
-    return API.delete(`/flashcard/${id}`);
-  }
+ 
+deleteFlashCardById(id:any){
+  return API.delete(`/flashcard/deleteFlashCard/${id}`);
+}
+
 }
 export default new FlashCardService();

@@ -192,6 +192,7 @@ export class FlashController {
     @Res() res: Response
   ) {
     try {
+
       const userBuild = await this.flashCardService.updateFlashCardId(id, data);
       return userBuild;
     } catch (error) {
@@ -204,8 +205,8 @@ export class FlashController {
     }
   }
 
-  @Delete("/:id")
-  @UseBefore(authMiddleware)
+  @Delete("deleteFlashCard/:id")
+   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "delete all build of users" })
   async deleteFlashCardById(
     @Req() req: Request | any,

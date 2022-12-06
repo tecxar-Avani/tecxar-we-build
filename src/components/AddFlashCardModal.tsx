@@ -1,4 +1,4 @@
-import { Input, Modal, Button, Form, } from "antd";
+import { Input, Modal, Button, Form } from "antd";
 import React, { useState } from "react";
 import GoogleButton from "react-google-button";
 
@@ -35,30 +35,47 @@ const AddFlashCardModal = (props: any) => {
         <Form
           form={form}
           id="form"
-          onFinish={
-            (data) =>
-            {
-               props.isLoggedIn ? props.handleSubmit(data) : setModal5Open(true);
-            form.resetFields()}
-           
-          }
+          onFinish={(data) => {
+            props.isLoggedIn
+              ? props.handleSubmit({
+                  ...data,
+                  id:
+                    props.defaultQuestionIndex &&
+                    props.flashCardArr &&
+                    props.flashCardArr[props.defaultQuestionIndex - 1].id,
+                })
+              : setModal5Open(true);
+            form.resetFields();
+          }}
           layout="vertical"
           autoComplete="off"
         >
-          <Form.Item name="question" label="Front">
+          <Form.Item key={1} name="question" label="Front">
             <TextArea
+              key={1}
               showCount
               maxLength={100}
               rows={4}
-              defaultValue={props?.flashCardData?.question}
+              // defaultValue={"question"}
+              defaultValue={
+                props.defaultQuestionIndex &&
+                props.flashCardArr &&
+                props.flashCardArr[props.defaultQuestionIndex - 1].question
+              }
             />
           </Form.Item>
-          <Form.Item name={"answer"} label={"Back"}>
+          <Form.Item key={2} name={"answer"} label={"Back"}>
             <TextArea
+              key={2}
               showCount
               maxLength={100}
               rows={4}
-              defaultValue={props?.flashCardData?.answer}
+              // defaultValue={"answer"}
+              defaultValue={
+                props.defaultQuestionIndex &&
+                props.flashCardArr &&
+                props.flashCardArr[props.defaultQuestionIndex - 1].answer
+              }
             />
           </Form.Item>
         </Form>

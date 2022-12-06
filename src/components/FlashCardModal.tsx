@@ -1,15 +1,18 @@
 import { Modal, Button } from "antd";
 import { useAppSelector } from "../hooks";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Image from "react-bootstrap/Image";
-import { deleteFlashCardById, flashCardData, flashCardSelector } from "../store/reducers/flashCard.reducer";
+import { deleteFlashCardId, flashCardData, flashCardSelector } from "../store/reducers/flashCard.reducer";
 import AddFlashCardModal from "./AddFlashCardModal";
 
 const FlashCardModal = (props: any) => {
   const deleteData = useAppSelector(flashCardSelector)
   const [deleteId , setDeleteId] = useState(false);
+  useEffect(() => {
+  
+  }, [props]);
 const onDelete = () =>{
-  dispatch(deleteFlashCardById())
+    // dispatch(deleteFlashCardById(id))
 }
   const headerIcon = ["deleteFlash.svg", "edit.svg"];
   const title =
@@ -31,12 +34,10 @@ const onDelete = () =>{
               };
 
               props.setEditFlashCardData(flashCardData);
-
               props.setAddFlashcard(true);
             }
             else if(btn == "deleteFlash.svg"){
               const id = props.flashCardArr[index].id
-             console.log(id)
             }
           }}
         />
@@ -45,9 +46,10 @@ const onDelete = () =>{
   const userId = props.flashCard.userId;
   const questionId = props.flashCard?.questionId;
   const index = props.flashCard.index;
-  // const editIndex = props.flashCardArr.index;
   const arrayLength = props.flashCard.arrayLength;
   const editQuestion = props.flashCard.editQuestion;
+ 
+
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       // add dispatch API here instead of console
@@ -57,10 +59,10 @@ const onDelete = () =>{
           props.questionCallback(userId, index, questionId);
         } else {
           props.questionCallback(index, questionId);
-        }
-      } else {
-        props.questionCallback(index, questionId);
-      }
+          }}
+      // } else {
+      //   props.questionCallback(index, questionId);
+      // }
     } else if (data == "Reveal Answer") {
       if (userId) {
         props.responseCallback(
@@ -84,6 +86,8 @@ const onDelete = () =>{
     }
   };
 
+  console.log("###################FlashCardModal")
+  console.log(props)
   return (
     <>
       <Modal
@@ -113,7 +117,7 @@ const onDelete = () =>{
         <div className="p-4">{props?.flashCard?.content}</div>
       </Modal>
 
-      <AddFlashCardModal
+      {/* <AddFlashCardModal
         modal2Open={props.addFlashCard}
         setModal2Open={props.setAddFlashcard}
         visible={props.addFlashCard}
@@ -133,6 +137,15 @@ const onDelete = () =>{
         }}
         flashCardData={props.editFlashCardData}
         handleSubmit={props.handleSubmit}
+      /> */}
+      <AddFlashCardModal
+        modal2Open={props.addFlashCard}
+        setModal2Open={() => props.setAddFlashcard()}
+        visible={props.addFlashCard}
+        flashCardData={props.editFlashCardData}
+        flashCardArr={props.flashCardArr}
+        handleSubmit={props.handleSubmit}
+        defaultQuestionIndex={props.defaultQuestionIndex}
       />
     </>
   );

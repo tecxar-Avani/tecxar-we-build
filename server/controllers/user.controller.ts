@@ -60,7 +60,6 @@ export class UserController {
   ) {
     try {
       const userBuild = await this.userService.updateUserProfile(id, data);
-      console.log("--------------------",userBuild)
 
       return userBuild;
     } catch (error) {

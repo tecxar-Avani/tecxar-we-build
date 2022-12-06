@@ -20,7 +20,7 @@ const SearchPage = () => {
   const router = useRouter();
   const [url, setUrl] = useState();
   const dispatch = useAppDispatch();
-  const { buildList } = useAppSelector(buildSelector);
+  const { buildList, buildListByUrl } = useAppSelector(buildSelector);
   const videosData: any = [];
   buildList.rows &&
     buildList.rows.length > 0 &&
@@ -36,9 +36,10 @@ const SearchPage = () => {
   const searchResult = (url: string) => {
     if (url !== "") {
       dispatch(getBuildByUrl(url));
+    
     }
   };
-
+  console.log("userBuildListuserBuildList", buildListByUrl);
   useEffect(() => {
     dispatch(getBuilds());
   }, []);
