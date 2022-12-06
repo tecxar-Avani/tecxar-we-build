@@ -15,12 +15,15 @@ import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 import { Input, Modal, Button, Form } from "antd";
-import { getUserByEmail, userSelector } from "../../store/reducers/user.reducer";
+import {
+  getUserByEmail,
+  userSelector,
+} from "../../store/reducers/user.reducer";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
-  const editFlashCard  = useAppSelector(flashCardSelector);
+  const editFlashCard = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
@@ -35,8 +38,7 @@ const Profile = () => {
     dispatch(getFlashCardByUser());
     dispatch(getUserByEmail());
   }, []);
-  console.log("OOOOOOOOOOOOOOOOOO",userData.userData
-  )
+
   const role = "admin";
   const videosData = [
     {
@@ -1445,7 +1447,6 @@ const Profile = () => {
       });
       setRevealAns(true);
     } else {
-
       setModal3Open({
         content: index
           ? flashCardArr[index]?.question
@@ -1453,18 +1454,17 @@ const Profile = () => {
         footer: ["Reveal Answer"],
         questionId: index ? flashCardArr[index]?.id : flashCardArr[0].id,
         index: index ? index : 1,
-     
+
         arrayLength: flashCardArr.length,
         onOk: modal4Open,
       });
       setRevealAns(true);
     }
   };
-const handleSubmit  = (data:any) =>{
-dispatch(updateFlashCardId(data))
-  {console.log("hello",editFlashCard)};
-}
-console.log("::::::::::",editFlashCard)
+  const handleSubmit = (data: any) => {
+    console.log(`handleSubmit`, data);
+     dispatch(updateFlashCardId(data));
+  };
   return (
     <>
       <div className="profile-main">
@@ -1558,7 +1558,7 @@ console.log("::::::::::",editFlashCard)
                 footer: ["Again", "Hard", "Good", "Easy"],
                 onOk: modal4Open,
                 questionId: questionId,
-                index: index ? index+1 : 1,
+                index: index ? index + 1 : 1,
                 arrayLength: arrayLength,
                 title: title,
               };
@@ -1573,8 +1573,11 @@ console.log("::::::::::",editFlashCard)
         flashCardArr={flashCardArr}
         addFlashCard={addFlashCard}
         editFlashCardData={editFlashCardData}
-        handleSubmit={handleSubmit}
+        handleSubmit={(data:any) => {
+          handleSubmit(data);
+        }}
       />
+
       <Modal
         title="Edit Your Name"
         open={editName}
@@ -1587,19 +1590,14 @@ console.log("::::::::::",editFlashCard)
             htmlType="submit"
             className="openmodal"
           >
-          Submit
+            Submit
           </Button>
         }
       >
-         <Form
-          form={form}
-          id="form"
-          layout="vertical"
-          autoComplete="off"
-        >
+        <Form form={form} id="form" layout="vertical" autoComplete="off">
           <Form.Item name="name" label="Name">
-        <Input defaultValue={profileData.title}></Input>
-        </Form.Item>
+            <Input defaultValue={profileData.title}></Input>
+          </Form.Item>
         </Form>
       </Modal>
     </>

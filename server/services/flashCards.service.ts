@@ -182,6 +182,7 @@ class FlashCardService {
       { ...data },
       { where: { id: id } }
     );
+
     if (!flashCardByUpdate) {
       return null;
     } else {

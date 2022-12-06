@@ -9,7 +9,6 @@ import GoogleButton from "react-google-button";
 const { Sider } = Layout;
 
 const SideBar = (toggle: any) => {
-console.log("###################",toggle.isLoggedIn)
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   // const url = window.location.origin;
