@@ -22,7 +22,6 @@ import { IFlashCard } from "../../../@types/common";
 
 
 const NewBuild = (props:any) => {
-console.log('props props',props)
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const buildData = useAppSelector(buildSelector);
@@ -156,7 +155,6 @@ useEffect(() => {
   dispatch(getAwarenessByBoxId(boxData));
 },[])
 
-console.log("buildData",buildData)
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
@@ -207,16 +205,13 @@ const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:stri
   }
   dispatch(addBuild(saveData))
   
-  console.log("#############",saveData)
 
 }
-console.log("++=====================",buildData)
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
     
   };
-console.log("===============",boxData)
   const handleData = (comment:any,review:any) =>{
     const data = {
       comment: comment.comment,
@@ -250,7 +245,6 @@ console.log("===============",boxData)
     }
   ]
 const acceptanceValue = acceptanceData.filter((A) => A.description)
-console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id}",router)
   return (
     <>
       <div className="d-flex m-0 w-100">

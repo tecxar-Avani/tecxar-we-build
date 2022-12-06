@@ -11,9 +11,10 @@ class UserService {
   }
   updateUserById(id:number,userData:any){
   
-    console.log(userData)
     return API.put(`/users/${id}`,userData)
   }
-
+  boxDataByUserId(){
+    return API.get(`/users/`)
+  }
 }
 export default new UserService();

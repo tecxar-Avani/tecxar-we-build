@@ -116,3 +116,5 @@ export interface IUpdateUser {
   updated_by?: number;
   updatedAt?: Date;
 }
+
+

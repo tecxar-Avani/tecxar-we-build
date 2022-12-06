@@ -1,5 +1,5 @@
-import { Input, Modal, Button, Form, } from "antd";
-import React from "react";
+import { Input, Modal, Button, Form } from "antd";
+import React,{useEffect} from "react";
 
 const { Search } = Input;
 const { TextArea } = Input;
@@ -7,6 +7,12 @@ const { TextArea } = Input;
 const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
 
+
+  useEffect(() => {
+    console.log("%%%%%%%AddFlashCardModal%%%%%%%%%%")
+    console.log(props)
+    console.log(props?.flashCardArr[props.defaultQuestionIndex-1]?.question)
+  }, [props]);
   return (
     <>
       <Modal
@@ -39,20 +45,24 @@ const AddFlashCardModal = (props: any) => {
           layout="vertical"
           autoComplete="off"
         >
-          <Form.Item name="question" label="Front">
+          <Form.Item key={1} name="question" label="Front">
             <TextArea
+              key={1}
               showCount
               maxLength={100}
               rows={4}
-              defaultValue={props?.flashCardData?.question}
+              // defaultValue={"question"}
+              defaultValue={props?.flashCardArr[props.defaultQuestionIndex-1]?.question}
             />
           </Form.Item>
-          <Form.Item name={"answer"} label={"Back"}>
+          <Form.Item key={2} name={"answer"} label={"Back"}>
             <TextArea
+              key={2}
               showCount
               maxLength={100}
               rows={4}
-              defaultValue={props?.flashCardData?.answer}
+              // defaultValue={"answer"}
+              defaultValue={props?.flashCardArr[props.defaultQuestionIndex-1]?.answer}
             />
           </Form.Item>
         </Form>

@@ -1352,7 +1352,6 @@ const SearchPage = () => {
     dispatch(getBuilds());
   }, []);
 
-  console.log("Buildsss",buildList)
   return (
     <>
       <SearchBar searchResult={searchResult} />

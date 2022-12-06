@@ -9,7 +9,6 @@ import { Card, CardImg, Col, Row } from "react-bootstrap";
 const VideoCard = (props: any) => {
   return (
     <Card className="p-0 border-0 rounded mb-2 videoCard01">
-      {console.log("AAAAAAAAAAAAAAAAAAAAAAAAA", props.VideoCardData)}
       <Card.Body className="p-0 rounded-0">
         <div className="position-relative">
           {props.VideoCardData.thumbnails ? (

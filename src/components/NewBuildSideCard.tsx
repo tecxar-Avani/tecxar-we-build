@@ -10,7 +10,6 @@ import GoogleButton from "react-google-button";
 
 
 const NewBuildSideCard = (props: any) => {
-console.log('props',props)
 
 
   const [polarisation, setPolarisation] = useState(false);

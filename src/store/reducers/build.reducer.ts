@@ -36,6 +36,12 @@ export const addBuild = createAsyncThunk(
   }
 );
 
+export const boxDataByUserId = createAsyncThunk(`users/`,async (box : IBoxes ) => {
+  const {status,data } = await BuildService.boxDataByUserId();
+  return { status,data };
+})
+
+
 interface State {
   id: number;
   build: IVideoBuild;
@@ -85,7 +91,6 @@ const buildSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getBuilds.fulfilled, (state, action) => {
-        console.log("DDDDDDDDDDDDDDDD", action);
         if (action.payload.status) {
           return {
             ...state,

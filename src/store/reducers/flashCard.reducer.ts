@@ -54,7 +54,7 @@ export const updateFlashCardId = createAsyncThunk(`flashcard/`, async (updateFla
 
   return { status,data };
 });
-export const deleteFlashCardById = createAsyncThunk(`flashcard/`, async (Id: number, { dispatch }) => {
+export const deleteFlashCardId = createAsyncThunk(`flashcard/deleteFlashCard/`, async (Id: number, { dispatch }) => {
   const { status, data } = await flashCardService.deleteFlashCardById(Id);
  
   return { status, data };
@@ -168,13 +168,13 @@ const flashCardSlice = createSlice({
           };
         }
       })
-      // .addCase(deleteFlashCardById.fulfilled, (state, action) => {
-      //   if (action.payload.status) {
-      //     return { ...state, loading: false };
-      //   } else {
-      //     return { ...state, loading: false, specificFlashcard: initialState.flashCard };
-      //   }
-      // })
+      .addCase(deleteFlashCardId.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          return { ...state, loading: false };
+        } else {
+          return { ...state, loading: false, specificFlashcard: initialState.flashCard };
+        }
+      })
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
       })
