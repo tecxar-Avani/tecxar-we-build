@@ -18,8 +18,6 @@ import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { flashcardsDto, updateflashcardsDto, flashCardResponseDto } from "@/dtos/flashcards.dto";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
-import { google } from "googleapis";
-import config from "@/configs";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 
 @Controller("/flashcard")
@@ -55,7 +53,7 @@ export class FlashController {
 
   @Post("/flashcardresponse")
   @HttpCode(201)
-  @OpenAPI({ summary: "Create a new build" })
+  @OpenAPI({ summary: "Create a new FlashCard Response" })
   async flashcardResponse(
     @Body() flashcardResponseData: flashCardResponseDto,
     @Req() req: Request | any,
@@ -68,7 +66,7 @@ export class FlashController {
       return {
         status: true,
         data: createFlashCardResponseData,
-        message: "Video Build created successfully.",
+        message: "FlashCard Response created successfully.",
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -78,6 +76,7 @@ export class FlashController {
   }
 
   @Get("/")
+  // @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCard(@Req() req: RequestWithUser | any, @Res() res: Response) {
     try {
@@ -98,6 +97,7 @@ export class FlashController {
   }
 
   @Get("/flashcardresponse")
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCardResponse(@Req() req: Request | any, @Res() res: Response) {
     try {
@@ -152,7 +152,6 @@ export class FlashController {
     }
   }
 
-
   @Get("/:id")
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCardBuildId(
@@ -179,6 +178,7 @@ export class FlashController {
   }
 
   @Put("/:id")
+  // @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
   async updateFlashCard(
     @Req() req: Request | any,
@@ -200,6 +200,7 @@ export class FlashController {
   }
 
   @Delete("/:id")
+   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "delete all build of users" })
   async deleteFlashCardById(
     @Req() req: Request | any,
@@ -213,11 +214,13 @@ export class FlashController {
       if (flashByDeleteId === null) {
         return res.send({
           status: 404,
-          message: "Flash Card with this Id not found",
+          message: "FlashCard with this Id not found",
         });
       }
       return { status: true, data: flashByDeleteId };
     } catch (error) {
+      console.log('--ERROR--',error);
+      
       if (error instanceof Error) {
         return { status: false, error: { code: 500, message: error.message } };
       }

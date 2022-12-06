@@ -9,9 +9,9 @@ import {
   Table,
   Default,
 } from "sequelize-typescript";
-import { IVideoBuild,VideoTypeEnumType,difficultyLevelEnumType } from "@/interfaces/videoBuilds.interface";
+import { IVideoBuild, VideoTypeEnumType, difficultyLevelEnumType } from "@/interfaces/videoBuilds.interface";
 import User from "@/models/user.model";
-
+import Boxes from "./boxes.model";
 export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 @Table({
   tableName: "video_builds",
@@ -21,8 +21,7 @@ export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 })
 export default class VideoBuilds
   extends Model<IVideoBuild, VideoBuildAttributes>
-  implements IVideoBuild
-{
+  implements IVideoBuild {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
@@ -47,12 +46,14 @@ export default class VideoBuilds
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
   public created_by: number;
+
   @BelongsTo(() => User)
   public created_by_user: User;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
   public updated_by: number;
+
   @BelongsTo(() => User)
   public updated_by_user: User;
 

@@ -59,7 +59,6 @@ class FlashCardService {
       }
     ];
     const options: {
-      // group:'flashCardsResponse.id',
       raw: boolean;
       where: any;
       order: any;
@@ -110,7 +109,7 @@ class FlashCardService {
     } = {
       attributes: [
         'id', 'created_by_user.user_name', 'created_by_user.tag_line', 'created_by_user.email',
-         'question', 'answer',[col('created_by_user.id'), 'user_id']
+        'question', 'answer', [col('created_by_user.id'), 'user_id']
       ],
       logging: console.log,
       order: [['id', 'ASC']],
@@ -120,31 +119,31 @@ class FlashCardService {
       nest: true,
       raw: true,
     };
-    const userOption : {
-        raw: boolean;
-        where: any;
-        limit?: number;
-        offset?: number;
-        include?: any;
-        attributes?: any;
-        nest?: boolean;
-        subQuery: boolean;
-  group:any
-      } = {
-        attributes: [
-          'created_by_user.user_name',[col('created_by_user.id'), 'user_id']
-        ],
-        where: where,
-        group:'created_by_user.id',
-        subQuery: false,
-        include: include,
-        nest: true,
-        raw: true,
-      
+    const userOption: {
+      raw: boolean;
+      where: any;
+      limit?: number;
+      offset?: number;
+      include?: any;
+      attributes?: any;
+      nest?: boolean;
+      subQuery: boolean;
+      group: any
+    } = {
+      attributes: [
+        'created_by_user.user_name', [col('created_by_user.id'), 'user_id']
+      ],
+      where: where,
+      group: 'created_by_user.id',
+      subQuery: false,
+      include: include,
+      nest: true,
+      raw: true,
+
     }
     const getFlashCardBuildId: IFlashCards[] | any = await this.flashCard.findAll(options);
     const getFlashCardUsers: IFlashCards[] | any = await this.flashCard.findAll(userOption);
-    return {build:getFlashCardBuildId,users:getFlashCardUsers};
+    return { build: getFlashCardBuildId, users: getFlashCardUsers };
   }
 
   public async getFlashCard(userId: number): Promise<IFlashCards[] | null> {

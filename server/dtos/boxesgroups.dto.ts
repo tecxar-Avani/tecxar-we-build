@@ -1,4 +1,4 @@
-import { IBoxesGroups,IUpdateBoxesGroups } from "@/interfaces/boxesgroups.interface";
+import { IBoxesGroups, IUpdateBoxesGroups } from "@/interfaces/boxesgroups.interface";
 import { IsNumber, IsOptional } from "class-validator";
 
 export class BoxesgroupDto implements IBoxesGroups {

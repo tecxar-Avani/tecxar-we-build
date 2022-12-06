@@ -48,6 +48,7 @@ export class videoBuildDto implements IVideoBuild {
 }
 
 export class updateVideoBuildDto implements IUpdateVideoBuild {
+  [x: string]: any;
   @IsOptional()
   @IsString()
   video_url?: string;
@@ -57,11 +58,11 @@ export class updateVideoBuildDto implements IUpdateVideoBuild {
   provider?: string;
 
   @IsOptional()
-   @IsString()
+  @IsString()
   type_of_video?: VideoTypeEnumType;
 
   @IsOptional()
-   @IsString()
+  @IsString()
   potential_polarization?: difficultyLevelEnumType;
 
   @IsOptional()

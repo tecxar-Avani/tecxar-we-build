@@ -1,4 +1,4 @@
-import { IBoxes ,IUpdateBoxes} from '@interfaces/boxes.interface';
+import { IBoxes, IUpdateBoxes } from '@interfaces/boxes.interface';
 import { IsOptional, IsString, IsDate, IsNumber } from 'class-validator';
 
 export class BoxesDto implements IBoxes {

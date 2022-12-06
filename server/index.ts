@@ -9,7 +9,6 @@ import { importClassesFromDirectories } from "@utils/util";
 import { validationMetadatasToSchemas } from "class-validator-jsonschema";
 import DB from "@databases";
 import { logger } from "@utils/logger";
-
 import express from "express";
 import { routingControllersToSpec } from "routing-controllers-openapi";
 import swaggerUi from "swagger-ui-express";
