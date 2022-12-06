@@ -7,7 +7,6 @@ const { TextArea } = Input;
 const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
 
-
   return (
     <>
       <Modal
@@ -26,7 +25,6 @@ const AddFlashCardModal = (props: any) => {
             key="submit1"
             htmlType="submit"
             className="openmodal"
-            
           >
             Save
           </Button>
@@ -35,7 +33,9 @@ const AddFlashCardModal = (props: any) => {
         <Form
           form={form}
           id="form"
-          onFinish={props.handleSubmit}
+          onFinish={(data) =>
+            props.handleSubmit({ ...data, id: props.flashCardData.id })
+          }
           layout="vertical"
           autoComplete="off"
         >

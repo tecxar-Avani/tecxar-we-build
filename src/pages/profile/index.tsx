@@ -17,7 +17,7 @@ import AddFlashCardModal from "@/components/AddFlashCardModal";
 import { Input, Modal, Button, Form } from "antd";
 import {
   getUserByEmail,
-  userSelector,
+  userSelector,updateUserById
 } from "../../store/reducers/user.reducer";
 import {
   buildSelector,
@@ -33,7 +33,7 @@ const Profile = () => {
   const [modal4Open, setModal4Open] = useState(false);
   const [addFlashCard, setAddFlashcard] = useState(false);
   const [editFlashCardData, setEditFlashCardData] = useState({});
-  const [editName, setEditName] = useState(false);
+  const [editName, setEditName] = useState<any>();
 
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const { userBuildList } = useAppSelector(buildSelector);
@@ -43,6 +43,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getFlashCardByUser());
     dispatch(getUserByEmail());
+   
   }, []);
   console.log("OOOOOOOOOOOOOOOOOO", userData.userData);
   const role = "admin";
@@ -118,14 +119,20 @@ const Profile = () => {
       deleteIcon: "delete.svg",
     },
   ];
+  
+  const onEdit = (e:any) => {
+  const data = {
+    id:userData.userData.id,
+    user_name:e
+  }
+    dispatch(updateUserById(data))
+  }
 
   const showModal = () => {
     setEditName(true);
   };
 
-  const handleOk = () => {
-    setEditName(false);
-  };
+  
 
   const handleCancel = () => {
     setEditName(false);
@@ -164,8 +171,9 @@ const Profile = () => {
       setRevealAns(true);
     }
   };
+ 
   const handleSubmit = (data: any) => {
-    dispatch(updateFlashCardId(data));
+     dispatch(updateFlashCardId(data));
   };
   return (
     <>
@@ -220,7 +228,7 @@ const Profile = () => {
               ))}
           </Row>
         </div>
-        {role == "admin" ? (
+        { userData.userData.role_id == 1 ? (
           <div className="pb-2">
             <HeaderTitle
               title="Total list of Profiles"
@@ -294,12 +302,15 @@ const Profile = () => {
         flashCardArr={flashCardArr}
         addFlashCard={addFlashCard}
         editFlashCardData={editFlashCardData}
-        handleSubmit={handleSubmit}
+        handleSubmit={(data:any) => {
+          handleSubmit(data);
+        }}
       />
+
       <Modal
         title="Edit Your Name"
         open={editName}
-        onOk={form.submit}
+         onOk={form.submit}
         onCancel={handleCancel}
         footer={
           <Button
@@ -307,13 +318,15 @@ const Profile = () => {
             key="submit1"
             htmlType="submit"
             className="openmodal"
+           
           >
             Submit
           </Button>
         }
       >
-        <Form form={form} id="form" layout="vertical" autoComplete="off">
-          <Form.Item name="name" label="Name">
+        <Form form={form} id="form" layout="vertical" autoComplete="off"
+          onFinish={onEdit}>
+          <Form.Item name="user_name" label="Name">
             <Input defaultValue={profileData.title}></Input>
           </Form.Item>
         </Form>

@@ -3,6 +3,7 @@ import { Image } from "react-bootstrap";
 
 
 const ProfileCard = (props: any) => {
+  
   return (
     <>
       <div

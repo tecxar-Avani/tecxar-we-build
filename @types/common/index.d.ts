@@ -107,3 +107,12 @@ export interface ICreateUser {
   createdAt?: Date;
   updatedAt?: Date;
 }
+export interface IUpdateUser {
+  id?:number;
+  user_name?: string;
+  tag_line?: string;
+  is_blocked?: number;
+  profile_image?: any;
+  updated_by?: number;
+  updatedAt?: Date;
+}

@@ -7,7 +7,7 @@ import {
   AnyAction,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
-import { ICreateUser, ICurrentUser } from "../../../@types/common";
+import { ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -27,6 +27,15 @@ export const getUserByEmail = createAsyncThunk(
     return data;
   }
 );
+
+export const updateUserById = createAsyncThunk(`users/`, async (updateUser: IUpdateUser, { dispatch }) => {
+  const id = Number(updateUser.id);
+  const user_name =  updateUser.user_name;
+  const { status, data } = await userService.updateUserById(id,user_name);
+ 
+
+  return { status,data };
+});
 
 interface State {
   id: number;

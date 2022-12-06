@@ -9,5 +9,11 @@ class UserService {
   getUserByMail() {
     return API.get(`/users/userByEmail`)
   }
+  updateUserById(id:number,userData:any){
+  
+    console.log(userData)
+    return API.put(`/users/${id}`,userData)
+  }
+
 }
 export default new UserService();
