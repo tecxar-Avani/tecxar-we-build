@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export interface ICreateUser {
   id?: number;
   role_id: number;
@@ -14,6 +15,7 @@ export interface ICreateUser {
 
 
 export interface IUpdateUser {
+  id?:number;
   user_name?: string;
   tag_line?: string;
   is_blocked?: number;

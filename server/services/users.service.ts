@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ICreateUser, IUpdateUser } from "@/interfaces/users.interface";
 import DB from "@databases";
 import { HttpException } from "@exceptions/HttpException";
@@ -37,7 +38,7 @@ class UserService {
   }
   
   public async updateUserProfile(id: number, data): Promise<IUpdateUser | null> {
-    const updateuserProfile: any| null = await this.users.update({ ...data },
+    const updateuserProfile: any| null = await this.users.update(data ,
       { where: { id : id } }
     );
     if (!updateuserProfile) {
