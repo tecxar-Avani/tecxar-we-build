@@ -125,7 +125,6 @@ export class FlashController {
   ) {
     try {
       const flashBuild = await this.flashCardService.getFlashCardByBuildId(id);
-
       return {
         status: true,
         flashBuild,

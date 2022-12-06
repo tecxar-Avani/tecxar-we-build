@@ -33,13 +33,15 @@ import BuildService from "@/services/build.service";
 import { google } from "googleapis";
 import config from "@/configs";
 import { RequestWithUser } from "@/interfaces/auth.interface";
+import BoxService from "@/services/box.service";
 
 @Controller("/build")
 // @UseBefore(authMiddleware)
 export class FlashController {
   private buildService = new BuildService();
   private flashCardService = new FlashCardService();
-  boxService: any;
+  private boxService = new BoxService();
+  // boxService: any;
 
   @Post("/create")
   @UseBefore(authMiddleware)
@@ -89,7 +91,7 @@ export class FlashController {
   @OpenAPI({ summary: "Get all build of users" })
   async getUsersBuild(@Req() req: Request | any, @Res() res: Response) {
     try {
-      const user = req.user.id;
+      const user = req.user.id;      
       const userBuild = await this.buildService.getBuildByUserId(user);
       return userBuild;
     } catch (error) {
@@ -111,14 +113,33 @@ export class FlashController {
     try {
       const userId = req.user.id;
       const userBuild = await this.buildService.getUserInteractedBuild(userId);
-       let searchedResult;
-       const searchedData = await this.youtubeApiCall(
-         userBuild
-       ).then((result) => {
-         searchedResult = result;
-       });
-       return { data: searchedResult, box: userBuild };
+      let searchedResult;
+      const searchedData = await this.youtubeApiCall(
+        userBuild
+      ).then((result) => {
+        searchedResult = result;
+      });
+      return { data: searchedResult, box: userBuild };
     } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+  @Get("/totalbuilds")
+  @UseBefore(authMiddleware)
+  @OpenAPI({ summary: "Get all build of users" })
+  async getTotalBuilds(@Req() req: Request | any, @Res() res: Response) {
+    try {
+      const user = req.user.id;
+      console.log(user);
+      const userBuild = await this.boxService.getTotalBuilds(user);
+      return userBuild;
+    } catch (error) {
+      console.log('error',error)
       return {
         error: {
           code: 500,
@@ -325,7 +346,7 @@ export class FlashController {
   ) {
     try {
       const buildById = await this.buildService.getBuildById(id);
-      return {status:true,data:buildById};
+      return { status: true, data: buildById };
     } catch (error) {
       return {
         error: {
@@ -335,6 +356,8 @@ export class FlashController {
       };
     }
   }
+
+  
 
   @Put("/:id")
   // @UseBefore(authMiddleware)
