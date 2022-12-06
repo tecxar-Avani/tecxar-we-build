@@ -4,6 +4,7 @@ import {
   addFlashCard,
   flashCardSelector,
   getFlashCardByBuildId,
+  createFlashCard,
 } from "../../store/reducers/flashCard.reducer";
 import { Card, Image } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
@@ -17,6 +18,7 @@ import { addBuild, buildSelector } from "../../store/reducers/build.reducer";
 import { addAwareness, awarenessSelector, getAwarenessByBoxId } from "../../store/reducers/awareness.reducer";
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
+import { IFlashCard } from "../../../@types/common";
 
 
 const NewBuild = (props:any) => {
@@ -28,18 +30,19 @@ console.log('props props',props)
   const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
-  const [awarenessDotModal ,setAwarenessDotModal] = useState(false);
+  const [awarenessDotModal, setAwarenessDotModal] = useState(false);
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
   const [modalChallenge , setModalChallenge] = useState({});
   const [review , setReview] = useState<string>("");
-  const [addFlashCardData, SetAddFlashcard] = useState(false);
+  const [addFlashCardData, setAddFlashcard] = useState(false);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [awarenessBoxId ,setAwarenessBoxId] = useState<number>(0);
+
   const [boxData , setBoxData] = useState([])
   const [dataArray, setDataArray] = useState([
     {
@@ -163,25 +166,29 @@ console.log("buildData",buildData)
     const findLastValue = filterArray?.slice(-1)[0];
     const lastQuestionId = findLastValue?.id;
 
-   if(filterArray && filterArray.length > 0 ){ if (questionId == lastQuestionId) {
-      setModal3Open({
-        content: "Congratulations! You have finished your deck",
-        footer: [],
-        onOk: modal4Open,
-      });
-      setRevealAns(true);
-    } else {
-      setModal3Open({
-        content: index ? filterArray[index].question : filterArray[0].question,
-        footer: ["Reveal Answer"],
-        userId: index ? filterArray[index].user_id : filterArray[0].user_id,
-        questionId: index ? filterArray[index].id : filterArray[0].id,
-        index: index ? index + 1 : 1,
-        arrayLength: filterArray.length,
-        onOk: modal4Open,
-      });
-      setRevealAns(true);
-    }}
+    if (filterArray && filterArray.length > 0) {
+      if (questionId == lastQuestionId) {
+        setModal3Open({
+          content: "Congratulations! You have finished your deck",
+          footer: [],
+          onOk: modal4Open,
+        });
+        setRevealAns(true);
+      } else {
+        setModal3Open({
+          content: index
+            ? filterArray[index].question
+            : filterArray[0].question,
+          footer: ["Reveal Answer"],
+          userId: index ? filterArray[index].user_id : filterArray[0].user_id,
+          questionId: index ? filterArray[index].id : filterArray[0].id,
+          index: index ? index + 1 : 1,
+          arrayLength: filterArray.length,
+          onOk: modal4Open,
+        });
+        setRevealAns(true);
+      }
+    }
   };
 
   // useEffect(() => {
@@ -212,18 +219,18 @@ console.log("++=====================",buildData)
 console.log("===============",boxData)
   const handleData = (comment:any,review:any) =>{
     const data = {
-      comment:comment.comment,
-      review_type:review,
-      box_id:Number(awarenessBoxId)
-    }
-    dispatch(addAwareness(data))
-    setReview(review)
-   }
-   const acceptanceData = [
+      comment: comment.comment,
+      review_type: review,
+      box_id: Number(awarenessBoxId),
+    };
+    dispatch(addAwareness(data));
+    setReview(review);
+  };
+  const acceptanceData = [
     {
-  "id":1,
-  "description":"hello",
-  "boxId":1,
+      id: 1,
+      description: "hello",
+      boxId: 1,
     },
     {"id":2,
     "description":"hello world",
@@ -260,7 +267,7 @@ console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id
 
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           <NewBuildBoxes
-            setModal1Open={SetAddFlashcard}
+            setModal1Open={setAddFlashcard}
             item={dataArray}
             arr={arr}
             setArr={(value: any) => {
@@ -310,7 +317,7 @@ console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"
               onClick={() => {
-                SetAddFlashcard(true);
+                setAddFlashcard(true);
               }}
             />
           </div>
@@ -318,7 +325,7 @@ console.log("{router.query.id}{router.query.id}{router.query.id}{router.query.id
       </div>
       <AddFlashCardModal
         modal2Open={addFlashCardData}
-        setModal2Open={SetAddFlashcard}
+        setModal2Open={setAddFlashcard}
         visible={addFlashCardData}
         handleSubmit={handleSubmit}
       />

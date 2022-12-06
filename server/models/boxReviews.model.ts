@@ -20,14 +20,13 @@ export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
 @Table({
   tableName: "box_reviews",
   createdAt: "createdAt",
-  updatedAt:"updatedAt",
+  updatedAt: "updatedAt",
   timestamps: true,
 })
 // eslint-disable-next-line prettier/prettier
 export default class BoxReviews
   extends Model<IBoxReviews, Box_ReviewsGroupAttributes>
-  implements IBoxReviews
-{
+  implements IBoxReviews {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 

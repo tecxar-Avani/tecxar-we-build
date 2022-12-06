@@ -16,7 +16,6 @@ const onDelete = () =>{
     headerIcon &&
     headerIcon?.length > 0 &&
     headerIcon?.map((btn: any) => {
-
       return (
         <Image
           src={`/img/${btn}`}
@@ -48,6 +47,9 @@ const onDelete = () =>{
   const index = props.flashCard.index;
   // const editIndex = props.flashCardArr.index;
   const arrayLength = props.flashCard.arrayLength;
+  const editQuestion = props.flashCard.editQuestion;
+  console.log("BBBBBBBBBBBBBBBBBB", editQuestion);
+
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       // add dispatch API here instead of console
@@ -56,8 +58,10 @@ const onDelete = () =>{
         if (userId) {
           props.questionCallback(userId, index, questionId);
         } else {
-      props.questionCallback(index, questionId);
-      }
+          props.questionCallback(index, questionId);
+        }
+      } else {
+        props.questionCallback(index, questionId);
       }
     } else if (data == "Reveal Answer") {
       if (userId) {
@@ -67,10 +71,17 @@ const onDelete = () =>{
           questionId,
           index,
           arrayLength,
-          title
+          title,
+          editQuestion
         );
       } else {
-        props.responseCallback(questionId, index, arrayLength, title);
+        props.responseCallback(
+          questionId,
+          index,
+          arrayLength,
+          title,
+          editQuestion
+        );
       }
     }
   };
@@ -79,9 +90,7 @@ const onDelete = () =>{
     <>
       <Modal
         open={props.modal}
-        title={
-          props?.flashCard?.title
-        }
+        title={props?.flashCard?.title}
         centered
         visible={props.modalVisible}
         onCancel={() => props.setmodalOpen(false)}
@@ -105,10 +114,25 @@ const onDelete = () =>{
       >
         <div className="p-4">{props?.flashCard?.content}</div>
       </Modal>
+
       <AddFlashCardModal
         modal2Open={props.addFlashCard}
-        setModal2Open={() => props.setAddFlashcard()}
+        setModal2Open={props.setAddFlashcard}
         visible={props.addFlashCard}
+        // questionId={modal3Open.questionId}
+        setEditFlashCardData={() => {
+          const questionFilter = props.flashCardArr.filter(
+            (F: any) => F.id == questionId
+          );
+          questionFilter.length > 0 &&
+            questionFilter.map((ans: any) => {
+              const newData = {
+                answer: ans.answer,
+                question: ans.question,
+              };
+              props.setEditFlashCardData(newData);
+            });
+        }}
         flashCardData={props.editFlashCardData}
         handleSubmit={props.handleSubmit}
       />

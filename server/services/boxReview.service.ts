@@ -41,5 +41,4 @@ class BoxService {
     }
   }
 }
-
 export default BoxService;

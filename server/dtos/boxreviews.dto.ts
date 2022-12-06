@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import { IBoxReviews, ReviewTypeEnumType ,IUpdateBoxReviews} from '@/interfaces/boxreviews.interface';
+import { IBoxReviews, ReviewTypeEnumType, IUpdateBoxReviews } from '@/interfaces/boxreviews.interface';
 import { IsNumber, IsString, IsDate, IsOptional } from 'class-validator';
 
 export class BoxreviewDto implements IBoxReviews {

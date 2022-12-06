@@ -1,4 +1,4 @@
-import { IGroups ,IUpdateGroups} from '@interfaces/groups.interface';
+import { IGroups, IUpdateGroups } from '@interfaces/groups.interface';
 import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class groupsDto implements IGroups {

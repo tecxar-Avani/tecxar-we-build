@@ -53,6 +53,7 @@ export class videoBuildDto implements IVideoBuild {
 }
 
 export class updateVideoBuildDto implements IUpdateVideoBuild {
+  [x: string]: any;
   @IsOptional()
   @IsString()
   video_url?: string;

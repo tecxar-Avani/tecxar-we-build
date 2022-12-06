@@ -27,6 +27,6 @@ class BoxService {
       return videoBuilds;
     }
   }
-}
 
+}
 export default BoxService;

@@ -25,7 +25,7 @@ const Profile = () => {
   const userData = useAppSelector(userSelector);
   const editFlashCard = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
-  const [modal3Open, setModal3Open] = useState({});
+  const [modal3Open, setModal3Open] = useState<any>({});
   const [modal4Open, setModal4Open] = useState(false);
   const [addFlashCard, setAddFlashcard] = useState(false);
   const [editFlashCardData, setEditFlashCardData] = useState({});
@@ -1437,8 +1437,9 @@ const Profile = () => {
   };
 
   const questionData = (index?: number, questionId?: number) => {
-    const findLastValue = flashCardArr.slice(-1)[0];
-    const lastQuestionId = findLastValue.id;
+    const findLastValue = flashCardArr[flashCardArr.length - 1];
+    const lastQuestionId =findLastValue && findLastValue.id;
+    const editQuestion = index ? flashCardArr[index+1]?.id : flashCardArr[0].id;
     if (questionId == lastQuestionId) {
       setModal3Open({
         content: "Congratulations! You have finished your deck",
@@ -1457,6 +1458,7 @@ const Profile = () => {
 
         arrayLength: flashCardArr.length,
         onOk: modal4Open,
+        editQuestion: editQuestion,
       });
       setRevealAns(true);
     }
@@ -1546,7 +1548,8 @@ const Profile = () => {
           questionId: number,
           index: number,
           arrayLength: number,
-          title: any
+          title: any,
+          editQuestion?: number
         ) => {
           const questionFilter = flashCardArr.filter(
             (F: any) => F.id == questionId
@@ -1561,15 +1564,29 @@ const Profile = () => {
                 index: index ? index + 1 : 1,
                 arrayLength: arrayLength,
                 title: title,
+                editQuestion: editQuestion,
               };
               setModal3Open(newData);
             });
         }}
         questionCallback={(index: number, questionId: number) => {
-          questionData(index, questionId);
+          const indexVal = index > 1 ? index - 1 : index;
+          questionData(indexVal, questionId);
         }}
         setAddFlashcard={setAddFlashcard}
-        setEditFlashCardData={setEditFlashCardData}
+        setEditFlashCardData={(questionId: number) => {
+          const questionFilter = flashCardArr.filter(
+            (F: any) => F.id == questionId
+          );
+          questionFilter.length > 0 &&
+            questionFilter.map((ans: any) => {
+              const newData = {
+                answer: ans.answer,
+                question: ans.question,
+              };
+              setEditFlashCardData(newData);
+            });
+        }}
         flashCardArr={flashCardArr}
         addFlashCard={addFlashCard}
         editFlashCardData={editFlashCardData}
@@ -1600,6 +1617,8 @@ const Profile = () => {
           </Form.Item>
         </Form>
       </Modal>
+
+     
     </>
   );
 };

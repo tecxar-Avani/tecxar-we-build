@@ -8,7 +8,7 @@ import { title } from "process";
 import { useRouter } from "next/router";
 import {
   buildSelector,
-  getBuildByUrl,
+  getBuilds,
 } from "../../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
@@ -1349,9 +1349,10 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    dispatch(getBuildByUrl());
-  }, [url]);
+    dispatch(getBuilds());
+  }, []);
 
+  console.log("Buildsss",buildList)
   return (
     <>
       <SearchBar searchResult={searchResult} />
@@ -1369,19 +1370,20 @@ const SearchPage = () => {
 
       <Row className="Search m-0">
         {buildList &&
-          buildList.length > 0 &&
-          buildList.map(
-            (videoData: any, index: number) =>
-              index < 9 &&
-              videoData.id && (
-                <Col lg={4} className="videoProfile pb-2" key={index}>
-                  <Link href={`/newBuild?id=${videoData.id}`}>
-                    <a>
-                      <VideoCard VideoCardData={videoData} />
-                    </a>
-                  </Link>
-                </Col>
-              )
+          buildList.rows &&
+          buildList.rows.length > 0 &&
+          buildList.rows.map(
+            (videoData: any, index: number) => 
+            index < 9 &&
+            videoData.videoId && (
+              <Col lg={4} className="videoProfile pb-2" key={index}>
+                <Link href={`/newBuild?id=${videoData.videoId}`}>
+                  <a>
+                    <VideoCard VideoCardData={videoData} />
+                  </a>
+                </Link>
+              </Col>
+            )
           )}
       </Row>
     </>

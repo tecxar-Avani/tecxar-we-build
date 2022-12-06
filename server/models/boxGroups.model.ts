@@ -1,12 +1,12 @@
 import { Optional } from "sequelize";
 import {
-    Column,
-    Model,
-    DataType,
-    AllowNull,
-    ForeignKey,
-    BelongsTo,
-    Table,
+  Column,
+  Model,
+  DataType,
+  AllowNull,
+  ForeignKey,
+  BelongsTo,
+  Table,
 } from "sequelize-typescript";
 import { IBoxesGroups } from "@/interfaces/boxesgroups.interface";
 import Group from "@/models/groups.model";
@@ -21,8 +21,7 @@ export type Boxes_GroupAttributes = Optional<IBoxesGroups, "id">;
 })
 export default class Boxes_Groups
   extends Model<IBoxesGroups, Boxes_GroupAttributes>
-  implements IBoxesGroups
-{
+  implements IBoxesGroups {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 

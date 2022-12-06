@@ -1,11 +1,11 @@
-/* eslint-disable prettier/prettier */
-import { ICreateUser } from "@/interfaces/users.interface";
+import { ICreateUser, IUpdateUser } from "@/interfaces/users.interface";
 import DB from "@databases";
 import { HttpException } from "@exceptions/HttpException";
 import { isEmpty } from "@utils/util";
 
 class UserService {
   private users = DB.users;
+  
   public async createUser(userData: ICreateUser): Promise<ICreateUser | null> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not user");
     const userCreated: any | null = await this.users.create(userData);
@@ -36,6 +36,16 @@ class UserService {
     }
   }
   
+  public async updateUserProfile(id: number, data): Promise<IUpdateUser | null> {
+    const updateuserProfile: any| null = await this.users.update({ ...data },
+      { where: { id : id } }
+    );
+    if (!updateuserProfile) {
+      return null;
+    } else {
+      return updateuserProfile;
+    }
+  }
 }
 
 export default UserService;
