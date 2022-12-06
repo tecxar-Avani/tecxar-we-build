@@ -14,7 +14,7 @@ const FlashCardModal = (props: any) => {
   
   }, [props]);
 const onDelete = () =>{
-  //  dispatch(deleteFlashCardById())
+    // dispatch(deleteFlashCardById(id))
 }
   const headerIcon = ["deleteFlash.svg", "edit.svg"];
   const title =

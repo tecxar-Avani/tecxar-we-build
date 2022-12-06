@@ -1488,6 +1488,7 @@ const Profile = () => {
   };
 
   const handleSubmit = (data: any) => {
+    console.log("ffffffffffff",data)
     dispatch(updateFlashCardId(data));
   };
   return (

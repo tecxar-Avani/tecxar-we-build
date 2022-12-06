@@ -40,7 +40,7 @@ const AddFlashCardModal = (props: any) => {
           form={form}
           id="form"
           onFinish={(data) =>
-            props.handleSubmit({ ...data, id: props.flashCardData.id })
+            props.handleSubmit({ ...data, id: props.flashCardArr[props.defaultQuestionIndex-1].id })
           }
           layout="vertical"
           autoComplete="off"
