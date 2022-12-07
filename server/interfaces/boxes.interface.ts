@@ -3,8 +3,8 @@ export interface IBoxes {
   build_id?: number;
   description?: string;
   sorting_order?: number;
-  createdAt?:Date;
-  updatedAt?:Date
+  createdAt?: Date;
+  updatedAt?: Date
 }
 
 export interface IUpdateBoxes {
@@ -12,5 +12,5 @@ export interface IUpdateBoxes {
   build_id?: number;
   description?: string;
   sorting_order?: number;
-  updatedAt?:Date
+  updatedAt?: Date
 }

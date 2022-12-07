@@ -16,6 +16,7 @@ class BoxService {
     const createBuildData: IBoxes[] = await this.box.bulkCreate(boxData);
     return createBuildData;
   }
+  
   public async getBuilds(): Promise<IBoxes[] | null> {
     const videoBuilds: IBoxes[] | null = await this.box.findAll({
       raw: true,
@@ -31,7 +32,6 @@ class BoxService {
       const query = `SELECT COUNT(*) FROM video_builds AS vb
       LEFT JOIN boxes box on vb.id = box.build_id
       where vb.created_by = ${userId} `;
-      console.log('@@@@@@',query)
       const BuildById: IBoxes[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
       return BuildById;
   }

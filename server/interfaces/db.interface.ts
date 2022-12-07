@@ -4,8 +4,8 @@ export interface dbConfig {
   password: string;
   database: string;
   port: number;
-  logging:boolean;
-  dialect:string;
+  logging: boolean;
+  dialect: string;
   pool: {
     min: number;
     max: number;

@@ -34,6 +34,7 @@ import { google } from "googleapis";
 import config from "@/configs";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 import BoxService from "@/services/box.service";
+import BoxReviewService from "@/services/boxReview.service";
 
 @Controller("/build")
 // @UseBefore(authMiddleware)
@@ -41,7 +42,7 @@ export class FlashController {
   private buildService = new BuildService();
   private flashCardService = new FlashCardService();
   private boxService = new BoxService();
-  // boxService: any;
+  private reviewService = new BoxReviewService();
 
   @Post("/create")
   @UseBefore(authMiddleware)
@@ -129,15 +130,16 @@ export class FlashController {
       };
     }
   }
+
   @Get("/totalbuilds")
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
   async getTotalBuilds(@Req() req: Request | any, @Res() res: Response) {
     try {
       const user = req.user.id;
-      console.log(user);
-      const userBuild = await this.boxService.getTotalBuilds(user);
-      return userBuild;
+      const buildCount = await this.boxService.getTotalBuilds(user);
+      const awernessCount = await this.reviewService.getTotalAwernessById(user);
+      return {buildCount,awernessCount};
     } catch (error) {
       console.log('error',error)
       return {
@@ -150,7 +152,7 @@ export class FlashController {
   }
 
   @Get("/url")
-  @OpenAPI({ summary: "Get all build of users by Url" })
+  @OpenAPI({ summary: "Search Url" })
   async getUsersBuildByUrl(
     @Req() req: Request | any,
     @Res() res: Response,
@@ -167,32 +169,6 @@ export class FlashController {
       ).then((result) => {
         searchedResult = result;
       });
-      return { status: true, data: searchedResult, box: userBuild };
-    } catch (error) {
-      return {
-        error: {
-          code: 500,
-          message: (error as Error).message,
-        },
-      };
-    }
-  }
-
-  @Get("/getAllBuilds")
-  @OpenAPI({ summary: "Get all build " })
-  async getAllBuilds(
-    @Req() req: Request | any,
-    @Res() res: Response,
-    @QueryParam("search") search?: string
-  ) {
-    try {
-      const userBuild = await this.buildService.getAllBuilds(search);
-      let searchedResult;
-      const searchedData = await this.youtubeApiCall(userBuild, search).then(
-        (result) => {
-          searchedResult = result;
-        }
-      );
       return { status: true, data: searchedResult, box: userBuild };
     } catch (error) {
       return {
@@ -339,6 +315,32 @@ export class FlashController {
     }
   }
 
+  @Get("/getAllBuilds")
+  @OpenAPI({ summary: "Get all build " })
+  async getAllBuilds(
+    @Req() req: Request | any,
+    @Res() res: Response,
+    @QueryParam("search") search?: string
+  ) {
+    try {
+      const userBuild = await this.buildService.getAllBuilds(search);
+      let searchedResult;
+      const searchedData = await this.youtubeApiCall(userBuild, search).then(
+        (result) => {
+          searchedResult = result;
+        }
+      );
+      return { status: true, data: searchedResult, box: userBuild };
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
   @Get("/:id")
   @OpenAPI({ summary: "Get build by Id" })
   async getBuildById(
@@ -358,8 +360,6 @@ export class FlashController {
       };
     }
   }
-
-  
 
   @Put("/:id")
   // @UseBefore(authMiddleware)

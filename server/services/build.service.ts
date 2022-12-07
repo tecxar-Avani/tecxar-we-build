@@ -123,11 +123,8 @@ class BuildService {
       order: [["id", "ASC"]],
       raw: true,
       subQuery: false,
-    };
-
-    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
-      option
-    );
+    }
+    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(option);
     return videoBuilds;
   }
 
@@ -188,9 +185,9 @@ class BuildService {
     );
     return videoBuilds;
   }
-  public async updateBuild(id: number, data:any): Promise<IVideoBuild | null> {
-    const videoBuildsUpdate: any | null = await this.videoBuild.update(
-      { ...data },
+
+  public async updateBuild(id: number, data): Promise<IVideoBuild | null> {
+    const videoBuildsUpdate: any | null = await this.videoBuild.update({ ...data },
       { where: { id: id } }
     );
     if (!videoBuildsUpdate) {
