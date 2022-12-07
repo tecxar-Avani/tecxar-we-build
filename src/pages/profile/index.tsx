@@ -17,7 +17,7 @@ import AddFlashCardModal from "@/components/AddFlashCardModal";
 import { Input, Modal, Button, Form } from "antd";
 import {
   getUserByEmail,
-  userSelector,updateUserById
+  userSelector,updateUserById, totalbuilds
 } from "../../store/reducers/user.reducer";
 import {
   buildSelector,
@@ -46,10 +46,11 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getFlashCardByUser());
     dispatch(getUserByEmail());
+    dispatch(totalbuilds());
   }, []);
-  console.log("OOOOOOOOOOOOOOOOOO", userData.userData);
-  const role = "admin";
-
+ 
+// console.log("$$$$$$$$$$$$$",userData.boxes.data.awernessCount)
+// console.log("$$$$$$hhhhhhhhhhhhh$$$$$$$",userData.boxes.data.buildCount)
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",

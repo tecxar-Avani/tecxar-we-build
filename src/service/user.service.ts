@@ -13,8 +13,8 @@ class UserService {
   
     return API.put(`/users/${id}`,userData)
   }
-  boxDataByUserId(){
-    return API.get(`/users/`)
+  totalbuilds(){
+    return API.get(`/build/totalbuilds`)
   }
 }
 export default new UserService();

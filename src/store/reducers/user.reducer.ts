@@ -7,7 +7,7 @@ import {
   AnyAction,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
-import { IBoxes, ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
+import { IBoxData, IBoxes, ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -35,8 +35,9 @@ export const updateUserById = createAsyncThunk(`users/`, async (updateUser: IUpd
   return { status,data };
 });
 
-export const boxDataByUserId = createAsyncThunk(`users/`,async (box : IBoxes ) => {
-  const {status,data } = await userService.boxDataByUserId();
+export const totalbuilds = createAsyncThunk(`build/totalbuilds`,async () => {
+  
+  const {status,data } = await userService.totalbuilds();
   return { status,data };
 })
 
@@ -47,6 +48,7 @@ interface State {
   error: string | undefined;
   loggedInUser: ICurrentUser;
   userData:ICreateUser;
+
 }
 
 const initialState: State = {
@@ -55,6 +57,7 @@ const initialState: State = {
   loading: false,
   error: undefined,
   id: 0,
+ 
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -105,6 +108,22 @@ const userSlice = createSlice({
           };
         }
      })
+     .addCase(totalbuilds.fulfilled, (state, action) => {
+      console.log(":::::::::::::::::::::::",action)
+      if (action.payload) {
+        return {
+          ...state,
+          loading: false,
+          boxes: action.payload,
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+          boxes: action.payload.data
+        };
+      }
+   })
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
       })
