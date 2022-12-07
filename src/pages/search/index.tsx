@@ -21,6 +21,8 @@ const SearchPage = () => {
   const [url, setUrl] = useState();
   const dispatch = useAppDispatch();
   const { buildList, buildListByUrl } = useAppSelector(buildSelector);
+  const videoId = buildList?.box?.map((a:any) => a.video_url.split("="))
+   const vId = videoId.map((b:any) => b[1])
   const videosData: any = [];
   buildList.rows &&
     buildList.rows.length > 0 &&
@@ -31,7 +33,7 @@ const SearchPage = () => {
       });
     });
 
-    
+  console.log("----------------------",buildList)  
  
   const searchResult = (url: string) => {
     if (url !== "") {
@@ -60,12 +62,37 @@ const SearchPage = () => {
       )}
 
       <Row className="Search m-0">
-        {buildList &&
+
+       { buildList?.rows?.error?.code == 500 ? (
+        buildList &&
+        buildList.box &&
+        buildList.box.length > 0 &&
+        buildList.box.map(
+          (videoData: any, index: number) =>
+          {  index < 9 &&
+            videoData.video_url && (
+             
+        
+              <Col lg={4} className="videoProfile pb-2" key={index}>
+                {/* {  videoId = videoData.video_url.split("=")[0] } */}
+                <Link
+                  href={`/newBuild?id=${videoData.videoId}&&videoId=${vId}`}
+                >
+                  <a>
+                    <VideoCard VideoCardData={videoData} />
+                  </a>
+                </Link>
+              </Col>
+              
+            )}
+        )
+       )
+       : (buildList &&
           buildList.rows &&
           buildList.rows.length > 0 &&
           buildList.rows.map(
             (videoData: any, index: number) =>
-              index < 9 &&
+            {  index < 9 &&
               videoData.videoId && (
                 <Col lg={4} className="videoProfile pb-2" key={index}>
                   <Link
@@ -76,8 +103,9 @@ const SearchPage = () => {
                     </a>
                   </Link>
                 </Col>
-              )
-          )}
+              )}
+          ))
+              }  
       </Row>
     </>
   );

@@ -57,7 +57,7 @@ const Profile = () => {
     boxLeftTitle: "Boxes",
     boxValueLeft: "4",
     profileImg: "Ellipse60.png",
-    bottomTitle: "all the city with me",
+    bottomTitle: userData.userData.tag_line,
     boxRightTitle: "Awareness",
     boxValueRight: "15",
     flashCardProfile: "flashCardProfile.svg",

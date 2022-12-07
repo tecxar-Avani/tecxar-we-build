@@ -7,7 +7,7 @@ import {
   AnyAction,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
-import { ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
+import { IBoxes, ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -34,6 +34,11 @@ export const updateUserById = createAsyncThunk(`users/`, async (updateUser: IUpd
   const { status, data } = await userService.updateUserById(id,user_name);
   return { status,data };
 });
+
+export const boxDataByUserId = createAsyncThunk(`users/`,async (box : IBoxes ) => {
+  const {status,data } = await userService.boxDataByUserId();
+  return { status,data };
+})
 
 
 interface State {
