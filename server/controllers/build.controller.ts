@@ -137,9 +137,10 @@ export class FlashController {
   async getTotalBuilds(@Req() req: Request | any, @Res() res: Response) {
     try {
       const user = req.user.id;
-      const buildCount = await this.boxService.getTotalBuilds(user);
+      const boxbuildCount = await this.boxService.getTotalBuilds(user);
       const awernessCount = await this.reviewService.getTotalAwernessById(user);
-      return {buildCount,awernessCount};
+      const flashCardCount = await this.flashCardService.getTotalFlashCard(user);
+      return {boxbuildCount,awernessCount,flashCardCount};
     } catch (error) {
       console.log('error',error)
       return {

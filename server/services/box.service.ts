@@ -29,7 +29,7 @@ class BoxService {
   }
 
   public async getTotalBuilds(userId:any): Promise<IBoxes[] | any> { 
-      const query = `SELECT COUNT(*) FROM video_builds AS vb
+      const query = `SELECT COUNT(*) AS boxbuild_total FROM video_builds AS vb
       LEFT JOIN boxes box on vb.id = box.build_id
       where vb.created_by = ${userId} `;
       const BuildById: IBoxes[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
