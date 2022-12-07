@@ -42,7 +42,7 @@ const AddFlashCardModal = (props: any) => {
                   id:
                     props.defaultQuestionIndex &&
                     props.flashCardArr &&
-                    props.flashCardArr[props.defaultQuestionIndex - 1].id,
+                    props.flashCardArr[props.defaultQuestionIndex - 1]?.id,
                 })
               : setModal5Open(true);
             form.resetFields();
@@ -60,7 +60,7 @@ const AddFlashCardModal = (props: any) => {
               defaultValue={
                 props.defaultQuestionIndex &&
                 props.flashCardArr &&
-                props.flashCardArr[props.defaultQuestionIndex - 1].question
+                props.flashCardArr[props.defaultQuestionIndex - 1]?.question
               }
             />
           </Form.Item>
@@ -74,7 +74,7 @@ const AddFlashCardModal = (props: any) => {
               defaultValue={
                 props.defaultQuestionIndex &&
                 props.flashCardArr &&
-                props.flashCardArr[props.defaultQuestionIndex - 1].answer
+                props.flashCardArr[props.defaultQuestionIndex - 1]?.answer
               }
             />
           </Form.Item>

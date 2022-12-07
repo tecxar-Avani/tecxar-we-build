@@ -157,7 +157,7 @@ const Profile = () => {
       });
       setRevealAns(true);
     } else {
-      const editQuestion = flashCardArr[defaultQuestionIndex].id;
+      const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
       setDefaultQuestionIndex(defaultQuestionIndex + 1);
       /* setModal3Open({
         content: index
