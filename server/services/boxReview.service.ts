@@ -46,7 +46,7 @@ class BoxService {
   }
 
   public async getTotalAwernessById(userId:any): Promise<IBoxReviews[] | any> { 
-    const query = `SELECT COUNT(*) FROM box_reviews AS br
+    const query = `SELECT COUNT(*) AS awerness_total FROM box_reviews AS br
     LEFT JOIN boxes box on br.id = box.id
     where br.created_by = ${userId} `;
     const BuildById: IBoxReviews[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
