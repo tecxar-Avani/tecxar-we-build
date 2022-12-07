@@ -54,7 +54,7 @@ export class AuthController {
           .cookie("authorization", token, {
             expires: new Date(Date.now() + 2700000),
           })
-         .redirect(`${config.urlHost}${lastPage}`);
+         .redirect(`${lastPage}`);
       } else {
         const data = {
           user_name: userName,
