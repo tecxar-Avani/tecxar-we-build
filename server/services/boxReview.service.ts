@@ -3,8 +3,12 @@ import { HttpException } from "@/exceptions/HttpException";
 import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
+import { QueryTypes } from "sequelize";
 
 class BoxService {
+  getTotalAwerness(user: any) {
+    throw new Error("Method not implemented.");
+  }
   private reviews = DB.boxReviews;
 
   public async createBoxReview(
@@ -40,5 +44,13 @@ class BoxService {
       return reviewsById;
     }
   }
+
+  public async getTotalAwernessById(userId:any): Promise<IBoxReviews[] | any> { 
+    const query = `SELECT COUNT(*) FROM box_reviews AS br
+    LEFT JOIN boxes box on br.id = box.id
+    where br.created_by = ${userId} `;
+    const BuildById: IBoxReviews[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
+    return BuildById;
+}
 }
 export default BoxService;

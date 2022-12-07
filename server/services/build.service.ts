@@ -100,10 +100,8 @@ class BuildService {
       raw: true,
       subQuery: false,
     }
-
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(option);
     return videoBuilds;
-
   }
 
   public async getAllBuilds(
@@ -149,6 +147,7 @@ class BuildService {
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(option);
     return videoBuilds;
   }
+
   public async updateBuild(id: number, data): Promise<IVideoBuild | null> {
     const videoBuildsUpdate: any | null = await this.videoBuild.update({ ...data },
       { where: { id: id } }
