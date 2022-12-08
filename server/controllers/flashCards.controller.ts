@@ -83,6 +83,7 @@ export class FlashController {
     try {
       const user = req.user.id;
       const flashBuild = await this.flashCardService.getFlashCard(user);
+      console.log("::::::::::------------------:::::::::::",flashBuild)
       return {
         status: true,
         data: flashBuild,
@@ -164,6 +165,8 @@ export class FlashController {
     @Res() res: Response
   ) {
     try {
+      
+
       const flashBuildId = await this.flashCardService.getFlashCardBuildId(
         buildId
       );

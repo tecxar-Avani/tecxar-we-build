@@ -86,8 +86,6 @@ const onDelete = () =>{
     }
   };
 
-  console.log("###################FlashCardModal")
-  console.log(props)
   return (
     <>
       <Modal

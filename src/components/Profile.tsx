@@ -67,14 +67,22 @@ const ProfileCard = (props: any) => {
             onClick={() => {
               props.setmodalOpen;
             }}
-          >
-            <Image
-              alt="flashCards"
-              src={`/img/${props.profile.flashCardProfile}`}
-              onClick={() => {
-                props.questionData();
-              }}
-            />
+          >{props.profile.flashCardsNumber > 0 ?(<Image
+            alt="flashCards"
+            src={`/img/${props.profile.flashCardProfile}`}
+            onClick={() => {
+              props.questionData();
+            }}
+          />):(<Image
+            alt="flashCards"
+            src={`/img/${props.profile.flashCardProfile}`}
+            // onClick={() => {
+            //   props.questionData();
+            // } }
+          />)
+          
+          }
+            
           </div>
         )}
         <div className="button justify-content-center d-flex">

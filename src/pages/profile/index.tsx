@@ -11,13 +11,15 @@ import {
   updateFlashCardId,
   flashCardData,
 } from "../../store/reducers/flashCard.reducer";
+import moment from 'moment';
+
 import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 import { Input, Modal, Button, Form } from "antd";
 import {
   getUserByEmail,
-  userSelector,updateUserById, totalbuilds
+  userSelector,updateUserById, totalbuilds, getAllUsers
 } from "../../store/reducers/user.reducer";
 import {
   buildSelector,
@@ -26,7 +28,9 @@ import {
 
 const Profile = () => {
   const dispatch = useAppDispatch();
-  const userData = useAppSelector(userSelector);
+  const userData  = useAppSelector(userSelector);
+  const userList  = useAppSelector(userSelector);
+
   const editFlashCard = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState<any>({});
@@ -35,99 +39,57 @@ const Profile = () => {
   const [editFlashCardData, setEditFlashCardData] = useState({});
   const [editName, setEditName] = useState<any>();
   const [defaultQuestionIndex, setDefaultQuestionIndex] = useState(0);
-
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const { userBuildList } = useAppSelector(buildSelector);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
-
   useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
+    dispatch(getAllUsers());
     dispatch(getUserByEmail());
     dispatch(totalbuilds());
   }, []);
- 
-// console.log("$$$$$$$$$$$$$",userData.boxes.data.awernessCount)
-// console.log("$$$$$$hhhhhhhhhhhhh$$$$$$$",userData.boxes.data.buildCount)
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
-    dateOfJoined: "Date joined: Oct 2022",
+    dateOfJoined: `Date joined: ${moment(userData && userData.userData && userData.userData.createdAt).format('MMM YYYY')} `,
     boxLeftTitle: "Boxes",
-    boxValueLeft: "4",
-    profileImg: "Ellipse60.png",
+    boxValueLeft: userData?.boxes?.data?.boxbuildCount?.map((a:any) => a.boxbuild_total),
+    profileImg: userData.userData.profile_image,
     bottomTitle: userData.userData.tag_line,
     boxRightTitle: "Awareness",
-    boxValueRight: "15",
+    boxValueRight: userData?.boxes?.data?.awernessCount?.map((a:any) => a.awerness_total),
     flashCardProfile: "flashCardProfile.svg",
-    flashCardsNumber: 38,
+    flashCardsNumber: userData?.boxes?.data?.flashCardCount?.map((a:any) => a.flashCard_total),
   };
-  const profileDatas = [
-    {
-      id: 1,
-      title: "Mazza Konny",
-      dateOfJoined: "Date joined: Oct 2022",
-      boxLeftTitle: "Boxes",
-      boxValueLeft: "4",
-      profileImg: "Ellipse60.png",
-      bottomTitle: "all the city with me",
-      boxRightTitle: "Awareness",
-      boxValueRight: "15",
-      blockIcon: "block.svg",
-      UnBlockIcon: "unBlock.svg",
-      deleteIcon: "delete.svg",
-    },
-    {
-      id: 2,
-      title: "Mazza Konny",
-      dateOfJoined: "Date joined: Oct 2022",
-      boxLeftTitle: "Boxes",
-      boxValueLeft: "4",
-      profileImg: "Ellipse60.png",
-      bottomTitle: "all the city with me",
-      boxRightTitle: "Awareness",
-      boxValueRight: "15",
-      blockIcon: "block.svg",
-      UnBlockIcon: "unBlock.svg",
-      deleteIcon: "delete.svg",
-    },
-    {
-      id: 3,
-      title: "Mazza Konny",
-      dateOfJoined: "Date joined: Oct 2022",
-      boxLeftTitle: "Boxes",
-      boxValueLeft: "4",
-      profileImg: "Ellipse60.png",
-      bottomTitle: "all the city with me",
-      boxRightTitle: "Awareness",
-      boxValueRight: "15",
-      blockIcon: "block.svg",
-      UnBlockIcon: "unBlock.svg",
-      deleteIcon: "delete.svg",
-    },
-    {
-      id: 4,
-      title: "Mazza Konny",
-      dateOfJoined: "Date joined: Oct 2022",
-      boxLeftTitle: "Boxes",
-      boxValueLeft: "4",
-      profileImg: "Ellipse60.png",
-      bottomTitle: "all the city with me",
-      boxRightTitle: "Awareness",
-      boxValueRight: "15",
-      blockIcon: "block.svg",
-      UnBlockIcon: "unBlock.svg",
-      deleteIcon: "delete.svg",
-    },
-  ];
+  console.log("-------------------------",userData.usersList)
+  const profileDatas : any = []; 
+    userData.usersList && userData.usersList.length > 0 && userData.usersList.map((data:any) => {
+      profileDatas.push({
+        id: data.id,
+        title:data.user_name,
+        dateOfJoined: `Date joined: ${moment(data.createdAt).format('MMM YYYY')}`,
+        boxLeftTitle: "Boxes",
+        boxValueLeft: "4",
+        profileImg: data.profile_image,
+        bottomTitle: data.tag_line,
+        boxRightTitle: "Awareness",
+        boxValueRight: "15",
+        blockIcon: "block.svg",
+        UnBlockIcon: "unBlock.svg",
+        deleteIcon: "delete.svg",
+      });
+    });
+  
   const onEdit = (e: any) => {
     const data = {
       id: userData.userData.id,
       user_name: e,
     };
     dispatch(updateUserById(data));
+    setEditName(false)
   };
 
   const showModal = () => {
@@ -158,7 +120,7 @@ const Profile = () => {
       });
       setRevealAns(true);
     } else {
-      const editQuestion = flashCardArr[defaultQuestionIndex].id;
+      const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
       setDefaultQuestionIndex(defaultQuestionIndex + 1);
       /* setModal3Open({
         content: index
@@ -186,6 +148,7 @@ const Profile = () => {
       setRevealAns(true);
     }
   };
+
 
   const handleSubmit = (data: any) => {
     console.log("ffffffffffff",data)
@@ -252,7 +215,7 @@ const Profile = () => {
             />
             <Row className="m-0">
               {profileDatas.length > 0 &&
-                profileDatas.map((profileDatas, index) => (
+                profileDatas.map((profileDatas:any, index:number) => (
                   <Col md={3} key={index}>
                     <ProfileCard
                       className="AllProfile"
@@ -350,7 +313,7 @@ const Profile = () => {
           id="form"
           layout="vertical"
           autoComplete="off"
-          onFinish={onEdit}
+          onFinish= {onEdit}
         >
           <Form.Item name="user_name" label="Name">
             <Input defaultValue={profileData.title}></Input>

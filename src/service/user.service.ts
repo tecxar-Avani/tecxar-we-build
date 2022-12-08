@@ -6,6 +6,10 @@ class UserService {
     return API.get(`/auth/`);
   }
 
+getAllUsers() {
+  return API.get(`/users/`);
+}
+
   getUserByMail() {
     return API.get(`/users/userByEmail`)
   }

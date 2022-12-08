@@ -7,7 +7,7 @@ import {
   AnyAction,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
-import { IBoxData, IBoxes, ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
+import {  IBoxes, ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -16,6 +16,15 @@ export const getUserAuth = createAsyncThunk(
   `userAuth/get`,
   async (): Promise<ICurrentUser> => {
     const { data } = await userService.userAuthentication();
+    return data;
+  }
+);
+
+export const getAllUsers: any = createAsyncThunk(
+  `users/`,
+  async (): Promise<ICreateUser> => {
+    const { data } = await userService.getAllUsers();
+ 
     return data;
   }
 );
@@ -48,7 +57,7 @@ interface State {
   error: string | undefined;
   loggedInUser: ICurrentUser;
   userData:ICreateUser;
-
+  usersList:ICreateUser
 }
 
 const initialState: State = {
@@ -57,7 +66,7 @@ const initialState: State = {
   loading: false,
   error: undefined,
   id: 0,
- 
+  usersList:{}
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -124,6 +133,26 @@ const userSlice = createSlice({
         };
       }
    })
+
+   .addCase(getAllUsers.fulfilled, (state, action) => {
+   
+    if (action.payload) {
+      
+      return {
+        ...state,
+        loading: false,
+        usersList: action.payload,
+        
+      };
+    } else {
+      return {
+        ...state,
+        loading: false,
+        usersList: initialState.usersList,
+      };
+    }
+  })
+
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
       })
