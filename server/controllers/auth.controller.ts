@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Response } from "express";
 import { Controller, Req, UseBefore, Res, Get } from "routing-controllers";
 import {
@@ -54,7 +55,8 @@ export class AuthController {
           .cookie("authorization", token, {
             expires: new Date(Date.now() + 2700000),
           })
-         .redirect(`${config.urlHost}${lastPage}`);
+        //  .redirect(`${config.urlHost}${lastPage}`);
+        .redirect(`https://webuild.tecxar.io/${lastPage}`);
       } else {
         const data = {
           user_name: userName,
