@@ -16,7 +16,6 @@ export class UserController {
   async getAllUsers(@Req() req: Request | any, @Res() res: Response) {
     try {
       const user = await this.userService.getUsers();
-
       return user;
     } catch (error) {
       return {
@@ -60,7 +59,7 @@ export class UserController {
   ) {
     try {
       const userBuild = await this.userService.updateUserProfile(id, data);
-      console.log("--------------------",userBuild)
+      console.log("--------------------", userBuild)
 
       return userBuild;
     } catch (error) {

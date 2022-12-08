@@ -20,7 +20,7 @@ import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import { BoxreviewDto } from "@/dtos/boxreviews.dto";
 
 @Controller("/reviews")
-//@UseBefore(authMiddleware)
+@UseBefore(authMiddleware)
 export class FlashController {
   private reviewService = new BoxReviewService();
 
@@ -69,7 +69,7 @@ export class FlashController {
 
   @Get("/getReviewsByBoxId")
   @OpenAPI({ summary: "Get all reviews of users" })
-  async getReviewsByBoxId(@Req() req: Request | any, @QueryParam('boxId')  boxId: number, @QueryParam('reviewType') type:string ,@Res() res: Response) {
+  async getReviewsByBoxId(@Req() req: Request | any, @QueryParam('boxId')  boxId: number, @QueryParam('type') type:string ,@Res() res: Response) {
     try {
       const reviewDataByBox = await this.reviewService.getReviewsByBox(boxId,type);
       return reviewDataByBox;

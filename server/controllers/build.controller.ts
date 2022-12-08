@@ -92,7 +92,7 @@ export class FlashController {
   @OpenAPI({ summary: "Get all build of users" })
   async getUsersBuild(@Req() req: Request | any, @Res() res: Response) {
     try {
-      const user = req.user.id;      
+      const user = req.user.id;
       const userBuild = await this.buildService.getBuildByUserId(user);
       return userBuild;
     } catch (error) {
@@ -140,9 +140,9 @@ export class FlashController {
       const boxbuildCount = await this.boxService.getTotalBuilds(user);
       const awernessCount = await this.reviewService.getTotalAwernessById(user);
       const flashCardCount = await this.flashCardService.getTotalFlashCard(user);
-      return {boxbuildCount,awernessCount,flashCardCount};
+      return { boxbuildCount, awernessCount, flashCardCount };
     } catch (error) {
-      console.log('error',error)
+      console.log('error', error)
       return {
         error: {
           code: 500,
