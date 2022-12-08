@@ -37,7 +37,7 @@ export const getUserInteractedBuild: any = createAsyncThunk(
 export const getBuildByUrl: any = createAsyncThunk(
   `build/get/url`,
   async (url: string): Promise<IBuildRowsCountResponse> => {
-    const data = await BuildService.getBuildByUrl(url);
+    const {data} = await BuildService.getBuildByUrl(url);
     console.log(`build data`, data);
     return { status: data.status, rows: data };
   }
@@ -122,6 +122,7 @@ const buildSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getBuilds.fulfilled, (state, action) => {
+
         if (action.payload.status) {
           return {
             ...state,

@@ -10,8 +10,8 @@ import {
   flashCardSelector,
   updateFlashCardId,
   flashCardData,
-} from "../../store/reducers/flashCard.reducer";
-import moment from 'moment';
+} from "@/store/reducers/flashCard.reducer";
+import moment from "moment";
 
 import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
@@ -19,17 +19,20 @@ import AddFlashCardModal from "@/components/AddFlashCardModal";
 import { Input, Modal, Button, Form } from "antd";
 import {
   getUserByEmail,
-  userSelector,updateUserById, totalbuilds, getAllUsers
-} from "../../store/reducers/user.reducer";
+  userSelector,
+  updateUserById,
+  totalbuilds,
+  getAllUsers,
+} from "@/store/reducers/user.reducer";
 import {
   buildSelector,
   getUserInteractedBuild,
-} from "../../store/reducers/build.reducer";
+} from "@/store/reducers/build.reducer";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
-  const userData  = useAppSelector(userSelector);
-  const userList  = useAppSelector(userSelector);
+  const userData = useAppSelector(userSelector);
+  const { usersList, boxes } = useAppSelector(userSelector);
 
   const editFlashCard = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
@@ -55,41 +58,30 @@ const Profile = () => {
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
-    dateOfJoined: `Date joined: ${moment(userData && userData.userData && userData.userData.createdAt).format('MMM YYYY')} `,
+    dateOfJoined: `Date joined: ${moment(
+      userData && userData.userData && userData.userData.createdAt
+    ).format("MMM YYYY")} `,
     boxLeftTitle: "Boxes",
-    boxValueLeft: userData?.boxes?.data?.boxbuildCount?.map((a:any) => a.boxbuild_total),
-    profileImg: userData.userData.profile_image,
+    boxValueLeft: boxes?.data?.boxbuildCount?.map((a: any) => a.boxbuild_total),
+    profileImg: "hello.jpg",
     bottomTitle: userData.userData.tag_line,
     boxRightTitle: "Awareness",
-    boxValueRight: userData?.boxes?.data?.awernessCount?.map((a:any) => a.awerness_total),
+    boxValueRight: boxes?.data?.awernessCount?.map(
+      (a: any) => a.awerness_total
+    ),
     flashCardProfile: "flashCardProfile.svg",
-    flashCardsNumber: userData?.boxes?.data?.flashCardCount?.map((a:any) => a.flashCard_total),
+    flashCardsNumber: boxes?.data?.flashCardCount?.map(
+      (a: any) => a.flashCard_total
+    ),
   };
-  const profileDatas : any = []; 
-    userData.usersList && userData.usersList.length > 0 && userData.usersList.map((data:any) => {
-      profileDatas.push({
-        id: data.id,
-        title:data.user_name,
-        dateOfJoined: `Date joined: ${moment(data.createdAt).format('MMM YYYY')}`,
-        boxLeftTitle: "Boxes",
-        boxValueLeft: "4",
-        profileImg: data.profile_image,
-        bottomTitle: data.tag_line,
-        boxRightTitle: "Awareness",
-        boxValueRight: "15",
-        blockIcon: "block.svg",
-        UnBlockIcon: "unBlock.svg",
-        deleteIcon: "delete.svg",
-      });
-    });
-  
+
   const onEdit = (e: any) => {
     const data = {
       id: userData.userData.id,
       user_name: e,
     };
     dispatch(updateUserById(data));
-    setEditName(false)
+    setEditName(false);
   };
 
   const showModal = () => {
@@ -100,10 +92,10 @@ const Profile = () => {
     setEditName(false);
   };
 
-   useEffect(() => {
-     dispatch(getUserInteractedBuild());
-   }, []);
-   
+  useEffect(() => {
+    dispatch(getUserInteractedBuild());
+  }, []);
+
   const questionData = (index?: number, questionId?: number) => {
     const findLastValue = flashCardArr[flashCardArr.length - 1];
     const lastQuestionId = findLastValue && findLastValue.id;
@@ -149,7 +141,6 @@ const Profile = () => {
     }
   };
 
-
   const handleSubmit = (data: any) => {
     dispatch(updateFlashCardId(data));
   };
@@ -170,10 +161,7 @@ const Profile = () => {
           />
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
-             {userBuildList &&
-              userBuildList.rows &&
-              userBuildList.rows.length > 0 &&
-              userBuildList.rows.map((videoData:any, index:number) => (
+              {userBuildList.rows.map((videoData: any, index: number) => (
                 <Col md={4} key={index} className="videoProfile">
                   <Link href={`/newBuild?id=${videoData.videoId}`}>
                     <a>
@@ -192,18 +180,15 @@ const Profile = () => {
             className="title-list-of-profile py-2 my-2"
           />
           <Row className="m-0">
-            {userBuildList &&
-              userBuildList.rows &&
-              userBuildList.rows.length > 0 &&
-              userBuildList.rows.map((videoData: any, index: number) => (
-                <Col md={4} key={index} className="videoProfile">
-                  <Link href={`/newBuild?id=${videoData.videoId}`}>
-                    <a>
-                      <VideoCard VideoCardData={videoData} />
-                    </a>
-                  </Link>
-                </Col>
-              ))}
+            {userBuildList.rows.map((videoData: any, index: number) => (
+              <Col md={4} key={index} className="videoProfile">
+                <Link href={`/newBuild?id=${videoData.videoId}`}>
+                  <a>
+                    <VideoCard VideoCardData={videoData} />
+                  </a>
+                </Link>
+              </Col>
+            ))}
           </Row>
         </div>
         {userData.userData.role_id == 1 ? (
@@ -213,15 +198,30 @@ const Profile = () => {
               className="title-list-of-profile py-2 mt-4 mb-3"
             />
             <Row className="m-0">
-              {profileDatas.length > 0 &&
-                profileDatas.map((profileDatas:any, index:number) => (
+              {usersList.map((user: any, index: number) => {
+                const profile = {
+                  id: user.id,
+                  title: user.user_name,
+                  dateOfJoined: `Date joined: ${moment(user.createdAt).format(
+                    "MMM YYYY"
+                  )}`,
+                  boxLeftTitle: "Boxes",
+                  boxValueLeft: "4",
+                  profileImg: "hello.jpg",
+                  bottomTitle: user.tag_line,
+                  boxRightTitle: "Awareness",
+                  boxValueRight: "15",
+                  blockIcon: "block.svg",
+                  UnBlockIcon: "unBlock.svg",
+                  deleteIcon: "delete.svg",
+                };
+
+                return (
                   <Col md={3} key={index}>
-                    <ProfileCard
-                      className="AllProfile"
-                      profile={profileDatas}
-                    />
+                    <ProfileCard className="AllProfile" profile={profile} />
                   </Col>
-                ))}
+                );
+              })}
             </Row>
           </div>
         ) : (
@@ -311,7 +311,7 @@ const Profile = () => {
           id="form"
           layout="vertical"
           autoComplete="off"
-          onFinish= {onEdit}
+          onFinish={onEdit}
         >
           <Form.Item name="user_name" label="Name">
             <Input defaultValue={profileData.title}></Input>

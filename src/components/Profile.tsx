@@ -1,9 +1,17 @@
 import React from "react";
 import { Image } from "react-bootstrap";
 
+interface profileProps {
+  className: string;
+  profile: {
+    title: string;
+    dateOfJoined: Date;
+    editIcon: string;
+  };
+  showModal: Function;
+}
 
 const ProfileCard = (props: any) => {
-  
   return (
     <>
       <div
@@ -11,9 +19,7 @@ const ProfileCard = (props: any) => {
       >
         <div className="d-flex justify-content-center align-items-center">
           <div>
-            {props.profile && props.profile.title && (
-              <h4 className="title">{props.profile.title}</h4>
-            )}
+            <h4 className="title">{props.profile.title}</h4>
             {props.profile && props.profile.dateOfJoined && (
               <h5 className="subTitle py-1">{props.profile.dateOfJoined}</h5>
             )}
@@ -40,8 +46,8 @@ const ProfileCard = (props: any) => {
           <div className="mx-4">
             <Image
               alt="profile"
-              src={`/img/${props.profile && props.profile.profileImg}`}
-              className="img-fluid"
+              src={`/profile/${props.profile.profileImg}`}
+              className="img-fluid img-rounded"
             />
             <p className="cityWithMe mb-0 mt-2">
               “{props.profile && props.profile.bottomTitle}”
@@ -67,22 +73,24 @@ const ProfileCard = (props: any) => {
             onClick={() => {
               props.setmodalOpen;
             }}
-          >{props.profile.flashCardsNumber > 0 ?(<Image
-            alt="flashCards"
-            src={`/img/${props.profile.flashCardProfile}`}
-            onClick={() => {
-              props.questionData();
-            }}
-          />):(<Image
-            alt="flashCards"
-            src={`/img/${props.profile.flashCardProfile}`}
-            // onClick={() => {
-            //   props.questionData();
-            // } }
-          />)
-          
-          }
-            
+          >
+            {props.profile.flashCardsNumber > 0 ? (
+              <Image
+                alt="flashCards"
+                src={`/img/${props.profile.flashCardProfile}`}
+                onClick={() => {
+                  props.questionData();
+                }}
+              />
+            ) : (
+              <Image
+                alt="flashCards"
+                src={`/img/${props.profile.flashCardProfile}`}
+                // onClick={() => {
+                //   props.questionData();
+                // } }
+              />
+            )}
           </div>
         )}
         <div className="button justify-content-center d-flex">
