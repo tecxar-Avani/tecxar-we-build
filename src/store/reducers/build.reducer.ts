@@ -36,14 +36,15 @@ export const getUserInteractedBuild: any = createAsyncThunk(
 
 export const getBuildByUrl: any = createAsyncThunk(
   `build/get/url`,
-  async (url:string): Promise<IBuildRowsCountResponse> => {
-    const { data } = await BuildService.getBuildByUrl(url);
+  async (url: string): Promise<IBuildRowsCountResponse> => {
+    const {data} = await BuildService.getBuildByUrl(url);
+    console.log(`build data`, data);
     return { status: data.status, rows: data };
   }
 );
 export const getBuildById: any = createAsyncThunk(
   `build/get/id`,
-  async (id:number): Promise<IBuildRowsCountResponse> => {
+  async (id: number): Promise<IBuildRowsCountResponse> => {
     const { data } = await BuildService.getBuildById(id);
     return { status: data.status, rows: data };
   }
@@ -56,12 +57,6 @@ export const addBuild = createAsyncThunk(
     return { status, data };
   }
 );
-
-// export const boxDataByUserId = createAsyncThunk(`users/`,async (box : IBoxes ) => {
-//   const {status,data } = await BuildService.boxDataByUserId();
-//   return { status,data };
-// })
-
 
 interface State {
   id: number;
@@ -84,17 +79,17 @@ const initialState: State = {
     status: true,
     rows: [],
   },
-  userBuildList:{
-    status:true,
-    rows:[]
+  userBuildList: {
+    status: true,
+    rows: [],
   },
-  buildListByUrl:{
-     status:true,
-    rows:[]
+  buildListByUrl: {
+    status: true,
+    rows: [],
   },
-  buildById:{
-    status:true,
-    rows:[]
+  buildById: {
+    status: true,
+    rows: [],
   },
   loading: false,
   error: undefined,
@@ -127,6 +122,7 @@ const buildSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getBuilds.fulfilled, (state, action) => {
+
         if (action.payload.status) {
           return {
             ...state,
@@ -159,7 +155,6 @@ const buildSlice = createSlice({
         }
       })
       .addCase(getBuildByUrl.fulfilled, (state, action) => {
-        console.log("buildListByUrl",action);
         if (action.payload.status) {
           return {
             ...state,

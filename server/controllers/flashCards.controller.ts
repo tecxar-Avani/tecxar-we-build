@@ -21,6 +21,7 @@ import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interf
 import { RequestWithUser } from "@/interfaces/auth.interface";
 
 @Controller("/flashcard")
+@UseBefore(authMiddleware)
 export class FlashController {
   private flashCardService = new FlashCardService();
 
@@ -53,6 +54,7 @@ export class FlashController {
 
   @Post("/flashcardresponse")
   @HttpCode(201)
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Create a new FlashCard Response" })
   async flashcardResponse(
     @Body() flashcardResponseData: flashCardResponseDto,
@@ -88,6 +90,8 @@ export class FlashController {
         data: flashBuild,
       };
     } catch (error) {
+      console.log(error);
+      
       return {
         error: {
           code: 500,
@@ -102,9 +106,7 @@ export class FlashController {
   async getFlashCardResponse(@Req() req: Request | any, @Res() res: Response) {
     try {
       const userId = req.user.id;
-      const flashBuild = await this.flashCardService.getFlashCardResponse(
-        userId
-      );
+      const flashBuild = await this.flashCardService.getFlashCardResponse(userId);
       return flashBuild;
     } catch (error) {
       return {
@@ -125,7 +127,6 @@ export class FlashController {
   ) {
     try {
       const flashBuild = await this.flashCardService.getFlashCardByBuildId(id);
-
       return {
         status: true,
         flashBuild,
@@ -165,6 +166,8 @@ export class FlashController {
     @Res() res: Response
   ) {
     try {
+      
+
       const flashBuildId = await this.flashCardService.getFlashCardBuildId(
         buildId
       );

@@ -48,6 +48,8 @@ export const getFlashCardByUser = createAsyncThunk(
   async (): Promise<IFlashCardRowsCountResponse> => {
     const { status, data } = await flashCardService.getFlashCardByUser();
     return { status: data.status, rows: data.data };
+  
+
   }
 );
 export const updateFlashCardId = createAsyncThunk(
@@ -144,6 +146,7 @@ const flashCardSlice = createSlice({
         }
       })
       .addCase(getFlashCardByUser.fulfilled, (state, action) => {
+       
         if (action.payload.status) {
           return {
             ...state,

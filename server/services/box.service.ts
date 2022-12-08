@@ -3,6 +3,7 @@ import { HttpException } from "@/exceptions/HttpException";
 import { IBoxes } from "@/interfaces/boxes.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
+import { QueryTypes } from "sequelize";
 
 class BoxService {
   private box = DB.box;
@@ -25,6 +26,14 @@ class BoxService {
     } else {
       return videoBuilds;
     }
+  }
+
+  public async getTotalBuilds(userId: any): Promise<IBoxes[] | any> {
+    const query = `SELECT COUNT(*) AS boxbuild_total FROM video_builds AS vb
+      LEFT JOIN boxes box on vb.id = box.build_id
+      where vb.created_by = ${userId} `;
+    const BuildById: IBoxes[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
+    return BuildById;
   }
 
 }

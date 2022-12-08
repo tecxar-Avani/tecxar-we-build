@@ -8,7 +8,7 @@ import DB from "@databases";
 import { isEmpty } from "class-validator";
 import { group } from "console";
 import { logging } from "googleapis/build/src/apis/logging";
-import { col, where } from "sequelize";
+import { col, QueryTypes, where } from "sequelize";
 
 class FlashCardService {
   private flashCard = DB.flashCards;
@@ -173,9 +173,17 @@ class FlashCardService {
     }
   }
 
+  public async getTotalFlashCard(userId: any): Promise<IFlashCards[] | any> {
+    const query = `SELECT COUNT(*) AS flashCard_total FROM flash_cards AS fc
+    LEFT JOIN boxes box on fc.id = box.id
+    where fc.created_by = ${userId} `;
+    const Count: IFlashCards[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
+    return Count;
+  }
+
   public async updateFlashCardId(
     id: number,
-    data:any
+    data: any
   ): Promise<IFlashCards | null> {
     const flashCardByUpdate: any | null = await this.flashCard.update(
       { ...data },

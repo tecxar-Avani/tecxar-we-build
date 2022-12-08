@@ -9,4 +9,3 @@ export interface IUpdateGroups {
   title?: string;
   updated_at?: Date;
 }
-  

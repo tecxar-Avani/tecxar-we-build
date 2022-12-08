@@ -243,6 +243,7 @@ const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:stri
     };
     dispatch(addAwareness(data));
     setReview(review);
+    setAwarenessModal(false)
   };
   const acceptanceData = [
     {

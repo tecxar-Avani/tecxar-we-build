@@ -5,9 +5,8 @@ interface ICustomerCredentials {
 
 type difficultyLevelEnumType = "low" | "medium" | "high" | "very_high";
 type VideoTypeEnumType = "theory" | "practical";
-type ResponseEnumType = "good"| "hard"| "easy"| "again"
-type ReviewTypeEnumType = "Acceptance" | "Resistance" | "Inspiration"
-
+type ResponseEnumType = "good" | "hard" | "easy" | "again";
+type ReviewTypeEnumType = "Acceptance" | "Resistance" | "Inspiration";
 
 export interface IVideoBuild {
   id?: number;
@@ -20,22 +19,22 @@ export interface IVideoBuild {
   updated_by?: number;
   createdAt?: Date;
   updatedAt?: Date;
-  rows?:any
+  rows?: any;
 }
 
 export interface IBuild {
-  answer?:string
-  email?: string
-  id?: number
-  question?:string
-  tag_line?: string
-  user_id?: number
-  user_name?: string
+  answer?: string;
+  email?: string;
+  id?: number;
+  question?: string;
+  tag_line?: string;
+  user_id?: number;
+  user_name?: string;
 }
 
 export interface IBuildUser {
-user_id: number
-user_name: string
+  user_id: number;
+  user_name: string;
 }
 export interface IFlashCard {
   id?: number;
@@ -45,11 +44,11 @@ export interface IFlashCard {
   created_by?: number;
   updated_by?: number;
   updatedAt?: Date;
-  user_id?:number
+  user_id?: number;
   flashBuild?: {
-    build: IBuild[],
-    users: IBuildUser[]
-  }
+    build: IBuild[];
+    users: IBuildUser[];
+  };
 }
 
 export interface IUpdateFlashCards {
@@ -61,7 +60,6 @@ export interface IUpdateFlashCards {
   updatedAt?: Date;
 }
 
-
 export interface IBoxReviews {
   id?: number;
   box_id: number;
@@ -70,7 +68,7 @@ export interface IBoxReviews {
   created_by?: number;
   createdAt?: Date;
 }
-export interface ICreateFlashCard{
+export interface ICreateFlashCard {
   question: string;
   answer: string;
 }
@@ -80,10 +78,9 @@ export interface IBoxes {
   build_id?: number;
   description?: string;
   sorting_order?: number;
-  createdAt?:Date;
-  updatedAt?:Date
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-
 
 export interface ICurrentUser {
   id?: number;
@@ -108,7 +105,7 @@ export interface ICreateUser {
   updatedAt?: Date;
 }
 export interface IUpdateUser {
-  id?:number;
+  id?: number;
   user_name?: string;
   tag_line?: string;
   is_blocked?: number;
@@ -116,5 +113,3 @@ export interface IUpdateUser {
   updated_by?: number;
   updatedAt?: Date;
 }
-
-

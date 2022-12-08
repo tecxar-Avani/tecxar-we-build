@@ -10,23 +10,30 @@ import {
   flashCardSelector,
   updateFlashCardId,
   flashCardData,
-} from "../../store/reducers/flashCard.reducer";
+} from "@/store/reducers/flashCard.reducer";
+import moment from "moment";
+
 import FlashCardModal from "@/components/FlashCardModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 import { Input, Modal, Button, Form } from "antd";
 import {
   getUserByEmail,
-  userSelector,updateUserById
-} from "../../store/reducers/user.reducer";
+  userSelector,
+  updateUserById,
+  totalbuilds,
+  getAllUsers,
+} from "@/store/reducers/user.reducer";
 import {
   buildSelector,
   getUserInteractedBuild,
-} from "../../store/reducers/build.reducer";
+} from "@/store/reducers/build.reducer";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
+  const { usersList } = useAppSelector(userSelector);
+
   const editFlashCard = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState<any>({});
@@ -35,98 +42,42 @@ const Profile = () => {
   const [editFlashCardData, setEditFlashCardData] = useState({});
   const [editName, setEditName] = useState<any>();
   const [defaultQuestionIndex, setDefaultQuestionIndex] = useState(0);
-
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const { userBuildList } = useAppSelector(buildSelector);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
-
   useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
+    dispatch(getAllUsers());
     dispatch(getUserByEmail());
+    dispatch(totalbuilds());
   }, []);
-  console.log("OOOOOOOOOOOOOOOOOO", userData.userData);
-  const role = "admin";
-
+console.log(usersList)
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
-    dateOfJoined: "Date joined: Oct 2022",
+    dateOfJoined: `Date joined: ${moment(
+      userData && userData.userData && userData.userData.createdAt
+    ).format("MMM YYYY")} `,
     boxLeftTitle: "Boxes",
-    boxValueLeft: "4",
-    profileImg: "Ellipse60.png",
-    bottomTitle: "all the city with me",
+    boxValueLeft: "15",
+    profileImg: "hello.jpg",
+    bottomTitle: userData.userData.tag_line,
     boxRightTitle: "Awareness",
-    boxValueRight: "15",
+    boxValueRight: "4",
     flashCardProfile: "flashCardProfile.svg",
-    flashCardsNumber: 38,
+    flashCardsNumber: "38",
   };
-  const profileDatas = [
-    {
-      id: 1,
-      title: "Mazza Konny",
-      dateOfJoined: "Date joined: Oct 2022",
-      boxLeftTitle: "Boxes",
-      boxValueLeft: "4",
-      profileImg: "Ellipse60.png",
-      bottomTitle: "all the city with me",
-      boxRightTitle: "Awareness",
-      boxValueRight: "15",
-      blockIcon: "block.svg",
-      UnBlockIcon: "unBlock.svg",
-      deleteIcon: "delete.svg",
-    },
-    {
-      id: 2,
-      title: "Mazza Konny",
-      dateOfJoined: "Date joined: Oct 2022",
-      boxLeftTitle: "Boxes",
-      boxValueLeft: "4",
-      profileImg: "Ellipse60.png",
-      bottomTitle: "all the city with me",
-      boxRightTitle: "Awareness",
-      boxValueRight: "15",
-      blockIcon: "block.svg",
-      UnBlockIcon: "unBlock.svg",
-      deleteIcon: "delete.svg",
-    },
-    {
-      id: 3,
-      title: "Mazza Konny",
-      dateOfJoined: "Date joined: Oct 2022",
-      boxLeftTitle: "Boxes",
-      boxValueLeft: "4",
-      profileImg: "Ellipse60.png",
-      bottomTitle: "all the city with me",
-      boxRightTitle: "Awareness",
-      boxValueRight: "15",
-      blockIcon: "block.svg",
-      UnBlockIcon: "unBlock.svg",
-      deleteIcon: "delete.svg",
-    },
-    {
-      id: 4,
-      title: "Mazza Konny",
-      dateOfJoined: "Date joined: Oct 2022",
-      boxLeftTitle: "Boxes",
-      boxValueLeft: "4",
-      profileImg: "Ellipse60.png",
-      bottomTitle: "all the city with me",
-      boxRightTitle: "Awareness",
-      boxValueRight: "15",
-      blockIcon: "block.svg",
-      UnBlockIcon: "unBlock.svg",
-      deleteIcon: "delete.svg",
-    },
-  ];
+
   const onEdit = (e: any) => {
     const data = {
       id: userData.userData.id,
       user_name: e,
     };
     dispatch(updateUserById(data));
+    setEditName(false);
   };
 
   const showModal = () => {
@@ -137,10 +88,10 @@ const Profile = () => {
     setEditName(false);
   };
 
-   useEffect(() => {
-     dispatch(getUserInteractedBuild());
-   }, []);
-   
+  useEffect(() => {
+    dispatch(getUserInteractedBuild());
+  }, []);
+
   const questionData = (index?: number, questionId?: number) => {
     const findLastValue = flashCardArr[flashCardArr.length - 1];
     const lastQuestionId = findLastValue && findLastValue.id;
@@ -187,7 +138,6 @@ const Profile = () => {
   };
 
   const handleSubmit = (data: any) => {
-    console.log("ffffffffffff",data)
     dispatch(updateFlashCardId(data));
   };
   return (
@@ -207,10 +157,7 @@ const Profile = () => {
           />
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
-             {userBuildList &&
-              userBuildList.rows &&
-              userBuildList.rows.length > 0 &&
-              userBuildList.rows.map((videoData:any, index:number) => (
+              {userBuildList.rows.map((videoData: any, index: number) => (
                 <Col md={4} key={index} className="videoProfile">
                   <Link href={`/newBuild?id=${videoData.videoId}`}>
                     <a>
@@ -229,18 +176,15 @@ const Profile = () => {
             className="title-list-of-profile py-2 my-2"
           />
           <Row className="m-0">
-            {userBuildList &&
-              userBuildList.rows &&
-              userBuildList.rows.length > 0 &&
-              userBuildList.rows.map((videoData: any, index: number) => (
-                <Col md={4} key={index} className="videoProfile">
-                  <Link href={`/newBuild?id=${videoData.videoId}`}>
-                    <a>
-                      <VideoCard VideoCardData={videoData} />
-                    </a>
-                  </Link>
-                </Col>
-              ))}
+            {userBuildList.rows.map((videoData: any, index: number) => (
+              <Col md={4} key={index} className="videoProfile">
+                <Link href={`/newBuild?id=${videoData.videoId}`}>
+                  <a>
+                    <VideoCard VideoCardData={videoData} />
+                  </a>
+                </Link>
+              </Col>
+            ))}
           </Row>
         </div>
         {userData.userData.role_id == 1 ? (
@@ -250,15 +194,30 @@ const Profile = () => {
               className="title-list-of-profile py-2 mt-4 mb-3"
             />
             <Row className="m-0">
-              {profileDatas.length > 0 &&
-                profileDatas.map((profileDatas, index) => (
+              {usersList.map((user: any, index: number) => {
+                const profile = {
+                  id: user.id,
+                  title: user.user_name,
+                  dateOfJoined: `Date joined: ${moment(user.createdAt).format(
+                    "MMM YYYY"
+                  )}`,
+                  boxLeftTitle: "Boxes",
+                  boxValueLeft: "4",
+                  profileImg: "hello.jpg",
+                  bottomTitle: user.tag_line,
+                  boxRightTitle: "Awareness",
+                  boxValueRight: "15",
+                  blockIcon: "block.svg",
+                  UnBlockIcon: "unBlock.svg",
+                  deleteIcon: "delete.svg",
+                };
+
+                return (
                   <Col md={3} key={index}>
-                    <ProfileCard
-                      className="AllProfile"
-                      profile={profileDatas}
-                    />
+                    <ProfileCard className="AllProfile" profile={profile} />
                   </Col>
-                ))}
+                );
+              })}
             </Row>
           </div>
         ) : (
@@ -326,7 +285,6 @@ const Profile = () => {
         }}
         defaultQuestionIndex={defaultQuestionIndex}
       />
-      {console.log("++++++++++++++++", editFlashCardData)}
 
       <Modal
         title="Edit Your Name"

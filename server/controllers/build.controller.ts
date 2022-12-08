@@ -33,13 +33,16 @@ import BuildService from "@/services/build.service";
 import { google } from "googleapis";
 import config from "@/configs";
 import { RequestWithUser } from "@/interfaces/auth.interface";
+import BoxService from "@/services/box.service";
+import BoxReviewService from "@/services/boxReview.service";
 
 @Controller("/build")
-// @UseBefore(authMiddleware)
+@UseBefore(authMiddleware)
 export class FlashController {
   private buildService = new BuildService();
   private flashCardService = new FlashCardService();
-  boxService: any;
+  private boxService = new BoxService();
+  private reviewService = new BoxReviewService();
 
   @Post("/create")
   @UseBefore(authMiddleware)
@@ -111,14 +114,30 @@ export class FlashController {
     try {
       const userId = req.user.id;
       const userBuild = await this.buildService.getUserInteractedBuild(userId);
-      let searchedResult;
-      const searchedData = await this.youtubeApiCall(userBuild).then(
-        (result) => {
-          searchedResult = result;
-        }
-      );
-      return { data: searchedResult, box: userBuild };
+      const { searchedData, error } = await this.youtubeApiCall(userBuild)
+      return { data: searchedData, box: userBuild };
     } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
+  @Get("/totalbuilds")
+  @UseBefore(authMiddleware)
+  @OpenAPI({ summary: "Get all build of users" })
+  async getTotalBuilds(@Req() req: Request | any, @Res() res: Response) {
+    try {
+      const user = req.user.id;
+      const boxbuildCount = await this.boxService.getTotalBuilds(user);
+      const awernessCount = await this.reviewService.getTotalAwernessById(user);
+      const flashCardCount = await this.flashCardService.getTotalFlashCard(user);
+      return { boxbuildCount, awernessCount, flashCardCount };
+    } catch (error) {
+      console.log('error', error)
       return {
         error: {
           code: 500,
@@ -129,7 +148,7 @@ export class FlashController {
   }
 
   @Get("/url")
-  @OpenAPI({ summary: "Get all build of users by Url" })
+  @OpenAPI({ summary: "Search Url" })
   async getUsersBuildByUrl(
     @Req() req: Request | any,
     @Res() res: Response,
@@ -138,41 +157,8 @@ export class FlashController {
   ) {
     try {
       const userBuild = await this.buildService.getUsersBuildByUrl(url, search);
-      let searchedResult;
-      const searchedData = await this.youtubeApiCall(
-        userBuild,
-        search,
-        url
-      ).then((result) => {
-        searchedResult = result;
-      });
-      return { status: true, data: searchedResult, box: userBuild };
-    } catch (error) {
-      return {
-        error: {
-          code: 500,
-          message: (error as Error).message,
-        },
-      };
-    }
-  }
-
-  @Get("/getAllBuilds")
-  @OpenAPI({ summary: "Get all build " })
-  async getAllBuilds(
-    @Req() req: Request | any,
-    @Res() res: Response,
-    @QueryParam("search") search?: string
-  ) {
-    try {
-      const userBuild = await this.buildService.getAllBuilds(search);
-      let searchedResult;
-      const searchedData = await this.youtubeApiCall(userBuild, search).then(
-        (result) => {
-          searchedResult = result;
-        }
-      );
-      return { status: true, data: searchedResult, box: userBuild };
+      const { searchedData, error } = await this.youtubeApiCall(userBuild, search, url)
+      return { data: searchedData, box: userBuild };
     } catch (error) {
       return {
         error: {
@@ -280,6 +266,7 @@ export class FlashController {
           part: ["id,snippet"],
           q: videoUrl,
         });
+
         for (let i = 0; i < response.data.items.length; i++) {
           const item = response.data.items[i];
           const videoUrl = item.snippet.thumbnails.default.url;
@@ -307,7 +294,29 @@ export class FlashController {
           searchedData.push(data);
         }
       }
-      return searchedData;
+      return { searchedData, error: null };
+    } catch (error) {
+      return {
+        searchedData: [],
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
+  @Get("/getAllBuilds")
+  @OpenAPI({ summary: "Get all build " })
+  async getAllBuilds(
+    @Req() req: Request | any,
+    @Res() res: Response,
+    @QueryParam("search") search?: string
+  ) {
+    try {
+      const userBuild = await this.buildService.getAllBuilds(search);
+      const { searchedData, error } = await this.youtubeApiCall(userBuild, search)
+      return { status: true, data: searchedData, box: userBuild };
     } catch (error) {
       return {
         error: {

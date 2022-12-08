@@ -7,7 +7,12 @@ import {
   AnyAction,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
-import { ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
+import {
+  IBoxes,
+  ICreateUser,
+  ICurrentUser,
+  IUpdateUser,
+} from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -20,6 +25,15 @@ export const getUserAuth = createAsyncThunk(
   }
 );
 
+export const getAllUsers: any = createAsyncThunk(
+  `users/`,
+  async (): Promise<ICreateUser> => {
+    const { data } = await userService.getAllUsers();
+
+    return data;
+  }
+);
+
 export const getUserByEmail = createAsyncThunk(
   `users/userByEmail`,
   async (): Promise<ICurrentUser> => {
@@ -28,28 +42,39 @@ export const getUserByEmail = createAsyncThunk(
   }
 );
 
-export const updateUserById = createAsyncThunk(`users/`, async (updateUser: IUpdateUser, { dispatch }) => {
-  const id = Number(updateUser.id);
-  const user_name =  updateUser.user_name;
-  const { status, data } = await userService.updateUserById(id,user_name);
-  return { status,data };
-});
+export const updateUserById = createAsyncThunk(
+  `users/`,
+  async (updateUser: IUpdateUser, { dispatch }) => {
+    const id = Number(updateUser.id);
+    const user_name = updateUser.user_name;
+    const { status, data } = await userService.updateUserById(id, user_name);
+    return { status, data };
+  }
+);
 
+export const totalbuilds = createAsyncThunk(`build/totalbuilds`, async () => {
+  const { status, data } = await userService.totalbuilds();
+  return { status, data };
+});
 
 interface State {
   id: number;
   loading: boolean;
   error: string | undefined;
   loggedInUser: ICurrentUser;
-  userData:ICreateUser;
+  userData: ICreateUser;
+  usersList: ICreateUser[];
+  // boxes: [];
 }
 
 const initialState: State = {
   loggedInUser: {},
-  userData:{},
+  userData: {},
   loading: false,
   error: undefined,
   id: 0,
+  usersList: [],
+  // boxes: [],
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -71,19 +96,19 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserAuth.fulfilled, (state, action) => {
-         if (action.payload) {
-           return {
-             ...state,
-             loading: false,
-             loggedInUser: action.payload,
-           };
-         } else {
-           return {
-             ...state,
-             loading: false,
-             loggedInUser: initialState.loggedInUser,
-           };
-         }
+        if (action.payload) {
+          return {
+            ...state,
+            loading: false,
+            loggedInUser: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            loggedInUser: initialState.loggedInUser,
+          };
+        }
       })
       .addCase(getUserByEmail.fulfilled, (state, action) => {
         if (action.payload) {
@@ -99,7 +124,39 @@ const userSlice = createSlice({
             userData: initialState.userData,
           };
         }
-     })
+      })
+      .addCase(totalbuilds.fulfilled, (state, action) => {
+        if (action.payload) {
+          return {
+            ...state,
+            loading: false,
+            boxes: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            boxes: action.payload,
+          };
+        }
+      })
+
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        if (action.payload) {
+          return {
+            ...state,
+            loading: false,
+            usersList: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            usersList: initialState.usersList,
+          };
+        }
+      })
+
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
       })

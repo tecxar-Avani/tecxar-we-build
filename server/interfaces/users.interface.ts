@@ -15,7 +15,7 @@ export interface ICreateUser {
 
 
 export interface IUpdateUser {
-  id?:number;
+  id?: number;
   user_name?: string;
   tag_line?: string;
   is_blocked?: number;

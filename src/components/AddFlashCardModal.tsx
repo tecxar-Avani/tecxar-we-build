@@ -8,7 +8,6 @@ const { TextArea } = Input;
 const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
   const [modal5Open, setModal5Open] = useState(false);
-
   return (
     <>
       <Modal
@@ -70,7 +69,6 @@ const AddFlashCardModal = (props: any) => {
               showCount
               maxLength={100}
               rows={4}
-              // defaultValue={"answer"}
               defaultValue={
                 props.defaultQuestionIndex &&
                 props.flashCardArr &&

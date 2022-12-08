@@ -22,19 +22,18 @@ const SearchPage = () => {
   const dispatch = useAppDispatch();
   const { buildList, buildListByUrl } = useAppSelector(buildSelector);
   const [videosData, setVideosData] = useState([]);
-
   useEffect(() => {
     try {
       if (buildListByUrl.data && buildListByUrl.data.length > 0) {
         setVideosData(buildListByUrl.data);
-      } else if (buildList.rows.length > 0) {
-        setVideosData(buildList.rows);
+      } else if (buildList.box) {
+        setVideosData(buildList.box);
       }
     } catch (error) {
       console.log(error);
     }
   }, [buildListByUrl, buildList]);
-
+console.log("_________________",buildList)
   const searchResult = (url: string) => {
     if (url !== "") {
       dispatch(getBuildByUrl(url));
@@ -61,9 +60,10 @@ const SearchPage = () => {
 
       <Row className="Search m-0">
         {videosData.map((videoData: any, index: number) => {
+         
           const id = videoData.newVideoId
             ? videoData.newVideoId
-            : videoData.videoId;
+            : videoData.videoId ? videoData.videoId : videoData.id;
           return (
             <Col lg={4} className="videoProfile pb-2" key={index}>
               <Link href={`/newBuild?id=${id}&&videoId=${id}`}>
