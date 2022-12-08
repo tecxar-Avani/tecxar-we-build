@@ -8,6 +8,7 @@ import { RequestWithUser } from "@/interfaces/auth.interface";
 import { UpdateUserDto } from "@/dtos/users.dto";
 
 @Controller("/users")
+@UseBefore(authMiddleware)
 export class UserController {
   private userService = new UserService();
 
@@ -16,7 +17,6 @@ export class UserController {
   async getAllUsers(@Req() req: Request | any, @Res() res: Response) {
     try {
       const user = await this.userService.getUsers();
-
       return user;
     } catch (error) {
       return {
