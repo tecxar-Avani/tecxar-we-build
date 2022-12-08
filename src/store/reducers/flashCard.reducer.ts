@@ -48,6 +48,7 @@ export const getFlashCardByUser = createAsyncThunk(
   async (): Promise<IFlashCardRowsCountResponse> => {
     const { status, data } = await flashCardService.getFlashCardByUser();
     return { status: data.status, rows: data.data };
+  
 
   }
 );

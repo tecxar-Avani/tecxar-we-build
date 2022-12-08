@@ -69,7 +69,6 @@ const AddFlashCardModal = (props: any) => {
               showCount
               maxLength={100}
               rows={4}
-              // defaultValue={"answer"}
               defaultValue={
                 props.defaultQuestionIndex &&
                 props.flashCardArr &&

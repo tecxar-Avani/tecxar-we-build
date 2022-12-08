@@ -49,7 +49,6 @@ const onDelete = () =>{
   const arrayLength = props.flashCard.arrayLength;
   const editQuestion = props.flashCard.editQuestion;
  
-
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       // add dispatch API here instead of console
@@ -85,7 +84,6 @@ const onDelete = () =>{
       }
     }
   };
-
   return (
     <>
       <Modal

@@ -331,7 +331,88 @@ export class FlashController {
           searchedResult = result;
         }
       );
-      return { status: true, data: searchedResult, box: userBuild };
+      const temp = {
+        status: true,
+        data: [
+          {
+            videoId: "cp1kkS7AZc4",
+            thumbnails: {
+              url: "https://i.ytimg.com/vi/cp1kkS7AZc4/default.jpg",
+              width: 120,
+              height: 90,
+            },
+            description:
+              "Video Sponsored by Ridge Wallet. Check them out here: https://ridge.com/REACT Use Code “REACT” for up to 40% off through ...",
+            title:
+              "Adults Try Not To Try - White Elephant Gifts! (Karaoke Mic, Ramen Humidifier, Bubble Wrap Suit)",
+            publishedAt: "2022-12-07T20:00:11Z",
+            duration: "0:11:38",
+            newVideoId: "cp1kkS7AZc4",
+            url: "https://www.youtube.com/embed/cp1kkS7AZc4",
+          },
+          {
+            videoId: "RGKi6LSPDLU",
+            thumbnails: {
+              url: "https://i.ytimg.com/vi/RGKi6LSPDLU/default.jpg",
+              width: 120,
+              height: 90,
+            },
+            description:
+              "Join my Recently launched Complete & Free React Course with 3 Projects: ...",
+            title: "React Tutorial in Hindi 🔥🔥",
+            publishedAt: "2021-04-14T14:43:19Z",
+            duration: "2:12:57",
+            newVideoId: "RGKi6LSPDLU",
+            url: "https://www.youtube.com/embed/RGKi6LSPDLU",
+          },
+          {
+            thumbnails: {
+              url: "https://i.ytimg.com/vi/-mJFZp84TIY/default.jpg",
+              width: 120,
+              height: 90,
+            },
+            description:
+              "Complete React Course by CodeWithHarry - Learn ReactJs from scratch in 2022 for FREE. React is a free and open-source ...",
+            title: "React Js Tutorials in Hindi",
+            publishedAt: "2021-08-13T12:14:26Z",
+            duration: "0:16:51",
+            newVideoId: "-mJFZp84TIY",
+            url: "https://www.youtube.com/embed/-mJFZp84TIY",
+          },
+          {
+            videoId: "bMknfKXIFA8",
+            thumbnails: {
+              url: "https://i.ytimg.com/vi/bMknfKXIFA8/default.jpg",
+              width: 120,
+              height: 90,
+            },
+            description:
+              "Learn React by building eight real-world projects and solving 140+ coding challenges. You can also follow this course ...",
+            title:
+              "React Course - Beginner&#39;s Tutorial for React JavaScript Library [2022]",
+            publishedAt: "2022-01-10T14:47:57Z",
+            duration: "11:55:28",
+            newVideoId: "bMknfKXIFA8",
+            url: "https://www.youtube.com/embed/bMknfKXIFA8",
+          },
+          {
+            thumbnails: {
+              url: "https://i.ytimg.com/vi/tiLWCNFzThE/default.jpg",
+              width: 120,
+              height: 90,
+            },
+            description:
+              "Welcome to React JS tutorial for beginners in Hindi in 2021. React is a JavaScript library for building user interfaces.",
+            title: "React JS Tutorial in Hindi 2022",
+            publishedAt: "2020-05-03T06:44:56Z",
+            duration: "0:13:30",
+            newVideoId: "tiLWCNFzThE",
+            url: "https://www.youtube.com/embed/tiLWCNFzThE",
+          },
+        ],
+        box: [],
+      };
+      return { status: true, data: temp.data, box: userBuild };
     } catch (error) {
       return {
         error: {

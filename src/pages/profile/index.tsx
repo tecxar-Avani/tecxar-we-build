@@ -51,6 +51,7 @@ const Profile = () => {
     dispatch(getUserByEmail());
     dispatch(totalbuilds());
   }, []);
+
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
@@ -64,7 +65,6 @@ const Profile = () => {
     flashCardProfile: "flashCardProfile.svg",
     flashCardsNumber: userData?.boxes?.data?.flashCardCount?.map((a:any) => a.flashCard_total),
   };
-  console.log("-------------------------",userData.usersList)
   const profileDatas : any = []; 
     userData.usersList && userData.usersList.length > 0 && userData.usersList.map((data:any) => {
       profileDatas.push({
@@ -151,7 +151,6 @@ const Profile = () => {
 
 
   const handleSubmit = (data: any) => {
-    console.log("ffffffffffff",data)
     dispatch(updateFlashCardId(data));
   };
   return (
@@ -290,7 +289,6 @@ const Profile = () => {
         }}
         defaultQuestionIndex={defaultQuestionIndex}
       />
-      {console.log("++++++++++++++++", editFlashCardData)}
 
       <Modal
         title="Edit Your Name"

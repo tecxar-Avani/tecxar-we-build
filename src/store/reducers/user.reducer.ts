@@ -118,7 +118,6 @@ const userSlice = createSlice({
         }
      })
      .addCase(totalbuilds.fulfilled, (state, action) => {
-      console.log(":::::::::::::::::::::::",action)
       if (action.payload) {
         return {
           ...state,

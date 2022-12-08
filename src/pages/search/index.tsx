@@ -21,25 +21,25 @@ const SearchPage = () => {
   const [url, setUrl] = useState();
   const dispatch = useAppDispatch();
   const { buildList, buildListByUrl } = useAppSelector(buildSelector);
-  const videosData: any = [];
-  buildList.rows &&
-    buildList.rows.length > 0 &&
-    buildList.rows.map((video: any) => {
-      videosData.push({
-        subTitle: video.title,
-        videoUrl: video.url,
-      });
-    });
+  const [videosData, setVideosData] = useState([]);
 
-    
- 
+  useEffect(() => {
+    try {
+      if (buildListByUrl.data && buildListByUrl.data.length > 0) {
+        setVideosData(buildListByUrl.data);
+      } else if (buildList.rows.length > 0) {
+        setVideosData(buildList.rows);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [buildListByUrl, buildList]);
+
   const searchResult = (url: string) => {
     if (url !== "") {
       dispatch(getBuildByUrl(url));
-    
     }
   };
-  console.log("userBuildListuserBuildList", buildListByUrl);
   useEffect(() => {
     dispatch(getBuilds());
   }, []);
@@ -60,24 +60,20 @@ const SearchPage = () => {
       )}
 
       <Row className="Search m-0">
-        {buildList &&
-          buildList.rows &&
-          buildList.rows.length > 0 &&
-          buildList.rows.map(
-            (videoData: any, index: number) =>
-              index < 9 &&
-              videoData.videoId && (
-                <Col lg={4} className="videoProfile pb-2" key={index}>
-                  <Link
-                    href={`/newBuild?id=${videoData.videoId}&&videoId=${videoData.id}`}
-                  >
-                    <a>
-                      <VideoCard VideoCardData={videoData} />
-                    </a>
-                  </Link>
-                </Col>
-              )
-          )}
+        {videosData.map((videoData: any, index: number) => {
+          const id = videoData.newVideoId
+            ? videoData.newVideoId
+            : videoData.videoId;
+          return (
+            <Col lg={4} className="videoProfile pb-2" key={index}>
+              <Link href={`/newBuild?id=${id}&&videoId=${id}`}>
+                <a>
+                  <VideoCard VideoCardData={videoData} />
+                </a>
+              </Link>
+            </Col>
+          );
+        })}
       </Row>
     </>
   );
