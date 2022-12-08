@@ -9,7 +9,9 @@ class FlashCardService {
   }
 
   getFlashCardByBuildId(id: number) {
+   
     return API.get(`/flashcard/flashcardByBuild/${id}`);
+   
   }
 
   updateFlashCardById(id: number, data: any) {

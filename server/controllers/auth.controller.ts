@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Response } from "express";
 import { Controller, Req, UseBefore, Res, Get } from "routing-controllers";
 import {

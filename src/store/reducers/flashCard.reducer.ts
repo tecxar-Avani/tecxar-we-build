@@ -72,7 +72,7 @@ export const updateFlashCardId = createAsyncThunk(
 export const deleteFlashCardById = createAsyncThunk(
   `flashcard/`,
   async (Id: number, { dispatch }) => {
-    const { status, data } = await flashCardService.deleteFlashCardById(Id);
+  const { status, data } = await flashCardService.deleteFlashCardById(Id);
 
   return { status,data };
 });

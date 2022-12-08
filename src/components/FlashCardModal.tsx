@@ -1,18 +1,20 @@
 import { Modal, Button } from "antd";
-import { useAppSelector } from "../hooks";
 import React, { useState,useEffect } from "react";
 import Image from "react-bootstrap/Image";
-import { deleteFlashCardId, flashCardData, flashCardSelector } from "../store/reducers/flashCard.reducer";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { deleteFlashCardById,flashCardSelector } from "../store/reducers/flashCard.reducer";
 import AddFlashCardModal from "./AddFlashCardModal";
 
 const FlashCardModal = (props: any) => {
   const deleteData = useAppSelector(flashCardSelector)
   const [deleteId , setDeleteId] = useState(false);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
   
   }, [props]);
-const onDelete = () =>{
-    // dispatch(deleteFlashCardById(id))
+const onDelete = (id:any) =>{
+     dispatch(deleteFlashCardById(id))
 }
   const headerIcon = ["deleteFlash.svg", "edit.svg"];
   const title =
@@ -38,6 +40,8 @@ const onDelete = () =>{
             }
             else if(btn == "deleteFlash.svg"){
               const id = props.flashCardArr[index].id
+             
+               onDelete(id)
             }
           }}
         />

@@ -208,7 +208,7 @@ export class FlashController {
     }
   }
 
-  @Delete("deleteFlashCard/:id")
+  @Delete("/deleteFlashCard/:id")
    @UseBefore(authMiddleware)
   @OpenAPI({ summary: "delete all build of users" })
   async deleteFlashCardById(
