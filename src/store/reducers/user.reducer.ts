@@ -64,7 +64,7 @@ interface State {
   loggedInUser: ICurrentUser;
   userData: ICreateUser;
   usersList: ICreateUser[];
-  boxes: [];
+  // boxes: [];
 }
 
 const initialState: State = {
@@ -74,7 +74,7 @@ const initialState: State = {
   error: undefined,
   id: 0,
   usersList: [],
-  boxes: [],
+  // boxes: [],
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -136,7 +136,7 @@ const userSlice = createSlice({
           return {
             ...state,
             loading: false,
-            boxes: action.payload.data,
+            boxes: action.payload,
           };
         }
       })

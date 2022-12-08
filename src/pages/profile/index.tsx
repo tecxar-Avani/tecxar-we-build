@@ -32,7 +32,7 @@ import {
 const Profile = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
-  const { usersList, boxes } = useAppSelector(userSelector);
+  const { usersList } = useAppSelector(userSelector);
 
   const editFlashCard = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
@@ -54,7 +54,7 @@ const Profile = () => {
     dispatch(getUserByEmail());
     dispatch(totalbuilds());
   }, []);
-
+console.log(usersList)
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
@@ -62,17 +62,13 @@ const Profile = () => {
       userData && userData.userData && userData.userData.createdAt
     ).format("MMM YYYY")} `,
     boxLeftTitle: "Boxes",
-    boxValueLeft: boxes?.data?.boxbuildCount?.map((a: any) => a.boxbuild_total),
+    boxValueLeft: "15",
     profileImg: "hello.jpg",
     bottomTitle: userData.userData.tag_line,
     boxRightTitle: "Awareness",
-    boxValueRight: boxes?.data?.awernessCount?.map(
-      (a: any) => a.awerness_total
-    ),
+    boxValueRight: "4",
     flashCardProfile: "flashCardProfile.svg",
-    flashCardsNumber: boxes?.data?.flashCardCount?.map(
-      (a: any) => a.flashCard_total
-    ),
+    flashCardsNumber: "38",
   };
 
   const onEdit = (e: any) => {
