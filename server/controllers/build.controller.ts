@@ -37,7 +37,7 @@ import BoxService from "@/services/box.service";
 import BoxReviewService from "@/services/boxReview.service";
 
 @Controller("/build")
-// @UseBefore(authMiddleware)
+ @UseBefore(authMiddleware)
 export class FlashController {
   private buildService = new BuildService();
   private flashCardService = new FlashCardService();

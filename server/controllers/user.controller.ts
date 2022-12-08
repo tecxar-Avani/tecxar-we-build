@@ -8,6 +8,7 @@ import { RequestWithUser } from "@/interfaces/auth.interface";
 import { UpdateUserDto } from "@/dtos/users.dto";
 
 @Controller("/users")
+@UseBefore(authMiddleware)
 export class UserController {
   private userService = new UserService();
 
