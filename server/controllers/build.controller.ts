@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-import { Response } from "express";
 import {
   Controller,
   Req,

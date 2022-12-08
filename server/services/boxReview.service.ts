@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import DB from "@databases";
@@ -51,6 +50,6 @@ class BoxService {
     where br.created_by = ${userId} `;
     const BuildById: IBoxReviews[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
     return BuildById;
-}
+  }
 }
 export default BoxService;

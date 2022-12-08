@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 import FlashCards from "@/models/flashCards.model";

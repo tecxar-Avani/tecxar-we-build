@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IBoxes } from "@/interfaces/boxes.interface";
 import DB from "@databases";
@@ -34,6 +33,5 @@ class BoxService {
     const BuildById: IBoxes[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
     return BuildById;
   }
-
 }
 export default BoxService;

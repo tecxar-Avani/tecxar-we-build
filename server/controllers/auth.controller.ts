@@ -31,11 +31,6 @@ export class AuthController {
       const userEmail = req.user._json.email;
       const userName = req.user._json.name;
       const googleProfileId = req.user._json.sub;
-      // if (req.user) {
-      //   req.cookie
-      //   return req.user;
-
-      // }
       const user = await this.userService.getUserByEmail(userEmail);
       if (user) {
         req.user = user;
@@ -55,12 +50,6 @@ export class AuthController {
             expires: new Date(Date.now() + 2700000),
           })
           .redirect(`${config.urlHost}${lastPage}`);
-        // .redirect(`http://localhost:3000/api/users`);
-        // return {
-        //   status: true,
-        //   user: req.user,
-        //   message: "You have logged in successfully.",
-        // };
       } else {
         const data = {
           user_name: userName,
@@ -83,7 +72,7 @@ export class AuthController {
   }
 
   @Get("/google_fail")
-  async google_fail(@Req() req: Request | any) {
+  async google_fail() {
     return { data: "google authentication failed" };
   }
 }

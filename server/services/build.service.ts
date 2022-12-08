@@ -6,7 +6,7 @@ import { Op, QueryTypes } from "sequelize";
 
 class BuildService {
   private videoBuild = DB.videoBuild;
-  sql: any;
+  
   public async createBuild(
     buildData: IVideoBuild
   ): Promise<IVideoBuild | null> {

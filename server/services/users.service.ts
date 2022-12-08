@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { ICreateUser, IUpdateUser } from "@/interfaces/users.interface";
 import DB from "@databases";
 import { HttpException } from "@exceptions/HttpException";

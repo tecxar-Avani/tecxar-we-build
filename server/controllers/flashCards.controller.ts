@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Response } from "express";
 import {
   Controller,
@@ -119,10 +118,7 @@ export class FlashController {
   ) {
     try {
       const flashBuild = await this.flashCardService.getFlashCardByBuildId(id);
-      return {
-        status: true,
-        flashBuild,
-      };
+      return { status: true,flashBuild};
     } catch (error) {
       return {
         error: {
