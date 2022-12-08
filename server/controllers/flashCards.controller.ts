@@ -27,12 +27,9 @@ export class FlashController {
 
   @Post("/create")
   @HttpCode(201)
-  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Create a new flash card" })
   async createFlashCard(
     @Body() cardData: flashcardsDto,
-    @Req() req: Request | any,
-    @Res() res: Response
   ) {
     try {
       //should make build id and created by id dynamic
@@ -58,8 +55,7 @@ export class FlashController {
   @OpenAPI({ summary: "Create a new FlashCard Response" })
   async flashcardResponse(
     @Body() flashcardResponseData: flashCardResponseDto,
-    @Req() req: Request | any,
-    @Res() res: Response
+    @Req() req: RequestWithUser,
   ) {
     try {
       flashcardResponseData.created_by = req.user.id;
@@ -81,17 +77,15 @@ export class FlashController {
 
   @Get("/")
   @OpenAPI({ summary: "Get all flashCard of users" })
-  async getFlashCard(@Req() req: RequestWithUser | any, @Res() res: Response) {
+  async getFlashCard(@Req() req: RequestWithUser) {
     try {
-      const user = req.user.id;
-      const flashBuild = await this.flashCardService.getFlashCard(user);
+      const {id} = req.user;
+      const flashBuild = await this.flashCardService.getFlashCard(id);
       return {
         status: true,
         data: flashBuild,
       };
     } catch (error) {
-      console.log(error);
-      
       return {
         error: {
           code: 500,
@@ -103,10 +97,10 @@ export class FlashController {
 
   @Get("/flashcardresponse")
   @OpenAPI({ summary: "Get flashcard response" })
-  async getFlashCardResponse(@Req() req: Request | any, @Res() res: Response) {
+  async getFlashCardResponse(@Req() req: RequestWithUser, @Res() res: Response) {
     try {
-      const userId = req.user.id;
-      const flashBuild = await this.flashCardService.getFlashCardResponse(userId);
+      const {id} = req.user;
+      const flashBuild = await this.flashCardService.getFlashCardResponse(id);
       return flashBuild;
     } catch (error) {
       return {
@@ -121,9 +115,7 @@ export class FlashController {
   @Get("/flashcardByBuild/:id")
   @OpenAPI({ summary: "Get all flash card by build" })
   async getFlashCardByBuildId(
-    @Req() req: Request | any,
     @Param("id") id: number,
-    @Res() res: Response
   ) {
     try {
       const flashBuild = await this.flashCardService.getFlashCardByBuildId(id);
@@ -131,23 +123,6 @@ export class FlashController {
         status: true,
         flashBuild,
       };
-
-      // let output = []
-      // flashBuild.forEach(function(item) {
-      //   var existing = output.filter(function(v, i) {
-      //      v.user_id == item.user_id;
-      //   });
-      //   if (existing.length) {
-      //     let existingIndex = output.indexOf(existing[0]);
-      //    console.log('>>>>>>>',Object.assign({userId: item.user_id}));
-      //     output[existingIndex].value = output[existingIndex].value.concat(item.user_id);
-      //   } else {
-      //     if (typeof item.user_id == 'number')
-      //       item.user_id = [item.user_id];
-      //     output.push(item);
-      //   }
-      // });
-      // console.log('/////////',output);
     } catch (error) {
       return {
         error: {
@@ -161,14 +136,11 @@ export class FlashController {
   @Get("/:id")
   @OpenAPI({ summary: "Get all build of users" })
   async getFlashCardBuildId(
-    @Req() req: Request | any,
     @Param("id") buildId: number,
     @Res() res: Response
   ) {
     try {
-      const flashBuildId = await this.flashCardService.getFlashCardBuildId(
-        buildId
-      );
+      const flashBuildId = await this.flashCardService.getFlashCardBuildId(buildId);
       if (flashBuildId === null) {
         return res.send({
           status: 404,
@@ -187,10 +159,8 @@ export class FlashController {
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
   async updateFlashCard(
-    @Req() req: Request | any,
     @Param("id") id: number,
     @Body() data: updateflashcardsDto,
-    @Res() res: Response
   ) {
     try {
       const userBuild = await this.flashCardService.updateFlashCardId(id, data);
@@ -209,14 +179,11 @@ export class FlashController {
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "delete all build of users" })
   async deleteFlashCardById(
-    @Req() req: Request | any,
     @Param("id") id: number,
     @Res() res: Response
   ) {
     try {
-      const flashByDeleteId = await this.flashCardService.deleteFlashCardById(
-        id
-      );
+      const flashByDeleteId = await this.flashCardService.deleteFlashCardById(id);
       if (flashByDeleteId === null) {
         return res.send({
           status: 404,
@@ -225,8 +192,6 @@ export class FlashController {
       }
       return { status: true, data: flashByDeleteId };
     } catch (error) {
-      console.log("--ERROR--", error);
-
       if (error instanceof Error) {
         return { status: false, error: { code: 500, message: error.message } };
       }

@@ -10,9 +10,8 @@ import {
   Table,
   Default,
 } from "sequelize-typescript";
-import { IVideoBuild, VideoTypeEnumType, difficultyLevelEnumType } from "@/interfaces/videoBuilds.interface";
+import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import User from "@/models/user.model";
-import Boxes from "./boxes.model";
 export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 @Table({
   tableName: "video_builds",

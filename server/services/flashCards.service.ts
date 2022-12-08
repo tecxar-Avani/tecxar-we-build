@@ -2,17 +2,15 @@
 import { HttpException } from "@/exceptions/HttpException";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 import FlashCards from "@/models/flashCards.model";
-import FlashCardsResponse from "@/models/flashCardsResponse.model";
 import User from "@/models/user.model";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
-import { group } from "console";
-import { logging } from "googleapis/build/src/apis/logging";
-import { col, QueryTypes, where } from "sequelize";
+import { col, QueryTypes } from "sequelize";
 
 class FlashCardService {
   private flashCard = DB.flashCards;
   private flashCardsResponse = DB.flashCardsResponse;
+  
   public async createFlashCard(
     cardData: IFlashCards
   ): Promise<IFlashCards | null> {

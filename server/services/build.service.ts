@@ -1,7 +1,5 @@
 import { HttpException } from "@/exceptions/HttpException";
-import { IVideoBuild,IUpdateVideoBuild } from "@/interfaces/videoBuilds.interface";
-import Boxes from "@/models/boxes.model";
-import VideoBuilds from "@/models/videoBuilds.model ";
+import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
 import { Op, QueryTypes } from "sequelize";

@@ -10,7 +10,7 @@ class BoxService {
     throw new Error("Method not implemented.");
   }
   private reviews = DB.boxReviews;
-
+  
   public async createBoxReview(
     reviewData: IBoxReviews | any
   ): Promise<IBoxReviews | null> {

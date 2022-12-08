@@ -9,7 +9,6 @@ class BoxService {
   private box = DB.box;
 
   public async createBox(boxData: IBoxes | any): Promise<IBoxes[] | null> {
-
     if (isEmpty(boxData)) {
       throw new HttpException(400, "Enter the build data");
     }

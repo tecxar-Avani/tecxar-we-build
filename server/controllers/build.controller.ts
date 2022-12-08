@@ -12,23 +12,13 @@ import {
   Delete,
   Put,
   Param,
-  UploadedFile,
   QueryParam,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
-import {
-  flashcardsDto,
-  updateflashcardsDto,
-  flashCardResponseDto,
-} from "@/dtos/flashcards.dto";
-import {
-  IFlashCards,
-  IFlashCardsResponse,
-} from "@/interfaces/flashCards.interface";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
-import { updateVideoBuildDto, videoBuildDto } from "@/dtos/videobuilds.dto";
+import { updateVideoBuildDto } from "@/dtos/videobuilds.dto";
 import BuildService from "@/services/build.service";
 import { google } from "googleapis";
 import config from "@/configs";
@@ -50,8 +40,7 @@ export class FlashController {
   @OpenAPI({ summary: "Create a new build" })
   async createBuild(
     @Body() videoBuildData: any,
-    @Req() req: Request | any,
-    @Res() res: Response
+    @Req() req: RequestWithUser,
   ) {
     try {
       videoBuildData.created_by = req.user.id;
@@ -90,10 +79,10 @@ export class FlashController {
   @Get("/")
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
-  async getUsersBuild(@Req() req: Request | any, @Res() res: Response) {
+  async getUsersBuild(@Req() req: RequestWithUser) {
     try {
-      const user = req.user.id;
-      const userBuild = await this.buildService.getBuildByUserId(user);
+      const {id} = req.user;
+      const userBuild = await this.buildService.getBuildByUserId(id);
       return userBuild;
     } catch (error) {
       return {
@@ -108,12 +97,11 @@ export class FlashController {
   @Get("/userInteractedBuild")
   @OpenAPI({ summary: "Get all users by Email" })
   async getUserInteractedBuild(
-    @Req() req: RequestWithUser | any,
-    @Res() res: Response
+    @Req() req: RequestWithUser,
   ) {
     try {
-      const userId = req.user.id;
-      const userBuild = await this.buildService.getUserInteractedBuild(userId);
+      const {id} = req.user;
+      const userBuild = await this.buildService.getUserInteractedBuild(id);
       const { searchedData, error } = await this.youtubeApiCall(userBuild)
       return { data: searchedData, box: userBuild };
     } catch (error) {
@@ -129,12 +117,12 @@ export class FlashController {
   @Get("/totalbuilds")
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
-  async getTotalBuilds(@Req() req: Request | any, @Res() res: Response) {
+  async getTotalBuilds(@Req() req: RequestWithUser) {
     try {
-      const user = req.user.id;
-      const boxbuildCount = await this.boxService.getTotalBuilds(user);
-      const awernessCount = await this.reviewService.getTotalAwernessById(user);
-      const flashCardCount = await this.flashCardService.getTotalFlashCard(user);
+      const {id} = req.user;
+      const boxbuildCount = await this.boxService.getTotalBuilds(id);
+      const awernessCount = await this.reviewService.getTotalAwernessById(id);
+      const flashCardCount = await this.flashCardService.getTotalFlashCard(id);
       return { boxbuildCount, awernessCount, flashCardCount };
     } catch (error) {
       console.log('error', error)
@@ -150,8 +138,6 @@ export class FlashController {
   @Get("/url")
   @OpenAPI({ summary: "Search Url" })
   async getUsersBuildByUrl(
-    @Req() req: Request | any,
-    @Res() res: Response,
     @QueryParam("url") url: string,
     @QueryParam("search") search?: string
   ) {
@@ -307,8 +293,6 @@ export class FlashController {
   @Get("/getAllBuilds")
   @OpenAPI({ summary: "Get all build " })
   async getAllBuilds(
-    @Req() req: Request | any,
-    @Res() res: Response,
     @QueryParam("search") search?: string
   ) {
     try {
@@ -328,9 +312,7 @@ export class FlashController {
   @Get("/:id")
   @OpenAPI({ summary: "Get build by Id" })
   async getBuildById(
-    @Req() req: Request | any,
     @Param("id") id: number,
-    @Res() res: Response
   ) {
     try {
       const buildById = await this.buildService.getBuildById(id);
@@ -346,13 +328,12 @@ export class FlashController {
   }
 
   @Put("/:id")
-  // @UseBefore(authMiddleware)
+   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
   async UpdateUsersBuild(
     @Req() req: Request | any,
     @Param("id") id: number,
     @Body() data: updateVideoBuildDto,
-    @Res() res: Response
   ) {
     try {
       data.created_by_user = req.user.id;
@@ -372,9 +353,7 @@ export class FlashController {
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Delete build id of users" })
   async DeleteUsersBuild(
-    @Req() req: Request | any,
     @Param("id") id: number,
-    @Res() res: Response
   ) {
     try {
       const userBuild = await this.buildService.deleteBuild(id);
