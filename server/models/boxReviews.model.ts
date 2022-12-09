@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -15,6 +14,7 @@ import {
 } from "@/interfaces/boxreviews.interface";
 import Boxes from "@/models/boxes.model";
 import User from "./user.model";
+import VideoBuilds from "./videoBuilds.model ";
 export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
 
 @Table({
@@ -23,7 +23,6 @@ export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
   updatedAt: "updatedAt",
   timestamps: true,
 })
-// eslint-disable-next-line prettier/prettier
 export default class BoxReviews
   extends Model<IBoxReviews, Box_ReviewsGroupAttributes>
   implements IBoxReviews {
@@ -42,6 +41,10 @@ export default class BoxReviews
   public box_id: number;
   @BelongsTo(() => Boxes)
   public box: Boxes;
+
+  @ForeignKey(()=>VideoBuilds)
+  @Column(DataType.INTEGER)
+  public build_id: number;
 
   @AllowNull(false)
   @ForeignKey(() => User)

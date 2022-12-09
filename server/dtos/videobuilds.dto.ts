@@ -1,20 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { IBoxes } from "@/interfaces/boxes.interface";
 import {
   IVideoBuild,
-  difficultyLevelEnumType,
-  VideoTypeEnumType,
   IUpdateVideoBuild,
 } from "@interfaces/videoBuilds.interface";
 import {
   IsArray,
-  IsDate,
   IsNumber,
   IsOptional,
   IsString,
 } from "class-validator";
 
-// eslint-disable-next-line prettier/prettier
 export class videoBuildDto implements IVideoBuild {
   @IsString()
   video_url: string;

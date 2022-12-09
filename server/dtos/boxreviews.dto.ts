@@ -14,6 +14,9 @@ export class BoxreviewDto implements IBoxReviews {
 
     @IsString()
     comment: string;
+    
+    @IsNumber()
+    build_id?:number
 
     @IsOptional()
     @IsNumber()

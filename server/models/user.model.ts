@@ -7,7 +7,6 @@ import {
   ForeignKey,
   BelongsTo,
   Table,
-  Default,
 } from "sequelize-typescript";
 import { ICreateUser } from "@/interfaces/users.interface";
 import Role from "@/models/roles.model";

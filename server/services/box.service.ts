@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IBoxes } from "@/interfaces/boxes.interface";
 import DB from "@databases";
@@ -9,7 +8,6 @@ class BoxService {
   private box = DB.box;
 
   public async createBox(boxData: IBoxes | any): Promise<IBoxes[] | null> {
-
     if (isEmpty(boxData)) {
       throw new HttpException(400, "Enter the build data");
     }
@@ -35,6 +33,5 @@ class BoxService {
     const BuildById: IBoxes[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
     return BuildById;
   }
-
 }
 export default BoxService;

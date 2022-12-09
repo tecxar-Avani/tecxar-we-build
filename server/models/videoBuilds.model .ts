@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -10,9 +9,8 @@ import {
   Table,
   Default,
 } from "sequelize-typescript";
-import { IVideoBuild, VideoTypeEnumType, difficultyLevelEnumType } from "@/interfaces/videoBuilds.interface";
+import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import User from "@/models/user.model";
-import Boxes from "./boxes.model";
 export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 @Table({
   tableName: "video_builds",
@@ -63,4 +61,5 @@ export default class VideoBuilds
 
   @Column(DataType.DATE)
   public readonly updatedAt!: Date;
+  
 }

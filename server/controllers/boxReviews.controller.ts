@@ -4,13 +4,10 @@ import {
   Controller,
   Req,
   UseBefore,
-  Res,
   Get,
   Body,
   HttpCode,
   Post,
-  Param,
-  QueryParams,
   QueryParam,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
@@ -18,6 +15,7 @@ import BoxReviewService from "@/services/boxReview.service";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import { BoxreviewDto } from "@/dtos/boxreviews.dto";
+import { RequestWithUser } from "@/interfaces/auth.interface";
 
 @Controller("/reviews")
 @UseBefore(authMiddleware)
@@ -29,15 +27,11 @@ export class FlashController {
   @OpenAPI({ summary: "Create a new BoxReviews" })
   async createReview(
     @Body() reviewData: BoxreviewDto,
-    @Req() req: Request | any,
-    @Res() res: Response
   ) {
     try {
       reviewData.created_by = 5;
       const createReviewData: IBoxReviews | null =
         await this.reviewService.createBoxReview(reviewData);
-   
-
       return {
         status: true,
         data: createReviewData,
@@ -52,10 +46,10 @@ export class FlashController {
 
   @Get("/")
   @OpenAPI({ summary: "Get all reviews of users" })
-  async getBoxReviews(@Req() req: Request | any, @Res() res: Response) {
+  async getBoxReviews(@Req() req: RequestWithUser) {
     try {
-      const user = req.user.id;
-      const reviewData = await this.reviewService.getReviews(user);
+      const {id} = req.user;
+      const reviewData = await this.reviewService.getReviews(id);
       return reviewData;
     } catch (error) {
       return {
@@ -68,10 +62,10 @@ export class FlashController {
   }
 
   @Get("/getReviewsByBoxId")
-  @OpenAPI({ summary: "Get all reviews of users" })
-  async getReviewsByBoxId(@Req() req: Request | any, @QueryParam('boxId')  boxId: number, @QueryParam('type') type:string ,@Res() res: Response) {
+  @OpenAPI({ summary: "get review by box id" })
+  async getReviewsByBoxId() {
     try {
-      const reviewDataByBox = await this.reviewService.getReviewsByBox(boxId,type);
+      const reviewDataByBox = await this.reviewService.getReviewsByBox();
       return reviewDataByBox;
     } catch (error) {
       return {

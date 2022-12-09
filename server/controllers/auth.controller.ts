@@ -32,11 +32,6 @@ export class AuthController {
       const userEmail = req.user._json.email;
       const userName = req.user._json.name;
       const googleProfileId = req.user._json.sub;
-      // if (req.user) {
-      //   req.cookie
-      //   return req.user;
-
-      // }
       const user = await this.userService.getUserByEmail(userEmail);
       if (user) {
         req.user = user;
@@ -79,7 +74,7 @@ export class AuthController {
   }
 
   @Get("/google_fail")
-  async google_fail(@Req() req: Request | any) {
+  async google_fail() {
     return { data: "google authentication failed" };
   }
 }
