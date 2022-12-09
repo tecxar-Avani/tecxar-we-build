@@ -38,6 +38,7 @@ class BoxService {
       where: { box_id: boxId , review_type:type },
       raw: true,
     });
+ 
     if (!reviewsById) {
       return null;
     } else {

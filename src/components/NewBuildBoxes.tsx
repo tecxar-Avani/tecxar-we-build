@@ -5,7 +5,6 @@ import OuterBox from "./OuterBox";
 import Ractangle from "./Ractangle";
 
 const NewBuildBoxes = (props: any) => {
-console.log("ppppppppppppppp",props)
   return (
     <>
       {[...Array(Math.ceil(props.item.length / 3))].map((_rows, index) => {

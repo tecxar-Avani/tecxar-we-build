@@ -54,7 +54,7 @@ const Profile = () => {
     dispatch(getUserByEmail());
     dispatch(totalbuilds());
   }, []);
-console.log(usersList)
+
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",

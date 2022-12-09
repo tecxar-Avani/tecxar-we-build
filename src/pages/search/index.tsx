@@ -59,7 +59,6 @@ const SearchPage = () => {
       )}
 
       <Row className="Search m-0">
-        {console.log("videosData", videosData)}
         {videosData.map((videoData: any, index: number) => {
           const videoId = videoData.newVideoId
             ? videoData.newVideoId

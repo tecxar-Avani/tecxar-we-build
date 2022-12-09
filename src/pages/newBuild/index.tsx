@@ -11,7 +11,7 @@ import NewBuildBoxes from "@/components/NewBuildBoxes";
 import FlashCardModal from "@/components/FlashCardModal";
 import AwarenessModal from "@/components/AwarenessModal";
 import { useRouter } from "next/router";
-
+import AwarenessTypeModal from "@/components/AwarenessTypeModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 import {
   addBuild,
@@ -22,23 +22,20 @@ import {
   addAwareness,
   getAwarenessByBoxId,
 } from "../../store/reducers/awareness.reducer";
-import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
 
 const NewBuild = (props: any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const { flashCardList } = useAppSelector(flashCardSelector);
-
+  const [open, setOpen] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
   const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
-  const [awarenessDotModal, setAwarenessDotModal] = useState(false);
   const [accept, setAccept] = useState(false);
   const [inspiration, setInspiration] = useState(false);
   const [resistance, setResistance] = useState(false);
-  const [modalChallenge, setModalChallenge] = useState({});
   const [review, setReview] = useState<string>("");
   const [addFlashCardData, setAddFlashcard] = useState(false);
   const [revealAns, setRevealAns] = useState(false);
@@ -183,6 +180,12 @@ const NewBuild = (props: any) => {
     { id: 5, description: "hello tecxar", boxId: 1 },
   ];
   const acceptanceValue = acceptanceData.filter((A) => A.description);
+
+  // for awarenessType modal
+
+  const showModal = () => {
+  setOpen(true);
+  };
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -221,8 +224,7 @@ const NewBuild = (props: any) => {
               }
             }}
             onFocus={handleChange}
-            // modalDot={setAwarenessDotModal}
-            // acceptanceData={acceptanceData}
+             acceptanceData={acceptanceData}
             Acceptance={Acceptance}
             Resistance={Resistance}
             Inspiration={Inspiration}
@@ -348,61 +350,12 @@ const NewBuild = (props: any) => {
             : ""
         } `}
       />
-      <AwarenessDotModal
-        awarenessModal={awarenessDotModal}
-        challenge={modalChallenge}
-        setAwarenessModal={setAwarenessDotModal}
-        visible={awarenessDotModal}
-        btnName="challenge"
-        id={awarenessIndex}
-        acceptanceValue={acceptanceValue}
-        title={`${
-          accept
-            ? "Acceptance"
-            : inspiration
-            ? "Inspiration"
-            : resistance
-            ? "Resistance"
-            : ""
-        }`}
-        // setModalChallenge ={setModalChallenge}
-        callBack={(title: any, content: any, header: any) => {
-          const newData = {
-            title: `${
-              title == "challenge"
-                ? "challenge"
-                : title == "Resolve"
-                ? "Resolve"
-                : title
-            }`,
-            content: content,
-            header: header,
-            awareLabel: "maria's acceptance",
-            challengeLabel: "maria's challenge",
-            awareValue: "hello",
-          };
-          setModalChallenge(newData);
-          // setModalChallenge(true)
-        }}
-        header={`Maria's ${
-          accept
-            ? "Acceptance"
-            : inspiration
-            ? "Inspiration"
-            : resistance
-            ? "Resistance"
-            : ""
-        }`}
-        className={`${
-          accept
-            ? "accptanceModalBG"
-            : inspiration
-            ? "inspirationModalBG"
-            : resistance
-            ? "resistanceModalBG"
-            : ""
-        } `}
-      />
+     <AwarenessTypeModal
+     open={open}
+     onClick={showModal}
+     />
+
+    
     </>
   );
 };
