@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Controller, Req, UseBefore, Get, Put, Body, Param } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import UserService from "@/services/users.service";

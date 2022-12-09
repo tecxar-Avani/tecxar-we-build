@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -62,4 +61,5 @@ export default class VideoBuilds
 
   @Column(DataType.DATE)
   public readonly updatedAt!: Date;
+  
 }

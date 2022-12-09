@@ -72,7 +72,6 @@ sequelize.afterBulkSync('afterSync', () => {
   // umzugMigrations.up();
   umzugSeeders.up(); // Don't open comment
 });
-
 const DB = {
   roles: Role,
   users: User,

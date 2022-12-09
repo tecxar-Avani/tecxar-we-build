@@ -4,7 +4,6 @@ import {
   Controller,
   Req,
   UseBefore,
-  Res,
   Get,
   Body,
   HttpCode,
@@ -63,10 +62,10 @@ export class FlashController {
   }
 
   @Get("/getReviewsByBoxId")
-  @OpenAPI({ summary: "Get all reviews of users" })
-  async getReviewsByBoxId( @QueryParam('boxId') boxId: number, @QueryParam('type') type: string) {
+  @OpenAPI({ summary: "get review by box id" })
+  async getReviewsByBoxId() {
     try {
-      const reviewDataByBox = await this.reviewService.getReviewsByBox(boxId, type);
+      const reviewDataByBox = await this.reviewService.getReviewsByBox();
       return reviewDataByBox;
     } catch (error) {
       return {

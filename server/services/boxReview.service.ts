@@ -32,16 +32,23 @@ class BoxService {
     }
   }
 
-  public async getReviewsByBox(boxId: number,type:string): Promise<IBoxReviews[] | null> {
-    const reviewsById: IBoxReviews[] | null = await this.reviews.findAll({
-      where: { box_id: boxId , review_type:type },
-      raw: true,
-    });
-    if (!reviewsById) {
-      return null;
-    } else {
-      return reviewsById;
-    }
+  // public async getReviewsByBox(boxId: number,type:string): Promise<IBoxReviews[] | null> {
+  //   const reviewsById: IBoxReviews[] | null = await this.reviews.findAll({
+  //     where: { box_id: boxId , review_type:type },
+  //     raw: true,
+  //   });
+  //   if (!reviewsById) {
+  //     return null;
+  //   } else {
+  //     return reviewsById;
+  //   }
+  // }
+
+  public async getReviewsByBox(): Promise<IBoxReviews[] | any> {
+    const query = `SELECT br.box_id,br.review_type FROM video_builds vb
+    INNER JOIN box_reviews br ON vb.id = br.build_id `;
+    const reviewsById: IBoxReviews[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
+    return reviewsById;
   }
 
   public async getTotalAwernessById(userId:any): Promise<IBoxReviews[] | any> { 

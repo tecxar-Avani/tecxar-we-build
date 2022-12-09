@@ -14,7 +14,6 @@ import { routingControllersToSpec } from "routing-controllers-openapi";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
 import passport from "passport";
-import session from "express-session";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -161,7 +160,6 @@ class App {
           },
         }
       );
-
       this.app.use(config.swagger.path, swaggerUi.serve, swaggerUi.setup(spec));
     }
   }
