@@ -8,7 +8,6 @@ import Link from "next/link";
 import GoogleButton from "react-google-button";
 
 const NewBuildSideCard = (props: any) => {
-
   const [polarisation, setPolarisation] = useState(false);
   const polarisations = useRef(null);
   const [difficulty, setDifficulty] = useState(false);
@@ -283,60 +282,50 @@ const NewBuildSideCard = (props: any) => {
 
         <hr className="border-dark  ms-2  " />
         <div className="d-flex owd bd-highlight">
-          <Tooltip
-            placement="topLeft"
-            title={
-              <>
-                <div className="d-flex  ">
-                  <Image
-                    src="../img/bulb.png"
-                    className="mx-n2 ms-2 pe-2 bulb"
-                  />{" "}
-                  Please make an account to save your build - don't let all your
-                  hard work go to waste! Login via Google
-                </div>
-              </>
-            }
-            arrowPointAtCenter
-            color="#FAEFAF"
-          >
-            {/* if user are loged out then  onClick={() => setModal5Open(true)} */}
+          {props.isLoggedIn === true ? (
             <div
               className="save bd-highlight"
               onClick={() =>
-               props.buildId ? props.isLoggedIn
-                  ? props.onSave(
-                      videoType,
-                      polarisationLevel,
-                      difficultyLevel,
-                      url
-                    )
-                  : setModal5Open(true)
-                  :''
+                props.onSave(videoType, polarisationLevel, difficultyLevel, url)
               }
             >
-              <Image src="../img/save.svg" className="ms-2" alt="no image" />
+              <Image src="/img/save.svg" className="ms-2" alt="no image" />
             </div>
-          </Tooltip>
-
-          <Modal title="" centered open={modal5Open} className="btnrv">
-            <div className="mb-n3">
-              <a href={`/api/google`}>
-                <GoogleButton className="m-auto googleButton" />
-              </a>
-              <br />
-              <span className="fs-5">Add Google Sign In Button To Website</span>
-            </div>
-          </Modal>
+          ) : (
+            <Tooltip
+              placement="topLeft"
+              title={
+                <>
+                  <div className="d-flex  ">
+                    <Image
+                      src="../img/bulb.png"
+                      className="mx-n2 ms-2 pe-2 bulb"
+                    />
+                    <p>
+                      Please make an account to save your build - don't let all
+                      your hard work go to waste!
+                      <a href={`/api/google`}>Login via Google</a>
+                    </p>
+                  </div>
+                </>
+              }
+              arrowPointAtCenter
+              color="#FAEFAF"
+            >
+              <div className="save bd-highlight">
+                <Image src="/img/save.svg" className="ms-2" alt="no image" />
+              </div>
+            </Tooltip>
+          )}
           <div className="backward bd-highlight">
-            <Image src="../img/backward.svg" className="ms-5 me-1" />
+            <Image src="/img/backward.svg" className="ms-5 me-1" />
           </div>
           <div className=" forward bd-highlight">
-            <Image src="../img/forward.svg" className="me-5" />
+            <Image src="/img/forward.svg" className="me-5" />
           </div>
           <Link href={`../`}>
             <div className=" delt bd-highlight">
-              <Image src="../img/delt.svg" className="me-3" />
+              <Image src="/img/delt.svg" className="me-3" />
             </div>
           </Link>
         </div>

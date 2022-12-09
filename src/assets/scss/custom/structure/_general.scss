@@ -154,9 +154,6 @@ body,
   padding-right: 1rem;
 }
 
-.builds-Main {
-  .videoProfile {}
-}
 
 .mainPage {
   overflow-y: scroll;
@@ -606,12 +603,6 @@ hr {
   border: 0 !important;
 }
 
-textarea.ant-input {
-  ::placeholder {
-    text-align: center;
-
-  }
-}
 
 .flash {
   right: 21px;
@@ -651,24 +642,6 @@ textarea.ant-input {
   }
 }
 
-// .videoCard01:hover {
-//   .iframs {
-//     display: block;
-//   }
-
-//   img {
-//     display: none;
-//   }
-// }
-
-// .btn-primary{
-//   color: black;
-
-//   :hover{
-//   color: #000 !important;
-//  background-color: white !important;
-//   }
-// }
 .btn {
   :hover {
     :hover {
@@ -918,6 +891,8 @@ display: none;
  width:413px;
 }
 
+  
+
 .awarenessDotModal {
   .ant-modal{
     overflow: scroll;}
@@ -994,4 +969,7 @@ display: none;
 
 .img-rounded{
   border-radius: 50%;
+}
+.ant-select-selection-placeholder {
+  color: #000000;
 }

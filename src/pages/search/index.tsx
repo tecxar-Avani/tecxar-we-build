@@ -26,16 +26,16 @@ const SearchPage = () => {
     try {
       if (buildListByUrl.data && buildListByUrl.data.length > 0) {
         setVideosData(buildListByUrl.data);
-      } else if (buildList.box) {
-        setVideosData(buildList.box);
+      } else if (buildList.rows) {
+        setVideosData(buildList.rows);
       }
     } catch (error) {
       console.log(error);
     }
   }, [buildListByUrl, buildList]);
-console.log("_________________",buildList)
+
   const searchResult = (url: string) => {
-    if (url !== "") {
+    if (url.trim().length > 0) {
       dispatch(getBuildByUrl(url));
     }
   };
@@ -59,14 +59,17 @@ console.log("_________________",buildList)
       )}
 
       <Row className="Search m-0">
+        {console.log("videosData", videosData)}
         {videosData.map((videoData: any, index: number) => {
-         
-          const id = videoData.newVideoId
+          const videoId = videoData.newVideoId
             ? videoData.newVideoId
-            : videoData.videoId ? videoData.videoId : videoData.id;
+            : videoData.videoId
+            ? videoData.videoId
+            : videoData.id;
+          const id = videoData.id;
           return (
             <Col lg={4} className="videoProfile pb-2" key={index}>
-              <Link href={`/newBuild?id=${id}&&videoId=${id}`}>
+              <Link href={`/newBuild?id=${id}&&videoId=${videoId}`}>
                 <a>
                   <VideoCard VideoCardData={videoData} />
                 </a>

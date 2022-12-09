@@ -25,9 +25,11 @@ import {
 import AwarenessDotModal from "@/components/AwarenessDotModal";
 import { userSelector } from "../../store/reducers/user.reducer";
 
-const NewBuild = (props:any) => {
+const NewBuild = (props: any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
+  const { flashCardList } = useAppSelector(flashCardSelector);
+
   const { buildById } = useAppSelector(buildSelector);
   const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
@@ -45,89 +47,15 @@ const NewBuild = (props:any) => {
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(0);
   const [boxData, setBoxData] = useState([]);
-  const [dataArray, setDataArray] = useState([
-    {
-      id: 1,
-      message: "",
-    },
-    {
-      id: 2,
-      message: "",
-    },
-    {
-      id: 3,
-      message: "",
-    },
-    {
-      id: 4,
-      message: "",
-    },
-    {
-      id: 5,
-      message: "",
-    },
-    {
-      id: 6,
-      message: "",
-    },
-    {
-      id: 7,
-      message: "",
-    },
-    {
-      id: 8,
-      message: "",
-    },
-    {
-      id: 9,
-      message: "",
-    },
-    {
-      id: 10,
-      message: "",
-    },
-    {
-      id: 11,
-      message: "",
-    },
-    {
-      id: 12,
-      message: "",
-    },
-    {
-      id: 13,
-      message: "",
-    },
-    {
-      id: 14,
-      message: "",
-    },
-    {
-      id: 15,
-      message: "",
-    },
-    {
-      id: 16,
-      message: "",
-    },
-    {
-      id: 17,
-      message: "",
-    },
-    {
-      id: 18,
-      message: "",
-    },
-    {
-      id: 19,
-      message: "",
-    },
-    {
-      id: 20,
-      message: "",
-    },
-  ]);
-
+  const init = [...Array(20)];
+  const [dataArray, setDataArray] = useState(
+    init.map((i, index) => {
+      return {
+        id: Number(index + 1),
+        message: "",
+      };
+    })
+  );
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -152,12 +80,14 @@ const NewBuild = (props:any) => {
     setInspiration(false);
     setResistance(true);
   };
-
-  const buildId = Number(router.query.videoId);
+  const buildId = Number(router.query.id);
   useEffect(() => {
-    dispatch(getFlashCardByBuildId(buildId));
-    dispatch(getBuildById(buildId));
+    if (buildId) {
+      dispatch(getFlashCardByBuildId(buildId));
+      dispatch(getBuildById(buildId));
+    }
   }, []);
+  
   useEffect(() => {
     const boxData = {
       boxId: awarenessBoxId,
@@ -165,23 +95,22 @@ const NewBuild = (props:any) => {
     };
     dispatch(getAwarenessByBoxId(boxData));
   }, []);
+
   useEffect(() => {
     if (buildById.data) {
       const data =
-        buildById &&
         buildById.data &&
         buildById.data.map((box: any) => {
           return { id: box.sorting_order, message: box.description };
         });
-      console.log(data);
       setDataArray(data);
-      setArr(data.map((d:any) => d.id));
+      setArr(data.map((d: any) => d.id));
     }
   }, [buildById]);
 
   const dispatch = useAppDispatch();
-  const flashCardArr = flashCardData?.flashCardList?.rows?.flashBuild?.build;
-  const userArr = flashCardData?.flashCardList?.rows?.flashBuild?.users;
+  const flashCardArr = flashCardList?.rows?.flashBuild?.build;
+  const userArr = flashCardList?.rows?.flashBuild?.users;
 
   const questionData = (userId: any, index?: number, questionId?: number) => {
     const filterArray = flashCardArr?.filter((F: any) => F.user_id == userId);
@@ -213,29 +142,26 @@ const NewBuild = (props:any) => {
     }
   };
 
-  // useEffect(() => {
-
-  //   setBoxData({ ...boxData, [awarenessBoxId]: awarenessIndex });
-  // }, []);
-
-  
-const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:string) => {
-  const saveData = {
-  type_of_video: videoType,
-  potential_polarization: polarisationLevel,
-  difficulty_level: difficultyLevel,
-  boxes : boxData,
-  video_url : url
-  }
-  dispatch(addBuild(saveData))
-  
-
-}
+  const onSave = (
+    videoType: any,
+    polarisationLevel: any,
+    difficultyLevel: any,
+    url: string
+  ) => {
+    const saveData = {
+      type_of_video: videoType,
+      potential_polarization: polarisationLevel,
+      difficulty_level: difficultyLevel,
+      boxes: boxData,
+      video_url: url,
+    };
+    dispatch(addBuild(saveData));
+  };
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
   };
-  const handleData = (comment:any,review:any) =>{
+  const handleData = (comment: any, review: any) => {
     const data = {
       comment: comment.comment,
       review_type: review,
@@ -243,7 +169,7 @@ const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:stri
     };
     dispatch(addAwareness(data));
     setReview(review);
-    setAwarenessModal(false)
+    setAwarenessModal(false);
   };
   const acceptanceData = [
     {
@@ -251,24 +177,12 @@ const onSave = (videoType:any,polarisationLevel:any,difficultyLevel:any,url:stri
       description: "hello",
       boxId: 1,
     },
-    {"id":2,
-    "description":"hello world",
-    "boxId":1,
-    },
-    {"id":3,
-    "description":"hello tecxar",
-    "boxId":1,
-    },
-    {"id":4,
-    "description":"hello tecxar",
-    "boxId":1,
-    },
-    {"id":5,
-    "description":"hello tecxar",
-    "boxId":1,
-    }
-  ]
-const acceptanceValue = acceptanceData.filter((A) => A.description)
+    { id: 2, description: "hello world", boxId: 1 },
+    { id: 3, description: "hello tecxar", boxId: 1 },
+    { id: 4, description: "hello tecxar", boxId: 1 },
+    { id: 5, description: "hello tecxar", boxId: 1 },
+  ];
+  const acceptanceValue = acceptanceData.filter((A) => A.description);
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -286,7 +200,7 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
             difficultyLevel: any,
             url: string
           ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
-          buildId ={buildId}
+          buildId={buildId}
         />
 
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
@@ -307,8 +221,8 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
               }
             }}
             onFocus={handleChange}
-            modalDot={setAwarenessDotModal}
-            acceptanceData={acceptanceData}
+            // modalDot={setAwarenessDotModal}
+            // acceptanceData={acceptanceData}
             Acceptance={Acceptance}
             Resistance={Resistance}
             Inspiration={Inspiration}
@@ -319,7 +233,7 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
           <div className="position-absolute mkCard">
             {userArr &&
               userArr?.length > 0 &&
-              userArr?.map((data: any, index: number) => {
+              userArr?.map((data: any) => {
                 return (
                   <Card
                     className="mt-3"
@@ -330,7 +244,7 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
                     <Card.Body className="d-flex justify-content-center align-items-center">
                       {data.user_name
                         .split(" ")
-                        .map((a: any) => a.charAt(0).toUpperCase())}
+                        .map((a: any) => a.charAt(0).UpperCase())}
                     </Card.Body>
                   </Card>
                 );
@@ -452,15 +366,7 @@ const acceptanceValue = acceptanceData.filter((A) => A.description)
             : ""
         }`}
         // setModalChallenge ={setModalChallenge}
-        callBack={(
-          title: any,
-          content: any,
-          header: any,
-          awareLabel: any,
-          challengeLabel: any,
-          awareValue: any,
-          id: any
-        ) => {
+        callBack={(title: any, content: any, header: any) => {
           const newData = {
             title: `${
               title == "challenge"
