@@ -892,7 +892,16 @@ display: none;
 }
 
   
+.awarenessTypeModal{
+  .ant-btn {
+    width: 63px !important;
+    height: -24px;
+    background-color:#000000 !important;
+    text-align: center;
+    margin-left: 0px !important;
+  }
 
+}
 .awarenessDotModal {
   .ant-modal{
     overflow: scroll;}
@@ -904,8 +913,6 @@ display: none;
      text-align: center;
      margin: -10px;
      margin-bottom: -62px;
-   
-   
    }
  
    textarea.ant-input {
@@ -918,13 +925,6 @@ display: none;
      background-color: #3a5e3d;
      text-align: center;
      margin-left: 230px;
-   
-     .ant-btn-default{
-      display: none;
-     }
-     .ant-btn-primary{
-      display: none;
-     }
    }
  
    .header {
@@ -934,7 +934,7 @@ display: none;
      font-size: 8px;
      line-height: 9px;
      text-align: left;
-     margin-bottom: -21px;
+     margin-bottom: 3px;
    }
    .ant-modal-footer{
     display: none;

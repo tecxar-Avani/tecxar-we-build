@@ -5,7 +5,6 @@ class AwarenessService {
   }
 
   getAwarenessByBoxId(boxId:number,reviewType:string) {
-   
     return API.get(`/reviews/getReviewsByBoxId?boxId=${boxId}&reviewType=${reviewType}`);
   }
  }

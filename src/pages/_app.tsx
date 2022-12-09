@@ -10,6 +10,8 @@ import SideBar from "../components/SideBar";
 import { Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { ToastContainer } from 'react-toastify';
+
 const cookieCutter = require('cookie-cutter');
 
 
@@ -39,6 +41,8 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
   }, [authorization]);
 
   return (
+    <>
+    <ToastContainer autoClose={2000} />
     <Provider store={store}>
       <Layout className="h-full">
         {/* <SideBar router={router}/> */}
@@ -51,6 +55,7 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
         </Layout>
       </Layout>
     </Provider>
+    </>
   );
 };
 

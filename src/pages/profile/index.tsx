@@ -46,7 +46,7 @@ const Profile = () => {
   const { userBuildList } = useAppSelector(buildSelector);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
-  useEffect(() => {}, [defaultQuestionIndex]);
+  // useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
@@ -109,20 +109,7 @@ const Profile = () => {
       setRevealAns(true);
     } else {
       const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
-      setDefaultQuestionIndex(defaultQuestionIndex + 1);
-      /* setModal3Open({
-        content: index
-          ? flashCardArr[index]?.question
-          : flashCardArr[0]?.question,
-        footer: ["Reveal Answer"],
-        questionId: index ? flashCardArr[index]?.id : flashCardArr[0].id,
-        index: index ? index : 1,
-
-        arrayLength: flashCardArr.length,
-        onOk: modal4Open,
-        editQuestion: editQuestion,
-        qaData: flashCardArr,
-      }); */
+        setDefaultQuestionIndex(defaultQuestionIndex + 1); 
       setModal3Open({
         content: flashCardArr[defaultQuestionIndex]?.question,
         footer: ["Reveal Answer"],

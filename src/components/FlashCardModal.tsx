@@ -34,7 +34,7 @@ const onDelete = (id:any) =>{
                 answer: props.flashCardArr[indexValue].answer,
                 id:props.flashCardArr[indexValue].id,
               };
-
+            
               props.setEditFlashCardData(flashCardData);
               props.setAddFlashcard(true);
             }
@@ -117,27 +117,6 @@ const onDelete = (id:any) =>{
         <div className="p-4">{props?.flashCard?.content}</div>
       </Modal>
 
-      {/* <AddFlashCardModal
-        modal2Open={props.addFlashCard}
-        setModal2Open={props.setAddFlashcard}
-        visible={props.addFlashCard}
-        // questionId={modal3Open.questionId}
-        setEditFlashCardData={() => {
-          const questionFilter = props.flashCardArr.filter(
-            (F: any) => F.id == questionId
-          );
-          questionFilter.length > 0 &&
-            questionFilter.map((ans: any) => {
-              const newData = {
-                answer: ans.answer,
-                question: ans.question,
-              };
-              props.setEditFlashCardData(newData);
-            });
-        }}
-        flashCardData={props.editFlashCardData}
-        handleSubmit={props.handleSubmit}
-      /> */}
       <AddFlashCardModal
         modal2Open={props.addFlashCard}
         setModal2Open={() => props.setAddFlashcard()}

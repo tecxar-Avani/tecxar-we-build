@@ -21,7 +21,7 @@ const NewBuildBoxes = (props: any) => {
                   arr={props.arr}
                   onFocus={props.onFocus}
                   visible={props.arr.includes(itemData.id)}
-                  acceptanceData={props.acceptanceData}
+                  AwarenessData={props.AwarenessData}
                   Acceptance={props.Acceptance}
                   Inspiration={props.Inspiration}
                   Resistance={props.Resistance}

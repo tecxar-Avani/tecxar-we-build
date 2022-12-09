@@ -23,12 +23,16 @@ import {
   getAwarenessByBoxId,
 } from "../../store/reducers/awareness.reducer";
 import { userSelector } from "../../store/reducers/user.reducer";
+import { Button, Divider, Form } from "antd";
+import TextArea from "antd/lib/input/TextArea";
+import ChallengeModal from "@/components/ChallengeModal";
 
 const NewBuild = (props: any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const { flashCardList } = useAppSelector(flashCardSelector);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
   const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
@@ -42,6 +46,9 @@ const NewBuild = (props: any) => {
   const [modal3Open, setModal3Open] = useState({});
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
+  const [challengeModal, setChallengeModal] = useState(false);
+  const [challengeData, setChallengeData] = useState([]);
+  const [challengeTitle, setChallengeTitle] = useState();
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(0);
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
@@ -83,8 +90,9 @@ const NewBuild = (props: any) => {
       dispatch(getFlashCardByBuildId(buildId));
       dispatch(getBuildById(buildId));
     }
+    // dispatch(getAwarenessByBoxId)
   }, []);
-  
+
   useEffect(() => {
     const boxData = {
       boxId: awarenessBoxId,
@@ -168,24 +176,139 @@ const NewBuild = (props: any) => {
     setReview(review);
     setAwarenessModal(false);
   };
-  const acceptanceData = [
+  const AwarenessData = [
     {
       id: 1,
       description: "hello",
       boxId: 1,
+      reviewType: "Acceptance",
+      challenges:"ooooooooooooooo"
     },
-    { id: 2, description: "hello world", boxId: 1 },
-    { id: 3, description: "hello tecxar", boxId: 1 },
-    { id: 4, description: "hello tecxar", boxId: 1 },
-    { id: 5, description: "hello tecxar", boxId: 1 },
+    { id: 2, description: "hello world", boxId: 1, reviewType: "Acceptance" },
+    { id: 3, description: "hello ", boxId: 1, reviewType: "Inspiration" },
+    { id: 4, description: "hello ", boxId: 1, reviewType: "Resistance" },
+    { id: 5, description: "hello ", boxId: 2, reviewType: "Acceptance" },
   ];
-  const acceptanceValue = acceptanceData.filter((A) => A.description);
 
   // for awarenessType modal
 
   const showModal = () => {
-  setOpen(true);
+    setOpen(true);
   };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  const challengeClose = () => {
+    setChallengeModal(false);
+  };
+  const content = (title: any) => {
+    return (
+      <>
+        {AwarenessData.length > 0 &&
+          AwarenessData.map((data) => {
+            return (
+              <>
+                {title == data.reviewType ? (
+                  <Form>
+                    <div className="header mt-2">Maria's {data.reviewType}</div>
+                    <Form.Item name="comment">
+                      <div className={`awarenessModal header`}>
+                        <TextArea
+                          showCount
+                          maxLength={500}
+                          rows={5}
+                          className="mb-2 AwareInputFirst"
+                          value={data.description}
+                        ></TextArea>
+                      </div>
+                    </Form.Item>
+                    <Button
+                      key="submit"
+                      type="primary"
+                      onClick={(e: any) => {
+                        const button =
+                          data.reviewType == "Acceptance"
+                            ? "Challenge"
+                            : data.reviewType == "Resistance"
+                            ? "Resolve"
+                            : "";
+                        challenge(data, button);
+                      }}
+                    >
+                      {data.reviewType == "Acceptance"
+                        ? "Challenge"
+                        : data.reviewType == "Resistance"
+                        ? "Resolve"
+                        : ""}
+                    </Button>
+                    
+                    {data.challenges ? (<>
+                      <Divider type="vertical" />
+                      <div className="header mt-2">Maria's challenge</div>
+                      <TextArea
+                      showCount
+                      maxLength={500}
+                      rows={4}
+                      className="mb-2 AwareInputFirst"
+                      value={data.challenges}
+                    ></TextArea>
+                    </>) : []}
+                  </Form>
+                ) : (
+                  []
+                )}
+              </>
+            );
+          })}
+      </>
+    );
+  };
+
+  const challenge = (data: any, e: any) => {
+    setChallengeModal(true);
+    setChallengeData(data);
+    setChallengeTitle(e);
+  };
+
+  const challengeContent = (data: any) => {
+    data = challengeData;
+
+    return (
+      <>
+        <Form>
+          <div className="header mt-2">Maria's {data.reviewType}</div>
+          <Form.Item name="comment">
+            <div className={`awarenessModal header`}>
+              <TextArea
+                maxLength={500}
+                rows={5}
+                className="mb-2 AwareInputFirst"
+                id={data.id}
+                value={data.description}
+              ></TextArea>
+            </div>
+          </Form.Item>
+          <div className="header mt-2">Maria's Challenge</div>
+          <Form.Item name="comment">
+            <div className={`awarenessModal header`}>
+              <TextArea
+                showCount
+                maxLength={500}
+                rows={5}
+                className="mb-2 AwareInputFirst"
+              ></TextArea>
+            </div>
+          </Form.Item>
+          <Button key="submit" type="primary">
+            Add
+          </Button>
+        </Form>
+      </>
+    );
+  };
+
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -224,13 +347,14 @@ const NewBuild = (props: any) => {
               }
             }}
             onFocus={handleChange}
-             acceptanceData={acceptanceData}
+            AwarenessData={AwarenessData}
             Acceptance={Acceptance}
             Resistance={Resistance}
             Inspiration={Inspiration}
             boxData={boxData}
             setBoxData={setBoxData}
             buildById={buildById}
+            modalDot={showModal}
           />
           <div className="position-absolute mkCard">
             {userArr &&
@@ -350,12 +474,46 @@ const NewBuild = (props: any) => {
             : ""
         } `}
       />
-     <AwarenessTypeModal
-     open={open}
-     onClick={showModal}
-     />
-
-    
+      <AwarenessTypeModal
+        open={open}
+        content={(title: any) => content(title)}
+        handleCancel={handleCancel}
+        btn="challenge"
+        title={`${
+          accept
+            ? "Acceptance"
+            : inspiration
+            ? "Inspiration"
+            : resistance
+            ? "Resistance"
+            : ""
+        }`}
+        className={`${
+          accept
+            ? "accptanceModalBG"
+            : inspiration
+            ? "inspirationModalBG"
+            : resistance
+            ? "resistanceModalBG"
+            : ""
+        } `}
+      />
+      <ChallengeModal
+        challengeModal={challengeModal}
+        content={challengeContent}
+        setChallengeModal={challengeClose}
+        btn="Add"
+        title={challengeTitle}
+        className={`${
+          accept
+            ? "accptanceModalBG"
+            : inspiration
+            ? "inspirationModalBG"
+            : resistance
+            ? "resistanceModalBG"
+            : ""
+        } `}
+      />
     </>
   );
 };

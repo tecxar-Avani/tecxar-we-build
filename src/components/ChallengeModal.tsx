@@ -1,25 +1,24 @@
 import React,{ useState } from 'react'
 import { Button, Modal } from 'antd';
 
-const AwarenessTypeModal = (props: any) => {
-  
+const ChallengeModal = (props: any) => {
     return(
         <Modal
-        open={props.open}
+        open={props.challengeModal}
         title={props.title}
         onOk={props.handleOk}
-        onCancel={props.handleCancel}
+        onCancel={props.setChallengeModal}
         footer={[
           <Button key="submit" type="primary" loading={props.loading} onClick={props.handleOk}>
            {props.btn}
           </Button>,
         ]}
-        className={`awarenessDotModal ${props.className}`}
+        className={`awarenessTypeModal awarenessDotModal ${props.className}`}
        bodyStyle={{ overflowY: 'auto', maxHeight: 'calc(100vh - 200px)' }}
       >
-      <div>{props.content(props.title)}</div>
+      <div>{props.content()}</div>
       </Modal>
     )
 
 }
-export default AwarenessTypeModal
+export default ChallengeModal

@@ -34,7 +34,7 @@ const AwarenessModal = (props: any) => {
           autoComplete="off"
         >
            <Form.Item>
-        <div className={`inputbox awarenessModal AwareInput ${props.className}`}><TextArea id={props.id} rows={3} className="mb-2 AwareInput" value={props.textValue}></TextArea></div></Form.Item>
+        <div className={`inputbox awarenessModal AwareInput ${props.className}`}><TextArea id={props.id} rows={3} className="mb-2 AwareInput" value={props.textValue ? props.textValue : ""}></TextArea></div></Form.Item>
         <div className="header mt-2">{props.header}</div>
         <Form.Item name="comment">
        <div className={`awarenessModal header ${props.className}`}><TextArea  showCount maxLength={500} rows={5} className="mb-2 AwareInputFirst"></TextArea></div>
