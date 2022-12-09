@@ -1,9 +1,11 @@
+import { getBuildById } from "@/store/reducers/build.reducer";
 import React from "react";
 import { Row } from "react-bootstrap";
 import OuterBox from "./OuterBox";
 import Ractangle from "./Ractangle";
 
 const NewBuildBoxes = (props: any) => {
+console.log("ppppppppppppppp",props)
   return (
     <>
       {[...Array(Math.ceil(props.item.length / 3))].map((_rows, index) => {
@@ -31,7 +33,7 @@ const NewBuildBoxes = (props: any) => {
                   setBoxData={(data: any) => {
                     props.setBoxData([...props.boxData, data]);
                   }}
-                  description ={itemData.message}
+                   description ={itemData.message}
                 />
               )}
             </Row>
