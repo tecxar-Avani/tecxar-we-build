@@ -37,10 +37,7 @@ export class FlashController {
   @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new build" })
-  async createBuild(
-    @Body() videoBuildData: any,
-    @Req() req: RequestWithUser,
-  ) {
+  async createBuild(@Body() videoBuildData: any, @Req() req: RequestWithUser) {
     try {
       videoBuildData.created_by = req.user.id;
       videoBuildData.updated_by = req.user.id;
@@ -80,7 +77,7 @@ export class FlashController {
   @OpenAPI({ summary: "Get all build of users" })
   async getUsersBuild(@Req() req: RequestWithUser) {
     try {
-      const {id} = req.user;
+      const { id } = req.user;
       const userBuild = await this.buildService.getBuildByUserId(id);
       return userBuild;
     } catch (error) {
@@ -95,13 +92,11 @@ export class FlashController {
 
   @Get("/userInteractedBuild")
   @OpenAPI({ summary: "Get all users by Email" })
-  async getUserInteractedBuild(
-    @Req() req: RequestWithUser,
-  ) {
+  async getUserInteractedBuild(@Req() req: RequestWithUser) {
     try {
-      const {id} = req.user;
+      const { id } = req.user;
       const userBuild = await this.buildService.getUserInteractedBuild(id);
-      const { searchedData, error } = await this.youtubeApiCall(userBuild)
+      const { searchedData, error } = await this.youtubeApiCall(userBuild);
       return { data: searchedData, box: userBuild };
     } catch (error) {
       return {
@@ -118,7 +113,7 @@ export class FlashController {
   @OpenAPI({ summary: "Get all build of users" })
   async getTotalBuilds(@Req() req: RequestWithUser) {
     try {
-      const {id} = req.user;
+      const { id } = req.user;
       const boxbuildCount = await this.boxService.getTotalBuilds(id);
       const awernessCount = await this.reviewService.getTotalAwarenessById(id);
       const flashCardCount = await this.flashCardService.getTotalFlashCard(id);
@@ -142,12 +137,27 @@ export class FlashController {
   ) {
     try {
       const userBuild = await this.buildService.getUsersBuildByUrl(url, search);
+      const allBuilds = await this.buildService.getAllBuilds();
       const { searchedData, error } = await this.youtubeApiCall(
         userBuild,
         search,
         url
       );
-      return { status: true, data: searchedData, box: userBuild };
+      if (searchedData && searchedData.length > 0) {
+        return { status: true, data: searchedData, box: userBuild };
+      } else {
+        const { searchedData, error } = await this.youtubeApiCall(
+          allBuilds,
+          search,
+          url
+        );
+        return {
+          status: true,
+          data: searchedData,
+          box: userBuild,
+          allBuilds: allBuilds,
+        };
+      }
     } catch (error) {
       return {
         error: {
@@ -163,6 +173,7 @@ export class FlashController {
     try {
       const searchedData = [];
       const videoUrl = url;
+      const videoIdToSearch = (await videoUrl) && videoUrl.split("=").pop();
       const youtube = google.youtube({
         version: "v3",
         auth: config.youtubeApiKey,
@@ -216,6 +227,7 @@ export class FlashController {
             youtubeData = await youtube.search.list({
               part: ["id,snippet"],
               q: url.video_url,
+              maxResults: 2,
             });
             await Promise.all(
               youtubeData?.data?.items && youtubeData.data.items.length > 0
@@ -255,10 +267,16 @@ export class FlashController {
           })
         );
       } else if (videoUrl || search) {
-        const response: any = await youtube.search.list({
-          part: ["id,snippet"],
-          q: videoUrl,
-        });
+        const response: any = videoIdToSearch
+          ? await youtube.videos.list({
+              part: ["snippet,contentDetails"],
+              id: [`${videoIdToSearch}`],
+            })
+          : await youtube.search.list({
+              part: ["snippet"],
+              relatedToVideoId: `${videoIdToSearch}`,
+              q: videoUrl,
+            });
 
         for (let i = 0; i < response.data.items.length; i++) {
           const item = response.data.items[i];
@@ -303,9 +321,7 @@ export class FlashController {
 
   @Get("/getAllBuilds")
   @OpenAPI({ summary: "Get all build " })
-  async getAllBuilds(
-    @QueryParam("search") search?: string
-  ) {
+  async getAllBuilds(@QueryParam("search") search?: string) {
     try {
       const userBuild = await this.buildService.getAllBuilds(search);
       const searchedData = [
@@ -586,9 +602,7 @@ export class FlashController {
 
   @Get("/:id")
   @OpenAPI({ summary: "Get build by Id" })
-  async getBuildById(
-    @Param("id") id: number,
-  ) {
+  async getBuildById(@Param("id") id: number) {
     try {
       const buildById = await this.buildService.getBuildById(id);
       return { status: true, data: buildById };
@@ -603,12 +617,12 @@ export class FlashController {
   }
 
   @Put("/:id")
-   @UseBefore(authMiddleware)
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update build id of users" })
   async UpdateUsersBuild(
     @Req() req: Request | any,
     @Param("id") id: number,
-    @Body() data: updateVideoBuildDto,
+    @Body() data: updateVideoBuildDto
   ) {
     try {
       data.created_by_user = req.user.id;
@@ -627,9 +641,7 @@ export class FlashController {
   @Delete("/:id")
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Delete build id of users" })
-  async DeleteUsersBuild(
-    @Param("id") id: number,
-  ) {
+  async DeleteUsersBuild(@Param("id") id: number) {
     try {
       const userBuild = await this.buildService.deleteBuild(id);
       return userBuild;

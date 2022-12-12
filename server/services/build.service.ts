@@ -125,7 +125,7 @@ class BuildService {
 
   public async getAllBuilds(search?: any): Promise<IVideoBuild[] | null> {
     const searchFilter = [];
-    if (search != "" && search != "undefine" && search != undefined) {
+    if (search != "" && search != "undefined" && search != undefined) {
       search = search.toLowerCase();
       searchFilter.push(
         {
