@@ -36,44 +36,25 @@ class BoxService {
     }
   }
 
-
   public async getReviewsByBox(id: number): Promise<IBoxReviews[] | null> {
     if (isEmpty(id)) {
       throw new HttpException(400, "Enter ID");
     }
-    const where = { "$box.build_id$": id };
-    const include = [
-      {
-        model: Boxes,
-        attributes: [],
-        as: "box",
-      }
-    ];
-    const options: {
-      raw: boolean;
-      where: any;
-      include?: any;
-      attributes?: any;
-      logging?: any;
-      nest?: boolean;
-      subQuery: boolean;
-    } = {
-      attributes: ["box_id", "review_type", "comment"],
-      logging: console.log,
-      where: where,
-      subQuery: false,
-      include: include,
-      nest: true,
-      raw: true,
-    };
-    const reviewsByBox: IBoxReviews[] | any = await this.reviews.findAll(options);
+    const query = `SELECT br.id,br.box_id, br.review_type, br.comment,brr.comment AS challenge,brr.review_type AS response_review 
+                    FROM
+                  boxes box
+                  INNER JOIN box_reviews br ON box.id = br.box_id
+                  LEFT JOIN box_reviews_response brr ON br.id = brr.boxReview_id
+                  where box.build_id =  ${id} `;
+    const reviewsByBox: IBoxReviews[] | any = await DB.sequelize.query(query, {
+      type: QueryTypes.SELECT,
+    });
     if (!reviewsByBox) {
       return null;
     } else {
       return reviewsByBox;
     }
   }
-
 
   public async getTotalAwarenessById(
     userId: any
