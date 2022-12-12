@@ -42,10 +42,6 @@ export default class BoxReviews
   @BelongsTo(() => Boxes)
   public box: Boxes;
 
-  @ForeignKey(()=>VideoBuilds)
-  @Column(DataType.INTEGER)
-  public build_id: number;
-
   @AllowNull(false)
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })

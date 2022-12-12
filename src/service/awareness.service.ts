@@ -4,8 +4,8 @@ class AwarenessService {
     return API.post(`/reviews/create`, awareness);
   }
 
-  getAwarenessByBoxId(boxId:number,reviewType:string) {
-    return API.get(`/reviews/getReviewsByBoxId?boxId=${boxId}&reviewType=${reviewType}`);
+  getAwarenessByBoxId(buildId:number) {
+    return API.get(`/reviews/getReviewsByBoxId/${buildId}`);
   }
  }
 export default new AwarenessService();

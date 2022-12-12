@@ -95,11 +95,7 @@ const NewBuild = (props: any) => {
     
   }, []);
   useEffect(() => {
-    const boxData = { 
-      boxId: awarenessBoxId,
-      reviewType: review,
-    };
-    dispatch(getAwarenessByBoxId(boxData));
+    dispatch(getAwarenessByBoxId(buildId));
   }, []);
 
   useEffect(() => {

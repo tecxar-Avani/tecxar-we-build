@@ -9,6 +9,7 @@ import {
   HttpCode,
   Post,
   QueryParam,
+  Param,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import BoxReviewService from "@/services/boxReview.service";
@@ -25,9 +26,7 @@ export class FlashController {
   @Post("/create")
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviews" })
-  async createReview(
-    @Body() reviewData: BoxreviewDto,
-  ) {
+  async createReview(@Body() reviewData: BoxreviewDto) {
     try {
       reviewData.created_by = 5;
       const createReviewData: IBoxReviews | null =
@@ -48,7 +47,7 @@ export class FlashController {
   @OpenAPI({ summary: "Get all reviews of users" })
   async getBoxReviews(@Req() req: RequestWithUser) {
     try {
-      const {id} = req.user;
+      const { id } = req.user;
       const reviewData = await this.reviewService.getReviews(id);
       return reviewData;
     } catch (error) {
@@ -61,11 +60,11 @@ export class FlashController {
     }
   }
 
-  @Get("/getReviewsByBoxId")
+  @Get("/getReviewsByBoxId/:buildId")
   @OpenAPI({ summary: "get review by box id" })
-  async getReviewsByBoxId() {
+  async getReviewsByBoxId(@Param("buildId") id: number) {
     try {
-      const reviewDataByBox = await this.reviewService.getReviewsByBox();
+      const reviewDataByBox = await this.reviewService.getReviewsByBox(id);
 
       return reviewDataByBox;
     } catch (error) {
@@ -77,5 +76,4 @@ export class FlashController {
       };
     }
   }
-
 }
