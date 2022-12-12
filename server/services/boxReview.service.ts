@@ -45,7 +45,7 @@ class BoxService {
   // }
 
   public async getReviewsByBox(): Promise<IBoxReviews[] | any> {
-    const query = `SELECT br.box_id,br.review_type FROM video_builds vb
+    const query = `SELECT br.box_id,br.review_type,br.comment FROM video_builds vb
     INNER JOIN box_reviews br ON vb.id = br.build_id `;
     const reviewsById: IBoxReviews[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
     return reviewsById;

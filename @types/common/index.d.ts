@@ -62,9 +62,9 @@ export interface IUpdateFlashCards {
 
 export interface IBoxReviews {
   id?: number;
-  box_id: number;
-  review_type: ReviewTypeEnumType;
-  comment: string;
+  box_id?: number;
+  review_type?: ReviewTypeEnumType;
+  comment?: string;
   created_by?: number;
   createdAt?: Date;
 }

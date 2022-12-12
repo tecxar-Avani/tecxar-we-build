@@ -20,6 +20,7 @@ import {
 } from "../../store/reducers/build.reducer";
 import {
   addAwareness,
+  awarenessSelector,
   getAwarenessByBoxId,
 } from "../../store/reducers/awareness.reducer";
 import { userSelector } from "../../store/reducers/user.reducer";
@@ -31,6 +32,7 @@ const NewBuild = (props: any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const { flashCardList } = useAppSelector(flashCardSelector);
+  const { awarenessList } = useAppSelector(awarenessSelector)
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
@@ -90,11 +92,10 @@ const NewBuild = (props: any) => {
       dispatch(getFlashCardByBuildId(buildId));
       dispatch(getBuildById(buildId));
     }
-    // dispatch(getAwarenessByBoxId)
+    
   }, []);
-
   useEffect(() => {
-    const boxData = {
+    const boxData = { 
       boxId: awarenessBoxId,
       reviewType: review,
     };
@@ -204,15 +205,18 @@ const NewBuild = (props: any) => {
     setChallengeModal(false);
   };
   const content = (title: any) => {
+    console.log(title)
     return (
       <>
-        {AwarenessData.length > 0 &&
-          AwarenessData.map((data) => {
+        {
+        awarenessList && awarenessList.length > 0 && awarenessList.map((data:any) => {
+          console.log("##############",data)
+
             return (
               <>
-                {title == data.reviewType ? (
+                {title == data.review_type ? (
                   <Form>
-                    <div className="header mt-2">Maria's {data.reviewType}</div>
+                    <div className="header mt-2">Maria's {data.review_type}</div>
                     <Form.Item name="comment">
                       <div className={`awarenessModal header`}>
                         <TextArea
@@ -220,7 +224,7 @@ const NewBuild = (props: any) => {
                           maxLength={500}
                           rows={5}
                           className="mb-2 AwareInputFirst"
-                          value={data.description}
+                          value={data.comment}
                         ></TextArea>
                       </div>
                     </Form.Item>
@@ -229,17 +233,17 @@ const NewBuild = (props: any) => {
                       type="primary"
                       onClick={(e: any) => {
                         const button =
-                          data.reviewType == "Acceptance"
+                          data.review_type == "acceptance"
                             ? "Challenge"
-                            : data.reviewType == "Resistance"
+                            : data.review_type == "resistance"
                             ? "Resolve"
                             : "";
                         challenge(data, button);
                       }}
                     >
-                      {data.reviewType == "Acceptance"
+                      {data.review_type == "acceptance"
                         ? "Challenge"
-                        : data.reviewType == "Resistance"
+                        : data.review_type == "resistance"
                         ? "Resolve"
                         : ""}
                     </Button>
@@ -278,7 +282,7 @@ const NewBuild = (props: any) => {
     return (
       <>
         <Form>
-          <div className="header mt-2">Maria's {data.reviewType}</div>
+          <div className="header mt-2">Maria's {data.review_type}</div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
               <TextArea
@@ -286,7 +290,7 @@ const NewBuild = (props: any) => {
                 rows={5}
                 className="mb-2 AwareInputFirst"
                 id={data.id}
-                value={data.description}
+                value={data.comment}
               ></TextArea>
             </div>
           </Form.Item>
@@ -347,7 +351,7 @@ const NewBuild = (props: any) => {
               }
             }}
             onFocus={handleChange}
-            AwarenessData={AwarenessData}
+            awarenessList={awarenessList}
             Acceptance={Acceptance}
             Resistance={Resistance}
             Inspiration={Inspiration}
@@ -481,11 +485,11 @@ const NewBuild = (props: any) => {
         btn="challenge"
         title={`${
           accept
-            ? "Acceptance"
+            ? "acceptance"
             : inspiration
-            ? "Inspiration"
+            ? "inspiration"
             : resistance
-            ? "Resistance"
+            ? "resistance"
             : ""
         }`}
         className={`${

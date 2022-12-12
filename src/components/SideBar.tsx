@@ -96,8 +96,7 @@ const SideBar = (toggle: any) => {
                <a href={`/api/google`}>
                 <GoogleButton className="m-auto googleButton" />
               </a>
-              <br />
-              <span className="fs-5">Add Google Sign In Button To Website</span>
+             
             </div>
           </Modal>
     </>

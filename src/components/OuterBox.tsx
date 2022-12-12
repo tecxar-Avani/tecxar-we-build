@@ -32,10 +32,12 @@ const OuterBox = (props: any) => {
                 onFocus={props.onFocus}
                 readOnly={props.description ? true : false}
               />
-              {props.AwarenessData.map((data:any) => {
+             
+              {props.awarenessList && props.awarenessList.length > 0 && props.awarenessList.map((data:any) => {
+             
    return(
    
-   data.reviewType  == "Inspiration" && data.boxId == props.id?  (
+   data.review_type  == "inspiration" && data.box_id == props.id ?  (
     <span onClick={props.modalDot}>
       <span
         className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
@@ -45,7 +47,7 @@ const OuterBox = (props: any) => {
       </span>
     </span>
   ) : 
-    data.reviewType == "Acceptance" && data.boxId == props.id? (
+    data.review_type == "acceptance" && data.box_id == props.id? (
     <span onClick={props.modalDot}>
       <span
         className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
@@ -55,7 +57,7 @@ const OuterBox = (props: any) => {
       </span>
     </span>
   ) : 
-  data.reviewType == "Resistance" && data.boxId == props.id ? (
+  data.review_type == "resistance" && data.box_id == props.id ? (
     <span onClick={props.modalDot}>
       <span
         className="position-absolute px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"

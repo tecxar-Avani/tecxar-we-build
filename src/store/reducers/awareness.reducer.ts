@@ -33,7 +33,7 @@ export const getAwarenessByBoxId = createAsyncThunk(`reviews/`, async (boxData: 
   const { status, data } = await AwarenessService.getAwarenessByBoxId(boxData.boxId,boxData.reviewType);
   // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
  
-  return { status,data};
+  return { status,rows :data};
 });
 
 
@@ -43,7 +43,7 @@ interface State {
   awareness: IBoxReviews;
   loading: boolean;
   error: string | undefined;
-  awarenessList: IBuildReviewRowsCountResponse;
+  awarenessList: IBuildReviewRowsCountResponse | any;
 }
 
 const initialState: State = {
@@ -94,13 +94,16 @@ const awarenessSlice = createSlice({
         }
       })
       .addCase(getAwarenessByBoxId.fulfilled, (state, action) => {
+       console.log("@@@@@@@@@@@@@@",action.payload)
         if (action.payload.status) {
           // toast.success(action.payload.data.message);
           // Router.back();
-          return { ...state, loading: false, awarenessList: action.payload.data };
+          return { ...state, loading: false, awarenessList: action.payload.rows };
         } else {
           // toast.error(action.payload.data.error.message);
           return { ...state, loading: false, awarenessList: initialState.awarenessList };
+    
+
         }
       })
      
