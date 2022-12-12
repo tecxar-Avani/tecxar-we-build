@@ -20,6 +20,7 @@ import {
 } from "../../store/reducers/build.reducer";
 import {
   addAwareness,
+  addReviewResponse,
   awarenessSelector,
   getAwarenessByBoxId,
 } from "../../store/reducers/awareness.reducer";
@@ -29,6 +30,7 @@ import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 
 const NewBuild = (props: any) => {
+  const [form] = Form.useForm();
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const { flashCardList } = useAppSelector(flashCardSelector);
@@ -173,20 +175,7 @@ const NewBuild = (props: any) => {
     setReview(review);
     setAwarenessModal(false);
   };
-  const AwarenessData = [
-    {
-      id: 1,
-      description: "hello",
-      boxId: 1,
-      reviewType: "Acceptance",
-      challenges:"ooooooooooooooo"
-    },
-    { id: 2, description: "hello world", boxId: 1, reviewType: "Acceptance" },
-    { id: 3, description: "hello ", boxId: 1, reviewType: "Inspiration" },
-    { id: 4, description: "hello ", boxId: 1, reviewType: "Resistance" },
-    { id: 5, description: "hello ", boxId: 2, reviewType: "Acceptance" },
-  ];
-
+  
   // for awarenessType modal
 
   const showModal = () => {
@@ -206,8 +195,6 @@ const NewBuild = (props: any) => {
       <>
         {
         awarenessList && awarenessList.length > 0 && awarenessList.map((data:any) => {
-          console.log("##############",data)
-
             return (
               <>
                 {title == data.review_type ? (
@@ -274,10 +261,10 @@ const NewBuild = (props: any) => {
 
   const challengeContent = (data: any) => {
     data = challengeData;
-
+console.log(data)
     return (
       <>
-        <Form>
+        <Form  form={form} onFinish={onChallengeClick}>
           <div className="header mt-2">Maria's {data.review_type}</div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
@@ -301,13 +288,22 @@ const NewBuild = (props: any) => {
               ></TextArea>
             </div>
           </Form.Item>
-          <Button key="submit" type="primary">
+          <Button key="submit"  htmlType="submit">
             Add
           </Button>
         </Form>
       </>
     );
   };
+
+  const onChallengeClick = (e:any) => {
+    const data = {
+      review_type : challengeTitle,
+      comment : e.comment
+    }
+  
+    dispatch(addReviewResponse(data))
+  }
 
   return (
     <>

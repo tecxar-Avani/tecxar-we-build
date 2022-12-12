@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IBoxReviews } from "@/interfaces/boxreviews.interface";
 import Boxes from "@/models/boxes.model";
+import BoxReviewsResponse from "@/models/boxReviewResponse.model";
 import BoxReviews from "@/models/boxReviews.model";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
@@ -45,7 +47,7 @@ class BoxService {
         model: Boxes,
         attributes: [],
         as: "box",
-      },
+      }
     ];
     const options: {
       raw: boolean;
@@ -56,7 +58,7 @@ class BoxService {
       nest?: boolean;
       subQuery: boolean;
     } = {
-      attributes: ["id", "review_type", "comment"],
+      attributes: ["box_id", "review_type", "comment"],
       logging: console.log,
       where: where,
       subQuery: false,

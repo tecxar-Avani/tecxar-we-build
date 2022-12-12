@@ -65,6 +65,7 @@ export class FlashController {
   async getReviewsByBoxId(@Param("buildId") id: number) {
     try {
       const reviewDataByBox = await this.reviewService.getReviewsByBox(id);
+      console.log("@@@@@@@@@@@@@@@@@@@",reviewDataByBox)
 
       return reviewDataByBox;
     } catch (error) {

@@ -26,7 +26,6 @@ import BoxService from "@/services/box.service";
 import BoxReviewService from "@/services/boxReview.service";
 
 @Controller("/build")
-@UseBefore(authMiddleware)
 export class FlashController {
   private buildService = new BuildService();
   private flashCardService = new FlashCardService();
@@ -159,11 +158,12 @@ export class FlashController {
         };
       }
     } catch (error) {
-      return {
+      return { 
         error: {
           code: 500,
           message: (error as Error).message,
         },
+      
       };
     }
   }
@@ -324,6 +324,7 @@ export class FlashController {
   async getAllBuilds(@QueryParam("search") search?: string) {
     try {
       const userBuild = await this.buildService.getAllBuilds(search);
+      let searchedResult;
       const searchedData = [
         {
           id: 58,
@@ -589,6 +590,11 @@ export class FlashController {
           url: "https://www.youtube.com/embed/W6NZfCO5SIk",
         },
       ];
+      // const searchedData = await this.youtubeApiCall(search, userBuild).then(
+      //   (result) => {
+      //     searchedResult = result;
+      //   }
+      // );
       return { status: true, data: searchedData, box: userBuild };
     } catch (error) {
       return {

@@ -113,3 +113,13 @@ export interface IUpdateUser {
   updated_by?: number;
   updatedAt?: Date;
 }
+
+export interface IBoxReviewsResponse {
+  id?: number;
+  boxReview_id?: number;
+  review_type?: ReviewResponseTypeEnumType;
+  comment?: string;
+  created_by?: number;
+  createdAt?: Date;
+ 
+}

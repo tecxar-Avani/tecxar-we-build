@@ -9,9 +9,10 @@ import {
 } from "@reduxjs/toolkit";
 import Router from "next/router";
 import { toast } from "react-toastify";
-import { IBuildReviewRowsCountResponse } from "../../../@types/responses";
+import { IBuildReviewRowsCountResponse, IReviewResponseRowsCountResponse } from "../../../@types/responses";
 import {
   IBoxReviews,
+  IBoxReviewsResponse,
   ICreateFlashCard,
   IFlashCard,
 } from "../../../@types/common";
@@ -42,12 +43,34 @@ export const getAwarenessByBoxId = createAsyncThunk(
   }
 );
 
+export const addReviewResponse = createAsyncThunk(
+  `reviewResponse/add`,
+  async (createBoxReviewResponseData:IBoxReviewsResponse) => {
+    const {status,data} = await AwarenessService.createReviewResponse(
+      createBoxReviewResponseData
+    );
+    return { status, data };
+  }
+)
+
+export const getReviewResponseByAwarenessId = createAsyncThunk(
+  `reviewResponse/`,
+  async (review_id: number) => {
+    const { status, data } = await AwarenessService.getReviewsResponseByAwareness(
+      review_id
+    );
+    return { status, rows: data };
+  }
+);
+
 interface State {
   id: number;
   awareness: IBoxReviews;
   loading: boolean;
   error: string | undefined;
   awarenessList: IBuildReviewRowsCountResponse | any;
+  reviewResponseData : IBoxReviewsResponse;
+  reviewResponseList : IReviewResponseRowsCountResponse;
 }
 
 const initialState: State = {
@@ -59,6 +82,11 @@ const initialState: State = {
   awarenessList: {
     status: true,
     rows: [],
+  },
+  reviewResponseData:{},
+  reviewResponseList:{
+    status:true,
+    rows:[]
   },
   loading: false,
   error: undefined,
@@ -106,7 +134,6 @@ const awarenessSlice = createSlice({
         }
       })
       .addCase(getAwarenessByBoxId.fulfilled, (state, action) => {
-        console.log("@@@@@@@@@@@@@@", action.payload);
         if (action.payload.status) {
           // toast.success(action.payload.data.message);
           // Router.back();
@@ -121,6 +148,43 @@ const awarenessSlice = createSlice({
             ...state,
             loading: false,
             awarenessList: initialState.awarenessList,
+          };
+        }
+      })
+
+      .addCase(addReviewResponse.fulfilled, (state, action) => {
+        if (action.payload.data.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            reviewResponseData: action.payload.data,
+          };
+        } else {
+          toast.error(action.payload.data.error.message);
+          return {
+            ...state,
+            loading: false,
+            reviewResponseData: initialState.reviewResponseData,
+          };
+        }
+      })
+
+      .addCase(getReviewResponseByAwarenessId.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          // toast.success(action.payload.data.message);
+          // Router.back();
+          return {
+            ...state,
+            loading: false,
+            reviewResponseList: action.payload.rows,
+          };
+        } else {
+          // toast.error(action.payload.data.error.message);
+          return {
+            ...state,
+            loading: false,
+            reviewResponseList: initialState.reviewResponseList,
           };
         }
       })
