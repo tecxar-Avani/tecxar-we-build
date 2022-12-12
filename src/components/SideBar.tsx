@@ -39,7 +39,7 @@ const SideBar = (toggle: any) => {
     setIsProfile(false);
     setIsUserGuide(true);
   };
-
+console.log("######$$$$$$$$$$$$@@@@@@@@",toggle)
   return (
     <>
       

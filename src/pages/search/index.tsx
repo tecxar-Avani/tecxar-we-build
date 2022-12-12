@@ -42,13 +42,12 @@ const SearchPage = () => {
   useEffect(() => {
     dispatch(getBuilds());
   }, []);
-
   return (
     <>
       <SearchBar searchResult={searchResult} />
       {router && router.query.selfLearning ? (
         <HeaderTitle
-          title="Learn something new about yourself"
+          title={buildListByUrl.data ? "Results" ? buildListByUrl.data=="error" ? "we don't" : "Learn something new about yourself" :"Learn something new about yourself" : "Learn something new about yourself"}
           className="title-list-of-profile py-4 Search"
         />
       ) : (
