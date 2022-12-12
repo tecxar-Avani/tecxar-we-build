@@ -9,39 +9,37 @@ import {
   Table,
   BelongsTo,
 } from "sequelize-typescript";
-import {
-  IBoxReviews,
-  ReviewTypeEnumType,
-} from "@/interfaces/boxreviews.interface";
 import Boxes from "@/models/boxes.model";
 import User from "./user.model";
 import VideoBuilds from "./videoBuilds.model ";
-export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
+import BoxReviews from "./boxReviews.model";
+import { IBoxReviewsResponse, ReviewResponseTypeEnumType } from "@/interfaces/boxReviewResponse";
+export type Box_ReviewsResponseGroupAttributes = Optional<IBoxReviewsResponse, "id">;
 
 @Table({
-  tableName: "box_reviews",
+  tableName: "box_reviews_response",
   createdAt: "createdAt",
   updatedAt: "updatedAt",
   timestamps: true,
 })
-export default class BoxReviews
-  extends Model<IBoxReviews, Box_ReviewsGroupAttributes>
-  implements IBoxReviews {
+export default class BoxReviewsResponse
+  extends Model<IBoxReviewsResponse, Box_ReviewsResponseGroupAttributes>
+  implements IBoxReviewsResponse {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
-  @Column(DataType.ENUM("acceptance", "resistance", "inspiration"))
-  public review_type: ReviewTypeEnumType;
+  @Column(DataType.ENUM("challenge", "resolve"))
+  public review_type: ReviewResponseTypeEnumType;
 
   @Column(DataType.TEXT)
   public comment: string;
 
   @AllowNull(false)
-  @ForeignKey(() => Boxes)
+  @ForeignKey(() => BoxReviews)
   @Column(DataType.INTEGER)
-  public box_id: number;
-  @BelongsTo(() => Boxes)
-  public box: Boxes;
+  public boxReview_id: number;
+  @BelongsTo(() => BoxReviews)
+  public boxReview: BoxReviews;
 
   @AllowNull(false)
   @ForeignKey(() => User)

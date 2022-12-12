@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import config from '@/configs/index';
 import { dbConfig } from '@interfaces/db.interface';
 import { logger } from '@utils/logger';
@@ -14,6 +15,7 @@ import FlashCards from "@/models/flashCards.model";
 import BoxGroups from "@/models/boxGroups.model";
 import BoxReviews from "@/models/boxReviews.model";
 import FlashCardsResponse from '@/models/flashCardsResponse.model';
+import BoxReviewsResponse from '@/models/boxReviewResponse.model';
 const { host, user, password, database, pool, port }: dbConfig = config.db;
 
 const sequelize = new Sequelize(database, user, password, {
@@ -81,6 +83,7 @@ const DB = {
   boxGroups: BoxGroups,
   flashCards: FlashCards,
   boxReviews: BoxReviews,
+  boxReviewsResponse : BoxReviewsResponse,
   flashCardsResponse: FlashCardsResponse,
   sequelize, // connection instance (RAW queries)
   Sequelize, // library

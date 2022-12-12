@@ -16,6 +16,7 @@ export interface IBoxReviews {
   build_id?:number
 }
 
+
 export interface IUpdateBoxReviews {
   id?: number;
   box_id?: number;

@@ -148,7 +148,6 @@ export class FlashController {
       );
       return { status: true, data: searchedData, box: userBuild };
     } catch (error) {
-      console.log("%^^^^^^^^^^^^^^^^^^^^",error)
       return { 
         error: {
           code: 500,
