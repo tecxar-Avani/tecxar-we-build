@@ -36,8 +36,9 @@ export const getUserInteractedBuild: any = createAsyncThunk(
 
 export const getBuildByUrl: any = createAsyncThunk(
   `build/get/url`,
-  async (url: string): Promise<IBuildRowsCountResponse> => {
-    const { data } = await BuildService.getBuildByUrl(url);
+  async (searchData:{url?:string,search?:string}): Promise<IBuildRowsCountResponse> => {
+    console.log("------------------",searchData)
+    const { data } = await BuildService.getBuildByUrl(searchData.url,searchData.search);
     return { status: data.status, rows: data };
   }
 );

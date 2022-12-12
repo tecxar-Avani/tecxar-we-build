@@ -170,10 +170,11 @@ export class FlashController {
 
   @OpenAPI({ summary: "YouTube Api Call" })
   async youtubeApiCall(userBuild?: any, search?: any, url?: any) {
+    console.log("#########~~~~~~~~~~~~~~############",  userBuild,  search,  url)
     try {
       const searchedData = [];
       const videoUrl = url;
-      const videoIdToSearch = (await videoUrl) && videoUrl.split("=").pop();
+      const videoIdToSearch = videoUrl && videoUrl.split("=").pop();
       const youtube = google.youtube({
         version: "v3",
         auth: config.youtubeApiKey,
@@ -229,6 +230,7 @@ export class FlashController {
               q: url.video_url,
               maxResults: 2,
             });
+            
             await Promise.all(
               youtubeData?.data?.items && youtubeData.data.items.length > 0
                 ? youtubeData.data.items.map(async (item: any) => {
@@ -259,7 +261,7 @@ export class FlashController {
                       newVideoId: array1[0],
                       url: `https://www.youtube.com/embed/${array1[0]}`,
                     };
-
+                 
                     searchedData.push(Filter);
                   })
                 : []
@@ -267,15 +269,17 @@ export class FlashController {
           })
         );
       } else if (videoUrl || search) {
-        const response: any = videoIdToSearch
+        console.log("videoIdToSearch",videoIdToSearch)
+        const response: any = 
+        videoIdToSearch
           ? await youtube.videos.list({
               part: ["snippet,contentDetails"],
               id: [`${videoIdToSearch}`],
             })
-          : await youtube.search.list({
-              part: ["snippet"],
-              relatedToVideoId: `${videoIdToSearch}`,
-              q: videoUrl,
+          : 
+          await youtube.search.list({
+            part: ["id,snippet"],
+            q: videoUrl,
             });
 
         for (let i = 0; i < response.data.items.length; i++) {
@@ -304,7 +308,9 @@ export class FlashController {
             newVideoId: array1[0],
             url: `https://www.youtube.com/embed/${array1[0]}`,
           };
+         
           searchedData.push(data);
+          
         }
       }
       return { searchedData, error: null };

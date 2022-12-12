@@ -14,8 +14,8 @@ class BuildService {
     return API.get(`/build/${id}`);
   }
 
-  getBuildByUrl(url: string) {
-    return API.get(`/build/url?url=${url}`);
+  getBuildByUrl(url?: string,search?:string) {
+    return API.get(`/build/url?url=${url}&&search=${search}`);
   }
   // listBuilds(url: any) {
   //   const urlData = url ? url : "node js tutorial";
