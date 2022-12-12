@@ -120,7 +120,7 @@ export class FlashController {
     try {
       const {id} = req.user;
       const boxbuildCount = await this.boxService.getTotalBuilds(id);
-      const awernessCount = await this.reviewService.getTotalAwernessById(id);
+      const awernessCount = await this.reviewService.getTotalAwarenessById(id);
       const flashCardCount = await this.flashCardService.getTotalFlashCard(id);
       return { boxbuildCount, awernessCount, flashCardCount };
     } catch (error) {

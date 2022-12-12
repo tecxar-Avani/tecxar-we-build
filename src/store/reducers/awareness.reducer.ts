@@ -10,7 +10,11 @@ import {
 import Router from "next/router";
 import { toast } from "react-toastify";
 import { IBuildReviewRowsCountResponse } from "../../../@types/responses";
-import { IBoxReviews, ICreateFlashCard, IFlashCard } from "../../../@types/common";
+import {
+  IBoxReviews,
+  ICreateFlashCard,
+  IFlashCard,
+} from "../../../@types/common";
 import AwarenessService from "../../service/awareness.service";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
@@ -20,23 +24,23 @@ export const addAwareness = createAsyncThunk(
   `reviews/add`,
   async (createAwarenessData: IBoxReviews, { dispatch }) => {
     const { status, data } = await AwarenessService.addAwareness(
-        createAwarenessData
+      createAwarenessData
     );
-    
+
     // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
     return { status, data };
-   
   }
 );
 
-export const getAwarenessByBoxId = createAsyncThunk(`reviews/`, async (boxData: { boxId: number; reviewType: string; }) => {
-  const { status, data } = await AwarenessService.getAwarenessByBoxId(boxData.boxId,boxData.reviewType);
-  // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
- 
-  return { status,rows :data};
-});
-
-
+export const getAwarenessByBoxId = createAsyncThunk(
+  `reviews/`,
+  async (buildId: number) => {
+    const { status, data } = await AwarenessService.getAwarenessByBoxId(
+      buildId
+    );
+    return { status, rows: data };
+  }
+);
 
 interface State {
   id: number;
@@ -47,10 +51,10 @@ interface State {
 }
 
 const initialState: State = {
-    awareness: {
-      review_type: "Inspiration" ,
+  awareness: {
+    review_type: "Inspiration",
     comment: "",
-    box_id:0
+    box_id: 0,
   },
   awarenessList: {
     status: true,
@@ -84,29 +88,43 @@ const awarenessSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addAwareness.fulfilled, (state, action) => {       
-        if (action.payload.data.status) {       
-         toast.success(action.payload.data.message);
-          return { ...state, loading: false,awarenessData: action.payload.data  };
+      .addCase(addAwareness.fulfilled, (state, action) => {
+        if (action.payload.data.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            awarenessData: action.payload.data,
+          };
         } else {
           toast.error(action.payload.data.error.message);
-          return { ...state, loading: false,awarenessData: initialState.awareness };
+          return {
+            ...state,
+            loading: false,
+            awarenessData: initialState.awareness,
+          };
         }
       })
       .addCase(getAwarenessByBoxId.fulfilled, (state, action) => {
-       console.log("@@@@@@@@@@@@@@",action.payload)
+        console.log("@@@@@@@@@@@@@@", action.payload);
         if (action.payload.status) {
           // toast.success(action.payload.data.message);
           // Router.back();
-          return { ...state, loading: false, awarenessList: action.payload.rows };
+          return {
+            ...state,
+            loading: false,
+            awarenessList: action.payload.rows,
+          };
         } else {
           // toast.error(action.payload.data.error.message);
-          return { ...state, loading: false, awarenessList: initialState.awarenessList };
-    
-
+          return {
+            ...state,
+            loading: false,
+            awarenessList: initialState.awarenessList,
+          };
         }
       })
-     
+
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
       })
@@ -118,5 +136,4 @@ const awarenessSlice = createSlice({
 
 export const awarenessReducer = awarenessSlice.reducer;
 export const awarenessSelector = (state: RootState) => state.boxReviews;
-export const { awarenessData, awareness } =
-awarenessSlice.actions;
+export const { awarenessData, awareness } = awarenessSlice.actions;
