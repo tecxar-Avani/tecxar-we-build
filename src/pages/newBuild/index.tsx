@@ -28,6 +28,7 @@ import { userSelector } from "../../store/reducers/user.reducer";
 import { Button, Divider, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
+import { toast } from "react-toastify";
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -145,7 +146,6 @@ const NewBuild = (props: any) => {
       }
     }
   };
-
   const onSave = (
     videoType: any,
     polarisationLevel: any,
@@ -159,7 +159,10 @@ const NewBuild = (props: any) => {
       boxes: boxData,
       video_url: url,
     };
-    dispatch(addBuild(saveData));
+    // boxData.length > 20 ?
+    dispatch(addBuild(saveData)) 
+    // :
+    // toast.error("You need to fill minimum 20 boxes");
   };
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);

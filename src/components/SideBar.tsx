@@ -5,10 +5,13 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import HeaderTitle from "./headerTitle";
 import GoogleButton from "react-google-button";
+import { useAppDispatch } from "../hooks";
+import { getBuilds, getUsersBuild } from "@/store/reducers/build.reducer";
 
 const { Sider } = Layout;
 
 const SideBar = (toggle: any) => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   // const url = window.location.origin;
@@ -20,12 +23,14 @@ const SideBar = (toggle: any) => {
 
   const selfLearning = () => {
     setIsSelfLearning(true);
+    
   };
   const otherLearnning = () => {
     setIsSelfLearning(false);
     setIsUserGuide(false);
     setIsProfile(false);
     setIsOtherLearning(true);
+    
   };
   const profile = () => {
     setIsSelfLearning(false);

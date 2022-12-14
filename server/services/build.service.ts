@@ -66,7 +66,7 @@ class BuildService {
   ): Promise<IVideoBuild[] | null> {
     const searchFilter = [];
     const where = [];
-    if (search != "" && search != "undefine" && search != undefined) {
+    if (search != "" && search != "undefined" && search != undefined) {
       search = search.toLowerCase();
       searchFilter.push(
         {
@@ -95,6 +95,7 @@ class BuildService {
       }
       where.push({ [Op.or]: searchFilter });
     }
+  
     if (url) {
       where.push({ video_url: url });
     }
@@ -105,6 +106,7 @@ class BuildService {
       where: any;
       raw: boolean;
       order: any;
+      logging:any
     } = {
       attributes: [
         "id",
@@ -119,6 +121,7 @@ class BuildService {
       order: [["id", "ASC"]],
       raw: true,
       subQuery: false,
+     logging:console.log
     }
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(option);
     return videoBuilds;

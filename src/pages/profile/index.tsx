@@ -127,7 +127,6 @@ const Profile = () => {
     dispatch(updateFlashCardId(data));
   };
 //all profile
-console.log("ooooooooooooooooooooooo",editUser)
 const blocked_user = usersList && usersList?.filter((user:any) => user.is_blocked == true)
 const unBlocked_user = usersList && usersList?.filter((user:any) => user.is_blocked == false)
 
@@ -146,10 +145,11 @@ const unBlocked_user = usersList && usersList?.filter((user:any) => user.is_bloc
             title="Your builds"
             className="title-list-of-profile py-2 my-2"
           />
-          
+{          console.log(userBuilds)
+}          
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
-              {userBuilds && userBuilds?.rows?.map((videoData: any, index: number) => (
+              {userBuilds && userBuilds?.data?.map((videoData: any, index: number) => (
                 <Col md={4} key={index} className="videoProfile">
                   <Link href={`/newBuild?id=${videoData.id}`}>
                     <a>

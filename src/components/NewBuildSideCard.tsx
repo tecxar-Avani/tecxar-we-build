@@ -17,7 +17,7 @@ const NewBuildSideCard = (props: any) => {
   const [videoType, setVideoType] = useState<any>("theory");
   const [polarisationLevel, setPolarisationLevel] = useState<any>("low");
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
-  const url = `https://www.youtube.com/watch?v=${props.id}`;
+  const url = `https://www.youtube.com/watch?v=${props.videoId}`;
 
   const [modal5Open, setModal5Open] = useState(false);
   const togglemodal = () => {
