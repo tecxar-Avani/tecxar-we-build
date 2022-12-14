@@ -863,9 +863,7 @@ height: 50px;}
   .ant-btn{
     display: none !important;
   }
-  .ant-modal-close-x{
-display: none;
-}
+ 
 }
 
 
@@ -890,8 +888,28 @@ display: none;
  height: 160px;
  width:413px;
 }
+.AwareInputChallenge{
+  height: 160px;
+  width:372px;
+  margin-left: 39px !important;
+ }
 
-  
+ .AwareInputChallengeHeader{
+  font-family: 'Arimo';
+     font-style: normal;
+     font-weight: 700;
+     font-size: 8px;
+     line-height: 9px;
+     margin-left: -269px;
+     margin-bottom: 3px;
+ }
+  .challengeAcceptBtn{
+    width: 100px !important;
+    height: -24px;
+    background-color:#000000 !important;
+    text-align: center;
+    margin-left: 304px !important;
+  }
 .awarenessTypeModal{
   .ant-btn {
     width: 63px !important;
@@ -922,11 +940,13 @@ display: none;
    .ant-btn {
      width: 111px;
      height: -24px;
-     background-color: #3a5e3d;
+     background-color: #44A82B;
      text-align: center;
-     margin-left: 230px;
+     margin-left: 304px;
    }
- 
+ .yellowBtn{
+  background-color:  #FFE500;
+ }
    .header {
      font-family: 'Arimo';
      font-style: normal;
@@ -940,8 +960,8 @@ display: none;
     display: none;
    }
   .ant-form-item{
-    margin-top: 11px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: -4px;
   }
   .ant-btn .challenge{
     width: 111px;
@@ -972,4 +992,10 @@ display: none;
 }
 .ant-select-selection-placeholder {
   color: #000000;
+}
+.filterInProfile{
+  height: 42px;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 900px
 }

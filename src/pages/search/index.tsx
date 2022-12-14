@@ -42,7 +42,7 @@ const SearchPage = () => {
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
     '(\\#[-a-z\\d_]*)?$','i');
     const validUrl = pattern.test(url)
-    console.log("pattern.test(str)",pattern.test(url))
+  
     const searchData ={
       url:validUrl ? url : undefined,
       search: !validUrl ?url : undefined

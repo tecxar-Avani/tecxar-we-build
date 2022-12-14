@@ -14,8 +14,7 @@ getAllUsers() {
     return API.get(`/users/userByEmail`)
   }
   updateUserById(id:number,userData:any){
-  
-    return API.put(`/users/${id}`,userData)
+    return API.put(`/users/update/${id}`,userData)
   }
   totalbuilds(){
     return API.get(`/build/totalbuilds`)

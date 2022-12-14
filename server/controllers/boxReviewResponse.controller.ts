@@ -14,7 +14,7 @@ import {
 import { OpenAPI } from "routing-controllers-openapi";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { RequestWithUser } from "@/interfaces/auth.interface";
-import BoxResponseService from "@/services/boxReviewResponse";
+import BoxResponseService from "@/services/boxReviewResponse.service";
 import { IBoxReviewsResponse } from "@/interfaces/boxReviewResponse";
 import { BoxReviewResponseDto } from "@/dtos/boxReviewResponse.dto";
 
@@ -24,13 +24,15 @@ export class BoxReviewResponseController {
   private reviewResponseService = new BoxResponseService();
 
   @Post("/create")
+  @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviewsResponse" })
-  async createReviewResponse(@Body() reviewData: BoxReviewResponseDto) {
+  async createReviewResponse(@Body() reviewData: any ,@Req() req: RequestWithUser) {
     try {
-      reviewData.created_by = 5;
+      reviewData.created_by = req.user.id;
       const createReviewResponseData: IBoxReviewsResponse | null =
         await this.reviewResponseService.createBoxReviewResponse(reviewData);
+    
       return {
         status: true,
         data: createReviewResponseData,
@@ -60,7 +62,7 @@ export class BoxReviewResponseController {
     }
   }
 
-  @Get("/getReviewsByBoxId/:box_review_id")
+  @Get("/reviewResponse/:box_review_id")
   @OpenAPI({ summary: "get review by awareness id" })
   async getReviewsResponseByAwareness(@Param("box_review_id") id: number) {
     try {

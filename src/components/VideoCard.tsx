@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardImg, Col, Row } from "react-bootstrap";
 
 const VideoCard = (props: any) => {
+  console.log("******************",props)
   return (
     <Card className="p-0 border-0 rounded mb-2 videoCard01">
       <Card.Body className="p-0 rounded-0">
@@ -22,15 +23,16 @@ const VideoCard = (props: any) => {
                 allow="autoplay; encrypted-media"
               ></iframe>
             </>
-          )}
+          )
+          }
 
           <div className="position-absolute bottom-0 end-0 px-2 mb-2 me-2 py-1 bg-black rounded">
-            <span className="text-white">{props.VideoCardData.duration}</span>
+            <span className="text-white">{props?.VideoCardData?.duration}</span>
           </div>
         </div>
         {props.VideoCardData.title && (
           <Card.Header className="title text-truncate px-0 bg-white border-0">
-            {props.VideoCardData.title}
+            {props?.VideoCardData?.title}
           </Card.Header>
         )}
       </Card.Body>

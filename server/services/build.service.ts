@@ -26,6 +26,7 @@ class BuildService {
       where: { created_by: userId },
       raw: true,
     });
+   
     if (!videoBuilds) {
       return null;
     } else {

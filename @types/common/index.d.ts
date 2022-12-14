@@ -22,6 +22,7 @@ export interface IVideoBuild {
   rows?: any;
 }
 
+
 export interface IBuild {
   answer?: string;
   email?: string;

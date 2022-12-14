@@ -1,4 +1,4 @@
-import { IFlashCard, IVideoBuild, IBoxReviews ,IBoxReviewsResponse} from "@types/common";
+import { IFlashCard, IVideoBuild, IBoxReviews ,IBoxReviewsResponse, ICreateUser} from "@types/common";
 
 interface IResponseBase {
   redirect?: string;
@@ -33,3 +33,5 @@ interface IBuildReviewRowsCountResponse
   extends ISuccessPaginatedData<IBoxReviews> {}
 
 interface IReviewResponseRowsCountResponse extends ISuccessPaginatedData<IBoxReviewsResponse>{}
+
+interface IUserResponseRowsCountResponse extends ISuccessPaginatedData<ICreateUser>{}

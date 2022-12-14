@@ -39,7 +39,10 @@ const SideBar = (toggle: any) => {
     setIsProfile(false);
     setIsUserGuide(true);
   };
-console.log("######$$$$$$$$$$$$@@@@@@@@",toggle)
+
+  const handleCancel = () =>{
+    setModal5Open(false)
+  }
   return (
     <>
       
@@ -90,7 +93,7 @@ console.log("######$$$$$$$$$$$$@@@@@@@@",toggle)
           </div>
         </Sider>
       </div>
-      <Modal title="" centered open={modal5Open} className="btnrv">
+      <Modal title="" centered open={modal5Open} className="btnrv"  onCancel={handleCancel}>
             <div className="mb-n3">
              
                <a href={`/api/google`}>

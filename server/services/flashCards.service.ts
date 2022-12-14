@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IFlashCards, IFlashCardsResponse } from "@/interfaces/flashCards.interface";
 import FlashCards from "@/models/flashCards.model";
@@ -171,7 +172,7 @@ class FlashCardService {
   }
 
   public async getTotalFlashCard(userId: any): Promise<IFlashCards[] | any> {
-    const query = `SELECT COUNT(*) AS flashCard_total FROM flash_cards AS fc
+    const query = `SELECT COUNT(*) AS flashCard FROM flash_cards AS fc
     LEFT JOIN boxes box on fc.id = box.id
     where fc.created_by = ${userId} `;
     const Count: IFlashCards[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });

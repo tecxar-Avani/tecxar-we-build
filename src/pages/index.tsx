@@ -2,7 +2,8 @@ import React from "react";
 import type { NextPage } from "next";
 import { Layout } from "antd";
 import Head from "next/head";
-import GoogleButton from "react-google-button";
+import Link from "next/link";
+// import Link from "antd/lib/typography/Link";
 const { Content } = Layout;
 
 const Home: NextPage = () => {
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
         <title>dashboard</title>
       </Head>
       <div className="d-flex flex-row h-full">
+      <Link href={"/search?selfLearning=true"}>
         <Content
           className="site-layout-background bg-black m-0"
           style={{
@@ -19,7 +21,12 @@ const Home: NextPage = () => {
             padding: 24,
             minHeight: 280,
           }}
-        ></Content>
+        >
+          {" "}
+         
+        </Content>
+        </Link>
+        <Link href="/search?selfLeaning=false">
         <Content
           className="site-layout-background bg-danger m-0"
           style={{
@@ -27,12 +34,15 @@ const Home: NextPage = () => {
             padding: 24,
             minHeight: 280,
           }}
-        ></Content>
+        >
+          {" "}
+          
+        </Content></Link>
+
         <div className="position-absolute left-66 top-0">
           <h1>
             We<span className="text-white">Build</span>
           </h1>
-        
         </div>
       </div>
     </>

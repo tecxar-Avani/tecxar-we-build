@@ -24,6 +24,7 @@ const OuterBox = (props: any) => {
               <TextArea
                 name={`message${props.id}`}
                 //  value={props?.description}
+                key={props.description ? props.description : ""}
                 maxLength={150}
                 autoSize={{ minRows: 5, maxRows: 5 }}
                 defaultValue={props.description ? props.description : ""}

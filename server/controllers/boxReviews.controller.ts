@@ -26,7 +26,8 @@ export class FlashController {
   @Post("/create")
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviews" })
-  async createReview(@Body() reviewData: BoxreviewDto) {
+  async createReview(@Body() reviewData: any) {
+    console.log("$$$$$$$$$$$$$$$",reviewData)
     try {
       reviewData.created_by = 5;
       const createReviewData: IBoxReviews | null =

@@ -6,8 +6,16 @@ class BuildService {
     return API.get(`/build/getAllBuilds`);
   }
 
+  UpdateBuildById(id:any,data:any){
+    return API.put(`/build/update/${id}`,data);
+  }
+
   getUserInteractedBuild() {
     return API.get(`/build/userInteractedBuild`);
+  }
+
+  getUsersBuild(){
+    return API.get(`/build/`)
   }
 
   getBuildById(id: number) {

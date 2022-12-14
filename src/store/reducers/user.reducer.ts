@@ -13,6 +13,8 @@ import {
   ICurrentUser,
   IUpdateUser,
 } from "../../../@types/common";
+import { IUserResponseRowsCountResponse } from "../../../@types/responses";
+import { toast } from "react-toastify";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -43,11 +45,16 @@ export const getUserByEmail = createAsyncThunk(
 );
 
 export const updateUserById = createAsyncThunk(
-  `users/`,
+  `users/update/`,
   async (updateUser: IUpdateUser, { dispatch }) => {
+    console.log(updateUser)
     const id = Number(updateUser.id);
-    const user_name = updateUser.user_name;
-    const { status, data } = await userService.updateUserById(id, user_name);
+    const user_data = {
+       user_name : updateUser.user_name,
+     is_blocked : updateUser?.is_blocked
+  }
+    const { status, data } = await userService.updateUserById(id,user_data);
+    dispatch(getAllUsers());
     return { status, data };
   }
 );
@@ -64,7 +71,8 @@ interface State {
   loggedInUser: ICurrentUser;
   userData: ICreateUser;
   usersList: ICreateUser[];
-  // boxes: [];
+  editUser:IUserResponseRowsCountResponse | any
+  totalCount:IUserResponseRowsCountResponse | any;
 }
 
 const initialState: State = {
@@ -74,7 +82,14 @@ const initialState: State = {
   error: undefined,
   id: 0,
   usersList: [],
-  // boxes: [],
+  editUser:{
+    status: true,
+    rows: [],
+  },
+  totalCount:{
+    status: true,
+    rows: [],
+  },
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -130,13 +145,13 @@ const userSlice = createSlice({
           return {
             ...state,
             loading: false,
-            boxes: action.payload,
+            totalCount: action.payload.data,
           };
         } else {
           return {
             ...state,
             loading: false,
-            boxes: action.payload,
+            totalCount: initialState.totalCount,
           };
         }
       })
@@ -153,6 +168,23 @@ const userSlice = createSlice({
             ...state,
             loading: false,
             usersList: initialState.usersList,
+          };
+        }
+      })
+
+      .addCase(updateUserById.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            editUser: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            editUser: action.payload.data.editUser,
           };
         }
       })

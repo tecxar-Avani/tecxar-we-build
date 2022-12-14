@@ -8,6 +8,7 @@ const ChallengeModal = (props: any) => {
         title={props.title}
         onOk={props.handleOk}
         onCancel={props.setChallengeModal}
+        destroyOnClose = {true}
         footer={[
           <Button key="submit" type="primary" loading={props.loading} onClick={props.handleOk}>
            {props.btn}

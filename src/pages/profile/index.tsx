@@ -27,12 +27,13 @@ import {
 import {
   buildSelector,
   getUserInteractedBuild,
+  getUsersBuild,
 } from "@/store/reducers/build.reducer";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
-  const { usersList } = useAppSelector(userSelector);
+  const { usersList ,totalCount,editUser } = useAppSelector(userSelector);
 
   const editFlashCard = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
@@ -43,7 +44,8 @@ const Profile = () => {
   const [editName, setEditName] = useState<any>();
   const [defaultQuestionIndex, setDefaultQuestionIndex] = useState(0);
   const { flashCardUserList } = useAppSelector(flashCardSelector);
-  const { userBuildList } = useAppSelector(buildSelector);
+  const { userBuildList,userBuilds } = useAppSelector(buildSelector);
+  const [filterParam, setFilterParam] = useState<any>(["All"]);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
   // useEffect(() => {}, [defaultQuestionIndex]);
@@ -53,8 +55,9 @@ const Profile = () => {
     dispatch(getAllUsers());
     dispatch(getUserByEmail());
     dispatch(totalbuilds());
+    dispatch(getUserInteractedBuild());
+    dispatch(getUsersBuild());
   }, []);
-
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
@@ -62,13 +65,13 @@ const Profile = () => {
       userData && userData.userData && userData.userData.createdAt
     ).format("MMM YYYY")} `,
     boxLeftTitle: "Boxes",
-    boxValueLeft: "15",
+      boxValueLeft: totalCount&& totalCount.boxbuildCount && totalCount.boxbuildCount.map((a:any) => a.boxes),
     profileImg: "hello.jpg",
     bottomTitle: userData.userData.tag_line,
     boxRightTitle: "Awareness",
-    boxValueRight: "4",
+      boxValueRight:  totalCount && totalCount.awernessCount && totalCount.awernessCount.map((a:any) => a.awareness),
     flashCardProfile: "flashCardProfile.svg",
-    flashCardsNumber: "38",
+      flashCardsNumber: totalCount && totalCount.flashCardCount && totalCount.flashCardCount.map((a:any) => a.flashCard),
   };
 
   const onEdit = (e: any) => {
@@ -87,10 +90,6 @@ const Profile = () => {
   const handleCancel = () => {
     setEditName(false);
   };
-
-  useEffect(() => {
-    dispatch(getUserInteractedBuild());
-  }, []);
 
   const questionData = (index?: number, questionId?: number) => {
     const findLastValue = flashCardArr[flashCardArr.length - 1];
@@ -127,6 +126,11 @@ const Profile = () => {
   const handleSubmit = (data: any) => {
     dispatch(updateFlashCardId(data));
   };
+//all profile
+console.log("ooooooooooooooooooooooo",editUser)
+const blocked_user = usersList && usersList?.filter((user:any) => user.is_blocked == true)
+const unBlocked_user = usersList && usersList?.filter((user:any) => user.is_blocked == false)
+
   return (
     <>
       <div className="profile-main">
@@ -142,11 +146,12 @@ const Profile = () => {
             title="Your builds"
             className="title-list-of-profile py-2 my-2"
           />
+          
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
-              {userBuildList.rows.map((videoData: any, index: number) => (
+              {userBuilds && userBuilds?.rows?.map((videoData: any, index: number) => (
                 <Col md={4} key={index} className="videoProfile">
-                  <Link href={`/newBuild?id=${videoData.videoId}`}>
+                  <Link href={`/newBuild?id=${videoData.id}`}>
                     <a>
                       <VideoCard VideoCardData={videoData} />
                     </a>
@@ -162,6 +167,8 @@ const Profile = () => {
             title="Builds you have interacted with"
             className="title-list-of-profile py-2 my-2"
           />
+        
+
           <Row className="m-0">
             {userBuildList.rows.map((videoData: any, index: number) => (
               <Col md={4} key={index} className="videoProfile">
@@ -176,35 +183,123 @@ const Profile = () => {
         </div>
         {userData.userData.role_id == 1 ? (
           <div className="pb-2">
+            <div className="d-flex"> 
             <HeaderTitle
               title="Total list of Profiles"
               className="title-list-of-profile py-2 mt-4 mb-3"
-            />
-            <Row className="m-0">
-              {usersList.map((user: any, index: number) => {
-                const profile = {
-                  id: user.id,
-                  title: user.user_name,
-                  dateOfJoined: `Date joined: ${moment(user.createdAt).format(
-                    "MMM YYYY"
-                  )}`,
-                  boxLeftTitle: "Boxes",
-                  boxValueLeft: "4",
-                  profileImg: "hello.jpg",
-                  bottomTitle: user.tag_line,
-                  boxRightTitle: "Awareness",
-                  boxValueRight: "15",
-                  blockIcon: "block.svg",
-                  UnBlockIcon: "unBlock.svg",
-                  deleteIcon: "delete.svg",
-                };
+            /> <select
+              onChange={(e) => {
+              setFilterParam(e.target.value);
+               }}
+               className="filterInProfile py-2 mt-4 mb-3"
+               aria-label="Filter Countries By Region">
+                <option value="All" className="filterInProfile">All Users</option>
+                <option value="Blocked" className="filterInProfile">Blocked Users</option>
+                <option value="unBlocked" className="filterInProfile">Unblock Users</option>
 
-                return (
-                  <Col md={3} key={index}>
-                    <ProfileCard className="AllProfile" profile={profile} />
-                  </Col>
-                );
-              })}
+               
+                </select>
+                <span className="focus"></span>
+              
+            </div>
+            <Row className="m-0">
+            {filterParam == "All" ? 
+usersList.map((user: any, index: number) => {
+  const profile = {
+    id: user.id,
+    title: user.user_name,
+    dateOfJoined: `Date joined: ${moment(user.createdAt).format(
+      "MMM YYYY"
+    )}`,
+    boxLeftTitle: "Boxes",
+    boxValueLeft: user.box,
+    profileImg: "hello.jpg",
+    bottomTitle: user.tag_line,
+    boxRightTitle: "Awareness",
+    boxValueRight: user.awareness,
+    blockIcon: "block.svg",
+    UnBlockIcon: "unBlock.svg",
+    deleteIcon: "delete.svg",
+  };
+
+  return (
+    <Col md={3} key={index}>
+      <ProfileCard className="AllProfile" profile={profile} />
+    </Col>
+  );
+})
+            : filterParam == "Blocked" ?  blocked_user.map((user: any, index: number) => {
+                          const profile = {
+                            id: user.id,
+                            title: user.user_name,
+                            dateOfJoined: `Date joined: ${moment(user.createdAt).format(
+                              "MMM YYYY"
+                            )}`,
+                            boxLeftTitle: "Boxes",
+                            boxValueLeft: user.box,
+                            profileImg: "hello.jpg",
+                            bottomTitle: user.tag_line,
+                            boxRightTitle: "Awareness",
+                            boxValueRight: user.awareness,
+                            blockIcon: "block.svg",
+                            UnBlockIcon: "unBlock.svg",
+                            deleteIcon: "delete.svg",
+                          };
+                          return (
+                            <Col md={3} key={index}>
+                              <ProfileCard className="AllProfile" profile={profile}/>
+                            </Col>)}) 
+              : filterParam == "unBlocked" ?
+                          unBlocked_user.map((user: any, index: number) => {
+                            const profile = {
+                              id: user.id,
+                              title: user.user_name,
+                              dateOfJoined: `Date joined: ${moment(user.createdAt).format(
+                                "MMM YYYY"
+                              )}`,
+                              boxLeftTitle: "Boxes",
+                              boxValueLeft: user.box,
+                              profileImg: "hello.jpg",
+                              bottomTitle: user.tag_line,
+                              boxRightTitle: "Awareness",
+                              boxValueRight: user.awareness,
+                              blockIcon: "block.svg",
+                              UnBlockIcon: "unBlock.svg",
+                              deleteIcon: "delete.svg",
+                            };
+                            return (
+                              <Col md={3} key={index}>
+                                <ProfileCard className="AllProfile" profile={profile}/>
+                              </Col>
+                            );})
+             :
+                            usersList.map((user: any, index: number) => {
+                              const profile = {
+                                id: user.id,
+                                title: user.user_name,
+                                dateOfJoined: `Date joined: ${moment(user.createdAt).format(
+                                  "MMM YYYY"
+                                )}`,
+                                boxLeftTitle: "Boxes",
+                                boxValueLeft: user.box,
+                                profileImg: "hello.jpg",
+                                bottomTitle: user.tag_line,
+                                boxRightTitle: "Awareness",
+                                boxValueRight: user.awareness,
+                                blockIcon: "block.svg",
+                                UnBlockIcon: "unBlock.svg",
+                                deleteIcon: "delete.svg",
+                              };
+                            
+                              return (
+                                <Col md={3} key={index}>
+                                  <ProfileCard className="AllProfile" profile={profile}/>
+                                </Col>
+                              );})
+                               
+            
+            }
+              
             </Row>
           </div>
         ) : (

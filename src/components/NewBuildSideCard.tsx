@@ -32,7 +32,7 @@ const NewBuildSideCard = (props: any) => {
   const handleDifficultyClick = (e: any) => {
     setDifficultyLevel(e.target.name);
   };
-
+  
   return (
     <>
       <div>
@@ -40,7 +40,7 @@ const NewBuildSideCard = (props: any) => {
           <iframe
             width="100%"
             height="215"
-            src={`//www.youtube.com/embed/${props.id}?autoplay=1&mute=1`}
+            src={`//www.youtube.com/embed/${props.videoId}?autoplay=1&mute=1`}
             name="youtube embed"
             allow="autoplay; encrypted-media"
           ></iframe>
@@ -48,15 +48,15 @@ const NewBuildSideCard = (props: any) => {
 
         <hr className="border-dark" />
 
-        <div className="mx-4">
+        {/* <div className="mx-4">
           <CustomButton title="Group" className="btn1 px-4 py-3 " />
           <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 " />
         </div>
-        <hr className="border-dark" />
+        <hr className="border-dark" /> */}
         <div>
           <span
             onClick={() => {
-              props.setAwarenessModal(true);
+              props.value == "" ? {} : props.setAwarenessModal(true);
             }}
           >
             <span onClick={props.Inspiration}>
@@ -69,14 +69,14 @@ const NewBuildSideCard = (props: any) => {
           <div>
             <span
               onClick={() => {
-                props.setAwarenessModal(true);
+                props.value == "" ? {} : props.setAwarenessModal(true);
               }}
             >
               <Image src="../img/polygon22.png" onClick={props.Inspiration} />
             </span>
             <span
               onClick={() => {
-                props.setAwarenessModal(true);
+                props.value == "" ? {} : props.setAwarenessModal(true);
               }}
             >
               <Image
@@ -88,7 +88,7 @@ const NewBuildSideCard = (props: any) => {
 
             <div
               onClick={() => {
-                props.setAwarenessModal(true);
+                props.value == "" ? {} : props.setAwarenessModal(true);
               }}
             >
               <span onClick={props.Acceptance}>
@@ -99,7 +99,7 @@ const NewBuildSideCard = (props: any) => {
 
           <span
             onClick={() => {
-              props.setAwarenessModal(true);
+              props.value == "" ? {} : props.setAwarenessModal(true);
             }}
           >
             <div className="redpolygon" onClick={props.Resistance} />
@@ -107,12 +107,12 @@ const NewBuildSideCard = (props: any) => {
 
           <span
             onClick={() => {
-              props.setAwarenessModal(true);
+              props.value == "" ? {} : props.setAwarenessModal(true);
             }}
           >
-            <span onClick={props.Resistance}>
-              <CustomButton title="Resistance" className="resistanceButton" />
-            </span>
+            
+              <CustomButton title="Resistance" className="resistanceButton" onClick={props.Resistance}/>
+          
           </span>
         </div>
         <hr className="border-dark" />

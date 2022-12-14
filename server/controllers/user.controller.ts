@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Req, UseBefore, Get, Put, Body, Param } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import UserService from "@/services/users.service";
@@ -44,7 +45,7 @@ export class UserController {
     }
   }
 
-  @Put("/:id")
+  @Put("/update/:id")
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Update users Profile" })
   async updateUsersProfile(
@@ -52,8 +53,12 @@ export class UserController {
     @Body() data: UpdateUserDto,
   ) {
     try {
+
       const userBuild = await this.userService.updateUserProfile(id, data);
-      return userBuild;
+      return {
+      data:userBuild,
+      message: "User Updated successfully."
+      }
     } catch (error) {
       return {
         error: {

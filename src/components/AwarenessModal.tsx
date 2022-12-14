@@ -19,12 +19,15 @@ const AwarenessModal = (props: any) => {
         visible={props.awarenessModal}
         onOk={() => props.setAwarenessModal(false)}
         onCancel={() => props.setAwarenessModal(false)}
+        destroyOnClose = {true}
         footer={props.footer && props.footer.length>0 && props.footer ? <Button  form="form"
         key="submit"
         htmlType="submit"
         className="openmodal">Add</Button> : []}
         className={`${props.className} awarenessModal`}
         okText="Add"
+       
+
       >
          <Form
           form={form}

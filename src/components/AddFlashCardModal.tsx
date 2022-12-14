@@ -8,7 +8,10 @@ const { TextArea } = Input;
 const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
   const [modal5Open, setModal5Open] = useState(false);
-
+  const handleCancel = () =>{
+    setModal5Open(false)
+  }
+console.log(props)
   return (
     <>
       <Modal
@@ -84,7 +87,7 @@ const AddFlashCardModal = (props: any) => {
           </Form.Item>
         </Form>
       </Modal>
-      {/* <Modal title="" centered open={modal5Open} className="btnrv">
+      <Modal title="" centered open={modal5Open} className="btnrv" onCancel={handleCancel}>
         <div className="mb-n3">
           <a href={`/api/google`}>
             <GoogleButton className="m-auto googleButton" />
@@ -92,7 +95,7 @@ const AddFlashCardModal = (props: any) => {
           <br />
           <span className="fs-5">Add Google Sign In Button To Website</span>
         </div>
-      </Modal> */}
+      </Modal>
     </>
   );
 };

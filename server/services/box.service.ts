@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException } from "@/exceptions/HttpException";
 import { IBoxes } from "@/interfaces/boxes.interface";
 import DB from "@databases";
@@ -27,10 +28,11 @@ class BoxService {
   }
 
   public async getTotalBuilds(userId: any): Promise<IBoxes[] | any> {
-    const query = `SELECT COUNT(*) AS boxbuild_total FROM video_builds AS vb
+    const query = `SELECT COUNT(*) AS boxes FROM video_builds AS vb
       LEFT JOIN boxes box on vb.id = box.build_id
       where vb.created_by = ${userId} `;
     const BuildById: IBoxes[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
+
     return BuildById;
   }
 }

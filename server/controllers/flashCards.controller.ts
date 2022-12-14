@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Response } from "express";
 import {
   Controller,
@@ -28,12 +29,11 @@ export class FlashController {
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new flash card" })
   async createFlashCard(
-    @Body() cardData: flashcardsDto,
+    @Body() cardData: flashcardsDto, @Req() req: RequestWithUser,
   ) {
     try {
       //should make build id and created by id dynamic
-      cardData.build_id = 2;
-      cardData.created_by = 5;
+      cardData.created_by = req.user.id;
       const createCardData: IFlashCards | null =
         await this.flashCardService.createFlashCard(cardData);
       return {

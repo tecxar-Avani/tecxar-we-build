@@ -37,7 +37,6 @@ export const getUserInteractedBuild: any = createAsyncThunk(
 export const getBuildByUrl: any = createAsyncThunk(
   `build/get/url`,
   async (searchData:{url?:string,search?:string}): Promise<IBuildRowsCountResponse> => {
-    console.log("------------------",searchData)
     const { data } = await BuildService.getBuildByUrl(searchData.url,searchData.search);
     return { status: data.status, rows: data };
   }
@@ -58,6 +57,25 @@ export const addBuild = createAsyncThunk(
   }
 );
 
+export const getUsersBuild : any = createAsyncThunk(
+  `build/`,
+  async (getBuildOfUser: IVideoBuild) => {
+  const {status,data} = await BuildService.getUsersBuild();
+  return { status, data };
+  }
+)
+
+export const UpdateUsersBuild = createAsyncThunk (
+  `build/update/`,
+  async (updateBuildData : IVideoBuild) => {
+    const id = Number(updateBuildData.id);
+    const editData = {
+      id: Number(updateBuildData.id),
+    };
+    const {status,data} = await BuildService.UpdateBuildById(id,editData);
+    return {status, data};
+  }
+);
 interface State {
   id: number;
   build: IVideoBuild;
@@ -67,6 +85,7 @@ interface State {
   userBuildList: IBuildRowsCountResponse | any;
   buildListByUrl: IBuildRowsCountResponse | any;
   buildById: IBuildRowsCountResponse | any;
+  userBuilds:IBuildRowsCountResponse | any;
   boxes: IBoxes;
 }
 
@@ -88,6 +107,10 @@ const initialState: State = {
     rows: [],
   },
   buildById: {
+    status: true,
+    rows: [],
+  },
+  userBuilds: {
     status: true,
     rows: [],
   },
@@ -138,7 +161,7 @@ const buildSlice = createSlice({
         }
       })
       .addCase(getUserInteractedBuild.fulfilled, (state, action) => {
-        if (action.payload.status) {
+        if (action.payload) {
           return {
             ...state,
             loading: false,
@@ -185,6 +208,23 @@ const buildSlice = createSlice({
           };
         }
       })
+      .addCase(getUsersBuild.fulfilled,(state,action) => {
+
+        if(action.payload.status){
+          return{
+            ...state,
+            loading:false,
+            userBuilds:action.payload.data.box,
+          };
+        }else{
+          return{
+              ...state,
+              loading:false,
+              userBuilds:initialState.userBuilds,
+          };
+        }
+        }
+      )
       .addCase(addBuild.fulfilled, (state, action) => {
         if (action.payload.data.status) {
           toast.success(action.payload.data.message);

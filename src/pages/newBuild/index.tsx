@@ -34,7 +34,7 @@ const NewBuild = (props: any) => {
   const router = useRouter();
   const flashCardData = useAppSelector(flashCardSelector);
   const { flashCardList } = useAppSelector(flashCardSelector);
-  const { awarenessList } = useAppSelector(awarenessSelector)
+  const { awarenessList ,reviewResponseList} = useAppSelector(awarenessSelector)
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
@@ -70,9 +70,9 @@ const NewBuild = (props: any) => {
       answer: data.answer,
       build_id: buildId,
     };
+
     dispatch(createFlashCard(flashCardData));
   };
-
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
@@ -190,7 +190,6 @@ const NewBuild = (props: any) => {
     setChallengeModal(false);
   };
   const content = (title: any) => {
-    console.log(title)
     return (
       <>
         {
@@ -199,14 +198,14 @@ const NewBuild = (props: any) => {
               <>
                 {title == data.review_type ? (
                   <Form>
-                    <div className="header mt-2">Maria's {data.review_type}</div>
+                    <div className="header mt-1">Maria's {data.review_type}</div>
                     <Form.Item name="comment">
                       <div className={`awarenessModal header`}>
                         <TextArea
                           showCount
                           maxLength={500}
                           rows={5}
-                          className="mb-2 AwareInputFirst"
+                          className="mb-0 AwareInputFirst"
                           value={data.comment}
                         ></TextArea>
                       </div>
@@ -214,6 +213,7 @@ const NewBuild = (props: any) => {
                     <Button
                       key="submit"
                       type="primary"
+                      className={` ${data.review_type == "resistance" ? "yellowBtn" : ""}`}
                       onClick={(e: any) => {
                         const button =
                           data.review_type == "acceptance"
@@ -231,16 +231,21 @@ const NewBuild = (props: any) => {
                         : ""}
                     </Button>
                     
-                    {data.challenges ? (<>
-                      <Divider type="vertical" />
-                      <div className="header mt-2">Maria's challenge</div>
+                    {data.challenge ? (<>
+                      <div className="AwareInputChallengeHeader">Maria's {data.response_review}</div>
                       <TextArea
-                      showCount
                       maxLength={500}
-                      rows={4}
-                      className="mb-2 AwareInputFirst"
-                      value={data.challenges}
+                      rows={3}
+                      className="mb-1 AwareInputChallenge"
+                      value={data.challenge}
                     ></TextArea>
+                    <Button
+                      key="submit"
+                      type="primary" className="mt-0 challengeAcceptBtn">  {data.review_type == "acceptance"
+                      ? "acceptance"
+                      : data.review_type == "resistance"
+                      ? "resistance"
+                      : ""}</Button>
                     </>) : []}
                   </Form>
                 ) : (
@@ -261,10 +266,9 @@ const NewBuild = (props: any) => {
 
   const challengeContent = (data: any) => {
     data = challengeData;
-console.log(data)
     return (
       <>
-        <Form  form={form} onFinish={onChallengeClick}>
+        <Form  form={form} onFinish={(review_response:any)=>onChallengeClick(data,review_response)}>
           <div className="header mt-2">Maria's {data.review_type}</div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
@@ -288,7 +292,7 @@ console.log(data)
               ></TextArea>
             </div>
           </Form.Item>
-          <Button key="submit"  htmlType="submit">
+          <Button key="submit" htmlType="submit" >
             Add
           </Button>
         </Form>
@@ -296,20 +300,20 @@ console.log(data)
     );
   };
 
-  const onChallengeClick = (e:any) => {
+  const onChallengeClick = (e:any,review_response:any) => {
     const data = {
       review_type : challengeTitle,
-      comment : e.comment
+      comment : review_response.comment,
+      boxReview_id:e.id
     }
-  
-    dispatch(addReviewResponse(data))
+   dispatch(addReviewResponse(data))
   }
-
   return (
     <>
       <div className="d-flex m-0 w-100">
         <NewBuildSideCard
           id={router.query.id}
+          videoId={router.query.videoId}
           value={awarenessIndex}
           Resistance={Resistance}
           Acceptance={Acceptance}
@@ -366,7 +370,7 @@ console.log(data)
                     <Card.Body className="d-flex justify-content-center align-items-center">
                       {data.user_name
                         .split(" ")
-                        .map((a: any) => a.charAt(0).UpperCase())}
+                        .map((a: any) => a.charAt(0))}
                     </Card.Body>
                   </Card>
                 );
