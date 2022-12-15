@@ -29,6 +29,7 @@ import {
   getUserInteractedBuild,
   getUsersBuild,
 } from "@/store/reducers/build.reducer";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -48,8 +49,7 @@ const Profile = () => {
   const [filterParam, setFilterParam] = useState<any>(["All"]);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
-  // console.log("$$$$$$$$$$$$$$$$$$$",userBuilds.box.map((a:any) => a.created_by == userData.userData.id))
-  // console.log("************",userData.userData.id)
+  
   // useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
@@ -147,8 +147,7 @@ const unBlocked_user = usersList && usersList?.filter((user:any) => user.is_bloc
             title="Your builds"
             className="title-list-of-profile py-2 my-2"
           />
-{          console.log(userBuilds)
-}          
+        
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
               {userBuilds && userBuilds?.data?.map((videoData: any, index: number) => (

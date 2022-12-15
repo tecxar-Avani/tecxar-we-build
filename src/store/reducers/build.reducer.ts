@@ -71,6 +71,10 @@ export const UpdateUsersBuild = createAsyncThunk (
     const id = Number(updateBuildData.id);
     const editData = {
       id: Number(updateBuildData.id),
+      video_url: updateBuildData.video_url,
+      type_of_video: updateBuildData.type_of_video,
+      potential_polarization: updateBuildData.potential_polarization,
+      difficulty_level: updateBuildData.difficulty_level,
     };
     const {status,data} = await BuildService.UpdateBuildById(id,editData);
     return {status, data};
@@ -235,6 +239,23 @@ const buildSlice = createSlice({
         } else {
           toast.error(action.payload.data.error.message);
           return { ...state, loading: false, addBuildData: initialState.build };
+        }
+      })
+      .addCase(UpdateUsersBuild.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            editData: action.payload,
+          };
+        } else {
+          toast.error(action.payload.data.error.message);
+          return {
+            ...state,
+            loading: false,
+            editData: action.payload.data.editData,
+          };
         }
       })
       .addMatcher(isPendingAction, (state) => {

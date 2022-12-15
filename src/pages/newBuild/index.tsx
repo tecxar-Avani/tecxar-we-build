@@ -17,6 +17,7 @@ import {
   addBuild,
   buildSelector,
   getBuildById,
+  UpdateUsersBuild,
 } from "../../store/reducers/build.reducer";
 import {
   addAwareness,
@@ -29,6 +30,7 @@ import { Button, Divider, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
+import DisabledContext from "antd/lib/config-provider/DisabledContext";
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -37,9 +39,8 @@ const NewBuild = (props: any) => {
   const { flashCardList } = useAppSelector(flashCardSelector);
   const { awarenessList ,reviewResponseList} = useAppSelector(awarenessSelector)
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
-  const { loggedInUser } = useAppSelector(userSelector);
+  const {userData} = useAppSelector(userSelector)
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
@@ -92,6 +93,8 @@ const NewBuild = (props: any) => {
     setResistance(true);
   };
   const buildId = Number(router.query.id);
+  const buildIdForFlash = router.query.id;
+
   useEffect(() => {
     if (buildId) {
       dispatch(getFlashCardByBuildId(buildId));
@@ -161,10 +164,24 @@ const NewBuild = (props: any) => {
       boxes: boxData,
       video_url: url,
     };
-    // boxData.length > 20 ?
+      //for update the build
+      const editData = {
+        type_of_video: videoType,
+        potential_polarization: polarisationLevel,
+        difficulty_level: difficultyLevel,
+        boxes: boxData,
+        video_url: url,
+        id:buildId
+      }
+const buildCreatedBy = buildById?.data?.map((a:any) => a.created_by)
+buildCreatedBy[0] == userData.id ? 
+            dispatch(UpdateUsersBuild(editData))
+:
+  
+      boxData.length > 20 ?
     dispatch(addBuild(saveData)) 
-    // :
-    // toast.error("You need to fill minimum 20 boxes");
+     :
+     toast.error("You need to fill minimum 20 boxes");
   };
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
@@ -177,7 +194,6 @@ const NewBuild = (props: any) => {
       box_id: Number(awarenessBoxId),
       build_id:buildId
     };
-    console.log('data',buildId)
     dispatch(addAwareness(data));
     setReview(review);
     setAwarenessModal(false);
@@ -315,6 +331,8 @@ const NewBuild = (props: any) => {
     }
    dispatch(addReviewResponse(data))
   }
+
+
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -383,12 +401,11 @@ const NewBuild = (props: any) => {
                 );
               })}
           </div>
-          <div className="position-absolute flash">
+          <div className="position-absolute flash" style={buildIdForFlash == "undefined" ? {pointerEvents:"none",opacity:0.4} : {}} >
             <Image
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"
-              onClick={() => {
-                setAddFlashcard(true);
+              onClick={() => { setAddFlashcard(true);
               }}
             />
           </div>

@@ -337,190 +337,139 @@ export class FlashController {
     try {
       const userBuild = await this.buildService.getAllBuilds(search);
       let searchedResult;
-       const { searchedData, error } = await this.youtubeApiCall(userBuild, search)
-      // const searchedData = [
-      //   {
-      //     id: 58,
-      //     videoId: "8CMmyBRqRHU",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/8CMmyBRqRHU/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       'Dear all, Welcome to the new course - "Calculus using python" The aim of this course is to build the foundation for machine ...',
-      //     title:
-      //       "1.2 Code example - 1 : Calculus using Python for Data Science",
-      //     publishedAt: "2022-12-06T17:18:58Z",
-      //     duration: "0:3:16",
-      //     newVideoId: "8CMmyBRqRHU",
-      //     url: "https://www.youtube.com/embed/8CMmyBRqRHU",
-      //   },
-      //   {
-      //     id: 59,
-      //     videoId: "8CMmyBRqRHU",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/8CMmyBRqRHU/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       'Dear all, Welcome to the new course - "Calculus using python" The aim of this course is to build the foundation for machine ...',
-      //     title:
-      //       "1.2 Code example - 1 : Calculus using Python for Data Science",
-      //     publishedAt: "2022-12-06T17:18:58Z",
-      //     duration: "0:3:16",
-      //     newVideoId: "8CMmyBRqRHU",
-      //     url: "https://www.youtube.com/embed/8CMmyBRqRHU",
-      //   },
-      //   {
-      //     id: 54,
-      //     videoId: "BkKm6Xo-cUk",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/BkKm6Xo-cUk/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       "This video showcases the introduction to a Node training program and takes beginners to the next level. This is the start of a ...",
-      //     title: "01 - Node training introduction",
-      //     publishedAt: "2020-08-26T14:59:00Z",
-      //     duration: "0:4:29",
-      //     newVideoId: "BkKm6Xo-cUk",
-      //     url: "https://www.youtube.com/embed/BkKm6Xo-cUk",
-      //   },
-      //   {
-      //     id: 60,
-      //     videoId: "BkKm6Xo-cUk",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/BkKm6Xo-cUk/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       "This video showcases the introduction to a Node training program and takes beginners to the next level. This is the start of a ...",
-      //     title: "01 - Node training introduction",
-      //     publishedAt: "2020-08-26T14:59:00Z",
-      //     duration: "0:4:29",
-      //     newVideoId: "BkKm6Xo-cUk",
-      //     url: "https://www.youtube.com/embed/BkKm6Xo-cUk",
-      //   },
-      //   {
-      //     id: 57,
-      //     videoId: "8CMmyBRqRHU",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/8CMmyBRqRHU/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       'Dear all, Welcome to the new course - "Calculus using python" The aim of this course is to build the foundation for machine ...',
-      //     title:
-      //       "1.2 Code example - 1 : Calculus using Python for Data Science",
-      //     publishedAt: "2022-12-06T17:18:58Z",
-      //     duration: "0:3:16",
-      //     newVideoId: "8CMmyBRqRHU",
-      //     url: "https://www.youtube.com/embed/8CMmyBRqRHU",
-      //   },
-      //   {
-      //     id: 61,
-      //     videoId: "BkKm6Xo-cUk",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/BkKm6Xo-cUk/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       "This video showcases the introduction to a Node training program and takes beginners to the next level. This is the start of a ...",
-      //     title: "01 - Node training introduction",
-      //     publishedAt: "2020-08-26T14:59:00Z",
-      //     duration: "0:4:29",
-      //     newVideoId: "BkKm6Xo-cUk",
-      //     url: "https://www.youtube.com/embed/BkKm6Xo-cUk",
-      //   },
-      //   {
-      //     id: 55,
-      //     videoId: "TlB_eWDSMt4",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/TlB_eWDSMt4/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       "Node.js Tutorial for Beginners: Learn Node in 1 Hour Get the complete Node course: http://bit.ly/2NfkpOC Subscribe for more ...",
-      //     title: "Node.js Tutorial for Beginners: Learn Node in 1 Hour",
-      //     publishedAt: "2018-02-21T23:57:12Z",
-      //     duration: "1:18:16",
-      //     newVideoId: "TlB_eWDSMt4",
-      //     url: "https://www.youtube.com/embed/TlB_eWDSMt4",
-      //   },
-      //   {
-      //     id: 55,
-      //     videoId: "BLl32FvcdVM",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/BLl32FvcdVM/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       "NodeJs crash course in Hindi: In this video, we will see everything you need to know about Node.js in Hindi. This node js tutorial ...",
-      //     title: "Node Js Tutorial in Hindi 🔥🔥",
-      //     publishedAt: "2021-06-21T12:06:01Z",
-      //     duration: "1:48:50",
-      //     newVideoId: "BLl32FvcdVM",
-      //     url: "https://www.youtube.com/embed/BLl32FvcdVM",
-      //   },
-      //   {
-      //     id: 55,
-      //     videoId: "uVwtVBpw7RQ",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/uVwtVBpw7RQ/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       "What is Node js? This short video explains it in 3 minutes. Node js tutorial for beginners: https://youtu.be/TlB_eWDSMt4 ...",
-      //     title: "What is Node js?",
-      //     publishedAt: "2018-01-23T23:51:31Z",
-      //     duration: "0:3:43",
-      //     newVideoId: "uVwtVBpw7RQ",
-      //     url: "https://www.youtube.com/embed/uVwtVBpw7RQ",
-      //   },
-      //   {
-      //     id: 55,
-      //     videoId: "o3sAZFveLW4",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/o3sAZFveLW4/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       "In this video we are going to learn node js in one single video. Node Js Tutorial in one video Content of this video: 00:00 ...",
-      //     title:
-      //       "🔥Node Js Tutorial in one video | Master Node JS in one video in Hindi",
-      //     publishedAt: "2022-01-13T18:23:51Z",
-      //     duration: "1:42:46",
-      //     newVideoId: "o3sAZFveLW4",
-      //     url: "https://www.youtube.com/embed/o3sAZFveLW4",
-      //   },
-      //   {
-      //     id: 55,
-      //     videoId: "W6NZfCO5SIk",
-      //     thumbnails: {
-      //       url: "https://i.ytimg.com/vi/W6NZfCO5SIk/default.jpg",
-      //       width: 120,
-      //       height: 90,
-      //     },
-      //     description:
-      //       "Watch this JavaScript tutorial for beginners to learn JavaScript basics in one hour. Want to master JavaScript? Get my complete ...",
-      //     title:
-      //       "JavaScript Tutorial for Beginners: Learn JavaScript in 1 Hour",
-      //     publishedAt: "2018-04-24T02:37:33Z",
-      //     duration: "0:48:17",
-      //     newVideoId: "W6NZfCO5SIk",
-      //     url: "https://www.youtube.com/embed/W6NZfCO5SIk",
-      //   },
-      // ];
+      //  const { searchedData, error } = await this.youtubeApiCall(userBuild, search)
+      const searchedData = [
+        {
+          id: 54,
+          videoId: "BkKm6Xo-cUk",
+          thumbnails: {
+            url: "https://i.ytimg.com/vi/BkKm6Xo-cUk/default.jpg",
+            width: 120,
+            height: 90,
+          },
+          description:
+            "This video showcases the introduction to a Node training program and takes beginners to the next level. This is the start of a ...",
+          title: "01 - Node training introduction",
+          publishedAt: "2020-08-26T14:59:00Z",
+          duration: "0:4:29",
+          newVideoId: "BkKm6Xo-cUk",
+          url: "https://www.youtube.com/embed/BkKm6Xo-cUk",
+        },
+        {
+          id: 60,
+          videoId: "BkKm6Xo-cUk",
+          thumbnails: {
+            url: "https://i.ytimg.com/vi/BkKm6Xo-cUk/default.jpg",
+            width: 120,
+            height: 90,
+          },
+          description:
+            "This video showcases the introduction to a Node training program and takes beginners to the next level. This is the start of a ...",
+          title: "01 - Node training introduction",
+          publishedAt: "2020-08-26T14:59:00Z",
+          duration: "0:4:29",
+          newVideoId: "BkKm6Xo-cUk",
+          url: "https://www.youtube.com/embed/BkKm6Xo-cUk",
+        },
+        {
+          id: 61,
+          videoId: "BkKm6Xo-cUk",
+          thumbnails: {
+            url: "https://i.ytimg.com/vi/BkKm6Xo-cUk/default.jpg",
+            width: 120,
+            height: 90,
+          },
+          description:
+            "This video showcases the introduction to a Node training program and takes beginners to the next level. This is the start of a ...",
+          title: "01 - Node training introduction",
+          publishedAt: "2020-08-26T14:59:00Z",
+          duration: "0:4:29",
+          newVideoId: "BkKm6Xo-cUk",
+          url: "https://www.youtube.com/embed/BkKm6Xo-cUk",
+        },
+        {
+          id: 55,
+          videoId: "TlB_eWDSMt4",
+          thumbnails: {
+            url: "https://i.ytimg.com/vi/TlB_eWDSMt4/default.jpg",
+            width: 120,
+            height: 90,
+          },
+          description:
+            "Node.js Tutorial for Beginners: Learn Node in 1 Hour Get the complete Node course: http://bit.ly/2NfkpOC Subscribe for more ...",
+          title: "Node.js Tutorial for Beginners: Learn Node in 1 Hour",
+          publishedAt: "2018-02-21T23:57:12Z",
+          duration: "1:18:16",
+          newVideoId: "TlB_eWDSMt4",
+          url: "https://www.youtube.com/embed/TlB_eWDSMt4",
+        },
+        {
+          id: 55,
+          videoId: "BLl32FvcdVM",
+          thumbnails: {
+            url: "https://i.ytimg.com/vi/BLl32FvcdVM/default.jpg",
+            width: 120,
+            height: 90,
+          },
+          description:
+            "NodeJs crash course in Hindi: In this video, we will see everything you need to know about Node.js in Hindi. This node js tutorial ...",
+          title: "Node Js Tutorial in Hindi 🔥🔥",
+          publishedAt: "2021-06-21T12:06:01Z",
+          duration: "1:48:50",
+          newVideoId: "BLl32FvcdVM",
+          url: "https://www.youtube.com/embed/BLl32FvcdVM",
+        },
+        {
+          id: 55,
+          videoId: "uVwtVBpw7RQ",
+          thumbnails: {
+            url: "https://i.ytimg.com/vi/uVwtVBpw7RQ/default.jpg",
+            width: 120,
+            height: 90,
+          },
+          description:
+            "What is Node js? This short video explains it in 3 minutes. Node js tutorial for beginners: https://youtu.be/TlB_eWDSMt4 ...",
+          title: "What is Node js?",
+          publishedAt: "2018-01-23T23:51:31Z",
+          duration: "0:3:43",
+          newVideoId: "uVwtVBpw7RQ",
+          url: "https://www.youtube.com/embed/uVwtVBpw7RQ",
+        },
+        {
+          id: 55,
+          videoId: "o3sAZFveLW4",
+          thumbnails: {
+            url: "https://i.ytimg.com/vi/o3sAZFveLW4/default.jpg",
+            width: 120,
+            height: 90,
+          },
+          description:
+            "In this video we are going to learn node js in one single video. Node Js Tutorial in one video Content of this video: 00:00 ...",
+          title:
+            "🔥Node Js Tutorial in one video | Master Node JS in one video in Hindi",
+          publishedAt: "2022-01-13T18:23:51Z",
+          duration: "1:42:46",
+          newVideoId: "o3sAZFveLW4",
+          url: "https://www.youtube.com/embed/o3sAZFveLW4",
+        },
+        {
+          id: 55,
+          videoId: "W6NZfCO5SIk",
+          thumbnails: {
+            url: "https://i.ytimg.com/vi/W6NZfCO5SIk/default.jpg",
+            width: 120,
+            height: 90,
+          },
+          description:
+            "Watch this JavaScript tutorial for beginners to learn JavaScript basics in one hour. Want to master JavaScript? Get my complete ...",
+          title:
+            "JavaScript Tutorial for Beginners: Learn JavaScript in 1 Hour",
+          publishedAt: "2018-04-24T02:37:33Z",
+          duration: "0:48:17",
+          newVideoId: "W6NZfCO5SIk",
+          url: "https://www.youtube.com/embed/W6NZfCO5SIk",
+        },
+      ];
       return { status: true, data: searchedData, box: userBuild };
     } catch (error) {
       return {
@@ -557,14 +506,10 @@ export class FlashController {
     @Body() data: updateVideoBuildDto
   ) {
     try {
-      if(id == req.user.id){
+     
         data.created_by_user = req.user.id;
         const userBuild = await this.buildService.updateBuild(id, data);
         return { data: userBuild, message: "Build Updated successfully" };
-      }
-      else{
-        return { message: "You can't update the build successfully" };
-      }
       
     } catch (error) {
       return {

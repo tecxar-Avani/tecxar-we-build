@@ -35,7 +35,7 @@ class BuildService {
   }
 
   public async getBuildById(id: number): Promise<IVideoBuild[] | null> {
-    const query = `SELECT box.description,box.id,box.sorting_order
+    const query = `SELECT box.description,box.id,box.sorting_order,vb.created_by
     FROM video_builds AS vb
     LEFT JOIN boxes box on vb.id = box.build_id
     where vb.id = ${id} `;
