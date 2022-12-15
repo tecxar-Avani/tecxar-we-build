@@ -17,6 +17,7 @@ import {
   addBuild,
   buildSelector,
   getBuildById,
+  UpdateUsersBuild,
 } from "../../store/reducers/build.reducer";
 import {
   addAwareness,
@@ -28,6 +29,8 @@ import { Button, Divider, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
+import DisabledContext from "antd/lib/config-provider/DisabledContext";
+import { userSelector } from "../../store/reducers/user.reducer";
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -37,6 +40,7 @@ const NewBuild = (props: any) => {
     useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
+  const { userData } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
@@ -72,7 +76,6 @@ const NewBuild = (props: any) => {
       ? buildListByUrl.data
       : [];
 
-  console.log("EEEEEEEEEEEEEEEEEEE", videoList);
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -98,6 +101,8 @@ const NewBuild = (props: any) => {
     setResistance(true);
   };
   const buildId = Number(router.query.id);
+  const buildIdForFlash = router.query.id;
+
   useEffect(() => {
     if (buildId) {
       dispatch(getFlashCardByBuildId(buildId));
@@ -169,30 +174,47 @@ const NewBuild = (props: any) => {
       videoList &&
       videoList.length > 0 &&
       videoList.filter((F: any) => F.videoId == videoId);
-    console.log("videoDataFilter", videoDataFilter);
-if (videoDataFilter && videoDataFilter.length > 0) {
-  const saveData = {
-    type_of_video: videoType,
-    potential_polarization: polarisationLevel,
-    difficulty_level: difficultyLevel,
-    boxes: boxData,
-    video_url: url,
-    description: videoDataFilter[0].description,
-    duration: videoDataFilter[0].duration,
-    new_video_id: videoDataFilter[0].newVideoId,
-    published_at: videoDataFilter[0].publishedAt,
-    thumbnails: videoDataFilter[0].thumbnails,
-    title: videoDataFilter[0].title,
-    embed_url: videoDataFilter[0].url,
-    video_id: videoDataFilter[0].videoId,
+    if (videoDataFilter && videoDataFilter.length > 0) {
+      const saveData = {
+        type_of_video: videoType,
+        potential_polarization: polarisationLevel,
+        difficulty_level: difficultyLevel,
+        boxes: boxData,
+        video_url: url,
+        description: videoDataFilter[0].description,
+        duration: videoDataFilter[0].duration,
+        new_video_id: videoDataFilter[0].newVideoId,
+        published_at: videoDataFilter[0].publishedAt,
+        thumbnails: videoDataFilter[0].thumbnails,
+        title: videoDataFilter[0].title,
+        embed_url: videoDataFilter[0].url,
+        video_id: videoDataFilter[0].videoId,
+      };
+      const editData = {
+        type_of_video: videoType,
+
+        potential_polarization: polarisationLevel,
+
+        difficulty_level: difficultyLevel,
+
+        boxes: boxData,
+
+        video_url: url,
+
+        id: buildId,
+      };
+
+      const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
+
+      buildCreatedBy[0] == userData.id
+        ? dispatch(UpdateUsersBuild(editData))
+        : boxData.length > 20
+        ? dispatch(addBuild(saveData))
+        : toast.error("You need to fill minimum 20 boxes");
+    }
+  
   };
-  // boxData.length > 20
-  //   ?
-  console.log("XXXXXXXXXXXXx", saveData);
-  dispatch(addBuild(saveData));
-  // : toast.error("You need to fill minimum 20 boxes");
-}
-  };
+
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
@@ -204,7 +226,6 @@ if (videoDataFilter && videoDataFilter.length > 0) {
       box_id: Number(awarenessBoxId),
       build_id: buildId,
     };
-    console.log("data", buildId);
     dispatch(addAwareness(data));
     setReview(review);
     setAwarenessModal(false);
@@ -363,6 +384,7 @@ if (videoDataFilter && videoDataFilter.length > 0) {
     };
     dispatch(addReviewResponse(data));
   };
+
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -429,7 +451,14 @@ if (videoDataFilter && videoDataFilter.length > 0) {
                 );
               })}
           </div>
-          <div className="position-absolute flash">
+          <div
+            className="position-absolute flash"
+            style={
+              buildIdForFlash == "undefined"
+                ? { pointerEvents: "none", opacity: 0.4 }
+                : {}
+            }
+          >
             <Image
               alt="flashCards"
               src="../../../img/flashcardnewbuild.svg"

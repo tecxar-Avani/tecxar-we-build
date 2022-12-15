@@ -19,6 +19,7 @@ const SearchPage = (props: any) => {
   const { buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
   const [videosData, setVideosData] = useState([]);
+  
   useEffect(() => {
     try {
       if (buildListByUrl.data && buildListByUrl.data.length > 0) {
@@ -65,21 +66,18 @@ const SearchPage = (props: any) => {
   }, [router]);
 
   return (
-    <>
+    <> 
       <SearchBar searchResult={searchResult} />
       {router && router.query.selfLearning ? (
         <HeaderTitle
           title={
             buildListByUrl.data
               ? "Results"
-              : buildListByUrl.data
-              ? "Results"
               : "Learn something new about yourself"
-            // : buildListByUrl.box ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
-            // : "Learn something new about yourself"
           }
-          className="title-list-of-profile py-4 Search"
+          className={`title-list-of-profile py-4 Search`}
         />
+       
       ) : (
         <HeaderTitle
           title={
@@ -92,9 +90,8 @@ const SearchPage = (props: any) => {
               : buildListByUrl.data
               ? "Results"
               : "Want to learn from others’ builds?"
-            // : buildListByUrl.box ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
-            // : "Learn something new about yourself"
           }
+        
           className="title-list-of-profile py-4 Search"
         />
       )}

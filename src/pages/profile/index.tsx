@@ -30,6 +30,7 @@ import {
   getUsersBuild,
 } from "@/store/reducers/build.reducer";
 import SideBar from "@/components/SideBar";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +50,8 @@ const Profile = () => {
   const [filterParam, setFilterParam] = useState<any>(["All"]);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
+  
+  // useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
@@ -156,7 +159,7 @@ const Profile = () => {
             title="Your builds"
             className="title-list-of-profile py-2 my-2"
           />
-          {console.log(userBuilds)}
+        
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
               {userBuilds &&

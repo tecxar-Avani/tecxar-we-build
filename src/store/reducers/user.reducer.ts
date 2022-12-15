@@ -47,7 +47,6 @@ export const getUserByEmail = createAsyncThunk(
 export const updateUserById = createAsyncThunk(
   `users/update/`,
   async (updateUser: IUpdateUser, { dispatch }) => {
-    console.log(updateUser)
     const id = Number(updateUser.id);
     const user_data = {
        user_name : updateUser.user_name,

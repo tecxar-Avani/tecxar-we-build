@@ -573,13 +573,11 @@ export class FlashController {
     @Body() data: updateVideoBuildDto
   ) {
     try {
-      if (id == req.user.id) {
+     
         data.created_by_user = req.user.id;
         const userBuild = await this.buildService.updateBuild(id, data);
         return { data: userBuild, message: "Build Updated successfully" };
-      } else {
-        return { message: "You can't update the build successfully" };
-      }
+      
     } catch (error) {
       return {
         error: {
