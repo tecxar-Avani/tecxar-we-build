@@ -17,6 +17,14 @@ export interface IVideoBuild {
   type_of_video?: any;
   potential_polarization?: any;
   difficulty_level?: any;
+  description?: any;
+  duration?: string;
+  new_video_id?: string;
+  published_at?: string;
+  thumbnails?: any;
+  title?: string;
+  embed_url?: any;
+  video_id?: string;
   created_by?: number;
   updated_by?: number;
   createdAt?: Date;

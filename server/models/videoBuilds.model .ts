@@ -20,7 +20,8 @@ export type VideoBuildAttributes = Optional<IVideoBuild, "id">;
 })
 export default class VideoBuilds
   extends Model<IVideoBuild, VideoBuildAttributes>
-  implements IVideoBuild {
+  implements IVideoBuild
+{
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
@@ -40,6 +41,30 @@ export default class VideoBuilds
 
   @Column(DataType.STRING)
   public difficulty_level: any;
+
+  @Column(DataType.STRING)
+  public description: any;
+
+  @Column(DataType.STRING)
+  public duration: string;
+
+  @Column(DataType.STRING)
+  public new_video_id: string;
+
+  @Column(DataType.STRING)
+  public published_at: string;
+
+  @Column(DataType.JSON)
+  public thumbnails: any;
+
+  @Column(DataType.STRING)
+  public title: string;
+
+  @Column(DataType.STRING)
+  public embed_url: string;
+
+  @Column(DataType.STRING)
+  public video_id: string;
 
   @AllowNull(false)
   @ForeignKey(() => User)
@@ -61,5 +86,4 @@ export default class VideoBuilds
 
   @Column(DataType.DATE)
   public readonly updatedAt!: Date;
-  
 }

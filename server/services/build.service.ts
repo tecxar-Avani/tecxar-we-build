@@ -7,7 +7,7 @@ import { Op, QueryTypes } from "sequelize";
 
 class BuildService {
   private videoBuild = DB.videoBuild;
-  
+
   public async createBuild(
     buildData: IVideoBuild
   ): Promise<IVideoBuild | null> {
@@ -26,7 +26,7 @@ class BuildService {
       where: { created_by: userId },
       raw: true,
     });
-   
+
     if (!videoBuilds) {
       return null;
     } else {
@@ -95,7 +95,7 @@ class BuildService {
       }
       where.push({ [Op.or]: searchFilter });
     }
-  
+
     if (url) {
       where.push({ video_url: url });
     }
@@ -106,7 +106,7 @@ class BuildService {
       where: any;
       raw: boolean;
       order: any;
-      logging:any
+      logging: any;
     } = {
       attributes: [
         "id",
@@ -121,9 +121,11 @@ class BuildService {
       order: [["id", "ASC"]],
       raw: true,
       subQuery: false,
-     logging:console.log
-    }
-    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(option);
+      logging: console.log,
+    };
+    const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
+      option
+    );
     return videoBuilds;
   }
 
@@ -139,6 +141,16 @@ class BuildService {
         },
         {
           potential_polarization: {
+            [Op.like]: `%${search}%`,
+          },
+        },
+        {
+          title: {
+            [Op.like]: `%${search}%`,
+          },
+        },
+         {
+          description: {
             [Op.like]: `%${search}%`,
           },
         }
@@ -172,6 +184,15 @@ class BuildService {
         "created_by",
         "difficulty_level",
         "potential_polarization",
+        "title",
+        "description",
+        "duration",
+        "new_video_id",
+        "published_at",
+        "thumbnails",
+        "title",
+        "embed_url",
+        "video_id",
       ],
       nest: true,
       order: [["id", "DESC"]],
@@ -185,8 +206,9 @@ class BuildService {
     return videoBuilds;
   }
 
-  public async updateBuild(id: number, data:any): Promise<IVideoBuild | null> {
-    const videoBuildsUpdate: any | null = await this.videoBuild.update({ ...data },
+  public async updateBuild(id: number, data: any): Promise<IVideoBuild | null> {
+    const videoBuildsUpdate: any | null = await this.videoBuild.update(
+      { ...data },
       { where: { id: id } }
     );
     if (!videoBuildsUpdate) {

@@ -50,47 +50,50 @@ const userId = buildById?.data?.map((a:any) => a.created_by)
                 onInput={handleChange}
                 id={props.id}
                 onFocus={props.onFocus}
-                readOnly={props.description && userId[0] != userData.id ? true :false}
+                readOnly={
+                  props.description && userId && userId.length>0 &&userId[0] != userData.id
+                    ? true
+                    : false
+                }
               />
-             
-              {props.awarenessList && props.awarenessList.length > 0 && props.awarenessList.map((data:any) => {
-             
-   return(
-   
-   data.review_type  == "inspiration" && data.box_id == props.id ?  (
-    <span onClick={props.modalDot}>
-      <span
-        className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
-        onClick={props.Inspiration}
-      >
-        I
-      </span>
-    </span>
-  ) : 
-    data.review_type == "acceptance" && data.box_id == props.id? (
-    <span onClick={props.modalDot}>
-      <span
-        className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
-        onClick={props.Acceptance}
-      >
-        A
-      </span>
-    </span>
-  ) : 
-  data.review_type == "resistance" && data.box_id == props.id ? (
-    <span onClick={props.modalDot}>
-      <span
-        className="position-absolute px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
-        onClick={props.Resistance}
-      >
-        R
-      </span>
-    </span>
-  ) : (
-    []
-  ))
-              })}
-           
+
+              {props.awarenessList &&
+                props.awarenessList.length > 0 &&
+                props.awarenessList.map((data: any) => {
+                  return data.review_type == "inspiration" &&
+                    data.box_id == props.id ? (
+                    <span onClick={props.modalDot}>
+                      <span
+                        className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
+                        onClick={props.Inspiration}
+                      >
+                        I
+                      </span>
+                    </span>
+                  ) : data.review_type == "acceptance" &&
+                    data.box_id == props.id ? (
+                    <span onClick={props.modalDot}>
+                      <span
+                        className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
+                        onClick={props.Acceptance}
+                      >
+                        A
+                      </span>
+                    </span>
+                  ) : data.review_type == "resistance" &&
+                    data.box_id == props.id ? (
+                    <span onClick={props.modalDot}>
+                      <span
+                        className="position-absolute px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
+                        onClick={props.Resistance}
+                      >
+                        R
+                      </span>
+                    </span>
+                  ) : (
+                    []
+                  );
+                })}
             </div>
           </Form>
         )}

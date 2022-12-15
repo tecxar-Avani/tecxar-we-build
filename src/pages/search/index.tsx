@@ -24,12 +24,12 @@ const SearchPage = (props: any) => {
     try {
       if (buildListByUrl.data && buildListByUrl.data.length > 0) {
         setVideosData(buildListByUrl.data);
-      } else if (buildList.rows) {
+      } else if (buildList?.box && buildList.box.length>0) {
         router && router.query.selfLearning
           ? userBuilds.data
             ? setVideosData(userBuilds.data)
-            : setVideosData(buildList.rows)
-          : setVideosData(buildList.rows);
+            : setVideosData(buildList.box)
+          : setVideosData(buildList.box);
       }
     } catch (error) {
       console.log(error);
