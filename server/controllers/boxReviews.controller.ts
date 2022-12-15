@@ -26,10 +26,10 @@ export class FlashController {
   @Post("/create")
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviews" })
-  async createReview(@Body() reviewData: any) {
-    console.log("$$$$$$$$$$$$$$$",reviewData)
+  async createReview(@Body() reviewData: any,@Req() req: RequestWithUser) {
+    
     try {
-      reviewData.created_by = 5;
+      reviewData.created_by = req.user.id;
       const createReviewData: IBoxReviews | null =
         await this.reviewService.createBoxReview(reviewData);
       return {

@@ -71,7 +71,7 @@ const ProfileCard = (props: any) => {
           <div className="mx-4">
             <Image
               alt="profile"
-              src={`/profile/${props.profile.profileImg}`}
+              src={`/profileImg/${props.profile.profileImg}`}
               className="img-fluid img-rounded"
             />
           {  props.profile.bottomTitle ? 

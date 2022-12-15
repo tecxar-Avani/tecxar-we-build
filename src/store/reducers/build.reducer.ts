@@ -209,7 +209,6 @@ const buildSlice = createSlice({
         }
       })
       .addCase(getUsersBuild.fulfilled,(state,action) => {
-console.log("$$$$$$$$$$$$$",action.payload.data)
         if(action.payload.status){
           return{
             ...state,

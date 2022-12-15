@@ -68,6 +68,7 @@ export interface IBoxReviews {
   comment?: string;
   created_by?: number;
   createdAt?: Date;
+  build_id?:number;
 }
 export interface ICreateFlashCard {
   question: string;

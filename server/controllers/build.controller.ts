@@ -79,7 +79,6 @@ export class FlashController {
       const { id } = req.user;
       const userBuild = await this.buildService.getBuildByUserId(id);
       const { searchedData, error } = await this.youtubeApiCall(userBuild);
-      console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZ",searchedData,userBuild)
       return { data: searchedData, box: userBuild };
     } catch (error) {
       return {
@@ -140,8 +139,6 @@ export class FlashController {
   ) {
     try {
       const userBuild = await this.buildService.getUsersBuildByUrl(url, search);
-console.log("rrrrrrrrrrrrrrrrrrr",url,search)
-      console.log("userrrr", userBuild);
       const { searchedData, error } = await this.youtubeApiCall(
         userBuild,
         search,
@@ -244,7 +241,7 @@ console.log("rrrrrrrrrrrrrrrrrrr",url,search)
 
             await Promise.all(
               youtubeData?.data?.items && youtubeData.data.items.length > 0
-                ? youtubeData.data.items.map(async (item: any) => {              console.log("In side youtubeData",item)
+                ? youtubeData.data.items.map(async (item: any) => {   
 
                     const videoUrl = item?.snippet?.thumbnails?.default?.url;
                     const splittedUrl = videoUrl?.split("vi/");
@@ -273,7 +270,6 @@ console.log("rrrrrrrrrrrrrrrrrrr",url,search)
                       newVideoId: array1[0],
                       url: `https://www.youtube.com/embed/${array1[0]}`,
                     };
-                    console.log("!!!!!!!Filter!!!!!!!!!", Filter);
                     searchedData.push(Filter);
                   })
                 : []

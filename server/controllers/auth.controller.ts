@@ -28,7 +28,7 @@ export class AuthController {
     @Res() res: Response
   ) {
     try {
-      let lastPage = '/';
+      const lastPage = '/';
       const userEmail = req.user._json.email;
       const userName = req.user._json.name;
       const googleProfileId = req.user._json.sub;
@@ -50,8 +50,8 @@ export class AuthController {
           .cookie("authorization", token, {
             expires: new Date(Date.now() + 2700000),
           })
-        //  .redirect(`${config.urlHost}${lastPage}`);
-        .redirect(`https://webuild.tecxar.io/${lastPage}`);
+        // .redirect(`${config.urlHost}${lastPage}`);
+         .redirect(`https://webuild.tecxar.io/${lastPage}`);
       } else {
         const data = {
           user_name: userName,

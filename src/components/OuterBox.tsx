@@ -6,6 +6,7 @@ import { Form } from "antd";
 const OuterBox = (props: any) => {
   const [form] = Form.useForm();
   const handleChange = (event: any) => {
+    console.log("QQQQQQQQQQQQQ",event)
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
     let BoxData = { sorting_order: id, description: value };

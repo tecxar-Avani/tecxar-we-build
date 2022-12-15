@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 export interface ICreateUser {
-  id?: number;
+  id?: number | any;
   role_id: number;
   user_name?: string;
   tag_line?: string;

@@ -54,7 +54,9 @@ const NewBuild = (props: any) => {
   const [challengeModal, setChallengeModal] = useState(false);
   const [challengeData, setChallengeData] = useState([]);
   const [challengeTitle, setChallengeTitle] = useState();
-  const [awarenessBoxId, setAwarenessBoxId] = useState<number>(0);
+  const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
+  const [boxId, setBoxId] = useState();
+
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
@@ -106,7 +108,7 @@ const NewBuild = (props: any) => {
       const data =
         buildById.data &&
         buildById.data.map((box: any) => {
-          return { id: box.sorting_order, message: box.description };
+          return { id: box.sorting_order, message: box.description, boxId:box.id};
         });
       setDataArray(data);
       setArr(data.map((d: any) => d.id));
@@ -173,7 +175,9 @@ const NewBuild = (props: any) => {
       comment: comment.comment,
       review_type: review,
       box_id: Number(awarenessBoxId),
+      build_id:buildId
     };
+    console.log('data',buildId)
     dispatch(addAwareness(data));
     setReview(review);
     setAwarenessModal(false);

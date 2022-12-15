@@ -27,15 +27,14 @@ export const addAwareness = createAsyncThunk(
     const { status, data } = await AwarenessService.addAwareness(
       createAwarenessData
     );
-
-    // dispatch(getFlashCard({ page: 1, pageSize: 30, searchStr: '' }));
+     dispatch(getAwarenessByBoxId(createAwarenessData?.build_id));
     return { status, data };
   }
 );
 
 export const getAwarenessByBoxId = createAsyncThunk(
   `reviews/`,
-  async (buildId: number) => {
+  async (buildId: number | undefined) => {
     const { status, data } = await AwarenessService.getAwarenessByBoxId(
       buildId
     );
@@ -134,6 +133,7 @@ const awarenessSlice = createSlice({
         }
       })
       .addCase(getAwarenessByBoxId.fulfilled, (state, action) => {
+      
         if (action.payload.status) {
           // toast.success(action.payload.data.message);
           // Router.back();

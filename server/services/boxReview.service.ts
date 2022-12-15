@@ -49,6 +49,8 @@ class BoxService {
     const reviewsByBox: IBoxReviews[] | any = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
     });
+   
+
     if (!reviewsByBox) {
       return null;
     } else {

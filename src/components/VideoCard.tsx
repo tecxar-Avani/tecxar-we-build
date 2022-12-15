@@ -3,7 +3,6 @@ import React from "react";
 import { Card, CardImg, Col, Row } from "react-bootstrap";
 
 const VideoCard = (props: any) => {
-  console.log("******************",props)
   return (
     <Card className="p-0 border-0 rounded mb-2 videoCard01">
       <Card.Body className="p-0 rounded-0">

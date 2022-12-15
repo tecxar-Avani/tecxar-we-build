@@ -4,7 +4,7 @@ class AwarenessService {
     return API.post(`/reviews/create`, awareness);
   }
 
-  getAwarenessByBoxId(buildId:number) {
+  getAwarenessByBoxId(buildId:number | undefined) {
     return API.get(`/reviews/getReviewsByBoxId/${buildId}`);
   }
 
