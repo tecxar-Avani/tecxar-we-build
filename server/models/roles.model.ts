@@ -17,7 +17,8 @@ export type RoleAttributes = Optional<IRole, "id">;
 })
 export default class Role
   extends Model<IRole, RoleAttributes>
-  implements IRole {
+  implements IRole
+{
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
@@ -25,7 +26,6 @@ export default class Role
   @Column(DataType.STRING)
   public role: string;
 
-  @AllowNull(false)
   @Column({ type: DataType.INTEGER })
   public created_by: number;
 

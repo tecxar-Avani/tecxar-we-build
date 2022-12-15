@@ -24,7 +24,6 @@ import {
   awarenessSelector,
   getAwarenessByBoxId,
 } from "../../store/reducers/awareness.reducer";
-import { userSelector } from "../../store/reducers/user.reducer";
 import { Button, Divider, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
@@ -33,13 +32,11 @@ import { toast } from "react-toastify";
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
   const router = useRouter();
-  const flashCardData = useAppSelector(flashCardSelector);
   const { flashCardList } = useAppSelector(flashCardSelector);
-  const { awarenessList ,reviewResponseList} = useAppSelector(awarenessSelector)
+  const { awarenessList, reviewResponseList } =
+    useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
-  const { loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
@@ -55,8 +52,6 @@ const NewBuild = (props: any) => {
   const [challengeData, setChallengeData] = useState([]);
   const [challengeTitle, setChallengeTitle] = useState();
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
-  const [boxId, setBoxId] = useState();
-
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
@@ -67,6 +62,17 @@ const NewBuild = (props: any) => {
       };
     })
   );
+
+  const { buildList, buildListByUrl, userBuilds } =
+    useAppSelector(buildSelector);
+  const videoList =
+    buildList && buildList.data?.length > 0
+      ? buildList.data
+      : buildListByUrl && buildListByUrl.data?.length > 0
+      ? buildListByUrl.data
+      : [];
+
+  console.log("EEEEEEEEEEEEEEEEEEE", videoList);
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -97,7 +103,6 @@ const NewBuild = (props: any) => {
       dispatch(getFlashCardByBuildId(buildId));
       dispatch(getBuildById(buildId));
     }
-    
   }, []);
   useEffect(() => {
     dispatch(getAwarenessByBoxId(buildId));
@@ -108,7 +113,11 @@ const NewBuild = (props: any) => {
       const data =
         buildById.data &&
         buildById.data.map((box: any) => {
-          return { id: box.sorting_order, message: box.description, boxId:box.id};
+          return {
+            id: box.sorting_order,
+            message: box.description,
+            boxId: box.id,
+          };
         });
       setDataArray(data);
       setArr(data.map((d: any) => d.id));
@@ -148,23 +157,41 @@ const NewBuild = (props: any) => {
       }
     }
   };
+
   const onSave = (
     videoType: any,
     polarisationLevel: any,
     difficultyLevel: any,
     url: string
   ) => {
-    const saveData = {
-      type_of_video: videoType,
-      potential_polarization: polarisationLevel,
-      difficulty_level: difficultyLevel,
-      boxes: boxData,
-      video_url: url,
-    };
-    // boxData.length > 20 ?
-    dispatch(addBuild(saveData)) 
-    // :
-    // toast.error("You need to fill minimum 20 boxes");
+    const videoId = url && url.split("=").pop();
+    const videoDataFilter =
+      videoList &&
+      videoList.length > 0 &&
+      videoList.filter((F: any) => F.videoId == videoId);
+    console.log("videoDataFilter", videoDataFilter);
+if (videoDataFilter && videoDataFilter.length > 0) {
+  const saveData = {
+    type_of_video: videoType,
+    potential_polarization: polarisationLevel,
+    difficulty_level: difficultyLevel,
+    boxes: boxData,
+    video_url: url,
+    description: videoDataFilter[0].description,
+    duration: videoDataFilter[0].duration,
+    new_video_id: videoDataFilter[0].newVideoId,
+    published_at: videoDataFilter[0].publishedAt,
+    thumbnails: videoDataFilter[0].thumbnails,
+    title: videoDataFilter[0].title,
+    embed_url: videoDataFilter[0].url,
+    video_id: videoDataFilter[0].videoId,
+  };
+  // boxData.length > 20
+  //   ?
+  console.log("XXXXXXXXXXXXx", saveData);
+  dispatch(addBuild(saveData));
+  // : toast.error("You need to fill minimum 20 boxes");
+}
   };
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
@@ -175,14 +202,14 @@ const NewBuild = (props: any) => {
       comment: comment.comment,
       review_type: review,
       box_id: Number(awarenessBoxId),
-      build_id:buildId
+      build_id: buildId,
     };
-    console.log('data',buildId)
+    console.log("data", buildId);
     dispatch(addAwareness(data));
     setReview(review);
     setAwarenessModal(false);
   };
-  
+
   // for awarenessType modal
 
   const showModal = () => {
@@ -199,13 +226,16 @@ const NewBuild = (props: any) => {
   const content = (title: any) => {
     return (
       <>
-        {
-        awarenessList && awarenessList.length > 0 && awarenessList.map((data:any) => {
+        {awarenessList &&
+          awarenessList.length > 0 &&
+          awarenessList.map((data: any) => {
             return (
               <>
                 {title == data.review_type ? (
                   <Form>
-                    <div className="header mt-1">Maria's {data.review_type}</div>
+                    <div className="header mt-1">
+                      Maria's {data.review_type}
+                    </div>
                     <Form.Item name="comment">
                       <div className={`awarenessModal header`}>
                         <TextArea
@@ -220,7 +250,9 @@ const NewBuild = (props: any) => {
                     <Button
                       key="submit"
                       type="primary"
-                      className={` ${data.review_type == "resistance" ? "yellowBtn" : ""}`}
+                      className={` ${
+                        data.review_type == "resistance" ? "yellowBtn" : ""
+                      }`}
                       onClick={(e: any) => {
                         const button =
                           data.review_type == "acceptance"
@@ -237,23 +269,34 @@ const NewBuild = (props: any) => {
                         ? "Resolve"
                         : ""}
                     </Button>
-                    
-                    {data.challenge ? (<>
-                      <div className="AwareInputChallengeHeader">Maria's {data.response_review}</div>
-                      <TextArea
-                      maxLength={500}
-                      rows={3}
-                      className="mb-1 AwareInputChallenge"
-                      value={data.challenge}
-                    ></TextArea>
-                    <Button
-                      key="submit"
-                      type="primary" className="mt-0 challengeAcceptBtn">  {data.review_type == "acceptance"
-                      ? "acceptance"
-                      : data.review_type == "resistance"
-                      ? "resistance"
-                      : ""}</Button>
-                    </>) : []}
+
+                    {data.challenge ? (
+                      <>
+                        <div className="AwareInputChallengeHeader">
+                          Maria's {data.response_review}
+                        </div>
+                        <TextArea
+                          maxLength={500}
+                          rows={3}
+                          className="mb-1 AwareInputChallenge"
+                          value={data.challenge}
+                        ></TextArea>
+                        <Button
+                          key="submit"
+                          type="primary"
+                          className="mt-0 challengeAcceptBtn"
+                        >
+                          {" "}
+                          {data.review_type == "acceptance"
+                            ? "acceptance"
+                            : data.review_type == "resistance"
+                            ? "resistance"
+                            : ""}
+                        </Button>
+                      </>
+                    ) : (
+                      []
+                    )}
                   </Form>
                 ) : (
                   []
@@ -275,7 +318,12 @@ const NewBuild = (props: any) => {
     data = challengeData;
     return (
       <>
-        <Form  form={form} onFinish={(review_response:any)=>onChallengeClick(data,review_response)}>
+        <Form
+          form={form}
+          onFinish={(review_response: any) =>
+            onChallengeClick(data, review_response)
+          }
+        >
           <div className="header mt-2">Maria's {data.review_type}</div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
@@ -299,7 +347,7 @@ const NewBuild = (props: any) => {
               ></TextArea>
             </div>
           </Form.Item>
-          <Button key="submit" htmlType="submit" >
+          <Button key="submit" htmlType="submit">
             Add
           </Button>
         </Form>
@@ -307,14 +355,14 @@ const NewBuild = (props: any) => {
     );
   };
 
-  const onChallengeClick = (e:any,review_response:any) => {
+  const onChallengeClick = (e: any, review_response: any) => {
     const data = {
-      review_type : challengeTitle,
-      comment : review_response.comment,
-      boxReview_id:e.id
-    }
-   dispatch(addReviewResponse(data))
-  }
+      review_type: challengeTitle,
+      comment: review_response.comment,
+      boxReview_id: e.id,
+    };
+    dispatch(addReviewResponse(data));
+  };
   return (
     <>
       <div className="d-flex m-0 w-100">
@@ -375,9 +423,7 @@ const NewBuild = (props: any) => {
                     }}
                   >
                     <Card.Body className="d-flex justify-content-center align-items-center">
-                      {data.user_name
-                        .split(" ")
-                        .map((a: any) => a.charAt(0))}
+                      {data.user_name.split(" ").map((a: any) => a.charAt(0))}
                     </Card.Body>
                   </Card>
                 );

@@ -72,7 +72,7 @@ export class FlashController {
   }
 
   @Get("/")
-   @UseBefore(authMiddleware)
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all build of users" })
   async getUsersBuild(@Req() req: RequestWithUser) {
     try {
@@ -145,9 +145,16 @@ export class FlashController {
         url
       );
       if (searchedData && searchedData.length > 0) {
-        return { status: true, data: searchedData, box: userBuild,
-          search:search && search != undefined && search != 'undefined' ?true:false,
-          url:url && url!= undefined && url != 'undefined' ? true:false };
+        return {
+          status: true,
+          data: searchedData,
+          box: userBuild,
+          search:
+            search && search != undefined && search != "undefined"
+              ? true
+              : false,
+          url: url && url != undefined && url != "undefined" ? true : false,
+        };
       } else {
         const allBuilds = await this.buildService.getAllBuilds();
         const { searchedData, error } = await this.youtubeApiCall(
@@ -160,8 +167,11 @@ export class FlashController {
           data: searchedData,
           box: userBuild,
           allBuilds: allBuilds,
-          search:search && search != undefined && search != 'undefined' ?true:false,
-          url:url && url!= undefined && url != 'undefined' ? true:false 
+          search:
+            search && search != undefined && search != "undefined"
+              ? true
+              : false,
+          url: url && url != undefined && url != "undefined" ? true : false,
         };
       }
     } catch (error) {
@@ -241,8 +251,7 @@ export class FlashController {
 
             await Promise.all(
               youtubeData?.data?.items && youtubeData.data.items.length > 0
-                ? youtubeData.data.items.map(async (item: any) => {   
-
+                ? youtubeData.data.items.map(async (item: any) => {
                     const videoUrl = item?.snippet?.thumbnails?.default?.url;
                     const splittedUrl = videoUrl?.split("vi/");
                     const result = splittedUrl.pop();
@@ -259,7 +268,7 @@ export class FlashController {
                       duration1.data.items[0]?.contentDetails?.duration;
                     durationCalculation(youTubeFormatDuration);
 
-                    const Filter = {
+                    const filter = {
                       id: url.id,
                       videoId: urlIdToSearch,
                       thumbnails: item?.snippet?.thumbnails?.default,
@@ -270,7 +279,8 @@ export class FlashController {
                       newVideoId: array1[0],
                       url: `https://www.youtube.com/embed/${array1[0]}`,
                     };
-                    searchedData.push(Filter);
+                    console.log("DDDDDDDDDDDDDDDDDDDDDD", filter);
+                    searchedData.push(filter);
                   })
                 : []
             );
@@ -278,17 +288,20 @@ export class FlashController {
         );
       } else if (videoUrl || search) {
         const videoIdToSearch = videoUrl && videoUrl.split("=").pop();
-        const response: any = videoIdToSearch && videoIdToSearch != undefined && videoIdToSearch != "undefined"
-          ? await youtube.videos.list({
-              part: ["snippet,contentDetails"],
-              id: [`${videoIdToSearch}`],
-            })
-          : await youtube.search.list({
-              part: ["snippet"],
-              q: search,
-              maxResults: 5,
-            });
-
+        const response: any =
+          videoIdToSearch &&
+          videoIdToSearch != undefined &&
+          videoIdToSearch != "undefined"
+            ? await youtube.videos.list({
+                part: ["snippet,contentDetails"],
+                id: [`${videoIdToSearch}`],
+              })
+            : await youtube.search.list({
+                part: ["snippet"],
+                q: search,
+                maxResults: 5,
+              });
+        console.log("ZZZZZZZZZZZZZZZZZ", response);
         for (let i = 0; i < response.data.items.length; i++) {
           const item = response.data.items[i];
           const videoUrl = item.snippet.thumbnails.default.url;
@@ -337,7 +350,10 @@ export class FlashController {
     try {
       const userBuild = await this.buildService.getAllBuilds(search);
       let searchedResult;
-       const { searchedData, error } = await this.youtubeApiCall(userBuild, search)
+      // const { searchedData, error } = await this.youtubeApiCall(
+      //   userBuild,
+      //   search
+      // );
       // const searchedData = [
       //   {
       //     id: 58,
@@ -521,7 +537,7 @@ export class FlashController {
       //     url: "https://www.youtube.com/embed/W6NZfCO5SIk",
       //   },
       // ];
-      return { status: true, data: searchedData, box: userBuild };
+      return { status: true, box: userBuild };
     } catch (error) {
       return {
         error: {
@@ -557,15 +573,13 @@ export class FlashController {
     @Body() data: updateVideoBuildDto
   ) {
     try {
-      if(id == req.user.id){
+      if (id == req.user.id) {
         data.created_by_user = req.user.id;
         const userBuild = await this.buildService.updateBuild(id, data);
         return { data: userBuild, message: "Build Updated successfully" };
-      }
-      else{
+      } else {
         return { message: "You can't update the build successfully" };
       }
-      
     } catch (error) {
       return {
         error: {

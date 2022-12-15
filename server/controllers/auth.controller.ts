@@ -28,7 +28,7 @@ export class AuthController {
     @Res() res: Response
   ) {
     try {
-      const lastPage = '/';
+      const lastPage = "/";
       const userEmail = req.user._json.email;
       const userName = req.user._json.name;
       const googleProfileId = req.user._json.sub;
@@ -50,8 +50,8 @@ export class AuthController {
           .cookie("authorization", token, {
             expires: new Date(Date.now() + 2700000),
           })
-        // .redirect(`${config.urlHost}${lastPage}`);
-         .redirect(`https://webuild.tecxar.io/${lastPage}`);
+          .redirect(`${config.urlHost}${lastPage}`);
+        // .redirect(`https://webuild.tecxar.io/${lastPage}`);
       } else {
         const data = {
           user_name: userName,
@@ -61,7 +61,27 @@ export class AuthController {
           is_blocked: 0,
         };
         const createUser = await this.userService.createUser(data);
-        return createUser;
+        if (createUser && createUser.id) {
+          req.user = createUser;
+          const token = await jwt.sign(
+            {
+              id: createUser.id,
+              email: userEmail,
+              name: userName,
+            },
+            JWT_KEY,
+            {
+              expiresIn: "1d",
+            }
+          );
+          res
+            .cookie("authorization", token, {
+              expires: new Date(Date.now() + 2700000),
+            })
+            .redirect(`${config.urlHost}${lastPage}`);
+        } else {
+          res.redirect(`${config.urlHost}${lastPage}`);
+        }
       }
     } catch (error) {
       return {
