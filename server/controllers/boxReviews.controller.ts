@@ -19,7 +19,7 @@ import { BoxreviewDto } from "@/dtos/boxreviews.dto";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 
 @Controller("/reviews")
-@UseBefore(authMiddleware)
+// @UseBefore(authMiddleware)
 export class FlashController {
   private reviewService = new BoxReviewService();
 

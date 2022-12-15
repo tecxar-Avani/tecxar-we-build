@@ -12,6 +12,7 @@ import {
 } from "../../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
+import Head from "next/head";
 
 const SearchPage = (props: any) => {
   const router = useRouter();
@@ -66,7 +67,10 @@ const SearchPage = (props: any) => {
   }, [router]);
 
   return (
-    <> 
+    <>     <Head>
+    <title>Search</title>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+  </Head>
       <SearchBar searchResult={searchResult} />
       {router && router.query.selfLearning ? (
         <HeaderTitle

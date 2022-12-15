@@ -279,7 +279,6 @@ export class FlashController {
                       newVideoId: array1[0],
                       url: `https://www.youtube.com/embed/${array1[0]}`,
                     };
-                    console.log("DDDDDDDDDDDDDDDDDDDDDD", filter);
                     searchedData.push(filter);
                   })
                 : []
@@ -301,7 +300,6 @@ export class FlashController {
                 q: search,
                 maxResults: 5,
               });
-        console.log("ZZZZZZZZZZZZZZZZZ", response);
         for (let i = 0; i < response.data.items.length; i++) {
           const item = response.data.items[i];
           const videoUrl = item.snippet.thumbnails.default.url;

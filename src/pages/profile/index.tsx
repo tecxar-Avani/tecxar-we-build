@@ -31,6 +31,7 @@ import {
 } from "@/store/reducers/build.reducer";
 import SideBar from "@/components/SideBar";
 import { toast } from "react-toastify";
+import Head from "next/head";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -146,6 +147,10 @@ const Profile = () => {
 
   return (
     <>
+        <Head>
+        <title>Profile</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <div className="profile-main">
         <ProfileCard
           className="pt-2"

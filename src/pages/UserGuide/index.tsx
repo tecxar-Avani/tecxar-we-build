@@ -1,14 +1,15 @@
-import ProfileCard from "@/components/Profile";
 import React from "react";
-import SearchBar from "@/components/SearchBar";
-import HeaderTitle from "@/components/headerTitle";
-import VideoCard from "@/components/VideoCard";
-import { Col, Image } from "react-bootstrap";
+import { Image } from "react-bootstrap";
+import Head from "next/head";
 
 const UserGuide = () => {
   
   return (
     <>
+        <Head>
+        <title>UserGuide</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
     <div className="userGuide">
       <p className="mx-4 my-3">Guides</p>
       <p className="mx-4 Ucontent">

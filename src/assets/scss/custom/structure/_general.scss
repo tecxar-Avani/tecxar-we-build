@@ -1006,6 +1006,11 @@ height: 50px;}
 
 .searchBar{
   width: 1400px;
+  .ant-input{
+   :placeholder-shown{
+    background-color: #EFEFEF !important;
+   }
+  }
 }
 
 .centerHeader{
@@ -1024,4 +1029,5 @@ line-height:23px !important;
 
 .logOut{
   margin-top: 10px;
+  margin-left: 1200px;
 }

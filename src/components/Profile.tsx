@@ -60,7 +60,7 @@ const ProfileCard = (props: any) => {
               }}
             />
           )}
-        </div><Button className="logOut">Log out</Button>
+        </div><Button className="logOut" type="primary">Log out</Button>
         <div className="d-flex justify-content-center align-items-center py-2">
           <div className={`${props.leftBoxClass}`}>
             <p className="boxes-heading m-0">

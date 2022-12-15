@@ -31,6 +31,7 @@ import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
 import DisabledContext from "antd/lib/config-provider/DisabledContext";
 import { userSelector } from "../../store/reducers/user.reducer";
+import Head from "next/head";
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -108,10 +109,10 @@ const NewBuild = (props: any) => {
       dispatch(getFlashCardByBuildId(buildId));
       dispatch(getBuildById(buildId));
     }
-  }, []);
+  }, [buildId]);
   useEffect(() => {
     dispatch(getAwarenessByBoxId(buildId));
-  }, []);
+  }, [buildId]);
 
   useEffect(() => {
     if (buildById.data) {
@@ -212,7 +213,6 @@ const NewBuild = (props: any) => {
         ? dispatch(addBuild(saveData))
         : toast.error("You need to fill minimum 20 boxes");
     }
-  
   };
 
   const handleChange = (e: any) => {
@@ -387,6 +387,10 @@ const NewBuild = (props: any) => {
 
   return (
     <>
+     <Head>
+        <title>New Build</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <div className="d-flex m-0 w-100">
         <NewBuildSideCard
           id={router.query.id}
@@ -520,7 +524,10 @@ const NewBuild = (props: any) => {
       />
       <AwarenessModal
         awarenessModal={awarenessModal}
-        setAwarenessModal={setAwarenessModal}
+        setAwarenessModal={(type:boolean) => {
+          setAwarenessIndex(false)
+          setAwarenessModal(type);
+        }}
         visible={awarenessModal}
         textValue={awarenessIndex}
         handleSubmit={(comment: any, review: any) => {
