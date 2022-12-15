@@ -300,7 +300,7 @@ const NewBuildSideCard = (props: any) => {
               onClick={() =>
                 props.onSave(videoType, polarisationLevel, difficultyLevel, url)
               }
-              style={userId[0] == userData.id ? {} : {pointerEvents:"none",opacity:0.4 }}
+              style={userId && userId[1] == userData.id ? {} : {pointerEvents:"none",opacity:0.4 }}
             >
               <Image src="/img/save.svg" className="ms-2" alt="no image" />
             </div>
