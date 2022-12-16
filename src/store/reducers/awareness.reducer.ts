@@ -37,7 +37,8 @@ export const getAwarenessByBoxId = createAsyncThunk(
   async (buildId: number | undefined) => {
     const { status, data } = await AwarenessService.getAwarenessByBoxId(
       buildId
-    );
+    ); 
+
     return { status, rows: data };
   }
 );
@@ -133,7 +134,6 @@ const awarenessSlice = createSlice({
         }
       })
       .addCase(getAwarenessByBoxId.fulfilled, (state, action) => {
-      
         if (action.payload.status) {
           // toast.success(action.payload.data.message);
           // Router.back();
@@ -171,6 +171,7 @@ const awarenessSlice = createSlice({
       })
 
       .addCase(getReviewResponseByAwarenessId.fulfilled, (state, action) => {
+
         if (action.payload.status) {
           // toast.success(action.payload.data.message);
           // Router.back();

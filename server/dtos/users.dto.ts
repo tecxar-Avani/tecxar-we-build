@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ICreateUser, IUpdateUser } from '@/interfaces/users.interface';
 import { IsOptional, IsString, IsDate, IsNumber } from 'class-validator';
 

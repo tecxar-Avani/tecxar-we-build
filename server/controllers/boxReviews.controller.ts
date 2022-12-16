@@ -24,10 +24,11 @@ export class FlashController {
   private reviewService = new BoxReviewService();
 
   @Post("/create")
+  @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviews" })
   async createReview(@Body() reviewData: any,@Req() req: RequestWithUser) {
-    
+    console.log("^^^^^^^^^^^^^^^^",reviewData)
     try {
       reviewData.created_by = req.user.id;
       const createReviewData: IBoxReviews | null =
@@ -66,6 +67,7 @@ export class FlashController {
   async getReviewsByBoxId(@Param("buildId") id: number) {
     try {
       const reviewDataByBox = await this.reviewService.getReviewsByBox(id);
+
       return reviewDataByBox;
     } catch (error) {
       return {

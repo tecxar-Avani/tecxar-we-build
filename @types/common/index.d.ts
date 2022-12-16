@@ -51,7 +51,13 @@ export interface IFlashCard {
     users: IBuildUser[];
   };
 }
-
+export interface IFlashCardsResponse {
+  id?: number;
+  response_type?: ResponseEnumType;
+  flash_card_id?: number;
+  created_by?: number;
+  createdAt?: Date
+}
 export interface IUpdateFlashCards {
   id?: number;
   build_id?: number;

@@ -287,7 +287,7 @@ export class FlashController {
         );
       } else if (videoUrl || search) {
         const videoIdToSearch = videoUrl && videoUrl.split("=").pop();
-        const response: any =
+        const response: any = 
           videoIdToSearch &&
           videoIdToSearch != undefined &&
           videoIdToSearch != "undefined"
@@ -296,10 +296,10 @@ export class FlashController {
                 id: [`${videoIdToSearch}`],
               })
             : await youtube.search.list({
-                part: ["snippet"],
-                q: search,
-                maxResults: 5,
-              });
+              part: ["id","snippet"],
+              q: search,
+              maxResults: 5,
+            });
         for (let i = 0; i < response.data.items.length; i++) {
           const item = response.data.items[i];
           const videoUrl = item.snippet.thumbnails.default.url;

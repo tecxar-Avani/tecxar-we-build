@@ -13,6 +13,7 @@ import { IFlashCardRowsCountResponse } from "../../../@types/responses";
 import {
   ICreateFlashCard,
   IFlashCard,
+  IFlashCardsResponse,
   IUpdateFlashCards,
 } from "../../../@types/common";
 import flashCardService from "../../service/flashCard.service";
@@ -29,6 +30,18 @@ export const createFlashCard = createAsyncThunk(
     );
 
     dispatch(getFlashCardByBuildId(createFlashCardData.build_id));
+    return { status, data };
+  }
+);
+
+export const createFlashCardResponse = createAsyncThunk(
+  `flashcard/flashcardresponse`,
+  async (createFlashCardResponseData: IFlashCardsResponse, { dispatch }) => {
+
+    const { status, data } = await flashCardService.addFlashcardresponse(
+      
+      createFlashCardResponseData
+    );
     return { status, data };
   }
 );
@@ -90,12 +103,17 @@ interface State {
   flashCardList: IFlashCardRowsCountResponse;
   flashCardUserList: IFlashCardRowsCountResponse;
   editFlashCard: IUpdateFlashCards;
+  flashCardResponse:IFlashCardsResponse;
 }
 
 const initialState: State = {
   flashCard: {
     question: "",
     answer: "",
+  },
+  flashCardResponse:{
+    response_type: "good",
+    flash_card_id: 0,
   },
   flashCardList: {
     status: true,
@@ -142,6 +160,23 @@ const flashCardSlice = createSlice({
             ...state,
             loading: false,
             flashCardData: initialState.flashCard,
+          };
+        }
+      })
+      .addCase(createFlashCardResponse.fulfilled, (state, action) => {
+        if (action.payload.data.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            flashCardResponse: action.payload.data,
+          };
+        } else {
+          toast.error(action.payload.data.error.message);
+          return {
+            ...state,
+            loading: false,
+            flashCardResponse: initialState.flashCardResponse,
           };
         }
       })

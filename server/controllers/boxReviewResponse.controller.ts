@@ -24,7 +24,7 @@ export class BoxReviewResponseController {
   private reviewResponseService = new BoxResponseService();
 
   @Post("/create")
-  @UseBefore(authMiddleware)
+  // @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviewsResponse" })
   async createReviewResponse(@Body() reviewData: any ,@Req() req: RequestWithUser) {
@@ -66,6 +66,7 @@ export class BoxReviewResponseController {
   @OpenAPI({ summary: "get review by awareness id" })
   async getReviewsResponseByAwareness(@Param("box_review_id") id: number) {
     try {
+
       const reviewResponseDataByAwareness = await this.reviewResponseService.getReviewsResponseByAwareness(id);
 
       return reviewResponseDataByAwareness;

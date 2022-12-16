@@ -42,7 +42,7 @@ export default class VideoBuilds
   @Column(DataType.STRING)
   public difficulty_level: any;
 
-  @Column(DataType.STRING)
+  @Column(DataType.TEXT)
   public description: any;
 
   @Column(DataType.STRING)

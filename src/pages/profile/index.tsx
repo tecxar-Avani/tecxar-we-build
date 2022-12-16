@@ -4,17 +4,15 @@ import VideoCard from "@/components/VideoCard";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { Col, Image, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import {
   getFlashCardByUser,
   flashCardSelector,
   updateFlashCardId,
-  flashCardData,
 } from "@/store/reducers/flashCard.reducer";
 import moment from "moment";
 
 import FlashCardModal from "@/components/FlashCardModal";
-import AddFlashCardModal from "@/components/AddFlashCardModal";
 
 import { Input, Modal, Button, Form } from "antd";
 import {
@@ -29,8 +27,6 @@ import {
   getUserInteractedBuild,
   getUsersBuild,
 } from "@/store/reducers/build.reducer";
-import SideBar from "@/components/SideBar";
-import { toast } from "react-toastify";
 import Head from "next/head";
 
 const Profile = () => {
@@ -91,7 +87,7 @@ const Profile = () => {
   const onEdit = (e: any) => {
     const data = {
       id: userData.userData.id,
-      user_name: e,
+      user_name: e.user_name,
     };
     dispatch(updateUserById(data));
     setEditName(false);
@@ -160,17 +156,17 @@ const Profile = () => {
           questionData={questionData}
           showModal={showModal}
         />
-        <div className="m-0 pb-2 overflow-x-scroll">
           <HeaderTitle
             title="Your builds"
             className="title-list-of-profile py-2 my-2"
           />
-        
+        <div className="m-0 pb-2 videoCard overflow-x-scroll">
+
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
               {userBuilds &&
                 userBuilds?.data?.map((videoData: any, index: number) => (
-                  <Col md={4} key={index} className="videoProfile">
+                  <Col md={4} key={index} className="videoProfile ">
                     <Link href={`/newBuild?id=${videoData.id}`}>
                       <a>
                         <VideoCard VideoCardData={videoData} />
@@ -206,7 +202,7 @@ const Profile = () => {
               <HeaderTitle
                 title="Total list of Profiles"
                 className="title-list-of-profile py-2 mt-4 mb-3"
-              />{" "}
+              />
               <select
                 onChange={(e) => {
                   setFilterParam(e.target.value);

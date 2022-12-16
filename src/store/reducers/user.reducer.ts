@@ -5,6 +5,8 @@ import {
   PayloadAction,
   AsyncThunk,
   AnyAction,
+  AsyncThunkAction,
+  Dispatch,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
 import {
@@ -40,6 +42,7 @@ export const getUserByEmail = createAsyncThunk(
   `users/userByEmail`,
   async (): Promise<ICurrentUser> => {
     const { data } = await userService.getUserByMail();
+    const id = data.id
     return data;
   }
 );
@@ -47,6 +50,7 @@ export const getUserByEmail = createAsyncThunk(
 export const updateUserById = createAsyncThunk(
   `users/update/`,
   async (updateUser: IUpdateUser, { dispatch }) => {
+  
     const id = Number(updateUser.id);
     const user_data = {
        user_name : updateUser.user_name,
@@ -54,6 +58,7 @@ export const updateUserById = createAsyncThunk(
   }
     const { status, data } = await userService.updateUserById(id,user_data);
     dispatch(getAllUsers());
+    dispatch(getUserByEmail())
     return { status, data };
   }
 );
@@ -200,3 +205,4 @@ const userSlice = createSlice({
 export const userReducer = userSlice.reducer;
 export const userSelector = (state: RootState) => state.users;
 export const { userData, loggedInUser } = userSlice.actions;
+

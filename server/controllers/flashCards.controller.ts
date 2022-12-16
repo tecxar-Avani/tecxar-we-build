@@ -50,7 +50,7 @@ export class FlashController {
 
   @Post("/flashcardresponse")
   @HttpCode(201)
-  @UseBefore(authMiddleware)
+  // @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Create a new FlashCard Response" })
   async flashcardResponse(
     @Body() flashcardResponseData: flashCardResponseDto,
@@ -65,7 +65,7 @@ export class FlashController {
       return {
         status: true,
         data: createFlashCardResponseData,
-        message: "FlashCard Response created successfully.",
+        message: "FlashCard response added successfully.",
       };
     } catch (error) {
       if (error instanceof Error) {

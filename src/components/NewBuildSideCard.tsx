@@ -5,10 +5,11 @@ import Overlay from "react-bootstrap/Overlay";
 import CustomButton from "./Button";
 import { Modal, Tooltip } from "antd";
 import Link from "next/link";
-import GoogleButton from "react-google-button";
 import { useAppSelector,useAppDispatch } from "../hooks";
 import { userSelector } from "@/store/reducers/user.reducer";
 import { buildSelector, getBuildById } from "@/store/reducers/build.reducer";
+import GoogleButton from "react-google-button";
+const cookieCutter = require('cookie-cutter');
 
 const NewBuildSideCard = (props: any) => {
 
@@ -25,8 +26,21 @@ const NewBuildSideCard = (props: any) => {
   const [polarisationLevel, setPolarisationLevel] = useState<any>("low");
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
-
   const [modal5Open, setModal5Open] = useState(false);
+  const [authorization, setAuthorization] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   useEffect(() => {
+//     let authorization = cookieCutter.get("authorization");
+//     setAuthorization(authorization);
+//   }, []);
+// console.log("AAAAAAAA",authorization)
+//   useEffect(() => {
+//     if (authorization) {
+//       setIsLoggedIn(true);
+//     }
+//   }, [authorization]);
+
   const togglemodal = () => {
     setModal5Open(!modal5Open);
   };
@@ -43,7 +57,9 @@ const NewBuildSideCard = (props: any) => {
     dispatch(getBuildById(props.id));
   
   },[])
-
+  const handleCancel = () => {
+    setModal5Open(false);
+  };
  const userId = buildById?.data?.map((a:any) => a.created_by)
   return (
     <>
@@ -294,17 +310,18 @@ const NewBuildSideCard = (props: any) => {
 
         <hr className="border-dark  ms-2  " />
         <div className="d-flex owd bd-highlight">
-          {props.isLoggedIn === true ? (
+          {/* {props.isLoggedIn === true ? ( */}
             <div
               className="save bd-highlight"
-              onClick={() =>
-                props.onSave(videoType, polarisationLevel, difficultyLevel, url)
+              onClick={() => props.isLoggedIn === true ? 
+                props.onSave(videoType, polarisationLevel, difficultyLevel, url) :  setModal5Open(true)
               }
-              style={ userId && userId.length>0 && userId[0] == userData.id ? {} : {pointerEvents:"none",opacity:0.4 }}
+             
+              // style={ userId && userId.length>0 && userId[0] == userData.id && userId == "undefined" ?  {}  :{pointerEvents:"none",opacity:0.4 }}
             >
               <Image src="/img/save.svg" className="ms-2" alt="no image" />
             </div>
-          ) : (
+          {/* ) : (
             <Tooltip
               placement="topLeft"
               title={
@@ -317,7 +334,7 @@ const NewBuildSideCard = (props: any) => {
                     <p>
                       Please make an account to save your build - don't let all
                       your hard work go to waste!
-                      <a href={`/api/google`}>Login via Google</a>
+                      <a onClick={()=>window.open('/api/google')}>Login via Google</a>
                     </p>
                   </div>
                 </>
@@ -329,7 +346,7 @@ const NewBuildSideCard = (props: any) => {
                 <Image src="/img/save.svg" className="ms-2" alt="no image" />
               </div>
             </Tooltip>
-          )}
+          )} */}
           <div className="backward bd-highlight">
             <Image src="/img/backward.svg" className="ms-5 me-1" />
           </div>
@@ -343,6 +360,19 @@ const NewBuildSideCard = (props: any) => {
           </Link>
         </div>
       </div>
+      <Modal
+        title=""
+        centered
+        open={modal5Open}
+        className="btnrv"
+        onCancel={handleCancel}
+      >
+        <div className="mb-n3">
+          <a onClick={()=>window.open('/api/google')}>
+            <GoogleButton className="m-auto googleButton" />
+          </a>
+        </div>
+      </Modal>
     </>
   );
 };
