@@ -85,6 +85,7 @@ const Profile = () => {
       totalCount &&
       totalCount.flashCardCount &&
       totalCount.flashCardCount.map((a: any) => a.flashCard),
+      logout:"Log out"
   };
 
   const onEdit = (e: any) => {

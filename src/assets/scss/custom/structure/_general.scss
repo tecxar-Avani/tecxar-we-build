@@ -152,6 +152,7 @@ body,
 .videoProfile {
   overflow: hidden;
   padding-right: 1rem;
+  margin-left: 12px;
 }
 
 
@@ -1005,11 +1006,13 @@ height: 50px;}
 }
 
 .searchBar{
-  width: 1400px;
-  .ant-input{
-   :placeholder-shown{
-    background-color: #EFEFEF !important;
-   }
+  width: 1430px;
+}
+.searchCard{
+  .ant-input:placeholder-shown {
+    text-overflow: ellipsis;
+    color: black;
+    background-color: #EFEFEF;
   }
 }
 
