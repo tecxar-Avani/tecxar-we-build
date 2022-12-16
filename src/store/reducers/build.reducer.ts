@@ -25,6 +25,15 @@ export const getBuilds: any = createAsyncThunk(
   }
 );
 
+export const getOthersBuilds: any = createAsyncThunk(
+  `build/getOtherBuild/`,
+  async (): Promise<IBuildRowsCountResponse> => {
+    const { data } = await BuildService.othersBuilds();
+    const dataBox = { box: data.box, rows: data.data };
+    return { status: data.status, rows: dataBox };
+  }
+);
+
 export const getUserInteractedBuild: any = createAsyncThunk(
   `build/get/userInteractedBuild`,
   async (): Promise<IBuildRowsCountResponse> => {
@@ -164,19 +173,35 @@ const buildSlice = createSlice({
           };
         }
       })
-      .addCase(getUserInteractedBuild.fulfilled, (state, action) => {
-        if (action.payload) {
+      .addCase(getOthersBuilds.fulfilled, (state, action) => {
+        if (action.payload.status) {
           return {
             ...state,
             loading: false,
-            userBuildList: action.payload.rows,
+            buildList: action.payload.rows,
             boxes: action.payload.boxes,
           };
         } else {
           return {
             ...state,
             loading: false,
-            userBuildList: initialState.userBuildList,
+            buildList: initialState.buildList,
+          };
+        }
+      })
+      .addCase(getUserInteractedBuild.fulfilled, (state, action) => {
+        if (action.payload) {
+          return {
+            ...state,
+            loading: false,
+            buildList: action.payload.rows,
+            boxes: action.payload.boxes,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            buildList: initialState.buildList,
           };
         }
       })
@@ -185,14 +210,14 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
-            buildListByUrl: action.payload.rows,
+            buildList: action.payload.rows,
             boxes: action.payload.boxes,
           };
         } else {
           return {
             ...state,
             loading: false,
-            buildListByUrl: initialState.buildListByUrl,
+            buildList: initialState.buildList,
           };
         }
       })
@@ -212,22 +237,21 @@ const buildSlice = createSlice({
           };
         }
       })
-      .addCase(getUsersBuild.fulfilled,(state,action) => {
-        if(action.payload.status){
-          return{
+      .addCase(getUsersBuild.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          return {
             ...state,
-            loading:false,
-            userBuilds:action.payload.data,
+            loading: false,
+            userBuilds: action.payload.data,
           };
-        }else{
-          return{
-              ...state,
-              loading:false,
-              userBuilds:initialState.userBuilds,
+        } else {
+          return {
+            ...state,
+            loading: false,
+            userBuilds: initialState.userBuilds,
           };
         }
-        }
-      )
+      })
       .addCase(addBuild.fulfilled, (state, action) => {
         if (action.payload.data.status) {
           toast.success(action.payload.data.message);

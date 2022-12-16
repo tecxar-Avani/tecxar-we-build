@@ -44,7 +44,6 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
     <>
     <ToastContainer autoClose={2000} />
     <Provider store={store}>
-      {console.log("wwwwwwwwwwwwww",store)}
       <Layout className="h-full">
         {/* <SideBar router={router}/> */}
         {r.pathname != "/newBuild" && <SideBar isLoggedIn={isLoggedIn} />}

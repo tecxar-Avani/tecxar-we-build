@@ -6,14 +6,13 @@ import CustomButton from "./Button";
 import { Modal, Tooltip } from "antd";
 import Link from "next/link";
 import GoogleButton from "react-google-button";
-import { useAppSelector,useAppDispatch } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../hooks";
 import { userSelector } from "@/store/reducers/user.reducer";
 import { buildSelector, getBuildById } from "@/store/reducers/build.reducer";
 
 const NewBuildSideCard = (props: any) => {
-
   const [polarisation, setPolarisation] = useState(false);
-  const {userData} = useAppSelector(userSelector)
+  const { userData } = useAppSelector(userSelector);
   const { buildById } = useAppSelector(buildSelector);
   const dispatch = useAppDispatch();
   const polarisations = useRef(null);
@@ -39,12 +38,11 @@ const NewBuildSideCard = (props: any) => {
   const handleDifficultyClick = (e: any) => {
     setDifficultyLevel(e.target.name);
   };
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(getBuildById(props.id));
-  
-  },[])
+  }, []);
 
- const userId = buildById?.data?.map((a:any) => a.created_by)
+  const userId = buildById?.data?.map((a: any) => a.created_by);
   return (
     <>
       <div>
@@ -65,10 +63,16 @@ const NewBuildSideCard = (props: any) => {
           <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 " />
         </div>
         <hr className="border-dark" /> */}
-        <div style={props.id == "undefined" ? {pointerEvents:"none",opacity:0.4} : {}}>
+        <div
+          style={
+            props.id == "undefined"
+              ? { pointerEvents: "none", opacity: 0.4 }
+              : {}
+          }
+        >
           <span
             onClick={() => {
-              props.value  == "" ? {} : props.setAwarenessModal(true);
+              props.value == "" ? {} : props.setAwarenessModal(true);
             }}
           >
             <span onClick={props.Inspiration}>
@@ -81,7 +85,7 @@ const NewBuildSideCard = (props: any) => {
           <div>
             <span
               onClick={() => {
-                props.value  == "" ? {} : props.setAwarenessModal(true);
+                props.value == "" ? {} : props.setAwarenessModal(true);
               }}
             >
               <Image src="../img/polygon22.png" onClick={props.Inspiration} />
@@ -100,7 +104,7 @@ const NewBuildSideCard = (props: any) => {
 
             <div
               onClick={() => {
-                props.value  == "" ? {} : props.setAwarenessModal(true);
+                props.value == "" ? {} : props.setAwarenessModal(true);
               }}
             >
               <span onClick={props.Acceptance}>
@@ -122,9 +126,11 @@ const NewBuildSideCard = (props: any) => {
               props.value == "" ? {} : props.setAwarenessModal(true);
             }}
           >
-            
-              <CustomButton title="Resistance" className="resistanceButton" onClick={props.Resistance}/>
-          
+            <CustomButton
+              title="Resistance"
+              className="resistanceButton"
+              onClick={props.Resistance}
+            />
           </span>
         </div>
         <hr className="border-dark" />
@@ -155,7 +161,10 @@ const NewBuildSideCard = (props: any) => {
                 <button
                   className="high-btn2"
                   name="Practical"
-                  onClick={()=>{handleVideoTypeClick ; setType(false)}}
+                  onClick={() => {
+                    handleVideoTypeClick;
+                    setType(false);
+                  }}
                 >
                   Practical
                 </button>
@@ -163,7 +172,10 @@ const NewBuildSideCard = (props: any) => {
                 <button
                   className="high-btn2"
                   name="Theoretical"
-                  onClick={()=>{handleVideoTypeClick ; setType(false)}}
+                  onClick={() => {
+                    handleVideoTypeClick;
+                    setType(false);
+                  }}
                 >
                   Theoretical
                 </button>
@@ -204,14 +216,20 @@ const NewBuildSideCard = (props: any) => {
                 <button
                   className="high-btn"
                   name="Low"
-                  onClick={()=>{handlePolarisationClick ; setPolarisation(false)}}
+                  onClick={() => {
+                    handlePolarisationClick;
+                    setPolarisation(false);
+                  }}
                 >
                   Low
                 </button>
                 <button
                   className="high-btn"
                   name="Medium"
-                  onClick={()=>{handlePolarisationClick ; setPolarisation(false)}}
+                  onClick={() => {
+                    handlePolarisationClick;
+                    setPolarisation(false);
+                  }}
                 >
                   Medium
                 </button>
@@ -219,14 +237,20 @@ const NewBuildSideCard = (props: any) => {
                 <button
                   className="high-btn"
                   name="High"
-                  onClick={()=>{handlePolarisationClick ; setPolarisation(false)}}
+                  onClick={() => {
+                    handlePolarisationClick;
+                    setPolarisation(false);
+                  }}
                 >
                   High
                 </button>
                 <button
                   className="high-btn3 mt-0"
                   name="VeryHigh"
-                  onClick={()=>{handlePolarisationClick ; setPolarisation(false)}}
+                  onClick={() => {
+                    handlePolarisationClick;
+                    setPolarisation(false);
+                  }}
                 >
                   Very High
                 </button>
@@ -261,14 +285,20 @@ const NewBuildSideCard = (props: any) => {
                 <button
                   className="high-btn"
                   name="Low"
-                  onClick={()=>{handleDifficultyClick ; setDifficulty(false)}}
+                  onClick={() => {
+                    handleDifficultyClick;
+                    setDifficulty(false);
+                  }}
                 >
                   Low
                 </button>
                 <button
                   className="high-btn"
                   name="Medium"
-                  onClick={()=>{handleDifficultyClick ; setDifficulty(false)}}
+                  onClick={() => {
+                    handleDifficultyClick;
+                    setDifficulty(false);
+                  }}
                 >
                   Medium
                 </button>
@@ -276,14 +306,20 @@ const NewBuildSideCard = (props: any) => {
                 <button
                   className="high-btn"
                   name="High"
-                  onClick={()=>{handleDifficultyClick ; setDifficulty(false)}}
+                  onClick={() => {
+                    handleDifficultyClick;
+                    setDifficulty(false);
+                  }}
                 >
                   High
                 </button>
                 <button
                   className="high-btn3"
                   name="VeryHigh"
-                  onClick={()=>{handleDifficultyClick ; setDifficulty(false)}}
+                  onClick={() => {
+                    handleDifficultyClick;
+                    setDifficulty(false);
+                  }}
                 >
                   Very High
                 </button>
@@ -300,7 +336,7 @@ const NewBuildSideCard = (props: any) => {
               onClick={() =>
                 props.onSave(videoType, polarisationLevel, difficultyLevel, url)
               }
-              style={ userId && userId.length>0 && userId[0] == userData.id ? {} : {pointerEvents:"none",opacity:0.4 }}
+              // style={ userId && userId.length>0 && userId[0] == userData.id ? {} : {pointerEvents:"none",opacity:0.4 }}
             >
               <Image src="/img/save.svg" className="ms-2" alt="no image" />
             </div>

@@ -114,6 +114,12 @@ const NewBuild = (props: any) => {
   }, []);
 
   useEffect(() => {
+    if (router.query.id == undefined) {
+      setDataArray([]);
+    }
+  }, [router.query.id]);
+  
+  useEffect(() => {
     if (buildById.data) {
       const data =
         buildById.data &&
@@ -173,7 +179,7 @@ const NewBuild = (props: any) => {
     const videoDataFilter =
       videoList &&
       videoList.length > 0 &&
-      videoList.filter((F: any) => F.videoId == videoId);
+      videoList.filter((F: any) => F.newVideoId == videoId);
     if (videoDataFilter && videoDataFilter.length > 0) {
       const saveData = {
         type_of_video: videoType,
@@ -212,7 +218,6 @@ const NewBuild = (props: any) => {
         ? dispatch(addBuild(saveData))
         : toast.error("You need to fill minimum 20 boxes");
     }
-  
   };
 
   const handleChange = (e: any) => {

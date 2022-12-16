@@ -50,7 +50,7 @@ const Profile = () => {
   const [filterParam, setFilterParam] = useState<any>(["All"]);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
-  
+
   // useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
@@ -89,7 +89,7 @@ const Profile = () => {
   const onEdit = (e: any) => {
     const data = {
       id: userData.userData.id,
-      user_name: e,
+      user_name: e.user_name,
     };
     dispatch(updateUserById(data));
     setEditName(false);
@@ -159,7 +159,7 @@ const Profile = () => {
             title="Your builds"
             className="title-list-of-profile py-2 my-2"
           />
-        
+
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
               {userBuilds &&

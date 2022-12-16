@@ -9,6 +9,7 @@ import {
   getBuilds,
   getBuildByUrl,
   getUsersBuild,
+  getOthersBuilds,
 } from "../../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
@@ -19,22 +20,26 @@ const SearchPage = (props: any) => {
   const { buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
   const [videosData, setVideosData] = useState([]);
-  
   useEffect(() => {
     try {
-      if (buildListByUrl.data && buildListByUrl.data.length > 0) {
-        setVideosData(buildListByUrl.data);
-      } else if (buildList?.box && buildList.box.length>0) {
+      if (
+        (buildList?.box && buildList.box.length > 0) ||
+        (userBuilds && userBuilds.box?.length > 0)
+      ) {
         router && router.query.selfLearning
-          ? userBuilds.data
-            ? setVideosData(userBuilds.data)
+          ? userBuilds?.box?.length > 0
+            ? setVideosData(userBuilds.box)
             : setVideosData(buildList.box)
           : setVideosData(buildList.box);
+      } else if (buildList.data && buildList.data.length > 0) {
+        setVideosData(buildList.data);
       }
     } catch (error) {
       console.log(error);
     }
-  }, [buildListByUrl, buildList, userBuilds]);
+  }, [buildList, userBuilds]);
+  
+
   const pattern = new RegExp(
     "^(https?:\\/\\/)?" + // protocol
       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
@@ -61,62 +66,97 @@ const SearchPage = (props: any) => {
         ? props.isLoggedIn == true
           ? dispatch(getUsersBuild())
           : dispatch(getBuilds())
+        : props.isLoggedIn == true
+        ? dispatch(getOthersBuilds())
         : dispatch(getBuilds());
     }
   }, [router]);
 
   return (
-    <> 
-      <SearchBar searchResult={searchResult} />
-      {router && router.query.selfLearning ? (
-        <HeaderTitle
-          title={
-            buildListByUrl.data
-              ? "Results"
-              : "Learn something new about yourself"
-          }
-          className={`title-list-of-profile py-4 Search`}
-        />
-       
-      ) : (
-        <HeaderTitle
-          title={
-            buildListByUrl.allBuilds && buildListByUrl.allBuilds.length > 0
-              ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
-              : !buildListByUrl.allBuilds &&
-                buildListByUrl?.box?.length == 0 &&
-                buildListByUrl.data?.length > 0
-              ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
-              : buildListByUrl.data
-              ? "Results"
-              : "Want to learn from others’ builds?"
-          }
-        
-          className="title-list-of-profile py-4 Search"
-        />
-      )}
+    <>
+      <div className="mx-4">
+        <SearchBar searchResult={searchResult} />
+        {router && router.query.selfLearning ? (
+          <HeaderTitle
+            title={
+              buildList.allBuilds && buildList.allBuilds.length > 0
+                ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
+                : !buildListByUrl.allBuilds &&
+                  buildListByUrl?.box?.length == 0 &&
+                  buildList?.box?.length == 0 &&
+                  buildListByUrl.data?.length > 0
+                ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
+                : buildListByUrl.data
+                ? "Results"
+                : "Learn something new about yourself"
+            }
+            className={`title-list-of-profile py-4 Search`}
+          />
+        ) : (
+          <HeaderTitle
+            title={
+              buildList.allBuilds && buildList.allBuilds.length > 0
+                ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
+                : buildList?.box?.length == 0 && buildList.data?.length > 0
+                ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
+                : buildListByUrl.data
+                ? "Results"
+                : "Want to learn from others’ builds?"
+            }
+            className="title-list-of-profile py-4 Search"
+          />
+        )}
 
-      <Row className="Search m-0">
-        {videosData &&
-          videosData.length > 0 &&
-          videosData.map((videoData: any, index: number) => {
-            const videoId = videoData.newVideoId
-              ? videoData.newVideoId
-              : videoData.videoId
-              ? videoData.videoId
-              : videoData.id;
-            const id = videoData.id;
-            return (
-              <Col lg={4} className="videoProfile pb-2" key={index}>
-                <Link href={`/newBuild?id=${id}&&videoId=${videoId}`}>
-                  <a>
-                    <VideoCard VideoCardData={videoData} />
-                  </a>
-                </Link>
-              </Col>
-            );
-          })}
-      </Row>
+        <Row className="Search m-0">
+          {buildList?.box?.length == 0 &&
+          buildList.data?.length > 0 &&
+          buildList?.data?.length < 2
+            ? videosData.map((videoData: any, index: number) => {
+                const videoId = videoData.newVideoId
+                  ? videoData.newVideoId
+                  : videoData.videoId
+                  ? videoData.videoId
+                  : videoData.id;
+
+                const id = videoData.id;
+
+                return (
+                  <div
+                    className="d-flex justify-content-center videoProfile1 pb-2"
+                    key={index}
+                  >
+                    <Link href={`/newBuild?id=${id}&&videoId=${videoId}`}>
+                      <a>
+                        <div className="content mt-2">
+                          Start Building!
+                          <VideoCard VideoCardData={videoData} />
+                        </div>
+                      </a>
+                    </Link>
+                  </div>
+                );
+              })
+            : videosData &&
+              videosData.length > 0 &&
+              videosData.map((videoData: any, index: number) => {
+                const videoId = videoData.newVideoId
+                  ? videoData.newVideoId
+                  : videoData.videoId
+                  ? videoData.videoId
+                  : videoData.id;
+                const id = videoData.id;
+                return (
+                  <Col lg={4} className="videoProfile pb-2" key={index}>
+                    <Link href={`/newBuild?id=${id}&&videoId=${videoId}`}>
+                      <a>
+                        <VideoCard VideoCardData={videoData} />
+                      </a>
+                    </Link>
+                  </Col>
+                );
+              })}
+        </Row>
+      </div>
     </>
   );
 };

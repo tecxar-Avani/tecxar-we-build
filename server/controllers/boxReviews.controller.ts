@@ -19,15 +19,15 @@ import { BoxreviewDto } from "@/dtos/boxreviews.dto";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 
 @Controller("/reviews")
-@UseBefore(authMiddleware)
+// @UseBefore(authMiddleware)
 export class FlashController {
   private reviewService = new BoxReviewService();
 
   @Post("/create")
+  @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviews" })
-  async createReview(@Body() reviewData: any,@Req() req: RequestWithUser) {
-    
+  async createReview(@Body() reviewData: any, @Req() req: RequestWithUser) {
     try {
       reviewData.created_by = req.user.id;
       const createReviewData: IBoxReviews | null =
