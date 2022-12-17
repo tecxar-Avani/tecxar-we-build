@@ -194,14 +194,14 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
-            buildList: action.payload.rows,
+            userBuildList: action.payload.rows,
             boxes: action.payload.boxes,
           };
         } else {
           return {
             ...state,
             loading: false,
-            buildList: initialState.buildList,
+            userBuildList: initialState.userBuildList,
           };
         }
       })
@@ -210,14 +210,14 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
-            buildList: action.payload.rows,
+            buildListByUrl: action.payload.rows,
             boxes: action.payload.boxes,
           };
         } else {
           return {
             ...state,
             loading: false,
-            buildList: initialState.buildList,
+            buildListByUrl: initialState.buildListByUrl,
           };
         }
       })
