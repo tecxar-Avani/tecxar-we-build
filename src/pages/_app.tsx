@@ -10,10 +10,9 @@ import SideBar from "../components/SideBar";
 import { Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
-const cookieCutter = require('cookie-cutter');
-
+const cookieCutter = require("cookie-cutter");
 
 // modified version - allows for custom pageProps type, falling back to 'any'
 type AppProps<P = any> = {
@@ -28,6 +27,7 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
   const r = useRouter();
   const [authorization, setAuthorization] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
 
   useEffect(() => {
     let authorization = cookieCutter.get("authorization");
@@ -38,23 +38,30 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
     if (authorization) {
       setIsLoggedIn(true);
     }
-  }, [authorization]);
+  }, [authorization,isFocus]);
+
+  useEffect(() => {
+    window.addEventListener("focus", () => setIsFocus(true));
+  });
 
   return (
     <>
-    <ToastContainer autoClose={2000} />
-    <Provider store={store}>
-      <Layout className="h-full">
-        {/* <SideBar router={router}/> */}
-        {r.pathname != "/newBuild" && <SideBar isLoggedIn={isLoggedIn} />}
+      <ToastContainer autoClose={2000} />
+      <Provider store={store}>
+        <Layout className="h-full">
+          {r.pathname != "/newBuild" && <SideBar isLoggedIn={isLoggedIn} />}
 
-        <Layout className="site-layout">
-          <div className="mainPage">
-            <Component {...pageProps} router={router} isLoggedIn={isLoggedIn} />
-          </div>
+          <Layout className="site-layout">
+            <div className="mainPage">
+              <Component
+                {...pageProps}
+                router={router}
+                isLoggedIn={isLoggedIn}
+              />
+            </div>
+          </Layout>
         </Layout>
-      </Layout>
-    </Provider>
+      </Provider>
     </>
   );
 };
