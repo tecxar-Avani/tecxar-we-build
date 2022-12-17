@@ -278,6 +278,7 @@ const NewBuild = (props: any) => {
                       className={` ${
                         data.review_type == "resistance" ? "yellowBtn" : ""
                       }`}
+                      // style={props.isLoggedIn == true ?  {pointerEvents:"none",opacity:0.4} : {}}
                       onClick={(e: any) => {
                         const button =
                           data.review_type == "acceptance"
