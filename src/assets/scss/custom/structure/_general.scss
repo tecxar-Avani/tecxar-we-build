@@ -150,11 +150,13 @@ body,
   width: 100%;
   overflow-x: scroll;
 }
+
 .videoProfile {
   overflow: hidden;
   padding-right: 1rem;
   margin-left: 12px;
 }
+
 .content {
   font-family: 'Arimo';
   font-style: normal;
@@ -164,8 +166,16 @@ body,
   background-color: #D9D9D9;
   width: 396px;
   color: black;
-    text-align: center;
+  text-align: center;
+
 }
+
+.videoProfile1 {
+  padding-right: 1rem;
+  margin-left: 531px;
+  margin-top: 20px;
+}
+
 .mainPage {
   overflow-y: scroll;
   // overflow: hidden !important;
@@ -315,8 +325,10 @@ body,
 }
 
 .ant-modal {
-  font-family: "Arimo";
+  font-family: 'Arimo';
+  ;
 }
+
 .ant-modal-body {
   text-align: center;
   margin: 9px;
@@ -448,6 +460,7 @@ body,
   align-items: center;
   text-align: center;
 }
+
 .ant-modal-header {
   font-family: "Arimo";
   font-style: normal;
@@ -460,18 +473,23 @@ body,
   margin-left: 430px;
   text-align: none !important;
 }
+
 .ant-modal {
   width: 440px !important;
   height: 473px !important;
   border-radius: 7px;
   // margin-left: 754px;
 }
+
 .awarenessModal {
+
   .ant-modal {
     margin-left: 754px !important;
   }
+
   .ant-modal-content {
     color: #000000;
+
   }
 
   .ant-modal-body {
@@ -499,15 +517,40 @@ body,
     line-height: 9px;
     text-align: left;
   }
+
   .ant-modal-footer {
     margin-top: 50px;
   }
+
+  .ant-input-textarea-show-count::after {
+    position: absolute;
+    bottom: 15px;
+    right: 9px;
+  }
 }
+
+.challenge-textbox-main {
+  position: relative;
+}
+
+.challenge-textbox-main .input-arrow::after {
+  content: "";
+  height: 90px;
+  position: absolute;
+  top: 52.5%;
+  width: 19px;
+  color: #000000;
+  left: 20px;
+  background-image: url("/public/line-arrow.svg");
+  background-position-y: 100%;
+}
+
 .ant-modal-title {
   font-weight: 700px !important;
   font-family: "Arimo";
   font-style: normal;
 }
+
 .userGuide {
   font-family: "Arimo";
   font-style: normal;
@@ -603,6 +646,7 @@ hr {
 .profileBG {
   background-color: white;
 }
+
 .newBuild {
   border: 0 !important;
 }
@@ -625,6 +669,7 @@ hr {
     font-weight: 400;
     padding: 0px !important;
   }
+
   .card-body {
     padding: 6px;
   }
@@ -710,21 +755,25 @@ hr {
 .inspirationButton {
   background-color: #7d1597;
   transform: translate(9%, 350%);
-  color: #f8f8f8;
+  color: #F8F8F8;
+  ;
 }
 
 .resistanceButton {
   background-color: #d91919;
   // transform: translate(105%, -11%);
   transform: translate(115%, -45%);
-  color: #f8f8f8;
+  color: #F8F8F8;
   margin-left: -15px;
+
 }
 
 .acceptanceButton {
   background-color: #1235ae;
   transform: translate(170%, -446%);
-  color: #f8f8f8;
+  color: #F8F8F8;
+  ;
+
 }
 
 .inspirationButton:hover {
@@ -736,6 +785,7 @@ hr {
   background-color: #1235ae;
   color: #f8f8f8;
 }
+
 .ant-tooltip-inner {
   color: black;
 }
@@ -758,6 +808,7 @@ hr {
   .ant-modal {
     margin-left: 754px;
   }
+
   .ant-modal-content,
   .ant-modal-header {
     background-color: #b2b5ed;
@@ -777,6 +828,7 @@ hr {
 }
 
 .resistanceModalBG {
+
   .ant-modal-content,
   .ant-modal-header {
     background-color: #e8abab;
@@ -794,6 +846,7 @@ hr {
     margin-top: 0;
   }
 }
+
 .redpolygon {
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   background-color: #d91919;
@@ -804,6 +857,7 @@ hr {
 }
 
 .inspirationModalBG {
+
   .ant-modal-content,
   .ant-modal-header {
     background-color: #e0c0eb;
@@ -825,6 +879,7 @@ hr {
 .ant-tooltip-inner {
   color: black;
 }
+
 .bulb {
   margin: 7px;
 
@@ -842,15 +897,19 @@ hr {
   border-radius: 3px;
   padding: 1px;
 }
-.ant-form-item-label > label::after {
+
+.ant-form-item-label>label::after {
   content: none;
 }
+
 .ant-input-textarea {
   margin-left: 2px !important;
 }
+
 .textBoxInnerNone {
   display: none;
 }
+
 .textBoxInnerBlock {
   display: block;
 }
@@ -859,6 +918,7 @@ hr {
   width: 225px;
   height: 50px;
 }
+
 .btnrv {
   .ant-btn {
     display: none !important;
@@ -868,12 +928,15 @@ hr {
 .googleicon {
   margin-top: -8px;
 }
+
 .googleicon:hover {
   cursor: pointer;
 }
+
 .googlecolor {
-  background-color: #4285f4;
+  background-color: #4285F4;
 }
+
 .h1,
 .h2,
 .h3,
@@ -888,15 +951,18 @@ h5,
 h6 {
   color: black !important;
 }
+
 .AwareInput {
-  background-color: #d9d9d9 !important;
+  background-color: #D9D9D9 !important;
   height: 74px;
   width: 413px;
 }
+
 .AwareInputFirst {
   height: 160px;
   width: 413px;
 }
+
 .AwareInputChallenge {
   height: 160px;
   width: 372px;
@@ -904,7 +970,7 @@ h6 {
 }
 
 .AwareInputChallengeHeader {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 8px;
@@ -912,6 +978,7 @@ h6 {
   margin-left: -269px;
   margin-bottom: 3px;
 }
+
 .challengeAcceptBtn {
   width: 100px !important;
   height: -24px;
@@ -919,6 +986,7 @@ h6 {
   text-align: center;
   margin-left: 304px !important;
 }
+
 .awarenessTypeModal {
   .ant-btn {
     width: 63px !important;
@@ -928,10 +996,12 @@ h6 {
     margin-left: 0px !important;
   }
 }
+
 .awarenessDotModal {
   .ant-modal {
     overflow: scroll;
   }
+
   .ant-modal-content {
     color: #000000;
   }
@@ -949,15 +1019,17 @@ h6 {
   .ant-btn {
     width: 111px;
     height: -24px;
-    background-color: #44a82b;
+    background-color: #44A82B;
     text-align: center;
     margin-left: 304px;
   }
+
   .yellowBtn {
-    background-color: #ffe500;
+    background-color: #FFE500;
   }
+
   .header {
-    font-family: "Arimo";
+    font-family: 'Arimo';
     font-style: normal;
     font-weight: 700;
     font-size: 8px;
@@ -965,32 +1037,41 @@ h6 {
     text-align: left;
     margin-bottom: 3px;
   }
+
   .ant-modal-footer {
     display: none;
   }
+
   .ant-form-item {
     margin-top: 5px;
     margin-bottom: -4px;
   }
+
   .ant-btn .challenge {
     width: 111px;
     height: -24px;
     background-color: #000000;
     text-align: center;
+
   }
 }
+
 .acceptDotBg {
-  background-color: #1235ae;
+  background-color: #1235AE;
 }
+
 .resistanceDotBg {
-  background-color: #d91919;
+  background-color: #D91919;
 }
+
 .inspirationDotBg {
-  background-color: #7d1597;
+  background-color: #7D1597;
 }
+
 * {
   -ms-overflow-style: none;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -998,9 +1079,11 @@ h6 {
 .img-rounded {
   border-radius: 50%;
 }
+
 .ant-select-selection-placeholder {
   color: #000000;
 }
+
 .filterInProfile {
   height: 42px;
   border-radius: 5px;
@@ -1008,10 +1091,11 @@ h6 {
   margin-left: 900px;
 }
 
-.searchBar{
+.searchBar {
   width: 1430px;
 }
-.searchCard{
+
+.searchCard {
   .ant-input:placeholder-shown {
     text-overflow: ellipsis;
     color: black;
@@ -1022,8 +1106,8 @@ h6 {
 .centerHeader {
   text-align: center !important;
   font: "Arimo" !important;
-  font-weight: 400px !important;
-  font-size: 20px !important;
+  font-Weight: 400px !important;
+  font-Size: 20px !important;
   line-height: 23px !important;
   margin-top: 50px;
 }

@@ -72,7 +72,7 @@ const OuterBox = (props: any) => {
                     data.sorting_order == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
-                        className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
+                        className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
                         onClick={props.Inspiration}
                       >
                         I
@@ -82,7 +82,7 @@ const OuterBox = (props: any) => {
                     data.sorting_order == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
-                        className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
+                        className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
                         onClick={props.Acceptance}
                       >
                         A
@@ -92,7 +92,7 @@ const OuterBox = (props: any) => {
                     data.sorting_order == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
-                        className="position-absolute px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
+                        className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
                         onClick={props.Resistance}
                       >
                         R
