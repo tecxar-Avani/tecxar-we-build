@@ -2,7 +2,7 @@ import { Modal, Button } from "antd";
 import React, { useState,useEffect } from "react";
 import Image from "react-bootstrap/Image";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { deleteFlashCardById,flashCardSelector } from "../store/reducers/flashCard.reducer";
+import { createFlashCardResponse, deleteFlashCardById,flashCardSelector } from "../store/reducers/flashCard.reducer";
 import AddFlashCardModal from "./AddFlashCardModal";
 
 const FlashCardModal = (props: any) => {
@@ -56,7 +56,11 @@ const onDelete = (id:any) =>{
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       // add dispatch API here instead of console
-
+      const flashCardResponseData = {
+        response_type : data,
+        flash_card_id : questionId
+      }
+      dispatch(createFlashCardResponse(flashCardResponseData))
       if (index <= arrayLength) {
         if (userId) {
           props.questionCallback(userId, index, questionId);

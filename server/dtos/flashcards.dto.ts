@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IFlashCards, IUpdateFlashCards, IFlashCardsResponse, ResponseEnumType } from '@interfaces/flashCards.interface';
 import { IsOptional, IsNumber, IsString, IsDate } from 'class-validator';
 

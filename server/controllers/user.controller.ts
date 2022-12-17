@@ -53,7 +53,6 @@ export class UserController {
     @Body() data: UpdateUserDto,
   ) {
     try {
-
       const userBuild = await this.userService.updateUserProfile(id, data);
       return {
       data:userBuild,

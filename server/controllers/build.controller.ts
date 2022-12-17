@@ -278,7 +278,7 @@ export class FlashController {
       // } else
       if (videoUrl) {
         const videoIdToSearch = videoUrl && videoUrl.split("=").pop();
-        const response: any =
+        const response: any = 
           videoIdToSearch &&
           videoIdToSearch != undefined &&
           videoIdToSearch != "undefined" &&

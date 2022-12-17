@@ -24,13 +24,14 @@ import {
   addReviewResponse,
   awarenessSelector,
   getAwarenessByBoxId,
+  getReviewResponseByAwarenessId,
 } from "../../store/reducers/awareness.reducer";
-import { Button, Divider, Form } from "antd";
+import { Button, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
-import DisabledContext from "antd/lib/config-provider/DisabledContext";
 import { userSelector } from "../../store/reducers/user.reducer";
+import Head from "next/head";
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -66,16 +67,15 @@ const NewBuild = (props: any) => {
       };
     })
   );
-
   const { buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
   const videoList =
-    buildList && buildList.data?.length > 0
-      ? buildList.data
-      : buildListByUrl && buildListByUrl.data?.length > 0
+    // buildList && buildList.box?.length > 0
+    //   ? buildList.box
+      // :
+       buildListByUrl && buildListByUrl.data?.length > 0
       ? buildListByUrl.data
       : [];
-
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -108,11 +108,11 @@ const NewBuild = (props: any) => {
       dispatch(getFlashCardByBuildId(buildId));
       dispatch(getBuildById(buildId));
     }
-  }, []);
+  }, [buildId]);
+
   useEffect(() => {
     dispatch(getAwarenessByBoxId(buildId));
-  }, []);
-
+  }, [buildId]);
   useEffect(() => {
     if (router.query.id == undefined) {
       setDataArray([]);
@@ -176,6 +176,8 @@ const NewBuild = (props: any) => {
     url: string
   ) => {
     const videoId = url && url.split("=").pop();
+  
+
     const videoDataFilter =
       videoList &&
       videoList.length > 0 &&
@@ -196,6 +198,7 @@ const NewBuild = (props: any) => {
         embed_url: videoDataFilter[0].url,
         video_id: videoDataFilter[0].videoId,
       };
+
       const editData = {
         type_of_video: videoType,
 
@@ -212,7 +215,7 @@ const NewBuild = (props: any) => {
 
       const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
 
-      buildCreatedBy[0] == userData.id
+      buildCreatedBy && buildCreatedBy.length>0 && buildCreatedBy[0] == userData.id
         ? dispatch(UpdateUsersBuild(editData))
         : boxData.length > 20
         ? dispatch(addBuild(saveData))
@@ -223,6 +226,7 @@ const NewBuild = (props: any) => {
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
+    
   };
   const handleData = (comment: any, review: any) => {
     const data = {
@@ -255,12 +259,13 @@ const NewBuild = (props: any) => {
         {awarenessList &&
           awarenessList.length > 0 &&
           awarenessList.map((data: any) => {
+       
             return (
               <>
                 {title == data.review_type ? (
                   <Form>
                     <div className="header mt-1">
-                      Maria's {data.review_type}
+                      {data.acceptance_user}'s {data.review_type}
                     </div>
                     <Form.Item name="comment">
                       <div className={`awarenessModal header`}>
@@ -279,6 +284,7 @@ const NewBuild = (props: any) => {
                       className={` ${
                         data.review_type == "resistance" ? "yellowBtn" : ""
                       }`}
+                      // style={props.isLoggedIn == true ?  {pointerEvents:"none",opacity:0.4} : {}}
                       onClick={(e: any) => {
                         const button =
                           data.review_type == "acceptance"
@@ -299,7 +305,7 @@ const NewBuild = (props: any) => {
                     {data.challenge ? (
                       <>
                         <div className="AwareInputChallengeHeader">
-                          Maria's {data.response_review}
+                         {data.challenge_user}'s {data.response_review}
                         </div>
                         <TextArea
                           maxLength={500}
@@ -333,15 +339,15 @@ const NewBuild = (props: any) => {
       </>
     );
   };
-
   const challenge = (data: any, e: any) => {
     setChallengeModal(true);
     setChallengeData(data);
     setChallengeTitle(e);
   };
-
   const challengeContent = (data: any) => {
+    
     data = challengeData;
+   
     return (
       <>
         <Form
@@ -350,7 +356,7 @@ const NewBuild = (props: any) => {
             onChallengeClick(data, review_response)
           }
         >
-          <div className="header mt-2">Maria's {data.review_type}</div>
+          <div className="header mt-2">{data.acceptance_user}'s {data.review_type}</div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
               <TextArea
@@ -362,7 +368,7 @@ const NewBuild = (props: any) => {
               ></TextArea>
             </div>
           </Form.Item>
-          <div className="header mt-2">Maria's Challenge</div>
+          <div className="header mt-2">Challenge</div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
               <TextArea
@@ -392,6 +398,10 @@ const NewBuild = (props: any) => {
 
   return (
     <>
+     <Head>
+        <title>New Build</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <div className="d-flex m-0 w-100">
         <NewBuildSideCard
           id={router.query.id}
@@ -525,7 +535,10 @@ const NewBuild = (props: any) => {
       />
       <AwarenessModal
         awarenessModal={awarenessModal}
-        setAwarenessModal={setAwarenessModal}
+        setAwarenessModal={(type:boolean) => {
+          setAwarenessIndex(false)
+          setAwarenessModal(type);
+        }}
         visible={awarenessModal}
         textValue={awarenessIndex}
         handleSubmit={(comment: any, review: any) => {
@@ -542,7 +555,7 @@ const NewBuild = (props: any) => {
             ? "Resistance"
             : ""
         }`}
-        header={`Maria's ${
+        header={`${userData.user_name}'s  ${
           accept
             ? "Acceptance"
             : inspiration

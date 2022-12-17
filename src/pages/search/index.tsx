@@ -13,6 +13,7 @@ import {
 } from "../../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
+import Head from "next/head";
 
 const SearchPage = (props: any) => {
   const router = useRouter();

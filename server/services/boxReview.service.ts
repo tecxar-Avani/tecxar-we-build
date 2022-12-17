@@ -40,12 +40,16 @@ class BoxService {
     if (isEmpty(id)) {
       throw new HttpException(400, "Enter ID");
     }
-    const query = `SELECT br.id,br.box_id, br.review_type, br.comment,brr.comment AS challenge,brr.review_type AS response_review 
-                    FROM
-                  boxes box
-                  INNER JOIN box_reviews br ON box.id = br.box_id
-                  LEFT JOIN box_reviews_response brr ON br.id = brr.boxReview_id
-                  where box.build_id =  ${id} `;
+    const query = `SELECT br.id,br.box_id, br.review_type, br.comment,brr.comment AS challenge,brr.review_type AS response_review ,br.created_by,
+    u.user_name AS acceptance_user, us.user_name AS challenge_user
+                        FROM
+                      boxes box
+                      INNER JOIN box_reviews br ON box.id = br.box_id
+                      LEFT JOIN box_reviews_response brr ON br.id = brr.boxReview_id
+                      LEFT JOIN users u ON br.created_by = u.id
+            LEFT JOIN users us ON brr.created_by = us.id
+    
+                      where box.build_id =  ${id} `;
     const reviewsByBox: IBoxReviews[] | any = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
     });

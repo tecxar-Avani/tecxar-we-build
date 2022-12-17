@@ -150,12 +150,22 @@ body,
   width: 100%;
   overflow-x: scroll;
 }
-
 .videoProfile {
   overflow: hidden;
   padding-right: 1rem;
+  margin-left: 12px;
 }
-
+.content {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+  background-color: #D9D9D9;
+  width: 396px;
+  color: black;
+    text-align: center;
+}
 .mainPage {
   overflow-y: scroll;
   // overflow: hidden !important;
@@ -998,8 +1008,15 @@ h6 {
   margin-left: 900px;
 }
 
-.searchBar {
-  width: 1400px;
+.searchBar{
+  width: 1430px;
+}
+.searchCard{
+  .ant-input:placeholder-shown {
+    text-overflow: ellipsis;
+    color: black;
+    background-color: #EFEFEF;
+  }
 }
 
 .centerHeader {

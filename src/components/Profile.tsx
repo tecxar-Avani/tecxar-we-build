@@ -38,12 +38,13 @@ const ProfileCard = (props: any) => {
     };
     dispatch(updateUserById(userData));
   }
+  console.log(props)
   return (
     <>
-     
+    
       <div
         className={`${props.className} profile text-center border-bottom pb-3 position-relative`}
-      >
+      > <Button className="logOut" type="primary">{props.profile.logout}</Button>
         <div className="d-flex justify-content-center align-items-center">
           <div>
             <h4 className="title">{props.profile.title}</h4>
