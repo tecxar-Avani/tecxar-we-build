@@ -19,12 +19,12 @@ import { IBoxReviewsResponse } from "@/interfaces/boxReviewResponse";
 import { BoxReviewResponseDto } from "@/dtos/boxReviewResponse.dto";
 
 @Controller("/reviewResponse")
-// @UseBefore(authMiddleware)
+//  @UseBefore(authMiddleware)
 export class BoxReviewResponseController {
   private reviewResponseService = new BoxResponseService();
 
   @Post("/create")
-  // @UseBefore(authMiddleware)
+   @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviewsResponse" })
   async createReviewResponse(@Body() reviewData: any ,@Req() req: RequestWithUser) {

@@ -129,8 +129,13 @@ class BuildService {
     return videoBuilds;
   }
 
-  public async getAllBuilds(search?: any): Promise<IVideoBuild[] | null> {
+  public async getAllBuilds(
+    search?: any,
+    userId?: number
+  ): Promise<IVideoBuild[] | null> {
     const searchFilter = [];
+    let whereStatement = {};
+    const where = [];
     if (search != "" && search != "undefined" && search != undefined) {
       search = search.toLowerCase();
       searchFilter.push(
@@ -149,7 +154,7 @@ class BuildService {
             [Op.like]: `%${search}%`,
           },
         },
-         {
+        {
           description: {
             [Op.like]: `%${search}%`,
           },
@@ -168,7 +173,18 @@ class BuildService {
           },
         });
       }
+
+      where.push({
+        [Op.or]: searchFilter,
+      });
     }
+
+    if (userId && userId != undefined) {
+      where.push({ created_by: {  [Op.not]:userId} });
+    }
+    whereStatement = {
+      [Op.and]: where,
+    };
     const option: {
       nest?: boolean;
       subQuery: boolean;
@@ -176,6 +192,8 @@ class BuildService {
       raw: boolean;
       limit: number;
       order: any;
+      where: any;
+      logging:any
     } = {
       attributes: [
         "id",
@@ -194,11 +212,13 @@ class BuildService {
         "embed_url",
         "video_id",
       ],
+      where: whereStatement,
       nest: true,
       order: [["id", "DESC"]],
       raw: true,
       limit: 10,
       subQuery: false,
+      logging:console.log
     };
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
       option

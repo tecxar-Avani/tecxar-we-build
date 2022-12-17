@@ -47,7 +47,7 @@ const Profile = () => {
   const [filterParam, setFilterParam] = useState<any>(["All"]);
 
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
-  
+
   // useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
