@@ -72,8 +72,8 @@ const NewBuild = (props: any) => {
   const videoList =
     // buildList && buildList.box?.length > 0
     //   ? buildList.box
-      // :
-       buildListByUrl && buildListByUrl.data?.length > 0
+    // :
+    buildListByUrl && buildListByUrl.data?.length > 0
       ? buildListByUrl.data
       : [];
   const handleSubmit = (data: any) => {
@@ -170,7 +170,6 @@ const NewBuild = (props: any) => {
     url: string
   ) => {
     const videoId = url && url.split("=").pop();
-  
 
     const videoDataFilter =
       videoList &&
@@ -209,7 +208,9 @@ const NewBuild = (props: any) => {
 
       const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
 
-      buildCreatedBy && buildCreatedBy.length>0 && buildCreatedBy[0] == userData.id
+      buildCreatedBy &&
+      buildCreatedBy.length > 0 &&
+      buildCreatedBy[0] == userData.id
         ? dispatch(UpdateUsersBuild(editData))
         : boxData.length > 20
         ? dispatch(addBuild(saveData))
@@ -220,7 +221,6 @@ const NewBuild = (props: any) => {
   const handleChange = (e: any) => {
     setAwarenessIndex(e.target.value);
     setAwarenessBoxId(e.target.id);
-    
   };
   const handleData = (comment: any, review: any) => {
     const data = {
@@ -253,16 +253,17 @@ const NewBuild = (props: any) => {
         {awarenessList &&
           awarenessList.length > 0 &&
           awarenessList.map((data: any) => {
-       
             return (
               <>
                 {title == data.review_type ? (
-                  <Form>
+                  <Form
+                    className={`${data.challenge && "challenge-textbox-main"}`}
+                  >
                     <div className="header mt-1">
                       {data.acceptance_user}'s {data.review_type}
                     </div>
-                    <Form.Item name="comment">
-                      <div className={`awarenessModal header`}>
+                    <Form.Item name="comment" className="input-arrow">
+                      <div className={`awarenessModal mb-2 header`}>
                         <TextArea
                           showCount
                           maxLength={500}
@@ -298,7 +299,7 @@ const NewBuild = (props: any) => {
                     {data.challenge ? (
                       <>
                         <div className="AwareInputChallengeHeader">
-                         {data.challenge_user}'s {data.response_review}
+                          {data.challenge_user}'s {data.response_review}
                         </div>
                         <TextArea
                           maxLength={500}
@@ -338,9 +339,8 @@ const NewBuild = (props: any) => {
     setChallengeTitle(e);
   };
   const challengeContent = (data: any) => {
-    
     data = challengeData;
-   
+
     return (
       <>
         <Form
@@ -349,7 +349,9 @@ const NewBuild = (props: any) => {
             onChallengeClick(data, review_response)
           }
         >
-          <div className="header mt-2">{data.acceptance_user}'s {data.review_type}</div>
+          <div className="header mt-2">
+            {data.acceptance_user}'s {data.review_type}
+          </div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
               <TextArea
@@ -391,7 +393,7 @@ const NewBuild = (props: any) => {
 
   return (
     <>
-     <Head>
+      <Head>
         <title>New Build</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
@@ -528,8 +530,8 @@ const NewBuild = (props: any) => {
       />
       <AwarenessModal
         awarenessModal={awarenessModal}
-        setAwarenessModal={(type:boolean) => {
-          setAwarenessIndex(false)
+        setAwarenessModal={(type: boolean) => {
+          setAwarenessIndex(false);
           setAwarenessModal(type);
         }}
         visible={awarenessModal}

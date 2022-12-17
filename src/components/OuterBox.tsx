@@ -2,24 +2,23 @@ import TextArea from "antd/lib/input/TextArea";
 import React, { useEffect } from "react";
 import { Col } from "react-bootstrap";
 import { Form } from "antd";
-import { useAppSelector,useAppDispatch } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../hooks";
 import { buildSelector, getBuildById } from "@/store/reducers/build.reducer";
 import { useRouter } from "next/router";
 import { getUserByEmail, userSelector } from "@/store/reducers/user.reducer";
-
 
 const OuterBox = (props: any) => {
   const { buildById } = useAppSelector(buildSelector);
   const router = useRouter();
   const buildId = Number(router.query.id);
-  const {userData} = useAppSelector(userSelector)
+  const { userData } = useAppSelector(userSelector);
 
   const dispatch = useAppDispatch();
 
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(getBuildById(buildId));
-    dispatch(getUserByEmail())
-  },[])
+    dispatch(getUserByEmail());
+  }, []);
   const [form] = Form.useForm();
   const handleChange = (event: any) => {
     const { value, id } = event.target;
@@ -32,7 +31,7 @@ const OuterBox = (props: any) => {
     }
   };
 
-const userId = buildById?.data?.map((a:any) => a.created_by)
+  const userId = buildById?.data?.map((a: any) => a.created_by);
 
   return (
     <Col sm={4} className="p-0">
@@ -51,7 +50,10 @@ const userId = buildById?.data?.map((a:any) => a.created_by)
                 id={props.id}
                 onFocus={props.onFocus}
                 readOnly={
-                  props.description && userId && userId.length>0 &&userId[0] != userData.id
+                  props.description &&
+                  userId &&
+                  userId.length > 0 &&
+                  userId[0] != userData.id
                     ? true
                     : false
                 }
@@ -64,7 +66,7 @@ const userId = buildById?.data?.map((a:any) => a.created_by)
                     data.box_id == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
-                        className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
+                        className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
                         onClick={props.Inspiration}
                       >
                         I
@@ -74,7 +76,7 @@ const userId = buildById?.data?.map((a:any) => a.created_by)
                     data.box_id == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
-                        className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
+                        className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
                         onClick={props.Acceptance}
                       >
                         A
@@ -84,7 +86,7 @@ const userId = buildById?.data?.map((a:any) => a.created_by)
                     data.box_id == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
-                        className="position-absolute px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
+                        className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
                         onClick={props.Resistance}
                       >
                         R
