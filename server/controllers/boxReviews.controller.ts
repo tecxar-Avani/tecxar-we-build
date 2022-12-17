@@ -27,8 +27,7 @@ export class FlashController {
   @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviews" })
-  async createReview(@Body() reviewData: any,@Req() req: RequestWithUser) {
-    console.log("^^^^^^^^^^^^^^^^",reviewData)
+  async createReview(@Body() reviewData: any, @Req() req: RequestWithUser) {
     try {
       reviewData.created_by = req.user.id;
       const createReviewData: IBoxReviews | null =

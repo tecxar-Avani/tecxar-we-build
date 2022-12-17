@@ -9,8 +9,8 @@ const SearchBar = (props:any) => {
  
   return (
     <>
-      <div className="searchCard mt-4 justify-content-center">
-        <div className="searchBar w-90 md-8 m-auto">
+      <div className="searchCard mt-4 ml-2">
+        <div className="md-8" style={{marginLeft:"15px"}}>
           <Input
             onPressEnter={(e: any) => props.searchResult(e.target.value)}
             className="w-full rounded-pill"

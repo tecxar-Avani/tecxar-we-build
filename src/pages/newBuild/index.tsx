@@ -114,6 +114,12 @@ const NewBuild = (props: any) => {
     dispatch(getAwarenessByBoxId(buildId));
   }, [buildId]);
   useEffect(() => {
+    if (router.query.id == undefined) {
+      setDataArray([]);
+    }
+  }, [router.query.id]);
+  
+  useEffect(() => {
     if (buildById.data) {
       const data =
         buildById.data &&

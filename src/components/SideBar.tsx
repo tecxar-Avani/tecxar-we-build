@@ -10,8 +10,8 @@ import { buildSelector } from "@/store/reducers/build.reducer";
 const { Sider } = Layout;
 
 const SideBar = (toggle: any) => {
-  const { buildListByUrl } = useAppSelector(buildSelector);
-
+  const { buildList, userBuilds, buildListByUrl } =
+    useAppSelector(buildSelector);
   const router = useRouter();
   // const url = window.location.origin;
   const [sideBarBG, setSideBarBG] = useState("profileBG");
@@ -33,10 +33,14 @@ const SideBar = (toggle: any) => {
   }, [router.asPath]);
 
   useEffect(() => {
-    if (buildListByUrl.data && buildListByUrl.data.length > 0) {
+    if (
+      (buildList?.box && buildList.box.length > 0) ||
+      userBuilds?.box?.length > 0 ||
+      userBuilds?.data?.length > 0
+    ) {
       setSideBarBG("profileBG");
     }
-  }, [buildListByUrl]);
+  }, [buildList, userBuilds]);
 
   const handleCancel = () => {
     setModal5Open(false);
