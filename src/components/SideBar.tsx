@@ -34,7 +34,7 @@ const SideBar = (toggle: any) => {
 
   useEffect(() => {
     if (
-      (buildList?.box && buildList.box.length > 0) ||
+       (buildListByUrl?.allBuilds && buildListByUrl.allBuilds.length > 0) || (buildListByUrl?.data &&buildListByUrl?.data?.length > 0) ||
       userBuilds?.box?.length > 0 ||
       userBuilds?.data?.length > 0
     ) {
