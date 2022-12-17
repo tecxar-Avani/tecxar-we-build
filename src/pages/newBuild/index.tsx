@@ -57,6 +57,8 @@ const NewBuild = (props: any) => {
   const [challengeData, setChallengeData] = useState([]);
   const [challengeTitle, setChallengeTitle] = useState();
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
+  const [boxId, setBoxId] = useState();
+
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
@@ -69,12 +71,16 @@ const NewBuild = (props: any) => {
   );
   const { buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
+    console.log("buildlist",buildList)
+    console.log("buildListByUrl",buildListByUrl)
+    console.log("userBuilds",userBuilds)
+
   const videoList =
     // buildList && buildList.box?.length > 0
     //   ? buildList.box
       // :
-       buildListByUrl && buildListByUrl.data?.length > 0
-      ? buildListByUrl.data
+      buildList && buildList.data?.length > 0
+      ? buildList.data
       : [];
   const handleSubmit = (data: any) => {
     const flashCardData = {
@@ -224,15 +230,15 @@ const NewBuild = (props: any) => {
   };
 
   const handleChange = (e: any) => {
-    setAwarenessIndex(e.target.value);
-    setAwarenessBoxId(e.target.id);
-    
+    setAwarenessIndex(e.description);
+    setAwarenessBoxId(e.id);
+    setBoxId(e.boxId)
   };
   const handleData = (comment: any, review: any) => {
     const data = {
       comment: comment.comment,
       review_type: review,
-      box_id: Number(awarenessBoxId),
+      box_id: Number(boxId),
       build_id: buildId,
     };
     dispatch(addAwareness(data));
@@ -284,7 +290,7 @@ const NewBuild = (props: any) => {
                       className={` ${
                         data.review_type == "resistance" ? "yellowBtn" : ""
                       }`}
-                      // style={props.isLoggedIn == true ?  {pointerEvents:"none",opacity:0.4} : {}}
+                       style={props.isLoggedIn ?  {} : {pointerEvents:"none",opacity:0.4}}
                       onClick={(e: any) => {
                         const button =
                           data.review_type == "acceptance"
@@ -395,7 +401,7 @@ const NewBuild = (props: any) => {
     };
     dispatch(addReviewResponse(data));
   };
-
+console.log("bbbbbbbbbbbbbbb",buildById)
   return (
     <>
      <Head>
@@ -438,7 +444,7 @@ const NewBuild = (props: any) => {
                 ]);
               }
             }}
-            onFocus={handleChange}
+            onFocus={(data:any)=>handleChange(data)}
             awarenessList={awarenessList}
             Acceptance={Acceptance}
             Resistance={Resistance}

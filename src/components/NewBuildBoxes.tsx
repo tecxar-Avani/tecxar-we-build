@@ -5,7 +5,9 @@ import OuterBox from "./OuterBox";
 import Ractangle from "./Ractangle";
 
 const NewBuildBoxes = (props: any) => {
+  console.log("&&&&&&&&&&",props)
   return (
+    
     <>
       {[...Array(Math.ceil(props.item.length / 3))].map((_rows, index) => {
         const subArray = props.item.slice(index * 3, index * 3 + 3);
@@ -19,7 +21,8 @@ const NewBuildBoxes = (props: any) => {
                   id={itemData.id}
                   counter={props.counter}
                   arr={props.arr}
-                  onFocus={props.onFocus}
+                  onFocus={(data:any)=>props.onFocus(data)
+                    }
                   visible={props.arr.includes(itemData.id)}
                   awarenessList={props.awarenessList}
                   Acceptance={props.Acceptance}
@@ -33,6 +36,7 @@ const NewBuildBoxes = (props: any) => {
                     props.setBoxData([...props.boxData, data]);
                   }}
                    description ={itemData.message}
+                   boxId = {itemData.boxId}
                 />
               )}
             </Row>

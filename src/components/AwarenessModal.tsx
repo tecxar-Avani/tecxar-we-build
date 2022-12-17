@@ -9,7 +9,6 @@ const { Search } = Input;
 
 
 const AwarenessModal = (props: any) => {
-
   const [form] = Form.useForm();
   form.resetFields();
     return (

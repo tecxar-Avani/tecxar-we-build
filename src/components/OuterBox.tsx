@@ -23,7 +23,7 @@ const OuterBox = (props: any) => {
   const handleChange = (event: any) => {
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
-    let BoxData = { sorting_order: id, description: value };
+    let BoxData = { sorting_order: id, description: value};
 
     if (value.length === 150 && !props.arr.includes(propsId)) {
       props.setBoxData(BoxData);
@@ -32,7 +32,6 @@ const OuterBox = (props: any) => {
   };
 
   const userId = buildById?.data?.map((a: any) => a.created_by);
-  console.log("props.description", props.description);
   return (
     <Col sm={4} className="p-0">
       <div className="innerBoxs p-3 w-100 " style={{ height: "170px" }}>
@@ -48,7 +47,12 @@ const OuterBox = (props: any) => {
                 defaultValue={props.description ? props.description : ""}
                 onInput={handleChange}
                 id={props.id}
-                onFocus={props.onFocus}
+                onFocus={()=>{
+                  const data = {id:props.id,
+                  boxId:props.boxId,
+                  description:props.description
+                }
+                  props.onFocus(data)}}
                 readOnly={
                   props.description &&
                   userId &&
@@ -62,8 +66,10 @@ const OuterBox = (props: any) => {
               {props.awarenessList &&
                 props.awarenessList.length > 0 &&
                 props.awarenessList.map((data: any) => {
+                  console.log("&&&&&&&&&&&&&&&&&",data)
+                  console.log("^^^^^^^^^^^^^",props.id)
                   return data.review_type == "inspiration" &&
-                    data.box_id == props.id ? (
+                    data.sorting_order == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
                         className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
@@ -73,7 +79,7 @@ const OuterBox = (props: any) => {
                       </span>
                     </span>
                   ) : data.review_type == "acceptance" &&
-                    data.box_id == props.id ? (
+                    data.sorting_order == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
                         className="position-absolute px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
@@ -83,7 +89,7 @@ const OuterBox = (props: any) => {
                       </span>
                     </span>
                   ) : data.review_type == "resistance" &&
-                    data.box_id == props.id ? (
+                    data.sorting_order == props.id ? (
                     <span onClick={props.modalDot}>
                       <span
                         className="position-absolute px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
