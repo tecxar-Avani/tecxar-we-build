@@ -38,11 +38,11 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
     if (authorization) {
       setIsLoggedIn(true);
     }
-  }, [authorization,isFocus]);
+  }, [authorization, isFocus]);
 
   useEffect(() => {
     window.addEventListener("focus", () => setIsFocus(true));
-  });
+  }, []);
 
   return (
     <>
