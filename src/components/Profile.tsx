@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import React from "react";
 import { Image } from "react-bootstrap";
 import { Button } from "antd";
+const cookieCutter = require("cookie-cutter");
+import { useRouter } from "next/router";
 
 interface profileProps {
   className: string;
@@ -15,36 +17,48 @@ interface profileProps {
 }
 
 const ProfileCard = (props: any) => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
-  const onBlock = (data:any) => {
+  const onBlock = (data: any) => {
     const userData = {
       id: data,
-      is_blocked:1
+      is_blocked: 1,
     };
     dispatch(updateUserById(userData));
-  }
-  const onUnBlock = (data:any) => {
+  };
+  const onUnBlock = (data: any) => {
     const userData = {
       id: data,
-      is_blocked:0
+      is_blocked: 0,
     };
     dispatch(updateUserById(userData));
-  }
-  const onDelete = (data:any) => {
+  };
+  const onDelete = (data: any) => {
     const userData = {
       id: data,
-      is_blocked:2
+      is_blocked: 2,
     };
     dispatch(updateUserById(userData));
-  }
-  console.log(props)
+  };
+
+  const logout = () => {
+    cookieCutter.set("authorization", "", { expires: new Date(0), path: "/" });
+    router.push({
+      pathname: "/",
+    });
+  };
+
   return (
     <>
-    
       <div
         className={`${props.className} profile text-center border-bottom pb-3 position-relative`}
-      > <Button className="logOut" type="primary">{props.profile.logout}</Button>
+      >
+        <div className="d-flex justify-content-end align-items-center py-2 px-4">
+          <Button className="logOut" type="primary" onClick={() => logout()}>
+            {props.profile.logout}
+          </Button>
+        </div>
         <div className="d-flex justify-content-center align-items-center">
           <div>
             <h4 className="title">{props.profile.title}</h4>
@@ -78,11 +92,13 @@ const ProfileCard = (props: any) => {
               src={`/profileImg/${props.profile.profileImg}`}
               className="img-fluid img-rounded"
             />
-          {  props.profile.bottomTitle ? 
-            <p className="cityWithMe mb-0 mt-2">
-            “{props.profile && props.profile.bottomTitle}”
-            </p>
-            : []}
+            {props.profile.bottomTitle ? (
+              <p className="cityWithMe mb-0 mt-2">
+                “{props.profile && props.profile.bottomTitle}”
+              </p>
+            ) : (
+              []
+            )}
           </div>
           <div className={`${props.rightBoxClass}`}>
             <p className="boxes-heading m-0">
@@ -132,7 +148,7 @@ const ProfileCard = (props: any) => {
                 height="41"
                 width="41"
                 className="mx-2 button"
-                onClick={()=>onBlock(props.profile.id)}
+                onClick={() => onBlock(props.profile.id)}
               />{" "}
               <figcaption> Block </figcaption>
             </figure>
@@ -144,7 +160,7 @@ const ProfileCard = (props: any) => {
                 height="41"
                 width="41"
                 className="mx-2 button"
-                onClick={()=>onUnBlock(props.profile.id)}
+                onClick={() => onUnBlock(props.profile.id)}
               />{" "}
               <figcaption> Unblock </figcaption>
             </figure>
@@ -156,7 +172,7 @@ const ProfileCard = (props: any) => {
                 height="41"
                 width="41"
                 className="mx-2 button"
-                onClick={()=>onDelete(props.profile.id)}
+                onClick={() => onDelete(props.profile.id)}
               />{" "}
               <figcaption> Delete </figcaption>
             </figure>

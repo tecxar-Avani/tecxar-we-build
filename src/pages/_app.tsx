@@ -11,7 +11,6 @@ import { Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer } from 'react-toastify';
-
 const cookieCutter = require('cookie-cutter');
 
 

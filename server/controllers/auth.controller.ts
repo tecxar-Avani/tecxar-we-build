@@ -33,7 +33,7 @@ export class AuthController {
       const userName = req.user._json.name;
       const googleProfileId = req.user._json.sub;
       const user = await this.userService.getUserByEmail(userEmail);
-      if (user) {
+      if (user && user.is_blocked == 0) {
         req.user = user;
         const token = await jwt.sign(
           {
@@ -52,7 +52,7 @@ export class AuthController {
           })
         .redirect(`${config.urlHost}${lastPage}`);
           // .redirect(`https://webuild.tecxar.io/${lastPage}`);
-      } else {
+      } else if(!user){
         const data = {
           user_name: userName,
           profile_id: googleProfileId,
@@ -84,6 +84,10 @@ export class AuthController {
           res
           // .redirect(`${config.urlHost}${lastPage}`);
            .redirect(`https://webuild.tecxar.io/${lastPage}`);
+        }
+      }else{
+        return{
+          message:"You are blocked by Admin"
         }
       }
     } catch (error) {

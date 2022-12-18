@@ -95,7 +95,6 @@ export class FlashController {
   async getUserInteractedBuild(@Req() req: RequestWithUser) {
     try {
       const { id } = req.user;
-
       const userBuild = await this.buildService.getUserInteractedBuild(id);
       return { data: [], box: userBuild };
     } catch (error) {
@@ -137,32 +136,33 @@ export class FlashController {
   ) {
     try {
       const userBuild = await this.buildService.getUsersBuildByUrl(url, search);
-      const { searchedData, error } = await this.youtubeApiCall(url);
-      if (searchedData && searchedData.length > 0) {
+      if (userBuild && userBuild.length > 0) {
         return {
           status: true,
-          data: searchedData,
-          box: userBuild,
-          search:
-            search && search != undefined && search != "undefined"
-              ? true
-              : false,
-          url: url && url != undefined && url != "undefined" ? true : false,
+          data: [],
+          box: search || url ? [] : userBuild,
+          results: userBuild,
         };
       } else {
-        const allBuilds = await this.buildService.getAllBuilds();
-        const { searchedData, error } = await this.youtubeApiCall(url);
-        return {
-          status: true,
-          data: searchedData,
-          box: userBuild,
-          allBuilds: allBuilds,
-          search:
-            search && search != undefined && search != "undefined"
-              ? true
-              : false,
-          url: url && url != undefined && url != "undefined" ? true : false,
-        };
+        if (url && url != undefined && url != "undefined") {
+          const { searchedData, error } = await this.youtubeApiCall(url);
+         
+          if (searchedData && searchedData.length > 0) {
+            return {
+              status: true,
+              data: searchedData,
+              box: userBuild,
+            };
+          }
+        } else {
+          const allBuilds = await this.buildService.getAllBuilds();
+          return {
+            status: true,
+            data: [],
+            box: [],
+            allBuilds: allBuilds,
+          };
+        }
       }
     } catch (error) {
       return {
@@ -278,7 +278,7 @@ export class FlashController {
       // } else
       if (videoUrl) {
         const videoIdToSearch = videoUrl && videoUrl.split("=").pop();
-        const response: any = 
+        const response: any =
           videoIdToSearch &&
           videoIdToSearch != undefined &&
           videoIdToSearch != "undefined" &&
@@ -334,6 +334,7 @@ export class FlashController {
   async getAllBuilds(@QueryParam("search") search?: string) {
     try {
       const userBuild = await this.buildService.getAllBuilds(search);
+   
       return { status: true, box: userBuild };
     } catch (error) {
       return {
@@ -354,7 +355,7 @@ export class FlashController {
   ) {
     try {
       const userId = req.user.id;
-      const userBuild = await this.buildService.getAllBuilds(search,userId);
+      const userBuild = await this.buildService.getAllBuilds(search, userId);
       return { status: true, box: userBuild };
     } catch (error) {
       return {

@@ -14,8 +14,17 @@ const SideBar = (toggle: any) => {
     useAppSelector(buildSelector);
   const router = useRouter();
   // const url = window.location.origin;
-  const [sideBarBG, setSideBarBG] = useState("profileBG");
+  const [sideBarBG, setSideBarBG] = useState("SelfLearningBG");
   const [modal5Open, setModal5Open] = useState(false);
+  const [buildListData, setBuildListData] = useState([buildList?.box]);
+
+  useEffect(() => {
+    setBuildListData(buildList?.box);
+  }, [buildList]);
+
+  useEffect(() => {
+    setBuildListData([]);
+  }, [buildListByUrl]);
 
   useEffect(() => {
     if (router.asPath == "/search?selfLearning=true") {
@@ -34,9 +43,12 @@ const SideBar = (toggle: any) => {
 
   useEffect(() => {
     if (
-       (buildListByUrl?.allBuilds && buildListByUrl.allBuilds.length > 0) || (buildListByUrl?.data &&buildListByUrl?.data?.length > 0) ||
-      userBuilds?.box?.length > 0 ||
-      userBuilds?.data?.length > 0
+      (buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)||
+      (buildListByUrl?.data && buildListByUrl?.data?.length > 0 && buildListData?.length == 0) ||
+      (buildListByUrl?.results && buildListByUrl?.results?.length > 0 && buildListData?.length == 0) ||
+      (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
+      (userBuilds?.data?.length > 0&& buildListData?.length == 0) 
+  
     ) {
       setSideBarBG("profileBG");
     }
@@ -45,6 +57,7 @@ const SideBar = (toggle: any) => {
   const handleCancel = () => {
     setModal5Open(false);
   };
+
   return (
     <>
       <div

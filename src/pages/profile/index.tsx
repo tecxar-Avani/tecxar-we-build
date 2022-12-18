@@ -144,11 +144,12 @@ const Profile = () => {
 
   return (
     <>
-        <Head>
+      <Head>
         <title>Profile</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className="profile-main">
+
         <ProfileCard
           className="pt-2"
           profile={profileData}
@@ -156,12 +157,12 @@ const Profile = () => {
           questionData={questionData}
           showModal={showModal}
         />
-          <HeaderTitle
-            title="Your builds"
-            className="title-list-of-profile py-2 my-2"
-          />
-        <div className="m-0 pb-2 videoCard overflow-x-scroll">
 
+        <HeaderTitle
+          title="Your builds"
+          className="title-list-of-profile py-2 my-2"
+        />
+        <div className="m-0 pb-2 videoCard overflow-x-scroll">
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
               {userBuilds &&

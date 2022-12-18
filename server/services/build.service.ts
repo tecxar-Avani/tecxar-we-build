@@ -65,7 +65,7 @@ class BuildService {
     search?: string
   ): Promise<IVideoBuild[] | null> {
     const searchFilter = [];
-    const where = [];
+    const where = [{}];
     if (search != "" && search != "undefined" && search != undefined) {
       search = search.toLowerCase();
       searchFilter.push(
@@ -99,6 +99,7 @@ class BuildService {
     if (url) {
       where.push({ video_url: url });
     }
+    
     const option: {
       nest?: boolean;
       subQuery: boolean;

@@ -21,6 +21,8 @@ const SearchPage = (props: any) => {
   const { buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
   const [videosData, setVideosData] = useState([]);
+  const [buildListData, setBuildListData] = useState([buildList?.box]);
+
   useEffect(() => {
     try {
       if (
@@ -39,7 +41,6 @@ const SearchPage = (props: any) => {
       console.log(error);
     }
   }, [buildList, userBuilds]);
-  
 
   const pattern = new RegExp(
     "^(https?:\\/\\/)?" + // protocol
@@ -61,6 +62,15 @@ const SearchPage = (props: any) => {
       dispatch(getBuildByUrl(searchData));
     }
   };
+
+  useEffect(() => {
+    setBuildListData(buildList?.box);
+  }, [buildList]);
+
+   useEffect(() => {
+      setBuildListData([]);
+   }, [buildListByUrl]);
+
   useEffect(() => {
     {
       router && router?.query?.selfLearning
@@ -72,7 +82,6 @@ const SearchPage = (props: any) => {
         : dispatch(getBuilds());
     }
   }, [router]);
-
   return (
     <>
       <div className="mx-4">
@@ -80,14 +89,17 @@ const SearchPage = (props: any) => {
         {router && router.query.selfLearning ? (
           <HeaderTitle
             title={
-              buildList.allBuilds && buildList.allBuilds.length > 0
+              buildListByUrl.allBuilds &&
+              buildListByUrl.allBuilds.length > 0 &&
+              buildListData?.length == 0
                 ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
                 : !buildListByUrl.allBuilds &&
                   buildListByUrl?.box?.length == 0 &&
-                  buildList?.box?.length == 0 &&
-                  buildListByUrl.data?.length > 0
+                  buildListByUrl.data?.length > 0 &&
+                  buildListData?.length == 0
                 ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
-                : buildListByUrl.data
+                : buildListByUrl?.results?.length > 0 &&
+                  buildListData?.length == 0
                 ? "Results"
                 : "Learn something new about yourself"
             }
@@ -96,11 +108,17 @@ const SearchPage = (props: any) => {
         ) : (
           <HeaderTitle
             title={
-              buildList.allBuilds && buildList.allBuilds.length > 0
+              buildListByUrl.allBuilds &&
+              buildListByUrl.allBuilds.length > 0 &&
+              buildListData?.length == 0
                 ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
-                : buildList?.box?.length == 0 && buildList.data?.length > 0
+                : !buildListByUrl.allBuilds &&
+                  buildListByUrl?.box?.length == 0 &&
+                  buildListByUrl.data?.length > 0 &&
+                  buildListData?.length == 0
                 ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
-                : buildListByUrl.data
+                : buildListByUrl?.results?.length > 0 &&
+                  buildListData?.length == 0
                 ? "Results"
                 : "Want to learn from others’ builds?"
             }
