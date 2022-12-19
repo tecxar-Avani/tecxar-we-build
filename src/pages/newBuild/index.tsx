@@ -82,13 +82,15 @@ const NewBuild = (props: any) => {
     // buildList && buildList.box?.length > 0
     //   ? buildList.box
     // :
-    buildList && buildList.data?.length > 0 ? buildList.data : [];
+    buildList && buildList.box?.length > 0 ? buildList.data : [];
+  
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
       answer: data.answer,
       build_id: buildId,
     };
+   
 
     dispatch(createFlashCard(flashCardData));
   };
@@ -183,7 +185,7 @@ const NewBuild = (props: any) => {
     url: string
   ) => {
     const videoId = url && url.split("=").pop();
-
+   
     const videoDataFilter =
       videoList &&
       videoList.length > 0 &&
@@ -220,7 +222,6 @@ const NewBuild = (props: any) => {
       };
 
       const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
-
       buildCreatedBy &&
       buildCreatedBy.length > 0 &&
       buildCreatedBy[0] == userData.id
@@ -427,9 +428,10 @@ console.log("filter",filter)
     dispatch(addReviewResponse(data));
   };
   return (
-    //  <>  
-    //               {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> :
-         <>   
+     <>  
+                  {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
+         {/* <>    */}
+         {/* <Spin spinning={build.loading} delay={100}/> */}
       <Head>
         <title>New Build</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />

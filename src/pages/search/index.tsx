@@ -105,12 +105,12 @@ const SearchPage = (props: any) => {
         buildListByUrl.allBuilds &&
         buildListByUrl.allBuilds.length > 0 &&
         buildListData?.length == 0
-          ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
+          ? <p className="mb-0"><div className="text-center my-2 headerSizeInsearch">We do not have anything matching your search. Please try another word.<br/>Otherwise, check out existing builds below </div><br></br> Existing Builds</p>
           : !buildListByUrl.allBuilds &&
             buildListByUrl?.box?.length == 0 &&
             buildListByUrl.data?.length > 0 &&
             buildListData?.length == 0
-          ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
+          ? <div className="text-center my-2 headerSizeInsearch">Lucky you! Nothing exists for this URL. To start your build, click the video below"</div>
           : buildListByUrl?.results?.length > 0 &&
             buildListData?.length == 0
           ? "Results"
@@ -124,12 +124,12 @@ const SearchPage = (props: any) => {
         buildListByUrl.allBuilds &&
         buildListByUrl.allBuilds.length > 0 &&
         buildListData?.length == 0
-          ? "We do not have anything matching your search. Please try another word.Otherwise, check out existing builds below"
+          ?  <p className="mb-0 "><div className="text-center my-2 headerSizeInsearch">We do not have anything matching your search. Please try another word.<br/>Otherwise, check out existing builds below </div><br></br> Existing Builds</p>
           : !buildListByUrl.allBuilds &&
             buildListByUrl?.box?.length == 0 &&
             buildListByUrl.data?.length > 0 &&              
             buildListData?.length == 0
-          ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
+          ? <div className="text-center my-2 headerSizeInsearch">Lucky you! Nothing exists for this URL. To start your build, click the video below"</div>
           : buildListByUrl?.results?.length > 0 &&
             buildListData?.length == 0
           ? "Results"

@@ -202,16 +202,16 @@ body,
   }
 }
 
-.title {
-  h1 {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 34px;
-    color: #000000;
-    margin: 0;
-  }
-}
+// .title {
+//   h1 {
+//     font-style: normal;
+//     font-weight: 700;
+//     font-size: 30px;
+//     line-height: 34px;
+//     color: #000000;
+//     margin: 0;
+//   }
+// }
 
 .vcontent {
   font-family: "Arimo";
@@ -1157,4 +1157,8 @@ h6 {
 .videoProfile1 {
   padding-right: 1rem;
   margin-top: 30px;
+}
+
+.headerSizeInsearch{
+  font-size: 20px !important;
 }
