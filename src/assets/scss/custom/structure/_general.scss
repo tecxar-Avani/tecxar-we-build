@@ -48,12 +48,28 @@ body,
 .searchCard ::placeholder {
   text-align: center;
 }
-
 .searchCard {
   .ant-input:placeholder-shown {
     text-overflow: ellipsis;
     color: black;
-    background-color: #efefef;
+    background-color: #d4d4d4;
+  }
+}
+.searchCard {
+  .ant-input:placeholder-shown {
+    text-overflow: ellipsis;
+    color: black;
+    background-color: #d4d4d4;
+  }
+  .ant-input::placeholder{
+    text-overflow: ellipsis;
+    color: black;
+    background-color: #d4d4d4;
+  }
+  .ant-input:focus, .ant-input-focused ::placeholder{
+    text-overflow: ellipsis;
+    color: black;
+    background-color: #d4d4d4;
   }
 }
 
@@ -206,10 +222,15 @@ body,
 }
 
 .flashCards {
-  position: absolute;
-  bottom: 18px;
-  right: 45px;
+  // position: absolute;
+  // bottom: 18px;
+  // right: 45px;
   cursor: pointer;
+  .ant-input-textarea-show-count::after {
+    position: absolute;
+    bottom: 20px;
+    right: 9px;
+}
 }
 
 .flashCardsContent {
@@ -352,13 +373,13 @@ body,
   padding: 0px;
   font-weight: 700;
   display: block;
-  width: 13px;
-  height: 14px;
-  font-size: 13px;
+  width: 16px;
+  height: 16px;
+  font-size: 11px;
   font-style: normal;
-  line-height: 8px;
+  line-height: 11px;
   text-align: center;
-  border-radius: 7px;
+  border-radius: 100%;
   background-color: black !important;
   color: white;
   margin-top: 15px;
@@ -478,6 +499,13 @@ body,
   border-radius: 7px;
   // margin-left: 754px;
 }
+.ant-modal-content {
+  border-radius: 7px !important;
+  .ant-modal-header {
+    border-radius: 7px !important;
+  }
+}
+
 
 .awarenessModal {
   .ant-modal {
@@ -486,6 +514,10 @@ body,
 
   .ant-modal-content {
     color: #000000;
+    border-radius: 7px;
+    .ant-modal-header {
+      border-radius: 7px;
+    }
   }
 
   .ant-modal-body {
@@ -801,9 +833,13 @@ hr {
     margin-left: 754px;
   }
 
-  .ant-modal-content,
-  .ant-modal-header {
+  .ant-modal-content {
+    border-radius: 7px;
     background-color: #b2b5ed;
+    .ant-modal-header {
+      background-color: #b2b5ed;
+      border-radius: 7px;
+    }
   }
 
   textarea.ant-input {
@@ -1084,13 +1120,7 @@ h6 {
   width: 1430px;
 }
 
-.searchCard {
-  .ant-input:placeholder-shown {
-    text-overflow: ellipsis;
-    color: black;
-    background-color: #efefef;
-  }
-}
+
 
 .centerHeader {
   text-align: center !important;

@@ -55,9 +55,12 @@ const NewBuild = (props: any) => {
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [challengeModal, setChallengeModal] = useState(false);
   const [challengeData, setChallengeData] = useState([]);
+  const [challengeArr, setChallengeArr] = useState([{}]);
+
   const [challengeTitle, setChallengeTitle] = useState();
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
   const [boxId, setBoxId] = useState();
+  const [boxAwarenessID, setBoxAwarenessID] = useState();
 
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
@@ -71,17 +74,12 @@ const NewBuild = (props: any) => {
   );
   const { buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
-    console.log("buildlist",buildList)
-    console.log("buildListByUrl",buildListByUrl)
-    console.log("userBuilds",userBuilds)
 
   const videoList =
     // buildList && buildList.box?.length > 0
     //   ? buildList.box
-      // :
-      buildList && buildList.data?.length > 0
-      ? buildList.data
-      : [];
+    // :
+    buildList && buildList.data?.length > 0 ? buildList.data : [];
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -124,7 +122,7 @@ const NewBuild = (props: any) => {
       setDataArray([]);
     }
   }, [router.query.id]);
-  
+
   useEffect(() => {
     if (buildById.data) {
       const data =
@@ -233,7 +231,7 @@ const NewBuild = (props: any) => {
   const handleChange = (e: any) => {
     setAwarenessIndex(e.description);
     setAwarenessBoxId(e.id);
-    setBoxId(e.boxId)
+    setBoxId(e.boxId);
   };
   const handleData = (comment: any, review: any) => {
     const data = {
@@ -249,7 +247,8 @@ const NewBuild = (props: any) => {
 
   // for awarenessType modal
 
-  const showModal = () => {
+  const showModal = (id: any) => {
+    setBoxAwarenessID(id);
     setOpen(true);
   };
 
@@ -260,6 +259,22 @@ const NewBuild = (props: any) => {
   const challengeClose = () => {
     setChallengeModal(false);
   };
+
+  const unique =awarenessList && awarenessList.length > 0 && awarenessList
+  .map((item:any) => item.id)
+  .filter((value:any, index:any, self:any) => self.indexOf(value) === index);
+  // useEffect(()=>{
+  //   setChallengeArr(unique)
+  // },[unique])
+
+  const filter = unique?.length > 0 && unique.map((data:any)=>{
+    const awarenessFilter = awarenessList.filter(
+      (d: any) => d.id == data
+    );
+    return awarenessFilter
+  })
+
+console.log("filter",filter)
   const content = (title: any) => {
     return (
       <>
@@ -268,7 +283,8 @@ const NewBuild = (props: any) => {
           awarenessList.map((data: any) => {
             return (
               <>
-                {title == data.review_type ? (
+                {" "}
+                {boxAwarenessID == data.box_id && title == data.review_type && (
                   <Form
                     className={`${data.challenge && "challenge-textbox-main"}`}
                   >
@@ -292,7 +308,11 @@ const NewBuild = (props: any) => {
                       className={` ${
                         data.review_type == "resistance" ? "yellowBtn" : ""
                       }`}
-                       style={props.isLoggedIn ?  {} : {pointerEvents:"none",opacity:0.4}}
+                      style={
+                        props.isLoggedIn
+                          ? {}
+                          : { pointerEvents: "none", opacity: 0.4 }
+                      }
                       onClick={(e: any) => {
                         const button =
                           data.review_type == "acceptance"
@@ -310,36 +330,34 @@ const NewBuild = (props: any) => {
                         : ""}
                     </Button>
 
-                    {data.challenge ? (
-                      <>
-                        <div className="AwareInputChallengeHeader">
-                          {data.challenge_user}'s {data.response_review}
-                        </div>
-                        <TextArea
-                          maxLength={500}
-                          rows={3}
-                          className="mb-1 AwareInputChallenge"
-                          value={data.challenge}
-                        ></TextArea>
-                        <Button
-                          key="submit"
-                          type="primary"
-                          className="mt-0 challengeAcceptBtn"
-                        >
-                          {" "}
-                          {data.review_type == "acceptance"
-                            ? "acceptance"
-                            : data.review_type == "resistance"
-                            ? "resistance"
-                            : ""}
-                        </Button>
-                      </>
-                    ) : (
-                      []
-                    )}
+                    {data.challenge ?
+                            <>
+                              <div className="AwareInputChallengeHeader">
+                                {data.challenge_user}'s {data.response_review}
+                              </div>
+                              <TextArea
+                                maxLength={500}
+                                rows={3}
+                                className="mb-1 AwareInputChallenge"
+                                value={data.challenge}
+                              ></TextArea>
+                              <Button
+                                key="submit"
+                                type="primary"
+                                className="mt-0 challengeAcceptBtn"
+                              >
+                                {" "}
+                                {data.review_type == "acceptance"
+                                  ? "acceptance"
+                                  : data.review_type == "resistance"
+                                  ? "resistance"
+                                  : ""}
+                              </Button>
+                            </>
+                        
+                        
+                      : []}
                   </Form>
-                ) : (
-                  []
                 )}
               </>
             );
@@ -377,7 +395,7 @@ const NewBuild = (props: any) => {
               ></TextArea>
             </div>
           </Form.Item>
-          <div className="header mt-2">Challenge</div>
+          <div className="header mt-2">{data.response_review}</div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
               <TextArea
@@ -404,7 +422,6 @@ const NewBuild = (props: any) => {
     };
     dispatch(addReviewResponse(data));
   };
-console.log("bbbbbbbbbbbbbbb",buildById)
   return (
     <>
       <Head>
@@ -447,7 +464,7 @@ console.log("bbbbbbbbbbbbbbb",buildById)
                 ]);
               }
             }}
-            onFocus={(data:any)=>handleChange(data)}
+            onFocus={(data: any) => handleChange(data)}
             awarenessList={awarenessList}
             Acceptance={Acceptance}
             Resistance={Resistance}
@@ -455,7 +472,7 @@ console.log("bbbbbbbbbbbbbbb",buildById)
             boxData={boxData}
             setBoxData={setBoxData}
             buildById={buildById}
-            modalDot={showModal}
+            modalDot={(id: any) => showModal(id)}
           />
           <div className="position-absolute mkCard">
             {userArr &&
@@ -564,7 +581,7 @@ console.log("bbbbbbbbbbbbbbb",buildById)
             ? "Resistance"
             : ""
         }`}
-        header={`${userData.user_name}'s  ${
+        header={`${props.isLoggedIn ? userData.user_name : ""} ${
           accept
             ? "Acceptance"
             : inspiration
@@ -582,6 +599,7 @@ console.log("bbbbbbbbbbbbbbb",buildById)
             ? "resistanceModalBG"
             : ""
         } `}
+        isLoggedIn = {props.isLoggedIn}
       />
       <AwarenessTypeModal
         open={open}

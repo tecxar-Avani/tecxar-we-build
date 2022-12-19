@@ -5,7 +5,6 @@ import OuterBox from "./OuterBox";
 import Ractangle from "./Ractangle";
 
 const NewBuildBoxes = (props: any) => {
-  console.log("&&&&&&&&&&",props)
   return (
     
     <>
@@ -28,7 +27,7 @@ const NewBuildBoxes = (props: any) => {
                   Acceptance={props.Acceptance}
                   Inspiration={props.Inspiration}
                   Resistance={props.Resistance}
-                  modalDot={props.modalDot}
+                  modalDot={(id:any)=> props.modalDot(id)}
                   responseCallback={(value: number) =>
                     props.setArr([...props.arr, value])
                   }

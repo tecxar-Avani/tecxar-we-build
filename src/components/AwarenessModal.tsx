@@ -4,13 +4,19 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Card, CardImg, Col, Row } from "react-bootstrap";
 import Image from 'react-bootstrap/Image'
+import LogInButton from "./LogInButton";
 
 const { Search } = Input;
 
 
 const AwarenessModal = (props: any) => {
+  const [modal5Open, setModal5Open] = useState(false);
+  const handleCancel = () =>{
+    setModal5Open(false)
+  }
   const [form] = Form.useForm();
   form.resetFields();
+  console.log("DDDDDDDD",props)
     return (
       <div className="awarenessModal">
         <Modal
@@ -31,7 +37,11 @@ const AwarenessModal = (props: any) => {
          <Form
           form={form}
           id="form"
-          onFinish={(data:any)=> props.handleSubmit(data,props.title)}
+          onFinish={(data:any)=>  props.isLoggedIn
+            ? props.handleSubmit(
+              props.handleSubmit(data,props.title)
+              )
+            : setModal5Open(true)}
           layout="vertical"
           autoComplete="off"
         >
@@ -43,6 +53,7 @@ const AwarenessModal = (props: any) => {
        </Form.Item>
        </Form>
 </Modal>
+<LogInButton title="" open={modal5Open} className="btnrv" handleCancel={handleCancel}/>
       </div>
     );
   };
