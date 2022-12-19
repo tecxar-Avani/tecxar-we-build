@@ -1,6 +1,7 @@
 import { Input, Modal, Button, Form } from "antd";
 import React, { useState } from "react";
 import GoogleButton from "react-google-button";
+import LogInButton from "./LogInButton";
 
 const { Search } = Input;
 const { TextArea } = Input;
@@ -23,6 +24,7 @@ const AddFlashCardModal = (props: any) => {
           props.setEditFlashCardData && props.setEditFlashCardData();
           props.setModal2Open(false);
         }}
+        className="flashCards"
         destroyOnClose = {true}
         footer={
           <Button
@@ -86,15 +88,9 @@ const AddFlashCardModal = (props: any) => {
           </Form.Item>
         </Form>
       </Modal>
-      <Modal title="" centered open={modal5Open} className="btnrv" onCancel={handleCancel}>
-        <div className="mb-n3">
-          <a href={`/api/google`}>
-            <GoogleButton className="m-auto googleButton" />
-          </a>
-          <br />
-          {/* <span className="fs-5">Add Google Sign In Button To Website</span> */}
-        </div>
-      </Modal>
+      <LogInButton title="" open={modal5Open} className="btnrv" handleCancel={handleCancel}/>
+       
+      
     </>
   );
 };

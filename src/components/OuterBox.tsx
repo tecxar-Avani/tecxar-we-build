@@ -68,7 +68,7 @@ const OuterBox = (props: any) => {
                 props.awarenessList.map((data: any) => {
                   return data.review_type == "inspiration" &&
                     data.sorting_order == props.id ? (
-                    <span onClick={props.modalDot}>
+                    <span onClick={() => props.modalDot(props.id)}>
                       <span
                         className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
                         onClick={props.Inspiration}
@@ -78,7 +78,7 @@ const OuterBox = (props: any) => {
                     </span>
                   ) : data.review_type == "acceptance" &&
                     data.sorting_order == props.id ? (
-                    <span onClick={props.modalDot}>
+                    <span onClick={() => props.modalDot(props.id)}>
                       <span
                         className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
                         onClick={props.Acceptance}
@@ -88,7 +88,7 @@ const OuterBox = (props: any) => {
                     </span>
                   ) : data.review_type == "resistance" &&
                     data.sorting_order == props.id ? (
-                    <span onClick={props.modalDot}>
+                    <span onClick={() => props.modalDot(props.id)}>
                       <span
                         className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
                         onClick={props.Resistance}

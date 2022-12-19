@@ -6,6 +6,7 @@ import Link from "next/link";
 import GoogleButton from "react-google-button";
 import { useAppSelector } from "../hooks";
 import { buildSelector } from "@/store/reducers/build.reducer";
+import LogInButton from "./LogInButton";
 
 const { Sider } = Layout;
 
@@ -40,22 +41,33 @@ const SideBar = (toggle: any) => {
       setSideBarBG("UserGuideBG");
     }
   }, [router.asPath]);
+  console.log(
+    "$$$$$$$$$$",
+    buildListByUrl.allBuilds &&
+      buildListByUrl.allBuilds.length > 0 &&
+      buildListData?.length == 0,
 
+    buildListData?.length
+  );
   useEffect(() => {
     if (
-      (buildListByUrl?.allBuilds?.length > 0 && buildListData?.length == 0) ||
-      (buildListByUrl?.data &&
-        buildListByUrl?.data?.length > 0 &&
+      //  (buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)||
+      // (buildListByUrl?.data && buildListByUrl?.data?.length > 0 && buildListData?.length == 0) ||
+      // (buildListByUrl?.results && buildListByUrl?.results?.length > 0 && buildListData?.length == 0)
+      // (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
+      // (userBuilds?.data?.length > 0&& buildListData?.length == 0)
+      (buildListByUrl.allBuilds &&
+        buildListByUrl.allBuilds.length > 0 &&
         buildListData?.length == 0) ||
-      (buildListByUrl?.results &&
-        buildListByUrl?.results?.length > 0 &&
+      (!buildListByUrl.allBuilds &&
+        buildListByUrl?.box?.length == 0 &&
+        buildListByUrl.data?.length > 0 &&
         buildListData?.length == 0) ||
-      (userBuilds?.box?.length > 0 && buildListData?.length == 0) ||
-      (userBuilds?.data?.length > 0 && buildListData?.length == 0)
+      (buildListByUrl?.results?.length > 0 && buildListData?.length == 0)
     ) {
       setSideBarBG("profileBG");
     }
-  }, [buildList, userBuilds]);
+  }, [buildList, userBuilds, buildListByUrl]);
 
   const handleCancel = () => {
     setModal5Open(false);
@@ -101,19 +113,12 @@ const SideBar = (toggle: any) => {
           </div>
         </Sider>
       </div>
-      <Modal
+      <LogInButton
         title=""
-        centered
         open={modal5Open}
         className="btnrv"
-        onCancel={handleCancel}
-      >
-        <div className="mb-n3">
-          <a href={`/api/google`}>
-            <GoogleButton className="m-auto googleButton" />
-          </a>
-        </div>
-      </Modal>
+        handleCancel={handleCancel}
+      />
     </>
   );
 };

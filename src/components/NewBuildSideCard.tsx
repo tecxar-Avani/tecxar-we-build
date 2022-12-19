@@ -9,6 +9,7 @@ import GoogleButton from "react-google-button";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { userSelector } from "@/store/reducers/user.reducer";
 import { buildSelector, getBuildById } from "@/store/reducers/build.reducer";
+import LogInButton from "./LogInButton";
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
@@ -401,19 +402,8 @@ const NewBuildSideCard = (props: any) => {
           </Link>
         </div>
       </div>
-      <Modal
-        title=""
-        centered
-        open={modal5Open}
-        className="btnrv"
-        onCancel={handleCancel}
-      >
-        <div className="mb-n3">
-          <a href="/api/google" target={"_blank"}>
-            <GoogleButton className="m-auto googleButton" />
-          </a>
-        </div>
-      </Modal>
+      <LogInButton title="" open={modal5Open} className="btnrv" handleCancel={handleCancel}/>
+
     </>
   );
 };

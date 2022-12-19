@@ -111,10 +111,10 @@ const SearchPage = (props: any) => {
               buildListByUrl.allBuilds &&
               buildListByUrl.allBuilds.length > 0 &&
               buildListData?.length == 0
-                ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
+                ? "We do not have anything matching your search. Please try another word.Otherwise, check out existing builds below"
                 : !buildListByUrl.allBuilds &&
                   buildListByUrl?.box?.length == 0 &&
-                  buildListByUrl.data?.length > 0 &&
+                  buildListByUrl.data?.length > 0 &&              
                   buildListData?.length == 0
                 ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
                 : buildListByUrl?.results?.length > 0 &&
