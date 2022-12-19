@@ -66,8 +66,6 @@ const OuterBox = (props: any) => {
               {props.awarenessList &&
                 props.awarenessList.length > 0 &&
                 props.awarenessList.map((data: any) => {
-                  console.log("&&&&&&&&&&&&&&&&&",data)
-                  console.log("^^^^^^^^^^^^^",props.id)
                   return data.review_type == "inspiration" &&
                     data.sorting_order == props.id ? (
                     <span onClick={props.modalDot}>

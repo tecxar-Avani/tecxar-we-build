@@ -28,16 +28,16 @@ const NewBuildSideCard = (props: any) => {
   const [authorization, setAuthorization] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-//   useEffect(() => {
-//     let authorization = cookieCutter.get("authorization");
-//     setAuthorization(authorization);
-//   }, []);
-// console.log("AAAAAAAA",authorization)
-//   useEffect(() => {
-//     if (authorization) {
-//       setIsLoggedIn(true);
-//     }
-//   }, [authorization]);
+  //   useEffect(() => {
+  //     let authorization = cookieCutter.get("authorization");
+  //     setAuthorization(authorization);
+  //   }, []);
+  // console.log("AAAAAAAA",authorization)
+  //   useEffect(() => {
+  //     if (authorization) {
+  //       setIsLoggedIn(true);
+  //     }
+  //   }, [authorization]);
 
   const togglemodal = () => {
     setModal5Open(!modal5Open);
@@ -53,12 +53,11 @@ const NewBuildSideCard = (props: any) => {
   };
   useEffect(() => {
     dispatch(getBuildById(props.id));
-  
-  },[])
+  }, []);
   const handleCancel = () => {
     setModal5Open(false);
   };
- const userId = buildById?.data?.map((a:any) => a.created_by)
+  const userId = buildById?.data?.map((a: any) => a.created_by);
   return (
     <>
       <div>
@@ -347,15 +346,22 @@ const NewBuildSideCard = (props: any) => {
         <hr className="border-dark  ms-2  " />
         <div className="d-flex owd bd-highlight">
           {/* {props.isLoggedIn === true ? ( */}
-            <div
-              className="save bd-highlight"
-              onClick={() => props.isLoggedIn === true ? 
-                props.onSave(videoType, polarisationLevel, difficultyLevel, url) :  setModal5Open(true)
-              }
-              // style={ userId && userId.length>0 && userId[0] == userData.id ? {} : {pointerEvents:"none",opacity:0.4 }}
-            >
-              <Image src="/img/save.svg" className="ms-2" alt="no image" />
-            </div>
+          <div
+            className="save bd-highlight"
+            onClick={() =>
+              props.isLoggedIn === true
+                ? props.onSave(
+                    videoType,
+                    polarisationLevel,
+                    difficultyLevel,
+                    url
+                  )
+                : setModal5Open(true)
+            }
+            // style={ userId && userId.length>0 && userId[0] == userData.id ? {} : {pointerEvents:"none",opacity:0.4 }}
+          >
+            <Image src="/img/save.svg" className="ms-2" alt="no image" />
+          </div>
           {/* ) : (
             <Tooltip
               placement="topLeft"
@@ -403,7 +409,7 @@ const NewBuildSideCard = (props: any) => {
         onCancel={handleCancel}
       >
         <div className="mb-n3">
-          <a onClick={()=>window.open('/api/google')}>
+          <a href="/api/google" target={"_blank"}>
             <GoogleButton className="m-auto googleButton" />
           </a>
         </div>
