@@ -24,7 +24,7 @@ const AddFlashCardModal = (props: any) => {
           props.setEditFlashCardData && props.setEditFlashCardData();
           props.setModal2Open(false);
         }}
-        className="flashCards"
+        className="flashCardsModal"
         destroyOnClose = {true}
         footer={
           <Button

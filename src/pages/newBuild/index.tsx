@@ -26,7 +26,7 @@ import {
   getAwarenessByBoxId,
   getReviewResponseByAwarenessId,
 } from "../../store/reducers/awareness.reducer";
-import { Button, Form } from "antd";
+import { Button, Form ,Spin} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
@@ -42,6 +42,7 @@ const NewBuild = (props: any) => {
   const [open, setOpen] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
   const { userData } = useAppSelector(userSelector);
+  const build = useAppSelector(buildSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
@@ -54,6 +55,8 @@ const NewBuild = (props: any) => {
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [challengeModal, setChallengeModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [challengeData, setChallengeData] = useState([]);
   const [challengeArr, setChallengeArr] = useState([{}]);
 
@@ -273,7 +276,7 @@ const NewBuild = (props: any) => {
     );
     return awarenessFilter
   })
-
+const loading = true
 console.log("filter",filter)
   const content = (title: any) => {
     return (
@@ -281,10 +284,11 @@ console.log("filter",filter)
         {awarenessList &&
           awarenessList.length > 0 &&
           awarenessList.map((data: any) => {
+            
             return (
               <>
-                {" "}
-                {boxAwarenessID == data.box_id && title == data.review_type && (
+  {
+                boxAwarenessID == data.sorting_order && title == data.review_type && (
                   <Form
                     className={`${data.challenge && "challenge-textbox-main"}`}
                   >
@@ -423,7 +427,9 @@ console.log("filter",filter)
     dispatch(addReviewResponse(data));
   };
   return (
-    <>
+    //  <>  
+    //               {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> :
+         <>   
       <Head>
         <title>New Build</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -641,6 +647,7 @@ console.log("filter",filter)
             : ""
         } `}
       />
+       {/* </>} */}
     </>
   );
 };

@@ -8,7 +8,7 @@ const HeaderTitle = (props: any) => {
     <div
       className={` ${
         props.title ==
-          "Lucky you! Nothing exists for this URL. To start your build, click the video below" &&
+          "Lucky you! Nothing exists for this URL. To start your build, click the video below" ? "centerHeader" :  props.title ==
         "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
           ? "centerHeader"
           : props.className

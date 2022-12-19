@@ -4,6 +4,7 @@ import HeaderTitle from "@/components/headerTitle";
 import VideoCard from "@/components/VideoCard";
 import { Col, Row } from "react-bootstrap";
 import { useRouter } from "next/router";
+import { Spin } from 'antd';
 import {
   buildSelector,
   getBuilds,
@@ -20,37 +21,10 @@ const SearchPage = (props: any) => {
   const dispatch = useAppDispatch();
   const { buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
+    const build = useAppSelector(buildSelector);
   const [videosData, setVideosData] = useState([]);
   const [buildListData, setBuildListData] = useState([buildList?.box]);
 
-  useEffect(() => {
-    try {
-      if (
-        (buildList?.box && buildList.box.length > 0) ||
-        (userBuilds && userBuilds.box?.length > 0)
-      ) {
-        router && router.query.selfLearning
-          ? userBuilds?.box?.length > 0
-            ? setVideosData(userBuilds.box)
-            : setVideosData(buildList.box)
-          : setVideosData(buildList.box);
-      } else if (buildList.data && buildList.data.length > 0) {
-        setVideosData(buildList.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [buildList, userBuilds]);
-
-  const pattern = new RegExp(
-    "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
-    "i"
-  );
   const searchResult = (url: string) => {
     const validUrl = pattern.test(url);
 
@@ -62,7 +36,6 @@ const SearchPage = (props: any) => {
       dispatch(getBuildByUrl(searchData));
     }
   };
-
   useEffect(() => {
     setBuildListData(buildList?.box);
   }, [buildList]);
@@ -82,100 +55,142 @@ const SearchPage = (props: any) => {
         : dispatch(getBuilds());
     }
   }, [router]);
+
+  useEffect(() => {
+    try {
+      if (
+        (buildList?.box && buildList.box.length > 0 && buildListData?.length > 0) ||
+        (buildListByUrl?.box && buildListByUrl.box.length > 0 && buildListData?.length > 0) ||
+        (userBuilds && userBuilds.box?.length > 0 && buildListData?.length > 0)
+      ) {
+        router && router.query.selfLearning
+          ? userBuilds?.box?.length > 0
+            ? setVideosData(userBuilds.box)
+            : setVideosData(buildList.box)
+          : setVideosData(buildList.box);
+      } else if (buildListByUrl.data && buildListByUrl.data.length > 0 && buildListData?.length == 0) {
+        setVideosData(buildListByUrl.data);
+      }else if(buildListByUrl?.allBuilds?.length > 0 &&  buildListByUrl?.data?.length == 0){
+        setVideosData(buildListByUrl.allBuilds);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [buildList, userBuilds,buildListByUrl,buildListData]);
+
+  const pattern = new RegExp(
+    "^(https?:\\/\\/)?" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  );
+
+
+
   return (
     <>
-      <div className="mx-4">
-        <SearchBar searchResult={searchResult} />
-        {router && router.query.selfLearning ? (
-          <HeaderTitle
-            title={
-              buildListByUrl.allBuilds &&
-              buildListByUrl.allBuilds.length > 0 &&
-              buildListData?.length == 0
-                ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
-                : !buildListByUrl.allBuilds &&
-                  buildListByUrl?.box?.length == 0 &&
-                  buildListByUrl.data?.length > 0 &&
-                  buildListData?.length == 0
-                ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
-                : buildListByUrl?.results?.length > 0 &&
-                  buildListData?.length == 0
-                ? "Results"
-                : "Learn something new about yourself"
-            }
-            className={`title-list-of-profile py-4 Search`}
-          />
-        ) : (
-          <HeaderTitle
-            title={
-              buildListByUrl.allBuilds &&
-              buildListByUrl.allBuilds.length > 0 &&
-              buildListData?.length == 0
-                ? "We do not have anything matching your search. Please try another word.Otherwise, check out existing builds below"
-                : !buildListByUrl.allBuilds &&
-                  buildListByUrl?.box?.length == 0 &&
-                  buildListByUrl.data?.length > 0 &&              
-                  buildListData?.length == 0
-                ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
-                : buildListByUrl?.results?.length > 0 &&
-                  buildListData?.length == 0
-                ? "Results"
-                : "Want to learn from others’ builds?"
-            }
-            className="title-list-of-profile py-4 Search"
-          />
-        )}
 
-        <Row className="Search m-0">
-          {buildList?.box?.length == 0 &&
-          buildList.data?.length > 0 &&
-          buildList?.data?.length < 2
-            ? videosData.map((videoData: any, index: number) => {
-                const videoId = videoData.newVideoId
-                  ? videoData.newVideoId
-                  : videoData.videoId
-                  ? videoData.videoId
-                  : videoData.id;
+   
+    {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> :
 
-                const id = videoData.id;
+   
+<div className="mx-4">
+  <SearchBar searchResult={searchResult} />
+  {router && router.query.selfLearning ? (
+    <HeaderTitle
+      title={
+        buildListByUrl.allBuilds &&
+        buildListByUrl.allBuilds.length > 0 &&
+        buildListData?.length == 0
+          ? "We do not have anything matching your search. Please try another word. Otherwise, check out existing builds below"
+          : !buildListByUrl.allBuilds &&
+            buildListByUrl?.box?.length == 0 &&
+            buildListByUrl.data?.length > 0 &&
+            buildListData?.length == 0
+          ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
+          : buildListByUrl?.results?.length > 0 &&
+            buildListData?.length == 0
+          ? "Results"
+          : "Learn something new about yourself"
+      }
+      className={`title-list-of-profile py-4 Search`}
+    />
+  ) : (
+    <HeaderTitle
+      title={
+        buildListByUrl.allBuilds &&
+        buildListByUrl.allBuilds.length > 0 &&
+        buildListData?.length == 0
+          ? "We do not have anything matching your search. Please try another word.Otherwise, check out existing builds below"
+          : !buildListByUrl.allBuilds &&
+            buildListByUrl?.box?.length == 0 &&
+            buildListByUrl.data?.length > 0 &&              
+            buildListData?.length == 0
+          ? "Lucky you! Nothing exists for this URL. To start your build, click the video below"
+          : buildListByUrl?.results?.length > 0 &&
+            buildListData?.length == 0
+          ? "Results"
+          : "Want to learn from others’ builds?"
+      }
+      className="title-list-of-profile py-4 Search"
+    />
+  )}
 
-                return (
-                  <div
-                    className="d-flex justify-content-center videoProfile1 pb-2"
-                    key={index}
-                  >
-                    <Link href={`/newBuild?id=${id}&&videoId=${videoId}`}>
-                      <a>
-                        <div className="content mt-2">
-                          Start Building!
-                          <VideoCard VideoCardData={videoData} />
-                        </div>
-                      </a>
-                    </Link>
+  <Row className="Search m-0">
+    {buildListByUrl?.box?.length == 0 &&
+    buildListByUrl.data?.length > 0 &&
+    buildListByUrl?.data?.length < 2 && buildListData?.length == 0
+      ? videosData.map((videoData: any, index: number) => {
+          const videoId = videoData.newVideoId
+            ? videoData.newVideoId
+            : videoData.videoId
+            ? videoData.videoId
+            : videoData.id;
+
+          const id = videoData.id;
+
+          return (
+            <div
+              className="d-flex justify-content-center mt-4 pb-2"
+              key={index}
+            >
+              <Link href={`/newBuild?id=${id}&&videoId=${videoId}`}>
+                <a>
+                  <div className="content mt-2">
+                    Start Building!
+                    <VideoCard VideoCardData={videoData} />
                   </div>
-                );
-              })
-            : videosData &&
-              videosData.length > 0 &&
-              videosData.map((videoData: any, index: number) => {
-                const videoId = videoData.newVideoId
-                  ? videoData.newVideoId
-                  : videoData.videoId
-                  ? videoData.videoId
-                  : videoData.id;
-                const id = videoData.id;
-                return (
-                  <Col lg={4} className="videoProfile pb-2" key={index}>
-                    <Link href={`/newBuild?id=${id}&&videoId=${videoId}`}>
-                      <a>
-                        <VideoCard VideoCardData={videoData} />
-                      </a>
-                    </Link>
-                  </Col>
-                );
-              })}
-        </Row>
-      </div>
+                </a>
+              </Link>
+            </div>
+          );
+        })
+      : videosData &&
+        videosData.length > 0 &&
+        videosData.map((videoData: any, index: number) => {
+          const videoId = videoData.newVideoId
+            ? videoData.newVideoId
+            : videoData.videoId
+            ? videoData.videoId
+            : videoData.id;
+          const id = videoData.id;
+          return (
+            <Col lg={4} className="videoProfile pb-2" key={index}>
+              <Link href={`/newBuild?id=${id}&&videoId=${videoId}`}>
+                <a>
+                  <VideoCard VideoCardData={videoData} />
+                </a>
+              </Link>
+            </Col>
+          );
+        })}
+  </Row>
+</div> } 
+    
+   
     </>
   );
 };

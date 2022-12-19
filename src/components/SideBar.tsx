@@ -41,35 +41,35 @@ const SideBar = (toggle: any) => {
       setSideBarBG("UserGuideBG");
     }
   }, [router.asPath]);
-console.log("$$$$$$$$$$", buildListByUrl.allBuilds &&
-buildListByUrl.allBuilds.length > 0 &&
-buildListData?.length == 0,
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)
 
-buildListData?.length)
   useEffect(() => {
     if (
-      //  (buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)||
-      // (buildListByUrl?.data && buildListByUrl?.data?.length > 0 && buildListData?.length == 0) ||
-      // (buildListByUrl?.results && buildListByUrl?.results?.length > 0 && buildListData?.length == 0) 
-      // (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
-      // (userBuilds?.data?.length > 0&& buildListData?.length == 0) 
-      (buildListByUrl.allBuilds &&
-              buildListByUrl.allBuilds.length > 0 &&
-              buildListData?.length == 0) || (!buildListByUrl.allBuilds &&
-                buildListByUrl?.box?.length == 0 &&
-                buildListByUrl.data?.length > 0 &&
-                buildListData?.length == 0) || ( buildListByUrl?.results?.length > 0 &&
-                  buildListData?.length == 0)
-  
+      (buildListByUrl?.data && buildListByUrl?.data?.length > 0 && buildListData?.length == 0) ||
+      (buildListByUrl?.results && buildListByUrl?.results?.length > 0 && buildListData?.length == 0) ||
+      (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
+      (userBuilds?.data?.length > 0&& buildListData?.length == 0) ||
+      (buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)
+
+      // (buildListByUrl.allBuilds &&
+      //         buildListByUrl.allBuilds.length > 0 &&
+      //         buildListData?.length == 0) || (!buildListByUrl.allBuilds &&
+      //           buildListByUrl?.box?.length == 0 &&
+      //           buildListByUrl.data?.length > 0 &&
+      //           buildListData?.length == 0) || ( buildListByUrl?.results?.length > 0 &&
+      //             buildListData?.length == 0)
     ) {
       setSideBarBG("profileBG");
     }
-  }, [buildList, userBuilds,buildListByUrl]);
+  }, [buildList, userBuilds,buildListByUrl,buildListData]);
 
   const handleCancel = () => {
     setModal5Open(false);
   };
-
+  console.log("testtest",buildList)
+  console.log("buildListByUrl",buildListByUrl)
+  console.log("userBuilds",userBuilds)
+  console.log("buildListData",buildListData)
   return (
     <>
       <div

@@ -170,7 +170,7 @@ body,
 .videoProfile {
   overflow: hidden;
   padding-right: 1rem;
-  margin-left: 12px;
+  // margin-left: 12px;
 }
 
 .content {
@@ -222,9 +222,11 @@ body,
 }
 
 .flashCards {
-  // position: absolute;
-  // bottom: 18px;
-  // right: 45px;
+  position: absolute;
+  bottom: 18px;
+  right: 45px;
+}
+.flashCardsModal{
   cursor: pointer;
   .ant-input-textarea-show-count::after {
     position: absolute;
@@ -1128,7 +1130,7 @@ h6 {
   font-weight: 400px !important;
   font-size: 20px !important;
   line-height: 23px !important;
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 .disableClass {
