@@ -110,8 +110,12 @@ const SideBar = (toggle: any) => {
           </div>
         </Sider>
       </div>
-      <LogInButton title="" open={modal5Open} className="btnrv" handleCancel={handleCancel}/>
-
+      <LogInButton
+        title=""
+        open={modal5Open}
+        className="btnrv"
+        handleCancel={handleCancel}
+      />
     </>
   );
 };

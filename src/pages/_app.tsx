@@ -11,7 +11,8 @@ import { Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
-
+import Script from "next/script";
+import { Head } from "next/document";
 const cookieCutter = require("cookie-cutter");
 
 // modified version - allows for custom pageProps type, falling back to 'any'
@@ -30,9 +31,12 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
   const [isFocus, setIsFocus] = useState(false);
 
   useEffect(() => {
-    let authorization = cookieCutter.get("authorization");
-    setAuthorization(authorization);
+    setAuthorization(cookieCutter.get("authorization"));
   }, []);
+
+  useEffect(() => {
+    console.log("testomg");
+  }, [pageProps]);
 
   useEffect(() => {
     if (authorization) {
@@ -49,6 +53,7 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
       <ToastContainer autoClose={2000} />
       <Provider store={store}>
         <Layout className="h-full">
+          {/* <SideBar router={router}/> */}
           {r.pathname != "/newBuild" && <SideBar isLoggedIn={isLoggedIn} />}
 
           <Layout className="site-layout">
