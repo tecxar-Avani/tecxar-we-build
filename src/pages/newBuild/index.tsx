@@ -83,7 +83,8 @@ const NewBuild = (props: any) => {
     //   ? buildList.box
     // :
     buildList && buildList.box?.length > 0 ? buildList.data : [];
-  
+const VideoDataForSave = buildListByUrl && buildListByUrl?.data?.length > 0 ? buildListByUrl.data : buildList.box
+console.log("@@@@@@@@@@@@@@@",buildList)
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -185,11 +186,11 @@ const NewBuild = (props: any) => {
     url: string
   ) => {
     const videoId = url && url.split("=").pop();
-   
+
     const videoDataFilter =
-      videoList &&
-      videoList.length > 0 &&
-      videoList.filter((F: any) => F.newVideoId == videoId);
+    VideoDataForSave &&
+    VideoDataForSave.length > 0 &&
+    VideoDataForSave.filter((F: any) => F.newVideoId == videoId);
     if (videoDataFilter && videoDataFilter.length > 0) {
       const saveData = {
         type_of_video: videoType,

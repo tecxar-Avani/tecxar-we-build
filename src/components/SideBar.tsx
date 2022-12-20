@@ -41,7 +41,6 @@ const SideBar = (toggle: any) => {
       setSideBarBG("UserGuideBG");
     }
   }, [router.asPath]);
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)
 
   useEffect(() => {
     if (
