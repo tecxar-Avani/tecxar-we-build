@@ -6,8 +6,6 @@ import { createFlashCardResponse, deleteFlashCardById,flashCardSelector } from "
 import AddFlashCardModal from "./AddFlashCardModal";
 
 const FlashCardModal = (props: any) => {
-  const deleteData = useAppSelector(flashCardSelector)
-  const [deleteId , setDeleteId] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

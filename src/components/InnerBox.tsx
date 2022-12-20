@@ -1,12 +1,10 @@
 import TextArea from "antd/lib/input/TextArea";
-import React, { useState } from "react";
-import { Col } from "react-bootstrap";
+import React from "react";
 import { Form } from "antd";
 
 // interface IVideosCard {
 //   VideoCardData: any;
 // }
-const numOfFields = 3;
 
 const InnerBox = (props: any) => {
   const [form] = Form.useForm();

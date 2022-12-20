@@ -1,4 +1,4 @@
-import React, { Dispatch, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import HeaderTitle from "@/components/headerTitle";
 import VideoCard from "@/components/VideoCard";
@@ -14,7 +14,6 @@ import {
 } from "../../store/reducers/build.reducer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
-import Head from "next/head";
 
 const SearchPage = (props: any) => {
   const router = useRouter();
@@ -171,10 +170,10 @@ const SearchPage = (props: any) => {
       : videosData &&
         videosData.length > 0 &&
         videosData.map((videoData: any, index: number) => {
-          const videoId = videoData.newVideoId
-            ? videoData.newVideoId
-            : videoData.videoId
-            ? videoData.videoId
+          const videoId = videoData.new_video_id
+            ? videoData.new_video_id
+            : videoData.video_id
+            ? videoData.video_id
             : videoData.id;
           const id = videoData.id;
           return (

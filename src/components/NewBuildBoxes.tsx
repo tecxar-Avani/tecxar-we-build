@@ -1,8 +1,6 @@
-import { getBuildById } from "@/store/reducers/build.reducer";
 import React from "react";
 import { Row } from "react-bootstrap";
 import OuterBox from "./OuterBox";
-import Ractangle from "./Ractangle";
 
 const NewBuildBoxes = (props: any) => {
   return (

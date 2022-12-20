@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
-import { Layout, Modal } from "antd";
+import { Layout } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import GoogleButton from "react-google-button";
 import { useAppSelector } from "../hooks";
 import { buildSelector } from "@/store/reducers/build.reducer";
 import LogInButton from "./LogInButton";

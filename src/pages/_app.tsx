@@ -11,8 +11,6 @@ import { Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
-import Script from "next/script";
-import { Head } from "next/document";
 const cookieCutter = require("cookie-cutter");
 
 // modified version - allows for custom pageProps type, falling back to 'any'

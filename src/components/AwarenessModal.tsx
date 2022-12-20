@@ -1,9 +1,6 @@
 import { Input, Modal, Button, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import Link from "next/link";
 import React, { useState } from "react";
-import { Card, CardImg, Col, Row } from "react-bootstrap";
-import Image from 'react-bootstrap/Image'
 import LogInButton from "./LogInButton";
 
 const { Search } = Input;
