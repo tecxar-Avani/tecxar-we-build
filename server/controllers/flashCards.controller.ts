@@ -165,7 +165,7 @@ export class FlashController {
     try {
 
       const userBuild = await this.flashCardService.updateFlashCardId(id, data);
-      return userBuild;
+      return{ userBuild ,message: "FlashCard updated successfully"}
     } catch (error) {
       return {
         error: {
@@ -191,7 +191,7 @@ export class FlashController {
           message: "FlashCard with this Id not found",
         });
       }
-      return { status: true, data: flashByDeleteId };
+      return { status: true, data: flashByDeleteId , message: "FlashCard delete successfully",};
     } catch (error) {
       if (error instanceof Error) {
         return { status: false, error: { code: 500, message: error.message } };

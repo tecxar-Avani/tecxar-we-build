@@ -55,7 +55,7 @@ const ProfileCard = (props: any) => {
         className={`${props.className} profile text-center border-bottom pb-3 position-relative`}
       >
         <div className="d-flex justify-content-end align-items-center py-2 px-4">
-          <Button className="logOut" type="primary" onClick={() => logout()}>
+          <Button className="logOut" type="primary" onClick={() => logout()} href={`/`}>
             {props.profile.logout}
           </Button>
         </div>
@@ -68,7 +68,7 @@ const ProfileCard = (props: any) => {
           </div>
           {props.profile && props.profile.editIcon && (
             <Image
-              className="px-2 mb-2"
+              className="px-2 mb-3"
               src={`/img/${props.profile.editIcon}`}
               onClick={() => {
                 props.showModal();

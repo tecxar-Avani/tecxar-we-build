@@ -78,14 +78,49 @@ export class AuthController {
             .cookie("authorization", token, {
               expires: new Date(Date.now() + 2700000),
             })
-            // .redirect(`${config.urlHost}${lastPage}`);
-             .redirect(`https://webuild.tecxar.io/${lastPage}`);
+             .redirect(`${config.urlHost}${lastPage}`);
+            //  .redirect(`https://webuild.tecxar.io/${lastPage}`);
         } else {
           res
-          // .redirect(`${config.urlHost}${lastPage}`);
-           .redirect(`https://webuild.tecxar.io/${lastPage}`);
+           .redirect(`${config.urlHost}${lastPage}`);
+          //  .redirect(`https://webuild.tecxar.io/${lastPage}`);
         }
-      }else{
+      }
+      else if(user && user.is_blocked == 2){
+        const data = {
+          is_blocked: 0,
+        };
+        const userId = user.id
+        const updateUser = await this.userService.updateUserProfile(userId,data);
+        if (updateUser) {
+          req.user = user;
+          const token = await jwt.sign(
+            {
+              id: user.id,
+              email: userEmail,
+              name: userName,
+            },
+            JWT_KEY,
+            {
+              expiresIn: "1d",
+            }
+          );
+          res
+            .cookie("authorization", token, {
+              expires: new Date(Date.now() + 2700000),
+            })
+             .redirect(`${config.urlHost}${lastPage}`);
+            //  .redirect(`https://webuild.tecxar.io/${lastPage}`);
+        } else {
+          res
+           .redirect(`${config.urlHost}${lastPage}`);
+          //  .redirect(`https://webuild.tecxar.io/${lastPage}`);
+        }
+      }
+      else{
+        // res.redirect(`${config.urlHost}${lastPage}`)
+        res.send("You are blocked by Admin")
+        // .redirect(`https://webuild.tecxar.io/${lastPage}`);
         return{
           message:"You are blocked by Admin"
         }

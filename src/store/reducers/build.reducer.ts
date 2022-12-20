@@ -89,6 +89,13 @@ export const UpdateUsersBuild = createAsyncThunk (
     return {status, data};
   }
 );
+
+export const deleteBuildId = createAsyncThunk(`build/deleteBuild/`, async (Id: number, { dispatch }) => {
+  const { status, data } = await BuildService.deleteBuildById(Id);
+ 
+  return { status, data };
+});
+
 interface State {
   id: number;
   build: IVideoBuild;
@@ -280,6 +287,14 @@ const buildSlice = createSlice({
             loading: false,
             editData: action.payload.data.editData,
           };
+        }
+      })
+      .addCase(deleteBuildId.fulfilled, (state, action) => {
+        toast.success(action.payload.data.message);
+        if (action.payload.status) {
+          return { ...state, loading: false };
+        } else {
+          return { ...state, loading: false, specificFlashcard: initialState.build };
         }
       })
       .addMatcher(isPendingAction, (state) => {

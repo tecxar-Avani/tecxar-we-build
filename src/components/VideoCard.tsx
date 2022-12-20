@@ -17,7 +17,7 @@ const VideoCard = (props: any) => {
                 className="iframs"
                 width="100%"
                 height="215"
-                // src={`${props.VideoCardData.url}?autoplay=false&mute=1`}
+                 src={`${props.VideoCardData.url}?autoplay=false&mute=1`}
                 name="youtube embed"
                 allow="autoplay; encrypted-media"
               ></iframe>

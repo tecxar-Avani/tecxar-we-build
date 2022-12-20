@@ -9,7 +9,6 @@ const FlashCardModal = (props: any) => {
   const deleteData = useAppSelector(flashCardSelector)
   const [deleteId , setDeleteId] = useState(false);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
   
   }, [props]);
@@ -129,6 +128,7 @@ const onDelete = (id:any) =>{
         flashCardArr={props.flashCardArr}
         handleSubmit={props.handleSubmit}
         defaultQuestionIndex={props.defaultQuestionIndex}
+        isLoggedIn={props.isLoggedIn}
       />
     </>
   );

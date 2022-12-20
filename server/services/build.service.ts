@@ -48,12 +48,13 @@ class BuildService {
   public async getUserInteractedBuild(
     userId: number
   ): Promise<IVideoBuild[] | null> {
-    const query = `SELECT vb.video_url
+    const query = `SELECT vb.*
     FROM video_builds AS vb
     LEFT JOIN flash_cards fc on vb.id = fc.build_id
     LEFT JOIN boxes box on vb.id = box.build_id
     LEFT JOIN box_reviews br on box.id = br.box_id
-    where br.created_by = ${userId} OR fc.created_by =${userId} `;
+    where (br.created_by = ${userId} OR fc.created_by = ${userId}) AND vb.created_by != ${userId}
+    group by vb.id; `;
     const UserInteractedId: IVideoBuild[] = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
     });
@@ -116,6 +117,20 @@ class BuildService {
         "created_by",
         "difficulty_level",
         "potential_polarization",
+        "provider",
+        "description",
+        "duration",
+       "new_video_id",
+        "published_at",
+       "thumbnails",
+        "title",
+        "embed_url",
+        "video_id",
+        "created_by",
+        "updated_by",
+        "createdAt",
+        "updatedAt",
+
       ],
       nest: true,
       where: where,

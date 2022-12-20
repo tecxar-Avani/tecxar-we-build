@@ -16,7 +16,6 @@ const AwarenessModal = (props: any) => {
   }
   const [form] = Form.useForm();
   form.resetFields();
-  console.log("DDDDDDDD",props)
     return (
       <div className="awarenessModal">
         <Modal

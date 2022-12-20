@@ -405,7 +405,7 @@ export class FlashController {
     }
   }
 
-  @Delete("/:id")
+  @Delete("/deleteBuild/:id")
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Delete build id of users" })
   async DeleteUsersBuild(@Param("id") id: number) {
