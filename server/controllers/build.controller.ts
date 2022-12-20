@@ -411,7 +411,7 @@ export class FlashController {
   async DeleteUsersBuild(@Param("id") id: number) {
     try {
       const userBuild = await this.buildService.deleteBuild(id);
-      return userBuild;
+      return {userBuild,message:"Build deleted successfully"} ;
     } catch (error) {
       return {
         error: {

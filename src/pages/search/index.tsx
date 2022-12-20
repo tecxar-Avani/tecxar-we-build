@@ -41,9 +41,11 @@ const SearchPage = (props: any) => {
 
    useEffect(() => {
       setBuildListData([]);
+
    }, [buildListByUrl]);
 
   useEffect(() => {
+
     {
       router && router?.query?.selfLearning
         ? props.isLoggedIn == true

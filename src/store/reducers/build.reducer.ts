@@ -60,15 +60,16 @@ export const getBuildById: any = createAsyncThunk(
 
 export const addBuild = createAsyncThunk(
   `build/add`,
-  async (createBuildData: IVideoBuild) => {
+  async (createBuildData: IVideoBuild,{dispatch}) => {
     const { status, data } = await BuildService.addBuild(createBuildData);
+    dispatch(getUsersBuild);
     return { status, data };
   }
 );
 
 export const getUsersBuild : any = createAsyncThunk(
   `build/`,
-  async (getBuildOfUser: IVideoBuild) => {
+  async (getBuildOfUser: IVideoBuild,) => {
   const {status,data} = await BuildService.getUsersBuild();
   return { status, data };
   }
@@ -262,6 +263,8 @@ const buildSlice = createSlice({
       .addCase(addBuild.fulfilled, (state, action) => {
         if (action.payload.data.status) {
           toast.success(action.payload.data.message);
+          //  Router.push(`/search?selfLearning=true`)
+          Router.push('/search?selfLearning=true', undefined,{ shallow: false })
           return {
             ...state,
             loading: false,
@@ -292,9 +295,10 @@ const buildSlice = createSlice({
       .addCase(deleteBuildId.fulfilled, (state, action) => {
         toast.success(action.payload.data.message);
         if (action.payload.status) {
+          Router.push("/")
           return { ...state, loading: false };
         } else {
-          return { ...state, loading: false, specificFlashcard: initialState.build };
+          return { ...state, loading: false, specificBuild: initialState.build };
         }
       })
       .addMatcher(isPendingAction, (state) => {

@@ -221,13 +221,22 @@ buildList.box
         id: buildId,
       };
       const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
-      buildCreatedBy &&
-      buildCreatedBy.length > 0 &&
-      buildCreatedBy[0] == userData.id
-        ? dispatch(UpdateUsersBuild(editData))
-        : boxData.length > 19
-        ? dispatch(addBuild(saveData))
-        : toast.error("You need to fill minimum 20 boxes");
+      if(buildCreatedBy && buildCreatedBy.length > 0 && buildCreatedBy[0] == userData.id){
+        dispatch(UpdateUsersBuild(editData))
+      }else if(boxData.length > 1){
+        dispatch(addBuild(saveData))
+        // router.push('/search?selfLearning=true', undefined,{ shallow: false })
+        // router.push(`/search?selfLearning=true`)    
+        }else{
+        toast.error("You need to fill minimum 20 boxes");
+      }
+      // buildCreatedBy &&
+      // buildCreatedBy.length > 0 &&
+      // buildCreatedBy[0] == userData.id
+      //   ? dispatch(UpdateUsersBuild(editData))
+      //   : boxData.length > 1
+      //   ?( dispatch(addBuild(saveData)))
+      //   : toast.error("You need to fill minimum 20 boxes");
     }
   };
  const successMsg = () => { toast.success("You accepted the challenge");}
@@ -326,6 +335,7 @@ buildList.box
                             ? "Resolve"
                             : "";
                         challenge(data, button);
+                        
                       }}
                     >
                       {data.review_type == "acceptance"
@@ -346,23 +356,21 @@ buildList.box
                                 className="mb-1 AwareInputChallenge"
                                 value={data.challenge}
                               ></TextArea>
-                        { data.created_by == userData.id &&
-                              <Button
+                        { data.created_by == userData.id ?
+                               <Button
                                 key="submit"
                                 type="primary"
                                 className="mt-0 challengeAcceptBtn"
                                  onClick={() =>  toast.success(`You accepted the ${ data.review_type}`)}
                               >
-                                {" "}
                                 {data.review_type == "acceptance"
                                   ? "acceptance"
                                   : data.review_type == "resistance"
                                   ? "resistance"
                                   : ""}
-                              </Button>}
+                              </Button>:[]
+                             }
                             </>
-                        
-                        
                       : []}
                   </Form>
                 )}
@@ -413,7 +421,7 @@ buildList.box
               ></TextArea>
             </div>
           </Form.Item>
-          <Button key="submit" htmlType="submit">
+          <Button key="submit" htmlType="submit" onClick={challengeClose}>
             Add
           </Button>
         </Form>

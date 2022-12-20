@@ -33,10 +33,6 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
   }, []);
 
   useEffect(() => {
-    console.log("testomg");
-  }, [pageProps]);
-
-  useEffect(() => {
     if (authorization) {
       setIsLoggedIn(true);
     }
