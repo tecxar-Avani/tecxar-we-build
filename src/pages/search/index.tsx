@@ -54,13 +54,14 @@ const SearchPage = (props: any) => {
         : dispatch(getBuilds());
     }
   }, [router]);
-
   useEffect(() => {
     try {
       if (
         (buildList?.box && buildList.box.length > 0 && buildListData?.length > 0) ||
         (buildListByUrl?.box && buildListByUrl.box.length > 0 && buildListData?.length > 0) ||
-        (userBuilds && userBuilds.box?.length > 0 && buildListData?.length > 0)
+        (userBuilds && userBuilds.box?.length > 0 && buildListData?.length > 0) 
+   
+
       ) {
         router && router.query.selfLearning
           ? userBuilds?.box?.length > 0
@@ -71,6 +72,8 @@ const SearchPage = (props: any) => {
         setVideosData(buildListByUrl.data);
       }else if(buildListByUrl?.allBuilds?.length > 0 &&  buildListByUrl?.data?.length == 0){
         setVideosData(buildListByUrl.allBuilds);
+      }else if ( buildListByUrl && buildListByUrl.results && buildListByUrl.results.length > 0){
+        setVideosData(buildListByUrl.results);
       }
     } catch (error) {
       console.log(error);

@@ -11,7 +11,6 @@ import LogInButton from "./LogInButton";
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
-  const { userData } = useAppSelector(userSelector);
   const { buildById } = useAppSelector(buildSelector);
   const dispatch = useAppDispatch();
   const polarisations = useRef(null);
@@ -24,23 +23,8 @@ const NewBuildSideCard = (props: any) => {
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
-  const [authorization, setAuthorization] = useState();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  //   useEffect(() => {
-  //     let authorization = cookieCutter.get("authorization");
-  //     setAuthorization(authorization);
-  //   }, []);
-  // console.log("AAAAAAAA",authorization)
-  //   useEffect(() => {
-  //     if (authorization) {
-  //       setIsLoggedIn(true);
-  //     }
-  //   }, [authorization]);
-
-  const togglemodal = () => {
-    setModal5Open(!modal5Open);
-  };
+ 
   const handleVideoTypeClick = (e: any) => {
     setVideoType(e.target.name);
   };
@@ -56,7 +40,7 @@ const NewBuildSideCard = (props: any) => {
   const handleCancel = () => {
     setModal5Open(false);
   };
-  const userId = buildById?.data?.map((a: any) => a.created_by);
+
   return (
     <>
       <div>
@@ -346,7 +330,7 @@ const NewBuildSideCard = (props: any) => {
         <div className="d-flex owd bd-highlight">
           {/* {props.isLoggedIn === true ? ( */}
           <div
-            className="save bd-highlight"
+            className="save bd-highlight cursor-pointer"
             onClick={() =>
               props.isLoggedIn === true
                 ? props.onSave(
@@ -361,40 +345,14 @@ const NewBuildSideCard = (props: any) => {
           >
             <Image src="/img/save.svg" className="ms-2" alt="no image" />
           </div>
-          {/* ) : (
-            <Tooltip
-              placement="topLeft"
-              title={
-                <>
-                  <div className="d-flex  ">
-                    <Image
-                      src="../img/bulb.png"
-                      className="mx-n2 ms-2 pe-2 bulb"
-                    />
-                    <p>
-                      Please make an account to save your build - don't let all
-                      your hard work go to waste!
-                      <a onClick={()=>window.open('/api/google')}>Login via Google</a>
-                    </p>
-                  </div>
-                </>
-              }
-              arrowPointAtCenter
-              color="#FAEFAF"
-            >
-              <div className="save bd-highlight">
-                <Image src="/img/save.svg" className="ms-2" alt="no image" />
-              </div>
-            </Tooltip>
-          )} */}
-          <div className="backward bd-highlight">
+          <div className="backward bd-highlight cursor-pointer">
             <Image src="/img/backward.svg" className="ms-5 me-1" />
           </div>
-          <div className=" forward bd-highlight">
+          <div className=" forward bd-highlight cursor-pointer">
             <Image src="/img/forward.svg" className="me-5" />
           </div>
           <Link href={`../`}>
-            <div className=" delt bd-highlight">
+            <div className="delt bd-highlight cursor-pointer">
               <Image src="/img/delt.svg" className="me-3" />
             </div>
           </Link>

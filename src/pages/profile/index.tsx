@@ -29,7 +29,7 @@ import {
 } from "@/store/reducers/build.reducer";
 import Head from "next/head";
 
-const Profile = () => {
+const Profile = (props:any) => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
   const { usersList, totalCount, editUser } = useAppSelector(userSelector);
@@ -157,7 +157,6 @@ const Profile = () => {
           questionData={questionData}
           showModal={showModal}
         />
-
         <HeaderTitle
           title="Your builds"
           className="title-list-of-profile py-2 my-2"
@@ -166,7 +165,7 @@ const Profile = () => {
           <div className="builds-Main overflow-auto">
             <div className="d-flex overflow-auto">
               {userBuilds &&
-                userBuilds?.data?.map((videoData: any, index: number) => (
+                userBuilds?.box?.map((videoData: any, index: number) => (
                   <Col md={4} key={index} className="videoProfile ">
                     <Link href={`/newBuild?id=${videoData.id}`}>
                       <a>
@@ -186,7 +185,7 @@ const Profile = () => {
           />
 
           <Row className="m-0">
-            {userBuildList.rows.map((videoData: any, index: number) => (
+            {userBuildList && userBuildList?.box?.map((videoData: any, index: number) => (
               <Col md={4} key={index} className="videoProfile">
                 <Link href={`/newBuild?id=${videoData.videoId}`}>
                   <a>
@@ -329,6 +328,7 @@ const Profile = () => {
       </div>
 
       <FlashCardModal
+      isLoggedIn={props.isLoggedIn}
         modal={revealAns}
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}

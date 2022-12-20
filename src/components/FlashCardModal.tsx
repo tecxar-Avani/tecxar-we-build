@@ -7,7 +7,6 @@ import AddFlashCardModal from "./AddFlashCardModal";
 
 const FlashCardModal = (props: any) => {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
   
   }, [props]);
@@ -127,6 +126,7 @@ const onDelete = (id:any) =>{
         flashCardArr={props.flashCardArr}
         handleSubmit={props.handleSubmit}
         defaultQuestionIndex={props.defaultQuestionIndex}
+        isLoggedIn={props.isLoggedIn}
       />
     </>
   );

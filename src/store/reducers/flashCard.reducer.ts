@@ -213,6 +213,7 @@ const flashCardSlice = createSlice({
       })
       .addCase(updateFlashCardId.fulfilled, (state, action) => {
         if (action.payload.status) {
+          toast.success(action.payload.data.message);
           return {
             ...state,
             loading: false,
@@ -227,6 +228,7 @@ const flashCardSlice = createSlice({
         }
       })
       .addCase(deleteFlashCardId.fulfilled, (state, action) => {
+        toast.success(action.payload.data.message);
         if (action.payload.status) {
           return { ...state, loading: false };
         } else {

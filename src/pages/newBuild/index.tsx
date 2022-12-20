@@ -79,7 +79,10 @@ const NewBuild = (props: any) => {
     //   ? buildList.box
     // :
     buildList && buildList.box?.length > 0 ? buildList.data : [];
-const VideoDataForSave = buildListByUrl && buildListByUrl?.data?.length > 0 ? buildListByUrl.data : buildList.box
+
+const VideoDataForSave = (buildListByUrl && buildListByUrl?.data?.length > 0) ? buildListByUrl.data : 
+( buildList && buildList.box?.length > 0 && buildList.box[0]?.id) ?  buildList.box:
+buildList.box
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -181,11 +184,12 @@ const VideoDataForSave = buildListByUrl && buildListByUrl?.data?.length > 0 ? bu
     url: string
   ) => {
     const videoId = url && url.split("=").pop();
-
     const videoDataFilter =
     VideoDataForSave &&
     VideoDataForSave.length > 0 &&
     VideoDataForSave.filter((F: any) => F.newVideoId == videoId);
+
+
     if (videoDataFilter && videoDataFilter.length > 0) {
       const saveData = {
         type_of_video: videoType,
@@ -216,17 +220,17 @@ const VideoDataForSave = buildListByUrl && buildListByUrl?.data?.length > 0 ? bu
 
         id: buildId,
       };
-
       const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
       buildCreatedBy &&
       buildCreatedBy.length > 0 &&
       buildCreatedBy[0] == userData.id
         ? dispatch(UpdateUsersBuild(editData))
-        : boxData.length > 20
+        : boxData.length > 19
         ? dispatch(addBuild(saveData))
         : toast.error("You need to fill minimum 20 boxes");
     }
   };
+ const successMsg = () => { toast.success("You accepted the challenge");}
 
   const handleChange = (e: any) => {
     setAwarenessIndex(e.description);
@@ -275,7 +279,6 @@ const VideoDataForSave = buildListByUrl && buildListByUrl?.data?.length > 0 ? bu
     return awarenessFilter
   })
 
-console.log("SSSSSSSS", buildById);
   const content = (title: any) => {
     return (
       <>
@@ -347,6 +350,7 @@ console.log("SSSSSSSS", buildById);
                                 key="submit"
                                 type="primary"
                                 className="mt-0 challengeAcceptBtn"
+                                 onClick={() =>  toast.success(`You accepted the ${ data.review_type}`)}
                               >
                                 {" "}
                                 {data.review_type == "acceptance"
@@ -524,6 +528,7 @@ console.log("SSSSSSSS", buildById);
       />
 
       <FlashCardModal
+      isLoggedIn={props.isLoggedIn}
         modal={revealAns}
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}
@@ -610,6 +615,7 @@ console.log("SSSSSSSS", buildById);
         open={open}
         content={(title: any) => content(title)}
         handleCancel={handleCancel}
+        handleOk={handleCancel}
         btn="challenge"
         title={`${
           accept

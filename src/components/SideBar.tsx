@@ -64,10 +64,7 @@ const SideBar = (toggle: any) => {
   const handleCancel = () => {
     setModal5Open(false);
   };
-  console.log("testtest",buildList)
-  console.log("buildListByUrl",buildListByUrl)
-  console.log("userBuilds",userBuilds)
-  console.log("buildListData",buildListData)
+
   return (
     <>
       <div

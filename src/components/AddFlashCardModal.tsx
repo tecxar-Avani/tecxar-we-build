@@ -11,6 +11,7 @@ const AddFlashCardModal = (props: any) => {
   const handleCancel = () =>{
     setModal5Open(false)
   }
+  
   return (
     <>
       <Modal
