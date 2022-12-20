@@ -1,6 +1,5 @@
 import { Input, Modal, Button, Form } from "antd";
 import React, { useState } from "react";
-import GoogleButton from "react-google-button";
 import LogInButton from "./LogInButton";
 
 const { Search } = Input;
@@ -63,12 +62,6 @@ const AddFlashCardModal = (props: any) => {
               showCount
               maxLength={100}
               rows={4}
-              // defaultValue={"question"}
-              // defaultValue={
-              //   props.defaultQuestionIndex &&
-              //   props.flashCardArr &&
-              //   props.flashCardArr[props.defaultQuestionIndex - 1]?.question
-              // }
               defaultValue={props?.flashCardData?.question}
             />
           </Form.Item>
@@ -78,11 +71,6 @@ const AddFlashCardModal = (props: any) => {
               showCount
               maxLength={100}
               rows={4}
-              // defaultValue={
-              //   props.defaultQuestionIndex &&
-              //   props.flashCardArr &&
-              //   props.flashCardArr[props.defaultQuestionIndex - 1]?.answer
-              // }
               defaultValue={props?.flashCardData?.answer}
 
             />

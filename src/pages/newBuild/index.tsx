@@ -24,9 +24,8 @@ import {
   addReviewResponse,
   awarenessSelector,
   getAwarenessByBoxId,
-  getReviewResponseByAwarenessId,
 } from "../../store/reducers/awareness.reducer";
-import { Button, Form ,Spin} from "antd";
+import { Button, Form} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
@@ -55,8 +54,6 @@ const NewBuild = (props: any) => {
   const [modal4Open, setModal4Open] = useState(false);
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [challengeModal, setChallengeModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const [challengeData, setChallengeData] = useState([]);
   const [challengeArr, setChallengeArr] = useState([{}]);
 
@@ -64,7 +61,6 @@ const NewBuild = (props: any) => {
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
   const [boxId, setBoxId] = useState();
   const [boxAwarenessID, setBoxAwarenessID] = useState();
-
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
@@ -241,6 +237,7 @@ buildList.box
     setAwarenessBoxId(e.id);
     setBoxId(e.boxId);
   };
+
   const handleData = (comment: any, review: any) => {
     const data = {
       comment: comment.comment,
