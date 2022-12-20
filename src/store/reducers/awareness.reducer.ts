@@ -45,10 +45,11 @@ export const getAwarenessByBoxId = createAsyncThunk(
 
 export const addReviewResponse = createAsyncThunk(
   `reviewResponse/add`,
-  async (createBoxReviewResponseData:IBoxReviewsResponse) => {
+  async (createBoxReviewResponseData:IBoxReviewsResponse, { dispatch }) => {
     const {status,data} = await AwarenessService.createReviewResponse(
       createBoxReviewResponseData
     );
+    dispatch(getAwarenessByBoxId(createBoxReviewResponseData?.build_id));
     return { status, data };
   }
 )

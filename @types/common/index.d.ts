@@ -129,5 +129,5 @@ export interface IBoxReviewsResponse {
   comment?: string;
   created_by?: number;
   createdAt?: Date;
- 
+ build_id?:number;
 }

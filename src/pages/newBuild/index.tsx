@@ -349,6 +349,7 @@ buildList.box
                                 className="mb-1 AwareInputChallenge"
                                 value={data.challenge}
                               ></TextArea>
+                        { data.created_by == userData.id &&
                               <Button
                                 key="submit"
                                 type="primary"
@@ -361,7 +362,7 @@ buildList.box
                                   : data.review_type == "resistance"
                                   ? "resistance"
                                   : ""}
-                              </Button>
+                              </Button>}
                             </>
                         
                         
@@ -428,6 +429,7 @@ buildList.box
       review_type: challengeTitle,
       comment: review_response.comment,
       boxReview_id: e.id,
+      build_id:buildId
     };
     dispatch(addReviewResponse(data));
   };

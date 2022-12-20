@@ -16,7 +16,7 @@ class AwarenessService {
     return API.get(`/reviewResponse/`)
   }
 
-  getReviewsResponseByAwareness(review_id:number){
+  getReviewsResponseByAwareness(review_id:number | undefined){
     return API.get(`/reviewResponse/${review_id}`)
   }
  }
