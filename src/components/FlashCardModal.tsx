@@ -49,21 +49,43 @@ const onDelete = (id:any) =>{
   const index = props.flashCard.index;
   const arrayLength = props.flashCard.arrayLength;
   const editQuestion = props.flashCard.editQuestion;
- 
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
-      // add dispatch API here instead of console
-      const flashCardResponseData = {
-        response_type : data,
-        flash_card_id : questionId
+      if(data == "Again"){
+        {
+          if (userId) {
+            props.againCallback(
+              data,
+              userId,
+              questionId,
+              index,
+              arrayLength,
+              title,
+              editQuestion
+            );
+          } else {
+            props.againCallback(
+              props.defaultQuestionIndex - 1,
+              data
+            );
+          }
+        }
+      } 
+      else{
+        const flashCardResponseData = {
+          response_type : data,
+          flash_card_id : questionId
+        }
+        dispatch(createFlashCardResponse(flashCardResponseData))
+        if (index <= arrayLength) {
+          if (userId) {
+            props.questionCallback(userId, index, questionId);
+          } else {
+            props.questionCallback(index, questionId);
+            }}
       }
-      dispatch(createFlashCardResponse(flashCardResponseData))
-      if (index <= arrayLength) {
-        if (userId) {
-          props.questionCallback(userId, index, questionId);
-        } else {
-          props.questionCallback(index, questionId);
-          }}
+      // add dispatch API here instead of console
+   
       // } else {
       //   props.questionCallback(index, questionId);
       // }
