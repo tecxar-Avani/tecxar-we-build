@@ -80,29 +80,35 @@ const NewBuild = (props: any) => {
     // :
     buildList && buildList.box?.length > 0 ? buildList.data : [];
 
+
+//We are doing this to get video's youtube information which we need to save
 const VideoDataForSave = (buildListByUrl && buildListByUrl?.data?.length > 0) ? buildListByUrl.data : 
 ( buildList && buildList.box?.length > 0 && buildList.box[0]?.id) ?  buildList.box:
 buildList.box
+
+//Create Flash card
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
       answer: data.answer,
       build_id: buildId,
     };
-   
-
     dispatch(createFlashCard(flashCardData));
   };
+
+
   const Acceptance = () => {
     setResistance(false);
     setInspiration(false);
     setAccept(true);
   };
+
   const Inspiration = () => {
     setAccept(false);
     setResistance(false);
     setInspiration(true);
   };
+  
   const Resistance = () => {
     setAccept(false);
     setInspiration(false);
@@ -209,15 +215,10 @@ buildList.box
 
       const editData = {
         type_of_video: videoType,
-
         potential_polarization: polarisationLevel,
-
         difficulty_level: difficultyLevel,
-
         boxes: boxData,
-
         video_url: url,
-
         id: buildId,
       };
       const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
@@ -225,8 +226,6 @@ buildList.box
         dispatch(UpdateUsersBuild(editData))
       }else if(boxData.length > 1){
         dispatch(addBuild(saveData))
-        // router.push('/search?selfLearning=true', undefined,{ shallow: false })
-        // router.push(`/search?selfLearning=true`)    
         }else{
         toast.error("You need to fill minimum 20 boxes");
       }

@@ -142,16 +142,18 @@ export class FlashController {
           data: [],
           box: search || url ? [] : userBuild,
           results: userBuild,
+          allBuilds: [],
         };
       } else {
         if (url && url != undefined && url != "undefined") {
           const { searchedData, error } = await this.youtubeApiCall(url);
-         
+
           if (searchedData && searchedData.length > 0) {
             return {
               status: true,
               data: searchedData,
               box: userBuild,
+              allBuilds: [],
             };
           }
         } else {
@@ -334,7 +336,7 @@ export class FlashController {
   async getAllBuilds(@QueryParam("search") search?: string) {
     try {
       const userBuild = await this.buildService.getAllBuilds(search);
-   
+
       return { status: true, box: userBuild };
     } catch (error) {
       return {
@@ -411,7 +413,7 @@ export class FlashController {
   async DeleteUsersBuild(@Param("id") id: number) {
     try {
       const userBuild = await this.buildService.deleteBuild(id);
-      return {userBuild,message:"Build deleted successfully"} ;
+      return { userBuild, message: "Build deleted successfully" };
     } catch (error) {
       return {
         error: {
