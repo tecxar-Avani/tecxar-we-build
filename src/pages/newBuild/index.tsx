@@ -25,14 +25,13 @@ import {
   awarenessSelector,
   getAwarenessByBoxId,
 } from "../../store/reducers/awareness.reducer";
-import { Button, Form} from "antd";
+import { Button, Form, Spin } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
 import { userSelector } from "../../store/reducers/user.reducer";
 import Head from "next/head";
 import moment from "moment";
-
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -58,7 +57,7 @@ const NewBuild = (props: any) => {
   const [challengeModal, setChallengeModal] = useState(false);
   const [challengeData, setChallengeData] = useState([]);
   const [challengeArr, setChallengeArr] = useState([{}]);
-  const today = new Date()
+  const today = new Date();
   const [challengeTitle, setChallengeTitle] = useState();
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
   const [boxId, setBoxId] = useState();
@@ -73,22 +72,8 @@ const NewBuild = (props: any) => {
       };
     })
   );
-  const { buildList, buildListByUrl, userBuilds } =
-    useAppSelector(buildSelector);
 
-  const videoList =
-    // buildList && buildList.box?.length > 0
-    //   ? buildList.box
-    // :
-    buildList && buildList.box?.length > 0 ? buildList.data : [];
-
-
-//We are doing this to get video's youtube information which we need to save
-const VideoDataForSave = (buildListByUrl && buildListByUrl?.data?.length > 0) ? buildListByUrl.data : 
-( buildList && buildList.box?.length > 0 && buildList.box[0]?.id) ?  buildList.box:
-buildList.box
-
-//Create Flash card
+  //Create Flash card
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -97,7 +82,6 @@ buildList.box
     };
     dispatch(createFlashCard(flashCardData));
   };
-
 
   const Acceptance = () => {
     setResistance(false);
@@ -110,7 +94,7 @@ buildList.box
     setResistance(false);
     setInspiration(true);
   };
-  
+
   const Resistance = () => {
     setAccept(false);
     setInspiration(false);
@@ -129,6 +113,7 @@ buildList.box
   useEffect(() => {
     dispatch(getAwarenessByBoxId(buildId));
   }, [buildId]);
+
   useEffect(() => {
     if (router.query.id == undefined) {
       setDataArray([]);
@@ -191,56 +176,35 @@ buildList.box
     difficultyLevel: any,
     url: string
   ) => {
-    const videoId = url && url.split("=").pop();
-    const videoDataFilter =
-    VideoDataForSave &&
-    VideoDataForSave.length > 0 &&
-    VideoDataForSave.filter((F: any) => F.newVideoId == videoId);
-
-
-    if (videoDataFilter && videoDataFilter.length > 0) {
-      const saveData = {
-        type_of_video: videoType,
-        potential_polarization: polarisationLevel,
-        difficulty_level: difficultyLevel,
-        boxes: boxData,
-        video_url: url,
-        description: videoDataFilter[0].description,
-        duration: videoDataFilter[0].duration,
-        new_video_id: videoDataFilter[0].newVideoId,
-        published_at: videoDataFilter[0].publishedAt,
-        thumbnails: videoDataFilter[0].thumbnails,
-        title: videoDataFilter[0].title,
-        embed_url: videoDataFilter[0].url,
-        video_id: videoDataFilter[0].videoId,
-      };
-
-      const editData = {
-        type_of_video: videoType,
-        potential_polarization: polarisationLevel,
-        difficulty_level: difficultyLevel,
-        boxes: boxData,
-        video_url: url,
-        id: buildId,
-      };
-      const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
-      if(buildCreatedBy && buildCreatedBy.length > 0 && buildCreatedBy[0] == userData.id){
-        dispatch(UpdateUsersBuild(editData))
-      }else if(boxData.length > 1){
-        dispatch(addBuild(saveData))
-        }else{
-        toast.error("You need to fill minimum 20 boxes");
-      }
-      // buildCreatedBy &&
-      // buildCreatedBy.length > 0 &&
-      // buildCreatedBy[0] == userData.id
-      //   ? dispatch(UpdateUsersBuild(editData))
-      //   : boxData.length > 1
-      //   ?( dispatch(addBuild(saveData)))
-      //   : toast.error("You need to fill minimum 20 boxes");
+    const saveData = {
+      type_of_video: videoType,
+      potential_polarization: polarisationLevel,
+      difficulty_level: difficultyLevel,
+      boxes: boxData,
+      video_url: url,
+    };
+    const editData = {
+      type_of_video: videoType,
+      potential_polarization: polarisationLevel,
+      difficulty_level: difficultyLevel,
+      boxes: boxData,
+      video_url: url,
+      id: buildId,
+    };
+    const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
+    if (
+      buildCreatedBy &&
+      buildCreatedBy.length > 0 &&
+      buildCreatedBy[0] == userData.id
+    ) {
+      console.log("editData", editData);
+      // dispatch(UpdateUsersBuild(editData));
+    } else if (boxData.length > 1) {
+      dispatch(addBuild(saveData));
+    } else {
+      toast.error("You need to fill minimum 20 boxes");
     }
   };
- const successMsg = () => { toast.success("You accepted the challenge");}
 
   const handleChange = (e: any) => {
     setAwarenessIndex(e.description);
@@ -275,20 +239,23 @@ buildList.box
     setChallengeModal(false);
   };
 
-  const unique =awarenessList && awarenessList.length > 0 && awarenessList
-  .map((item:any) => item.id)
-  .filter((value:any, index:any, self:any) => self.indexOf(value) === index);
-  // useEffect(()=>{
-  //   setChallengeArr(unique)
-  // },[unique])
+  const unique =
+    awarenessList &&
+    awarenessList.length > 0 &&
+    awarenessList
+      .map((item: any) => item.id)
+      .filter(
+        (value: any, index: any, self: any) => self.indexOf(value) === index
+      );
 
-  const filter = unique?.length > 0 && unique.map((data:any)=>{
-    const awarenessFilter = awarenessList.filter(
-      (d: any) => d.id == data
-    );
-    return awarenessFilter
-  })
-const buildCreatedBy = buildById?.data?.map((a:any) => a.created_by)
+  const filter =
+    unique?.length > 0 &&
+    unique.map((data: any) => {
+      const awarenessFilter = awarenessList.filter((d: any) => d.id == data);
+      return awarenessFilter;
+    });
+
+  const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
   const content = (title: any) => {
     const titleLowerCase = title.toLowerCase();
     return (
@@ -296,108 +263,140 @@ const buildCreatedBy = buildById?.data?.map((a:any) => a.created_by)
         {awarenessList &&
           awarenessList.length > 0 &&
           awarenessList.map((data: any) => {
-            const formatDate = data.acceptance_time && moment(data.acceptance_time).fromNow()
-            const formatHour = formatDate && formatDate.split(" ")
-            const formatDateReviewResponse = data.review_time && moment(data.review_time).fromNow()
-            const formatHourReviewResponse = formatDateReviewResponse && formatDateReviewResponse.split(" ")
-            console.log("~~~~~~~~~~~~~~~~~~~~~~",formatDate)
-console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
+            const formatDate =
+              data.acceptance_time && moment(data.acceptance_time).fromNow();
+            const formatHour = formatDate && formatDate.split(" ");
+            const formatDateReviewResponse =
+              data.review_time && moment(data.review_time).fromNow();
+            const formatHourReviewResponse =
+              formatDateReviewResponse && formatDateReviewResponse.split(" ");
+
             return (
               <>
-  {        
-  // a few seconds ago   
-  // a minute ago 
-                boxAwarenessID == data.sorting_order && titleLowerCase == data.review_type && (
-                  <Form
-                    className={`${data.challenge && "challenge-textbox-main"}`}
-                  >
-                    <div className="header mt-1">
-                      {data.acceptance_user}'s {data.review_type} 
-                      &nbsp;&nbsp;{formatHour?.length > 0 && formatDate == 'a few seconds ago' && 'a minute ago' ? 'Now' :
-                      ((formatHour[0] && formatHour[0] < '25'  && formatHour[1] == 'hours') || (formatHour[0] < '61'  && formatHour[1] == 'minutes') 
-                       ? "Today" 
-                       :(formatHour[0] > '25' || formatHour[0] < '48'   && formatHour[1] == 'hours')
-                      //  : (formatHour[0] > "24" ||formatHour[0] < "48" )
-                      ? "yesterday" 
-                       :moment(data.acceptance_time).fromNow())}
-                    </div>
-                    <Form.Item name="comment" className="input-arrow">
-                      <div className={`awarenessModal mb-2 header`}>
-                        <TextArea
-                          showCount
-                          maxLength={500}
-                          rows={5}
-                          className="mb-0 AwareInputFirst"
-                          value={data.comment}
-                          readOnly={true}
-                        ></TextArea>
-                      </div>
-                    </Form.Item>
-                    <Button
-                      key="submit"
-                      type="primary"
-                      className={` ${
-                        data.review_type == "resistance" ? "yellowBtn" : ""
-                      }`}
-                      style={
-                        props.isLoggedIn
-                          ? {}
-                          : { pointerEvents: "none", opacity: 0.4 }
-                      }
-                      onClick={(e: any) => {
-                        const button =
-                          data.review_type == "acceptance"
+                {
+                  // a few seconds ago
+                  // a minute ago
+                  boxAwarenessID == data.sorting_order &&
+                    titleLowerCase == data.review_type && (
+                      <Form
+                        className={`${
+                          data.challenge && "challenge-textbox-main"
+                        }`}
+                      >
+                        <div className="header mt-1">
+                          {data.acceptance_user}'s {data.review_type}
+                          &nbsp;&nbsp;
+                          {formatHour?.length > 0 &&
+                          formatDate == "a few seconds ago" &&
+                          "a minute ago"
+                            ? "Now"
+                            : (formatHour[0] &&
+                                formatHour[0] < "25" &&
+                                formatHour[1] == "hours") ||
+                              (formatHour[0] < "61" &&
+                                formatHour[1] == "minutes")
+                            ? "Today"
+                            : formatHour[0] > "25" ||
+                              (formatHour[0] < "48" && formatHour[1] == "hours")
+                            ? //  : (formatHour[0] > "24" ||formatHour[0] < "48" )
+                              "yesterday"
+                            : moment(data.acceptance_time).fromNow()}
+                        </div>
+                        <Form.Item name="comment" className="input-arrow">
+                          <div className={`awarenessModal mb-2 header`}>
+                            <TextArea
+                              showCount
+                              maxLength={500}
+                              rows={5}
+                              className="mb-0 AwareInputFirst"
+                              value={data.comment}
+                              readOnly={true}
+                            ></TextArea>
+                          </div>
+                        </Form.Item>
+                        <Button
+                          key="submit"
+                          type="primary"
+                          className={` ${
+                            data.review_type == "resistance" ? "yellowBtn" : ""
+                          }`}
+                          style={
+                            props.isLoggedIn
+                              ? {}
+                              : { pointerEvents: "none", opacity: 0.4 }
+                          }
+                          onClick={(e: any) => {
+                            const button =
+                              data.review_type == "acceptance"
+                                ? "Challenge"
+                                : data.review_type == "resistance"
+                                ? "Resolve"
+                                : "";
+                            challenge(data, button);
+                          }}
+                        >
+                          {data.review_type == "acceptance"
                             ? "Challenge"
                             : data.review_type == "resistance"
                             ? "Resolve"
-                            : "";
-                        challenge(data, button);
-                        
-                      }}
-                    >
-                      {data.review_type == "acceptance"
-                        ? "Challenge"
-                        : data.review_type == "resistance"
-                        ? "Resolve"
-                        : ""}
-                    </Button>
-                    {data.challenge ?
-                            <>
-                              <div className="AwareInputChallengeHeader">
-                                {data.challenge_user}'s {data.response_review}
-                                 &nbsp;&nbsp;{formatHourReviewResponse?.length > 0 && formatDateReviewResponse == 'a few seconds ago' && 'a minute ago' ? 'Now' :
-                                 ((formatHourReviewResponse[0] < '25'  && formatHourReviewResponse[1] == 'hours') || (formatHourReviewResponse[0] < '61'  && formatHourReviewResponse[1] == 'minutes') 
-                                 ? "Today" 
-                                 :(formatHourReviewResponse[0] > '25' || formatHourReviewResponse[0] < '48'   && formatHourReviewResponse[1] == 'hours')
-                                 ? "yesterday" 
-                                 :moment(data.review_time).fromNow())}
-                              </div>
-                              <TextArea
-                                maxLength={500}
-                                rows={3}
-                                className="mb-1 AwareInputChallenge"
-                                value={data.challenge}
-                                readOnly={true}
-                              ></TextArea>
-                       
-                               <Button
-                                key="submit"
-                                type="primary"
-                                className="mt-0 challengeAcceptBtn"
-                                style={ buildCreatedBy[0] == userData.id ? {} : {pointerEvents:"none",opacity:-0.6 }}
-                                 onClick={() =>  toast.success(`You accepted the ${ data.review_type}`)}
-                              >
-                                {data.review_type == "acceptance"
-                                  ? "acceptance"
-                                  : data.review_type == "resistance"
-                                  ? "resistance"
-                                  : ""}
-                              </Button>
-                             
-                            </>
-                      : []}
-                  </Form>
-                )}
+                            : ""}
+                        </Button>
+                        {data.challenge ? (
+                          <>
+                            <div className="AwareInputChallengeHeader">
+                              {data.challenge_user}'s {data.response_review}
+                              &nbsp;&nbsp;
+                              {formatHourReviewResponse?.length > 0 &&
+                              formatDateReviewResponse == "a few seconds ago" &&
+                              "a minute ago"
+                                ? "Now"
+                                : (formatHourReviewResponse[0] < "25" &&
+                                    formatHourReviewResponse[1] == "hours") ||
+                                  (formatHourReviewResponse[0] < "61" &&
+                                    formatHourReviewResponse[1] == "minutes")
+                                ? "Today"
+                                : formatHourReviewResponse[0] > "25" ||
+                                  (formatHourReviewResponse[0] < "48" &&
+                                    formatHourReviewResponse[1] == "hours")
+                                ? "yesterday"
+                                : moment(data.review_time).fromNow()}
+                            </div>
+                            <TextArea
+                              maxLength={500}
+                              rows={3}
+                              className="mb-1 AwareInputChallenge"
+                              value={data.challenge}
+                              readOnly={true}
+                            ></TextArea>
+
+                            <Button
+                              key="submit"
+                              type="primary"
+                              className="mt-0 challengeAcceptBtn"
+                              style={
+                                buildCreatedBy[0] == userData.id
+                                  ? {}
+                                  : { pointerEvents: "none", opacity: -0.6 }
+                              }
+                              onClick={() =>
+                                toast.success(
+                                  `You accepted the ${data.review_type}`
+                                )
+                              }
+                            >
+                              {data.review_type == "acceptance"
+                                ? "acceptance"
+                                : data.review_type == "resistance"
+                                ? "resistance"
+                                : ""}
+                            </Button>
+                          </>
+                        ) : (
+                          []
+                        )}
+                      </Form>
+                    )
+                }
               </>
             );
           })}
@@ -411,9 +410,9 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
   };
   const challengeContent = (data: any) => {
     data = challengeData;
-    const formatDate = data.acceptance_time && moment(data.acceptance_time).fromNow()
-    const formatHour = formatDate && formatDate.split(" ")
-
+    const formatDate =
+      data.acceptance_time && moment(data.acceptance_time).fromNow();
+    const formatHour = formatDate && formatDate.split(" ");
 
     return (
       <>
@@ -424,13 +423,28 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
           }
         >
           <div className="header mt-2">
-            {data.acceptance_user}'s {data.review_type} 
-            &nbsp;&nbsp;{formatHour?.length > 0 && formatDate == 'a few seconds ago' && 'a minute ago' ? 'Now' :
-                      ((formatHour && formatHour[0] && formatHour[0] < '25'  && formatHour[1] == 'hours') || (formatHour && formatHour[0] && formatHour[0] < '61'  && formatHour[1] == 'minutes') 
-            ? "Today"
-            :(formatHour && formatHour[0] && formatHour[0] > '25' || formatHour && formatHour[0] && formatHour[0] < "48"   && formatHour[1] == 'hours')
-            ? "yesterday" 
-            :moment(data.review_time).fromNow())}
+            {data.acceptance_user}'s {data.review_type}
+            &nbsp;&nbsp;
+            {formatHour?.length > 0 &&
+            formatDate == "a few seconds ago" &&
+            "a minute ago"
+              ? "Now"
+              : (formatHour &&
+                  formatHour[0] &&
+                  formatHour[0] < "25" &&
+                  formatHour[1] == "hours") ||
+                (formatHour &&
+                  formatHour[0] &&
+                  formatHour[0] < "61" &&
+                  formatHour[1] == "minutes")
+              ? "Today"
+              : (formatHour && formatHour[0] && formatHour[0] > "25") ||
+                (formatHour &&
+                  formatHour[0] &&
+                  formatHour[0] < "48" &&
+                  formatHour[1] == "hours")
+              ? "yesterday"
+              : moment(data.review_time).fromNow()}
           </div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
@@ -444,7 +458,9 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
               ></TextArea>
             </div>
           </Form.Item>
-          <div className="header mt-2">{userData.user_name}'s {challengeTitle} &nbsp;&nbsp; Now</div>
+          <div className="header mt-2">
+            {userData.user_name}'s {challengeTitle} &nbsp;&nbsp; Now
+          </div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
               <TextArea
@@ -455,7 +471,7 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
               ></TextArea>
             </div>
           </Form.Item>
-          <Button key="submit" htmlType="submit" onClick={challengeClose} >
+          <Button key="submit" htmlType="submit" onClick={challengeClose}>
             Add
           </Button>
         </Form>
@@ -468,15 +484,15 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
       review_type: challengeTitle,
       comment: review_response.comment,
       boxReview_id: e.id,
-      build_id:buildId
+      build_id: buildId,
     };
     dispatch(addReviewResponse(data));
   };
   return (
-     <>  
-                  {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
-         {/* <>    */}
-         {/* <Spin spinning={build.loading} delay={100}/> */}
+    <>
+      {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
+      {/* <>    */}
+      <Spin spinning={build.loading} delay={100} />
       <Head>
         <title>New Build</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -507,7 +523,15 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
             arr={arr}
             setArr={(value: any) => {
               setArr(value);
-              if (value.length > 20) {
+              if (value.length > 20 && !buildById) {
+                setDataArray([
+                  ...dataArray,
+                  {
+                    id: value.length,
+                    message: "",
+                  },
+                ]);
+              } else {
                 setDataArray([
                   ...dataArray,
                   {
@@ -572,7 +596,7 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
       />
 
       <FlashCardModal
-      isLoggedIn={props.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
         modal={revealAns}
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}
@@ -653,7 +677,7 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
             ? "resistanceModalBG"
             : ""
         } `}
-        isLoggedIn = {props.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
       />
       <AwarenessTypeModal
         open={open}
@@ -696,7 +720,6 @@ console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
             : ""
         } `}
       />
-       {/* </>} */}
     </>
   );
 };

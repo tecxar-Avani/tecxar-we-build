@@ -16,7 +16,7 @@ const SideBar = (toggle: any) => {
   // const url = window.location.origin;
   const [sideBarBG, setSideBarBG] = useState("profileBG");
   const [modal5Open, setModal5Open] = useState(false);
-  const [buildListData, setBuildListData] = useState([buildList?.box]);
+  const [buildListData, setBuildListData] = useState(buildList?.box);
 
   useEffect(() => {
     setBuildListData(buildList?.box);

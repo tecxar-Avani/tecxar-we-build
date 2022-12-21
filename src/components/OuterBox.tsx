@@ -14,18 +14,20 @@ const OuterBox = (props: any) => {
   const { userData } = useAppSelector(userSelector);
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getBuildById(buildId));
-    dispatch(getUserByEmail());
-  }, []);
   const [form] = Form.useForm();
   const handleChange = (event: any) => {
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
-    let BoxData = { sorting_order: id, description: value};
+    let BoxData = { sorting_order: id, description: value };
 
-    if (value.length === 150 && !props.arr.includes(propsId)) {
+    if (value.length === 150 && !props.arr.includes(propsId) && !props.boxId) {
+      props.setBoxData(BoxData);
+      props.responseCallback(propsId, value, id);
+    } else if (
+      props.boxId &&
+      value.length === 150 &&
+      !props.arr.includes(propsId)
+    ) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
     }
@@ -47,12 +49,14 @@ const OuterBox = (props: any) => {
                 defaultValue={props.description ? props.description : ""}
                 onInput={handleChange}
                 id={props.id}
-                onFocus={()=>{
-                  const data = {id:props.id,
-                  boxId:props.boxId,
-                  description:props.description
-                }
-                  props.onFocus(data)}}
+                onFocus={() => {
+                  const data = {
+                    id: props.id,
+                    boxId: props.boxId,
+                    description: props.description,
+                  };
+                  props.onFocus(data);
+                }}
                 readOnly={
                   props.description &&
                   userId &&

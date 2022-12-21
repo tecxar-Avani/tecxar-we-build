@@ -33,8 +33,6 @@ const Profile = (props:any) => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
   const { usersList, totalCount, editUser } = useAppSelector(userSelector);
-
-  const editFlashCard = useAppSelector(flashCardSelector);
   const [revealAns, setRevealAns] = useState(false);
   const [modal3Open, setModal3Open] = useState<any>({});
   const [modal4Open, setModal4Open] = useState(false);
@@ -45,10 +43,8 @@ const Profile = (props:any) => {
   const { flashCardUserList } = useAppSelector(flashCardSelector);
   const { userBuildList, userBuilds } = useAppSelector(buildSelector);
   const [filterParam, setFilterParam] = useState<any>(["All"]);
-
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
 
-  // useEffect(() => {}, [defaultQuestionIndex]);
   const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getFlashCardByUser());
@@ -136,6 +132,7 @@ const Profile = (props:any) => {
   const handleSubmit = (data: any) => {
     dispatch(updateFlashCardId(data));
   };
+  
   //all profile
   const blocked_user =
     usersList && usersList?.filter((user: any) => user.is_blocked == true);

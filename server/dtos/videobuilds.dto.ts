@@ -31,6 +31,36 @@ export class videoBuildDto implements IVideoBuild {
   difficulty_level: any;
 
   @IsOptional()
+  @IsString()
+  description: string;
+
+  @IsOptional()
+  @IsString()
+  duration: string;
+
+  @IsOptional()
+  @IsString()
+  new_video_id: string;
+
+  @IsOptional()
+  @IsString()
+  published_at: string;
+
+  @IsOptional()
+  thumbnails: any;
+
+  @IsOptional()
+  title: any;
+
+  @IsOptional()
+  @IsString()
+  embed_url: string;
+
+  @IsOptional()
+  @IsString()
+  video_id: string;
+
+  @IsOptional()
   @IsArray()
   boxes?: any;
 

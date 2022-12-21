@@ -17,7 +17,7 @@ import { OpenAPI } from "routing-controllers-openapi";
 import FlashCardService from "@/services/flashCards.service";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
-import { updateVideoBuildDto } from "@/dtos/videobuilds.dto";
+import { updateVideoBuildDto, videoBuildDto } from "@/dtos/videobuilds.dto";
 import BuildService from "@/services/build.service";
 import { google } from "googleapis";
 import config from "@/configs";
@@ -36,10 +36,27 @@ export class FlashController {
   @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new build" })
-  async createBuild(@Body() videoBuildData: any, @Req() req: RequestWithUser) {
+  async createBuild(
+    @Body() videoBuildData: videoBuildDto,
+    @Req() req: RequestWithUser
+  ) {
     try {
+      const { searchedData, error } = await this.youtubeApiCall(
+        videoBuildData.video_url
+      );
       videoBuildData.created_by = req.user.id;
       videoBuildData.updated_by = req.user.id;
+
+      if (searchedData && searchedData.length > 0) {
+        videoBuildData.description = searchedData[0].description;
+        videoBuildData.duration = searchedData[0].duration;
+        videoBuildData.new_video_id = searchedData[0].newVideoId;
+        videoBuildData.published_at = searchedData[0].publishedAt;
+        videoBuildData.thumbnails = searchedData[0].thumbnails;
+        videoBuildData.title = searchedData[0].title;
+        videoBuildData.embed_url = searchedData[0].url;
+        videoBuildData.video_id = searchedData[0].videoId;
+      }
       const createBuildData: IVideoBuild | null =
         await this.buildService.createBuild(videoBuildData);
 
@@ -61,7 +78,7 @@ export class FlashController {
       }
       return {
         status: true,
-        data: createBuildData,
+         data: createBuildData,
         message: "Video Build created successfully.",
       };
     } catch (error) {
@@ -226,58 +243,6 @@ export class FlashController {
         finalDuration = `${hours}:${minutes}:${duration}`;
         return finalDuration;
       };
-      let youtubeData;
-
-      // if (userBuild && userBuild.length > 0) {
-      //   await Promise.all(
-      //     userBuild.map(async (url: any) => {
-      //       const urlIdToSearch =
-      //         url.video_url && url.video_url.split("=").pop();
-
-      //       youtubeData =
-      //         urlIdToSearch &&
-      //         (await youtube.videos.list({
-      //           part: ["snippet,contentDetails"],
-      //           id: [`${urlIdToSearch}`],
-      //         }));
-
-      //       await Promise.all(
-      //         youtubeData?.data?.items && youtubeData.data.items.length > 0
-      //           ? youtubeData.data.items.map(async (item: any) => {
-      //               const videoUrl = item?.snippet?.thumbnails?.default?.url;
-      //               const splittedUrl = videoUrl?.split("vi/");
-      //               const result = splittedUrl.pop();
-      //               const array1 = result?.split("/de");
-      //               const duration1 = await youtube.videos.list({
-      //                 id: array1[0],
-      //                 part: ["contentDetails"],
-      //               });
-      //               const youTubeFormatDuration =
-      //                 (await duration1) &&
-      //                 duration1.data &&
-      //                 duration1.data.items &&
-      //                 duration1.data.items.length > 0 &&
-      //                 duration1.data.items[0]?.contentDetails?.duration;
-      //               durationCalculation(youTubeFormatDuration);
-
-      //               const filter = {
-      //                 id: url.id,
-      //                 videoId: urlIdToSearch,
-      //                 thumbnails: item?.snippet?.thumbnails?.default,
-      //                 description: item?.snippet?.description,
-      //                 title: item?.snippet?.title,
-      //                 publishedAt: item?.snippet?.publishedAt,
-      //                 duration: finalDuration,
-      //                 newVideoId: array1[0],
-      //                 url: `https://www.youtube.com/embed/${array1[0]}`,
-      //               };
-      //               searchedData.push(filter);
-      //             })
-      //           : []
-      //       );
-      //     })
-      //   );
-      // } else
       if (videoUrl) {
         const videoIdToSearch = videoUrl && videoUrl.split("=").pop();
         const response: any =
@@ -306,7 +271,7 @@ export class FlashController {
           durationCalculation(youTubeFormatDuration);
 
           const data = {
-            videoId: item.id.videoId,
+            videoId: videoIdToSearch,
             thumbnails: item.snippet.thumbnails.default,
             description: item.snippet.description,
             title: item.snippet.title,

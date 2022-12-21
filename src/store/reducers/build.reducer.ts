@@ -70,7 +70,7 @@ export const getBuildById: any = createAsyncThunk(
 
 export const addBuild = createAsyncThunk(
   `build/add`,
-  async (createBuildData: IVideoBuild, { dispatch }) => {
+  async (createBuildData: IVideoBuild | any, { dispatch }) => {
     const { status, data } = await BuildService.addBuild(createBuildData);
     dispatch(getUsersBuild);
     return { status, data };
@@ -202,7 +202,7 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
-            // buildListByUrl: initialState.buildListByUrl,
+             buildListByUrl: initialState.buildListByUrl,
             buildList: action.payload.rows,
             boxes: action.payload.boxes,
           };
@@ -210,7 +210,7 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
-            // buildListByUrl: initialState.buildListByUrl,
+            buildListByUrl: initialState.buildListByUrl,
             buildList: initialState.buildList,
           };
         }
@@ -268,14 +268,14 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
-            // buildListByUrl: initialState.buildListByUrl,
+             buildListByUrl: initialState.buildListByUrl,
             userBuilds: action.payload.data,
           };
         } else {
           return {
             ...state,
             loading: false,
-            // buildListByUrl: initialState.buildListByUrl,
+            buildListByUrl: initialState.buildListByUrl,
             userBuilds: initialState.userBuilds,
           };
         }

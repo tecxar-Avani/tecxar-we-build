@@ -143,7 +143,6 @@ const SearchPage = (props: any) => {
 
       <Row className="Search m-0">
         {videosData.map((videoData: any, index: number) => {
-          console.log("videoData", videoData);
           const { id } = videoData;
           const videoId = videoData.new_video_id
             ? videoData.new_video_id
