@@ -1,4 +1,10 @@
-import { IFlashCard, IVideoBuild, IBoxReviews ,IBoxReviewsResponse, ICreateUser} from "@types/common";
+import {
+  IFlashCard,
+  IVideoBuild,
+  IBoxReviews,
+  IBoxReviewsResponse,
+  ICreateUser,
+} from "@types/common";
 
 interface IResponseBase {
   redirect?: string;
@@ -27,11 +33,25 @@ interface IFailedResponse extends IResponseBase {
 
 interface IBuildRowsCountResponse extends ISuccessPaginatedData<IVideoBuild> {}
 
+interface IBuildList {
+  status: boolean;
+  rows: IVideoBuild[];
+  box: IVideoBuild[];
+  data: IVideoBuild[];
+}
+
+interface IBuildListByURL extends IBuildList {
+  allBuilds: IVideoBuild[];
+  results: IVideoBuild[];
+}
+
 interface IFlashCardRowsCountResponse
   extends ISuccessPaginatedData<IFlashCard> {}
 interface IBuildReviewRowsCountResponse
   extends ISuccessPaginatedData<IBoxReviews> {}
 
-interface IReviewResponseRowsCountResponse extends ISuccessPaginatedData<IBoxReviewsResponse>{}
+interface IReviewResponseRowsCountResponse
+  extends ISuccessPaginatedData<IBoxReviewsResponse> {}
 
-interface IUserResponseRowsCountResponse extends ISuccessPaginatedData<ICreateUser>{}
+interface IUserResponseRowsCountResponse
+  extends ISuccessPaginatedData<ICreateUser> {}

@@ -6,14 +6,18 @@ import CustomButton from "./Button";
 import Link from "next/link";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { userSelector } from "@/store/reducers/user.reducer";
-import { buildSelector, deleteBuildId, getBuildById } from "@/store/reducers/build.reducer";
+import {
+  buildSelector,
+  deleteBuildId,
+  getBuildById,
+} from "@/store/reducers/build.reducer";
 import LogInButton from "./LogInButton";
 import { Router } from "react-router-dom";
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
-  const {userData} = useAppSelector(userSelector);
+  const { userData } = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
   const polarisations = useRef(null);
   const [difficulty, setDifficulty] = useState(false);
@@ -25,8 +29,8 @@ const NewBuildSideCard = (props: any) => {
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
+  console.log("QQQQQQQQ", props);
 
- 
   const handleVideoTypeClick = (e: any) => {
     setVideoType(e.target.name);
   };
@@ -38,15 +42,14 @@ const NewBuildSideCard = (props: any) => {
   };
   useEffect(() => {
     dispatch(getBuildById(props.id));
-     
   }, []);
   const handleCancel = () => {
     setModal5Open(false);
   };
   const deleteBuild = () => {
-    dispatch(deleteBuildId(props.id))
-  }
- const userId = buildById?.data?.map((a:any) => a.created_by)
+    dispatch(deleteBuildId(props.id));
+  };
+  const userId = buildById?.data?.map((a: any) => a.created_by);
   return (
     <>
       <div>
@@ -347,8 +350,15 @@ const NewBuildSideCard = (props: any) => {
                   )
                 : setModal5Open(true)
             }
-              style={(props.id == undefined || props.id == "undefined") || (userId && userId.length>0 && userId[0] == userData.id) ? {} : {pointerEvents:"none",opacity:0.4 }}
-          >{console.log("######",props.id)}
+            style={
+              props.id == undefined ||
+              props.id == "undefined" ||
+              (userId && userId.length > 0 && userId[0] == userData.id)
+                ? {}
+                : { pointerEvents: "none", opacity: 0.4 }
+            }
+          >
+            {console.log("######", props.id)}
             <Image src="/img/save.svg" className="ms-2" alt="no image" />
           </div>
           <div className="backward bd-highlight cursor-pointer">
@@ -358,14 +368,26 @@ const NewBuildSideCard = (props: any) => {
             <Image src="/img/forward.svg" className="me-5" />
           </div>
           {/* <Link href={`../`}> */}
-            <div className="delt bd-highlight cursor-pointer" onClick={deleteBuild} style={ userId && userId.length>0 && userId[0] == userData.id ? {} : {pointerEvents:"none",opacity:0.4 }}>
-              <Image src="/img/delt.svg" className="me-3" />
-            </div>
+          <div
+            className="delt bd-highlight cursor-pointer"
+            onClick={deleteBuild}
+            style={
+              userId && userId.length > 0 && userId[0] == userData.id
+                ? {}
+                : { pointerEvents: "none", opacity: 0.4 }
+            }
+          >
+            <Image src="/img/delt.svg" className="me-3" />
+          </div>
           {/* </Link> */}
         </div>
       </div>
-      <LogInButton title="" open={modal5Open} className="btnrv" handleCancel={handleCancel}/>
-
+      <LogInButton
+        title=""
+        open={modal5Open}
+        className="btnrv"
+        handleCancel={handleCancel}
+      />
     </>
   );
 };

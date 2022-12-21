@@ -10,7 +10,11 @@ import {
 import BuildService from "../../service/build.service";
 import Router from "next/router";
 import { toast } from "react-toastify";
-import { IBuildRowsCountResponse } from "../../../@types/responses";
+import {
+  IBuildList,
+  IBuildListByURL,
+  IBuildRowsCountResponse,
+} from "../../../@types/responses";
 import { IBoxes, IVideoBuild } from "../../../@types/common";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
@@ -45,8 +49,14 @@ export const getUserInteractedBuild: any = createAsyncThunk(
 
 export const getBuildByUrl: any = createAsyncThunk(
   `build/get/url`,
-  async (searchData:{url?:string,search?:string}): Promise<IBuildRowsCountResponse> => {
-    const { data } = await BuildService.getBuildByUrl(searchData.url,searchData.search);
+  async (searchData: {
+    url?: string;
+    search?: string;
+  }): Promise<IBuildRowsCountResponse> => {
+    const { data } = await BuildService.getBuildByUrl(
+      searchData.url,
+      searchData.search
+    );
     return { status: data.status, rows: data };
   }
 );
@@ -60,24 +70,21 @@ export const getBuildById: any = createAsyncThunk(
 
 export const addBuild = createAsyncThunk(
   `build/add`,
-  async (createBuildData: IVideoBuild,{dispatch}) => {
+  async (createBuildData: IVideoBuild, { dispatch }) => {
     const { status, data } = await BuildService.addBuild(createBuildData);
     dispatch(getUsersBuild);
     return { status, data };
   }
 );
 
-export const getUsersBuild : any = createAsyncThunk(
-  `build/`,
-  async (getBuildOfUser: IVideoBuild,) => {
-  const {status,data} = await BuildService.getUsersBuild();
+export const getUsersBuild: any = createAsyncThunk(`build/`, async () => {
+  const { status, data } = await BuildService.getUsersBuild();
   return { status, data };
-  }
-)
+});
 
-export const UpdateUsersBuild = createAsyncThunk (
+export const UpdateUsersBuild = createAsyncThunk(
   `build/update/`,
-  async (updateBuildData : IVideoBuild) => {
+  async (updateBuildData: IVideoBuild) => {
     const id = Number(updateBuildData.id);
     const editData = {
       id: Number(updateBuildData.id),
@@ -86,27 +93,30 @@ export const UpdateUsersBuild = createAsyncThunk (
       potential_polarization: updateBuildData.potential_polarization,
       difficulty_level: updateBuildData.difficulty_level,
     };
-    const {status,data} = await BuildService.UpdateBuildById(id,editData);
-    return {status, data};
+    const { status, data } = await BuildService.UpdateBuildById(id, editData);
+    return { status, data };
   }
 );
 
-export const deleteBuildId = createAsyncThunk(`build/deleteBuild/`, async (Id: number, { dispatch }) => {
-  const { status, data } = await BuildService.deleteBuildById(Id);
- 
-  return { status, data };
-});
+export const deleteBuildId = createAsyncThunk(
+  `build/deleteBuild/`,
+  async (Id: number, { dispatch }) => {
+    const { status, data } = await BuildService.deleteBuildById(Id);
+
+    return { status, data };
+  }
+);
 
 interface State {
   id: number;
   build: IVideoBuild;
   loading: boolean;
   error: string | undefined;
-  buildList: IBuildRowsCountResponse | any;
+  buildList: IBuildList;
   userBuildList: IBuildRowsCountResponse | any;
-  buildListByUrl: IBuildRowsCountResponse | any;
+  buildListByUrl: IBuildListByURL;
   buildById: IBuildRowsCountResponse | any;
-  userBuilds:IBuildRowsCountResponse | any;
+  userBuilds: IBuildRowsCountResponse | any;
   boxes: IBoxes;
 }
 
@@ -118,6 +128,8 @@ const initialState: State = {
   buildList: {
     status: true,
     rows: [],
+    box: [],
+    data: [],
   },
   userBuildList: {
     status: true,
@@ -126,6 +138,10 @@ const initialState: State = {
   buildListByUrl: {
     status: true,
     rows: [],
+    box: [],
+    data: [],
+    allBuilds: [],
+    results: [],
   },
   buildById: {
     status: true,
@@ -186,6 +202,7 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
+            // buildListByUrl: initialState.buildListByUrl,
             buildList: action.payload.rows,
             boxes: action.payload.boxes,
           };
@@ -193,6 +210,7 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
+            // buildListByUrl: initialState.buildListByUrl,
             buildList: initialState.buildList,
           };
         }
@@ -250,12 +268,14 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
+            // buildListByUrl: initialState.buildListByUrl,
             userBuilds: action.payload.data,
           };
         } else {
           return {
             ...state,
             loading: false,
+            // buildListByUrl: initialState.buildListByUrl,
             userBuilds: initialState.userBuilds,
           };
         }
@@ -263,8 +283,7 @@ const buildSlice = createSlice({
       .addCase(addBuild.fulfilled, (state, action) => {
         if (action.payload.data.status) {
           toast.success(action.payload.data.message);
-          //  Router.push(`/search?selfLearning=true`)
-          Router.push('/search?selfLearning=true','/search?selfLearning=true',{ shallow: false })
+          Router.push("/search?selfLearning=true");
           return {
             ...state,
             loading: false,
@@ -295,10 +314,14 @@ const buildSlice = createSlice({
       .addCase(deleteBuildId.fulfilled, (state, action) => {
         toast.success(action.payload.data.message);
         if (action.payload.status) {
-          Router.push("/")
+          Router.push("/");
           return { ...state, loading: false };
         } else {
-          return { ...state, loading: false, specificBuild: initialState.build };
+          return {
+            ...state,
+            loading: false,
+            specificBuild: initialState.build,
+          };
         }
       })
       .addMatcher(isPendingAction, (state) => {
