@@ -31,6 +31,8 @@ import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
 import { userSelector } from "../../store/reducers/user.reducer";
 import Head from "next/head";
+import moment from "moment";
+
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -56,7 +58,7 @@ const NewBuild = (props: any) => {
   const [challengeModal, setChallengeModal] = useState(false);
   const [challengeData, setChallengeData] = useState([]);
   const [challengeArr, setChallengeArr] = useState([{}]);
-
+  const today = new Date()
   const [challengeTitle, setChallengeTitle] = useState();
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
   const [boxId, setBoxId] = useState();
@@ -81,8 +83,7 @@ const NewBuild = (props: any) => {
     buildList && buildList.box?.length > 0 ? buildList.data : [];
 
 const VideoDataForSave = (buildListByUrl && buildListByUrl?.data?.length > 0) ? buildListByUrl.data : 
-( buildList && buildList.box?.length > 0 && buildList.box[0]?.id) ?  buildList.box:
-buildList.box
+( buildList && buildList.box?.length > 0 && buildList.box[0]?.id) ?  buildList.box:buildList.box
   const handleSubmit = (data: any) => {
     const flashCardData = {
       question: data.question,
@@ -287,23 +288,38 @@ buildList.box
     );
     return awarenessFilter
   })
-
+const buildCreatedBy = buildById?.data?.map((a:any) => a.created_by)
   const content = (title: any) => {
+    const titleLowerCase = title.toLowerCase();
     return (
       <>
         {awarenessList &&
           awarenessList.length > 0 &&
           awarenessList.map((data: any) => {
-            
+            const formatDate = data.acceptance_time && moment(data.acceptance_time).fromNow()
+            const formatHour = formatDate && formatDate.split(" ")
+            const formatDateReviewResponse = data.review_time && moment(data.review_time).fromNow()
+            const formatHourReviewResponse = formatDateReviewResponse && formatDateReviewResponse.split(" ")
+            console.log("~~~~~~~~~~~~~~~~~~~~~~",formatDate)
+console.log("~~~~~~~~~~formatHour~~~~~~~~~~~~",formatHour)
             return (
               <>
-  {
-                boxAwarenessID == data.sorting_order && title == data.review_type && (
+  {        
+  // a few seconds ago   
+  // a minute ago 
+                boxAwarenessID == data.sorting_order && titleLowerCase == data.review_type && (
                   <Form
                     className={`${data.challenge && "challenge-textbox-main"}`}
                   >
                     <div className="header mt-1">
-                      {data.acceptance_user}'s {data.review_type}
+                      {data.acceptance_user}'s {data.review_type} 
+                      &nbsp;&nbsp;{formatHour?.length > 0 && formatDate == 'a few seconds ago' && 'a minute ago' ? 'Now' :
+                      ((formatHour[0] && formatHour[0] < '25'  && formatHour[1] == 'hours') || (formatHour[0] < '61'  && formatHour[1] == 'minutes') 
+                       ? "Today" 
+                       :(formatHour[0] > '25' || formatHour[0] < '48'   && formatHour[1] == 'hours')
+                      //  : (formatHour[0] > "24" ||formatHour[0] < "48" )
+                      ? "yesterday" 
+                       :moment(data.acceptance_time).fromNow())}
                     </div>
                     <Form.Item name="comment" className="input-arrow">
                       <div className={`awarenessModal mb-2 header`}>
@@ -313,6 +329,7 @@ buildList.box
                           rows={5}
                           className="mb-0 AwareInputFirst"
                           value={data.comment}
+                          readOnly={true}
                         ></TextArea>
                       </div>
                     </Form.Item>
@@ -344,23 +361,30 @@ buildList.box
                         ? "Resolve"
                         : ""}
                     </Button>
-
                     {data.challenge ?
                             <>
                               <div className="AwareInputChallengeHeader">
                                 {data.challenge_user}'s {data.response_review}
+                                 &nbsp;&nbsp;{formatHourReviewResponse?.length > 0 && formatDateReviewResponse == 'a few seconds ago' && 'a minute ago' ? 'Now' :
+                                 ((formatHourReviewResponse[0] < '25'  && formatHourReviewResponse[1] == 'hours') || (formatHourReviewResponse[0] < '61'  && formatHourReviewResponse[1] == 'minutes') 
+                                 ? "Today" 
+                                 :(formatHourReviewResponse[0] > '25' || formatHourReviewResponse[0] < '48'   && formatHourReviewResponse[1] == 'hours')
+                                 ? "yesterday" 
+                                 :moment(data.review_time).fromNow())}
                               </div>
                               <TextArea
                                 maxLength={500}
                                 rows={3}
                                 className="mb-1 AwareInputChallenge"
                                 value={data.challenge}
+                                readOnly={true}
                               ></TextArea>
-                        { data.created_by == userData.id ?
+                       
                                <Button
                                 key="submit"
                                 type="primary"
                                 className="mt-0 challengeAcceptBtn"
+                                style={ buildCreatedBy[0] == userData.id ? {} : {pointerEvents:"none",opacity:-0.6 }}
                                  onClick={() =>  toast.success(`You accepted the ${ data.review_type}`)}
                               >
                                 {data.review_type == "acceptance"
@@ -368,8 +392,8 @@ buildList.box
                                   : data.review_type == "resistance"
                                   ? "resistance"
                                   : ""}
-                              </Button>:[]
-                             }
+                              </Button>
+                             
                             </>
                       : []}
                   </Form>
@@ -387,6 +411,9 @@ buildList.box
   };
   const challengeContent = (data: any) => {
     data = challengeData;
+    const formatDate = data.acceptance_time && moment(data.acceptance_time).fromNow()
+    const formatHour = formatDate && formatDate.split(" ")
+
 
     return (
       <>
@@ -397,7 +424,13 @@ buildList.box
           }
         >
           <div className="header mt-2">
-            {data.acceptance_user}'s {data.review_type}
+            {data.acceptance_user}'s {data.review_type} 
+            &nbsp;&nbsp;{formatHour?.length > 0 && formatDate == 'a few seconds ago' && 'a minute ago' ? 'Now' :
+                      ((formatHour && formatHour[0] && formatHour[0] < '25'  && formatHour[1] == 'hours') || (formatHour && formatHour[0] && formatHour[0] < '61'  && formatHour[1] == 'minutes') 
+            ? "Today"
+            :(formatHour && formatHour[0] && formatHour[0] > '25' || formatHour && formatHour[0] && formatHour[0] < "48"   && formatHour[1] == 'hours')
+            ? "yesterday" 
+            :moment(data.review_time).fromNow())}
           </div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
@@ -407,10 +440,11 @@ buildList.box
                 className="mb-2 AwareInputFirst"
                 id={data.id}
                 value={data.comment}
+                readOnly={true}
               ></TextArea>
             </div>
           </Form.Item>
-          <div className="header mt-2">{data.response_review}</div>
+          <div className="header mt-2">{userData.user_name}'s {challengeTitle} &nbsp;&nbsp; Now</div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
               <TextArea
@@ -421,7 +455,7 @@ buildList.box
               ></TextArea>
             </div>
           </Form.Item>
-          <Button key="submit" htmlType="submit" onClick={challengeClose}>
+          <Button key="submit" htmlType="submit" onClick={challengeClose} >
             Add
           </Button>
         </Form>
@@ -629,11 +663,11 @@ buildList.box
         btn="challenge"
         title={`${
           accept
-            ? "acceptance"
+            ? "Acceptance"
             : inspiration
-            ? "inspiration"
+            ? "Inspiration"
             : resistance
-            ? "resistance"
+            ? "Resistance"
             : ""
         }`}
         className={`${

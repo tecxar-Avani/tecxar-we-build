@@ -40,7 +40,7 @@ class BoxService {
     if (isEmpty(id)) {
       throw new HttpException(400, "Enter ID");
     }
-    const query = `SELECT br.id,br.box_id, br.review_type, br.comment,brr.comment AS challenge,brr.review_type AS response_review ,br.created_by,
+    const query = `SELECT br.id,br.box_id, br.review_type, br.comment,brr.comment AS challenge,brr.review_type AS response_review ,br.createdAt AS acceptance_time ,brr.createdAt AS review_time ,
     u.user_name AS acceptance_user, us.user_name AS challenge_user,box.sorting_order
                         FROM
                       boxes box

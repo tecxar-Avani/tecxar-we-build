@@ -32,6 +32,7 @@ const AddFlashCardModal = (props: any) => {
             key="submit1"
             htmlType="submit"
             className="openmodal"
+            // type="text"
           >
             Save
           </Button>

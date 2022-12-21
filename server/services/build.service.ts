@@ -35,7 +35,20 @@ class BuildService {
   }
 
   public async getBuildById(id: number): Promise<IVideoBuild[] | null> {
-    const query = `SELECT box.description,box.id,box.sorting_order,vb.created_by
+    const query = `SELECT box.description,box.id,box.sorting_order,vb.created_by,
+    vb.id As vb_id,
+    vb.video_url,
+    vb.type_of_video,
+    vb.difficulty_level,
+    vb.potential_polarization,
+    vb.title,
+    vb.description as vb_description,
+    vb.duration,
+    vb.new_video_id,
+    vb.published_at,
+    vb.thumbnails,
+    vb.embed_url,
+    vb.video_id
     FROM video_builds AS vb
     LEFT JOIN boxes box on vb.id = box.build_id
     where vb.id = ${id} `;
@@ -224,7 +237,6 @@ class BuildService {
         "new_video_id",
         "published_at",
         "thumbnails",
-        "title",
         "embed_url",
         "video_id",
       ],

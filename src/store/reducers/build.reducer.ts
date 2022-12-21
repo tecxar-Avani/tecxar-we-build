@@ -264,7 +264,7 @@ const buildSlice = createSlice({
         if (action.payload.data.status) {
           toast.success(action.payload.data.message);
           //  Router.push(`/search?selfLearning=true`)
-          Router.push('/search?selfLearning=true', undefined,{ shallow: false })
+          Router.push('/search?selfLearning=true','/search?selfLearning=true',{ shallow: false })
           return {
             ...state,
             loading: false,
