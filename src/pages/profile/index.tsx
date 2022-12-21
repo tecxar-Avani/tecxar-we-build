@@ -97,13 +97,14 @@ const Profile = (props:any) => {
     setEditName(false);
   };
 
-  const questionData = (index?: number, questionId?: number) => {
+  const questionData = (index?: any, data?:any, questionId?: number ) => {
+
+    // setDefaultQuestionIndex(index)
     const findLastValue = flashCardArr[flashCardArr.length - 1];
     const lastQuestionId = findLastValue && findLastValue.id;
     // const editQuestion = index
     //   ? flashCardArr[index + 1].id
     //   : flashCardArr[0].id;
-
     if (defaultQuestionIndex == flashCardArr.length) {
       setModal3Open({
         content: "Congratulations! You have finished your deck",
@@ -114,7 +115,10 @@ const Profile = (props:any) => {
       setRevealAns(true);
     } else {
       const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
-      setDefaultQuestionIndex(defaultQuestionIndex + 1);
+      console.log("defaultQuestionIndex",defaultQuestionIndex)
+      data && data == "Again" ? 
+        setDefaultQuestionIndex(defaultQuestionIndex- 1)
+      : setDefaultQuestionIndex(defaultQuestionIndex + 1);
       setModal3Open({
         content: flashCardArr[defaultQuestionIndex]?.question,
         footer: ["Reveal Answer"],
@@ -159,7 +163,7 @@ const Profile = (props:any) => {
           className="title-list-of-profile py-2 my-2"
         />
         <div className="m-0 pb-2 videoCard overflow-x-scroll">
-          <div className="builds-Main overflow-auto">
+          <div className="overflow-auto">
             <div className="d-flex overflow-auto">
               {userBuilds &&
                 userBuilds?.box?.map((videoData: any, index: number) => (
@@ -360,7 +364,8 @@ const Profile = (props:any) => {
           // alert(index)
           // const indexVal = index > 1 ? index - 1 : index;
           questionData(defaultQuestionIndex, questionId);
-        }}
+        }
+      }
         setAddFlashcard={setAddFlashcard}
         setEditFlashCardData={(questionId: any) => {
           const questionFilter = flashCardArr.filter(
@@ -384,6 +389,12 @@ const Profile = (props:any) => {
           handleSubmit(data);
         }}
         defaultQuestionIndex={defaultQuestionIndex}
+        againCallback={(
+          index: number,
+          data:any
+        )=>{
+          questionData(index,data);
+         }}
       />
 
       <Modal

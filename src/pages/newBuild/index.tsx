@@ -25,7 +25,7 @@ import {
   awarenessSelector,
   getAwarenessByBoxId,
 } from "../../store/reducers/awareness.reducer";
-import { Button, Form, Spin } from "antd";
+import { Button, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
@@ -37,12 +37,10 @@ const NewBuild = (props: any) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const { flashCardList } = useAppSelector(flashCardSelector);
-  const { awarenessList, reviewResponseList } =
-    useAppSelector(awarenessSelector);
+  const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
   const { userData } = useAppSelector(userSelector);
-  const build = useAppSelector(buildSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
@@ -57,7 +55,6 @@ const NewBuild = (props: any) => {
   const [challengeModal, setChallengeModal] = useState(false);
   const [challengeData, setChallengeData] = useState([]);
   const [challengeArr, setChallengeArr] = useState([{}]);
-  const today = new Date();
   const [challengeTitle, setChallengeTitle] = useState();
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
   const [boxId, setBoxId] = useState();
@@ -144,7 +141,6 @@ const NewBuild = (props: any) => {
     const filterArray = flashCardArr?.filter((F: any) => F.user_id == userId);
     const findLastValue = filterArray?.slice(-1)[0];
     const lastQuestionId = findLastValue?.id;
-
     if (filterArray && filterArray.length > 0) {
       if (questionId == lastQuestionId) {
         setModal3Open({
@@ -204,6 +200,13 @@ const NewBuild = (props: any) => {
     } else {
       toast.error("You need to fill minimum 20 boxes");
     }
+    // buildCreatedBy &&
+    // buildCreatedBy.length > 0 &&
+    // buildCreatedBy[0] == userData.id
+    //   ? dispatch(UpdateUsersBuild(editData))
+    //   : boxData.length > 1
+    //   ?( dispatch(addBuild(saveData)))
+    //   : toast.error("You need to fill minimum 20 boxes");
   };
 
   const handleChange = (e: any) => {
@@ -247,13 +250,9 @@ const NewBuild = (props: any) => {
       .filter(
         (value: any, index: any, self: any) => self.indexOf(value) === index
       );
-
-  const filter =
-    unique?.length > 0 &&
-    unique.map((data: any) => {
-      const awarenessFilter = awarenessList.filter((d: any) => d.id == data);
-      return awarenessFilter;
-    });
+  // useEffect(()=>{
+  //   setChallengeArr(unique)
+  // },[unique])
 
   const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
   const content = (title: any) => {
@@ -264,13 +263,14 @@ const NewBuild = (props: any) => {
           awarenessList.length > 0 &&
           awarenessList.map((data: any) => {
             const formatDate =
-              data.acceptance_time && moment(data.acceptance_time).fromNow();
+              data.acceptance_time &&
+              moment(data.acceptance_time).startOf("date").fromNow();
             const formatHour = formatDate && formatDate.split(" ");
             const formatDateReviewResponse =
-              data.review_time && moment(data.review_time).fromNow();
+              data.review_time &&
+              moment(data.review_time).startOf("date").fromNow();
             const formatHourReviewResponse =
               formatDateReviewResponse && formatDateReviewResponse.split(" ");
-
             return (
               <>
                 {
@@ -296,12 +296,17 @@ const NewBuild = (props: any) => {
                               (formatHour[0] < "61" &&
                                 formatHour[1] == "minutes")
                             ? "Today"
-                            : formatHour[0] > "25" ||
-                              (formatHour[0] < "48" && formatHour[1] == "hours")
+                            : formatHour[0] > "24" ||
+                              (formatHour[0] < "48" &&
+                                formatHour[1] == "hours") ||
+                              formatDate == "a day ago"
                             ? //  : (formatHour[0] > "24" ||formatHour[0] < "48" )
                               "yesterday"
-                            : moment(data.acceptance_time).fromNow()}
+                            : moment(data.acceptance_time)
+                                .startOf("date")
+                                .fromNow()}
                         </div>
+
                         <Form.Item name="comment" className="input-arrow">
                           <div className={`awarenessModal mb-2 header`}>
                             <TextArea
@@ -325,7 +330,7 @@ const NewBuild = (props: any) => {
                               ? {}
                               : { pointerEvents: "none", opacity: 0.4 }
                           }
-                          onClick={(e: any) => {
+                          onClick={() => {
                             const button =
                               data.review_type == "acceptance"
                                 ? "Challenge"
@@ -355,11 +360,14 @@ const NewBuild = (props: any) => {
                                   (formatHourReviewResponse[0] < "61" &&
                                     formatHourReviewResponse[1] == "minutes")
                                 ? "Today"
-                                : formatHourReviewResponse[0] > "25" ||
+                                : formatHourReviewResponse[0] > "24" ||
                                   (formatHourReviewResponse[0] < "48" &&
-                                    formatHourReviewResponse[1] == "hours")
+                                    formatHourReviewResponse[1] == "hours") ||
+                                  formatDateReviewResponse == "a day ago"
                                 ? "yesterday"
-                                : moment(data.review_time).fromNow()}
+                                : moment(data.review_time)
+                                    .startOf("date")
+                                    .fromNow()}
                             </div>
                             <TextArea
                               maxLength={500}
@@ -374,6 +382,8 @@ const NewBuild = (props: any) => {
                               type="primary"
                               className="mt-0 challengeAcceptBtn"
                               style={
+                                buildCreatedBy &&
+                                buildCreatedBy[0] &&
                                 buildCreatedBy[0] == userData.id
                                   ? {}
                                   : { pointerEvents: "none", opacity: -0.6 }
@@ -411,7 +421,8 @@ const NewBuild = (props: any) => {
   const challengeContent = (data: any) => {
     data = challengeData;
     const formatDate =
-      data.acceptance_time && moment(data.acceptance_time).fromNow();
+      data.acceptance_time &&
+      moment(data.acceptance_time).startOf("date").fromNow();
     const formatHour = formatDate && formatDate.split(" ");
 
     return (
@@ -438,13 +449,14 @@ const NewBuild = (props: any) => {
                   formatHour[0] < "61" &&
                   formatHour[1] == "minutes")
               ? "Today"
-              : (formatHour && formatHour[0] && formatHour[0] > "25") ||
+              : (formatHour && formatHour[0] && formatHour[0] > "24") ||
                 (formatHour &&
                   formatHour[0] &&
                   formatHour[0] < "48" &&
-                  formatHour[1] == "hours")
+                  formatHour[1] == "hours") ||
+                formatDate == "a day ago"
               ? "yesterday"
-              : moment(data.review_time).fromNow()}
+              : moment(data.review_time).startOf("date").fromNow()}
           </div>
           <Form.Item name="comment">
             <div className={`awarenessModal header`}>
@@ -492,7 +504,7 @@ const NewBuild = (props: any) => {
     <>
       {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
       {/* <>    */}
-      <Spin spinning={build.loading} delay={100} />
+      {/* <Spin spinning={build.loading} delay={100}/> */}
       <Head>
         <title>New Build</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -636,6 +648,14 @@ const NewBuild = (props: any) => {
         ) => {
           questionData(userId, index, questionId);
         }}
+        againCallback={(
+          data: any,
+          userId: number,
+          questionId: number,
+          index: number,
+          arrayLength: number
+        )=>{
+          questionData(userId, index-1);  }}
       />
       <AwarenessModal
         awarenessModal={awarenessModal}
@@ -720,6 +740,7 @@ const NewBuild = (props: any) => {
             : ""
         } `}
       />
+      {/* </>} */}
     </>
   );
 };
