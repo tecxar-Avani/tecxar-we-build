@@ -6,8 +6,8 @@ export const googleStrategy = new GoogleStrategy(
   {
     clientID: config.google.clientId,
     clientSecret: config.google.clientSecret,
-     callbackURL: 'https://webuild.tecxar.io/api/google_callback',
-      //  callbackURL: config.google.callbackUrl,
+    //  callbackURL: 'https://webuild.tecxar.io/api/google_callback',
+    callbackURL: config.google.callbackUrl,
   },
   function (accessToken, refreshToken, profile, cb) {
     return cb(null, profile);
