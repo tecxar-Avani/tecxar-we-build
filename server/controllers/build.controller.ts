@@ -78,7 +78,7 @@ export class FlashController {
       }
       return {
         status: true,
-         data: createBuildData,
+        data: createBuildData,
         message: "Video Build created successfully.",
       };
     } catch (error) {
@@ -359,8 +359,8 @@ export class FlashController {
     @Body() data: updateVideoBuildDto
   ) {
     try {
-      data.created_by_user = req.user.id;
-      console.log("datadata",data)
+      console.log("data", data);
+      data.updated_by = req.user.id;
       // const userBuild = await this.buildService.updateBuild(id, data);
       return { data: [], message: "Build Updated successfully" };
     } catch (error) {

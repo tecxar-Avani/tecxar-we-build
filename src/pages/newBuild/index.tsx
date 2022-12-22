@@ -198,7 +198,7 @@ const NewBuild = (props: any) => {
     ) {
       console.log("editData", editData);
       dispatch(UpdateUsersBuild(editData));
-    } else if (boxData.length > 1) {
+    } else if (boxData.length > 19) {
       dispatch(addBuild(saveData));
     } else {
       toast.error("You need to fill minimum 20 boxes");

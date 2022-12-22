@@ -42,6 +42,7 @@ const NewBuildSideCard = (props: any) => {
   };
   
   const userId = buildById?.data?.map((a: any) => a.created_by);
+  
   return (
     <>
       <div>

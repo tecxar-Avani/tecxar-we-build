@@ -3,7 +3,6 @@ import { Row } from "react-bootstrap";
 import OuterBox from "./OuterBox";
 
 const NewBuildBoxes = (props: any) => {
-  console.log("SSSSSSSS",props)
   return (
     <>
       {[...Array(Math.ceil(props.item.length / 3))].map((_rows, index) => {

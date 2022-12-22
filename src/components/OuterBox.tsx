@@ -9,11 +9,8 @@ import { getUserByEmail, userSelector } from "@/store/reducers/user.reducer";
 
 const OuterBox = (props: any) => {
   const { buildById } = useAppSelector(buildSelector);
-  const router = useRouter();
-  const buildId = Number(router.query.id);
   const { userData } = useAppSelector(userSelector);
 
-  const dispatch = useAppDispatch();
   
   const [form] = Form.useForm();
   const handleChange = (event: any) => {
@@ -24,7 +21,8 @@ const OuterBox = (props: any) => {
     if (value.length === 150 && !props.arr.includes(propsId) && !props.boxId) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
-    } else if (
+    }
+     else if (
       props.boxId &&
       value.length === 150 &&
       !props.arr.includes(propsId)
