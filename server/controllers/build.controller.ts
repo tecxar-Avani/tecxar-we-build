@@ -360,8 +360,9 @@ export class FlashController {
   ) {
     try {
       data.created_by_user = req.user.id;
-      const userBuild = await this.buildService.updateBuild(id, data);
-      return { data: userBuild, message: "Build Updated successfully" };
+      console.log("datadata",data)
+      // const userBuild = await this.buildService.updateBuild(id, data);
+      return { data: [], message: "Build Updated successfully" };
     } catch (error) {
       return {
         error: {

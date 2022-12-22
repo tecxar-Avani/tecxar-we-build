@@ -39,6 +39,7 @@ const onDelete = (id:any) =>{
               const id = props.flashCardArr[index].id
              
                onDelete(id)
+               props.setmodalOpen(false)
             }
           }}
         />

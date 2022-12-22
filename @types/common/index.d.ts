@@ -19,6 +19,7 @@ export interface IVideoBuild {
   duration?:string;
   created_by?: number;
   updated_by?: number;
+  boxes?:any;
   createdAt?: Date;
   updatedAt?: Date;
   rows?: any;

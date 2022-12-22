@@ -92,6 +92,7 @@ export const UpdateUsersBuild = createAsyncThunk(
       type_of_video: updateBuildData.type_of_video,
       potential_polarization: updateBuildData.potential_polarization,
       difficulty_level: updateBuildData.difficulty_level,
+      boxes:updateBuildData.boxes
     };
     const { status, data } = await BuildService.UpdateBuildById(id, editData);
     return { status, data };

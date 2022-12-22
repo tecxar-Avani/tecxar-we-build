@@ -59,6 +59,7 @@ export const updateUserById = createAsyncThunk(
     const { status, data } = await userService.updateUserById(id,user_data);
     dispatch(getAllUsers());
     dispatch(getUserByEmail())
+    dispatch(totalbuilds())
     return { status, data };
   }
 );

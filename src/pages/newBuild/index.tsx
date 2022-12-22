@@ -29,7 +29,7 @@ import { Button, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
-import { userSelector } from "../../store/reducers/user.reducer";
+import { userSelector, getUserByEmail } from "../../store/reducers/user.reducer";
 import Head from "next/head";
 import moment from "moment";
 
@@ -70,6 +70,7 @@ const NewBuild = (props: any) => {
     })
   );
 
+
   //Create Flash card
   const handleSubmit = (data: any) => {
     const flashCardData = {
@@ -104,6 +105,8 @@ const NewBuild = (props: any) => {
     if (buildId) {
       dispatch(getFlashCardByBuildId(buildId));
       dispatch(getBuildById(buildId));
+      dispatch(getUserByEmail());
+
     }
   }, [buildId]);
 
@@ -194,7 +197,7 @@ const NewBuild = (props: any) => {
       buildCreatedBy[0] == userData.id
     ) {
       console.log("editData", editData);
-      // dispatch(UpdateUsersBuild(editData));
+      dispatch(UpdateUsersBuild(editData));
     } else if (boxData.length > 1) {
       dispatch(addBuild(saveData));
     } else {
@@ -242,18 +245,9 @@ const NewBuild = (props: any) => {
     setChallengeModal(false);
   };
 
-  const unique =
-    awarenessList &&
-    awarenessList.length > 0 &&
-    awarenessList
-      .map((item: any) => item.id)
-      .filter(
-        (value: any, index: any, self: any) => self.indexOf(value) === index
-      );
   // useEffect(()=>{
   //   setChallengeArr(unique)
   // },[unique])
-
   const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
   const content = (title: any) => {
     const titleLowerCase = title.toLowerCase();
@@ -424,7 +418,6 @@ const NewBuild = (props: any) => {
       data.acceptance_time &&
       moment(data.acceptance_time).startOf("date").fromNow();
     const formatHour = formatDate && formatDate.split(" ");
-
     return (
       <>
         <Form
@@ -527,7 +520,6 @@ const NewBuild = (props: any) => {
           ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
           buildId={buildId}
         />
-
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           <NewBuildBoxes
             setModal1Open={setAddFlashcard}
@@ -535,7 +527,7 @@ const NewBuild = (props: any) => {
             arr={arr}
             setArr={(value: any) => {
               setArr(value);
-              if (value.length > 20 && !buildById) {
+              if (value.length > 20) {
                 setDataArray([
                   ...dataArray,
                   {
@@ -543,15 +535,7 @@ const NewBuild = (props: any) => {
                     message: "",
                   },
                 ]);
-              } else {
-                setDataArray([
-                  ...dataArray,
-                  {
-                    id: value.length,
-                    message: "",
-                  },
-                ]);
-              }
+              } 
             }}
             onFocus={(data: any) => handleChange(data)}
             awarenessList={awarenessList}
@@ -652,9 +636,7 @@ const NewBuild = (props: any) => {
           data: any,
           userId: number,
           questionId: number,
-          index: number,
-          arrayLength: number
-        )=>{
+          index: number        )=>{
           questionData(userId, index-1);  }}
       />
       <AwarenessModal
@@ -679,7 +661,7 @@ const NewBuild = (props: any) => {
             ? "Resistance"
             : ""
         }`}
-        header={`${props.isLoggedIn ? userData.user_name : ""} ${
+        header={`${props.isLoggedIn ? `${userData.user_name}'s` : ""} ${
           accept
             ? "Acceptance"
             : inspiration
