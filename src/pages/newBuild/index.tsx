@@ -194,8 +194,8 @@ const NewBuild = (props: any) => {
       buildCreatedBy[0] == userData.id
     ) {
       console.log("editData", editData);
-      // dispatch(UpdateUsersBuild(editData));
-    } else if (boxData.length > 1) {
+      dispatch(UpdateUsersBuild(editData));
+    } else if (boxData.length > 19) {
       dispatch(addBuild(saveData));
     } else {
       toast.error("You need to fill minimum 20 boxes");
@@ -654,8 +654,9 @@ const NewBuild = (props: any) => {
           questionId: number,
           index: number,
           arrayLength: number
-        )=>{
-          questionData(userId, index-1);  }}
+        ) => {
+          questionData(userId, index - 1);
+        }}
       />
       <AwarenessModal
         awarenessModal={awarenessModal}
