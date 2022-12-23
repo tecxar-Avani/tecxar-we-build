@@ -353,11 +353,14 @@ const NewBuildSideCard = (props: any) => {
           >
             <Image src="/img/save.svg" className="ms-2" alt="no image" />
           </div>
-          <div className="backward bd-highlight cursor-pointer">
-            <Image src="/img/backward.svg" className="ms-5 me-1" />
+          <div className="backward bd-highlight cursor-pointer" >
+            <Image src="/img/backward.svg" className="ms-5 me-1" 
+            onClick={() =>{setDifficultyLevel("low"),setPolarisationLevel("low"),setVideoType("theory"),props?.setIsRefresh(false)}}/>
           </div>
-          <div className=" forward bd-highlight cursor-pointer">
-            <Image src="/img/forward.svg" className="me-5" />
+
+          <div className=" forward bd-highlight cursor-pointer" >
+            <Image src="/img/forward.svg" className="me-5" 
+            onClick={() =>{setDifficultyLevel("low"),setPolarisationLevel("low"),setVideoType("theory"),props?.setIsRefresh(false)}}/>
           </div>
           {/* <Link href={`../`}> */}
           <div

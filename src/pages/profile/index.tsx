@@ -29,7 +29,7 @@ import {
 } from "@/store/reducers/build.reducer";
 import Head from "next/head";
 
-const Profile = (props:any) => {
+const Profile = (props: any) => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userSelector);
   const { usersList, totalCount, editUser } = useAppSelector(userSelector);
@@ -77,7 +77,7 @@ const Profile = (props:any) => {
       totalCount &&
       totalCount.flashCardCount &&
       totalCount.flashCardCount.map((a: any) => a.flashCard),
-      logout:"Log out"
+    logout: "Log out",
   };
 
   const onEdit = (e: any) => {
@@ -97,46 +97,61 @@ const Profile = (props:any) => {
     setEditName(false);
   };
 
-  const questionData = (index?: any, data?:any, questionId?: number ) => {
+  const questionData = (index?: any, data?: any, questionId?: number) => {
 
-    // setDefaultQuestionIndex(index)
     const findLastValue = flashCardArr[flashCardArr.length - 1];
     const lastQuestionId = findLastValue && findLastValue.id;
     // const editQuestion = index
     //   ? flashCardArr[index + 1].id
     //   : flashCardArr[0].id;
-    if (defaultQuestionIndex == flashCardArr.length) {
+    
+    if (data == "again") {
+      console.log("flashCardArr", index);
+      
       setModal3Open({
-        content: "Congratulations! You have finished your deck",
-        footer: [],
-        onOk: modal4Open,
-        qaData: flashCardArr,
-      });
-      setRevealAns(true);
-    } else {
-      const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
-      console.log("defaultQuestionIndex",defaultQuestionIndex)
-      data && data == "Again" ? 
-        setDefaultQuestionIndex(defaultQuestionIndex- 1)
-      : setDefaultQuestionIndex(defaultQuestionIndex + 1);
-      setModal3Open({
-        content: flashCardArr[defaultQuestionIndex]?.question,
+        content:
+          index == 0 ? flashCardArr[0].question : flashCardArr[index].question,
         footer: ["Reveal Answer"],
-        questionId: flashCardArr[defaultQuestionIndex]?.id,
-        index: defaultQuestionIndex,
+        questionId: index == 0 ? flashCardArr[0].id : flashCardArr[index].id,
+        index: index == 0 ? 0 : index - 1,
         arrayLength: flashCardArr.length,
         onOk: modal4Open,
-        editQuestion: editQuestion,
-        qaData: flashCardArr,
       });
+
       setRevealAns(true);
+    } else {
+      if (defaultQuestionIndex == flashCardArr.length) {
+        setModal3Open({
+          content: "Congratulations! You have finished your deck",
+          footer: [],
+          onOk: modal4Open,
+          qaData: flashCardArr,
+        });
+        setRevealAns(true);
+        setDefaultQuestionIndex(0)
+      } else {
+        const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
+        console.log("##defaultQuestionIndex###", defaultQuestionIndex);
+        setDefaultQuestionIndex(defaultQuestionIndex + 1);
+        setModal3Open({
+          content: flashCardArr[defaultQuestionIndex]?.question,
+          footer: ["Reveal Answer"],
+          questionId: flashCardArr[defaultQuestionIndex]?.id,
+          index: defaultQuestionIndex,
+          arrayLength: flashCardArr.length,
+          onOk: modal4Open,
+          editQuestion: editQuestion,
+          qaData: flashCardArr,
+        });
+        setRevealAns(true);
+      }
     }
   };
 
   const handleSubmit = (data: any) => {
     dispatch(updateFlashCardId(data));
   };
-  
+
   //all profile
   const blocked_user =
     usersList && usersList?.filter((user: any) => user.is_blocked == true);
@@ -150,7 +165,6 @@ const Profile = (props:any) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className="profile-main">
-
         <ProfileCard
           className="pt-2"
           profile={profileData}
@@ -186,15 +200,16 @@ const Profile = (props:any) => {
           />
 
           <Row className="m-0">
-            {userBuildList && userBuildList?.box?.map((videoData: any, index: number) => (
-              <Col md={4} key={index} className="videoProfile">
-                <Link href={`/newBuild?id=${videoData.videoId}`}>
-                  <a>
-                    <VideoCard VideoCardData={videoData} />
-                  </a>
-                </Link>
-              </Col>
-            ))}
+            {userBuildList &&
+              userBuildList?.box?.map((videoData: any, index: number) => (
+                <Col md={4} key={index} className="videoProfile">
+                  <Link href={`/newBuild?id=${videoData.videoId}`}>
+                    <a>
+                      <VideoCard VideoCardData={videoData} />
+                    </a>
+                  </Link>
+                </Col>
+              ))}
           </Row>
         </div>
         {userData.userData.role_id == 1 ? (
@@ -329,7 +344,7 @@ const Profile = (props:any) => {
       </div>
 
       <FlashCardModal
-      isLoggedIn={props.isLoggedIn}
+        isLoggedIn={props.isLoggedIn}
         modal={revealAns}
         flashCard={modal3Open}
         setmodalOpen={setRevealAns}
@@ -364,8 +379,7 @@ const Profile = (props:any) => {
           // alert(index)
           // const indexVal = index > 1 ? index - 1 : index;
           questionData(defaultQuestionIndex, questionId);
-        }
-      }
+        }}
         setAddFlashcard={setAddFlashcard}
         setEditFlashCardData={(questionId: any) => {
           const questionFilter = flashCardArr.filter(
@@ -389,14 +403,12 @@ const Profile = (props:any) => {
           handleSubmit(data);
         }}
         defaultQuestionIndex={defaultQuestionIndex}
-        againCallback={(
-          index: number,
-          data:any
-        )=>{
-          questionData(index,data);
-         }}
+        againCallback={(defaultQuestionIndex: any) => {
+          console.log("@@@@@@@@", defaultQuestionIndex);
+          questionData(defaultQuestionIndex, "again");
+        }}
+        //  setDefaultQuestionIndex = {setDefaultQuestionIndex}
       />
-
       <Modal
         title="Edit Your Name"
         open={editName}

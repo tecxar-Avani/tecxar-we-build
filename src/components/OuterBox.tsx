@@ -1,7 +1,7 @@
 import TextArea from "antd/lib/input/TextArea";
 import React, { useEffect } from "react";
 import { Col } from "react-bootstrap";
-import { Form } from "antd";
+import { Button, Form } from "antd";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { buildSelector, getBuildById } from "@/store/reducers/build.reducer";
 import { useRouter } from "next/router";
@@ -10,9 +10,17 @@ import { getUserByEmail, userSelector } from "@/store/reducers/user.reducer";
 const OuterBox = (props: any) => {
   const { buildById } = useAppSelector(buildSelector);
   const { userData } = useAppSelector(userSelector);
-
   
   const [form] = Form.useForm();
+
+  
+  useEffect(() => {
+    if(props.Isrefresh){
+       form.resetFields();
+      props.setIsRefresh(false)
+    }
+  }, [props.Isrefresh]);
+
   const handleChange = (event: any) => {
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
@@ -31,16 +39,17 @@ const OuterBox = (props: any) => {
       props.responseCallback(propsId, value, id);
     }
   };
-
   const userId = buildById?.data?.map((a: any) => a.created_by);
   return (
     <Col sm={4} className="p-0">
       <div className="innerBoxs p-3 w-100 " style={{ height: "170px" }}>
         {props.visible && (
           <Form form={form} name="formTwo" className="textBoxInner">
+           
             <div className="position-relative position-relative-example">
+            <Form.Item name={`message${props.id}`}>
               <TextArea
-                name={`message${props.id}`}
+                
                 //  value={props?.description}
                 key={props.description ? props.description : ""}
                 maxLength={150}
@@ -64,8 +73,10 @@ const OuterBox = (props: any) => {
                     ? true
                     : false
                 }
-              />
-
+              /></Form.Item>
+              <Form.Item>
+           
+              </Form.Item>
               {props.awarenessList &&
                 props.awarenessList.length > 0 &&
                 props.awarenessList.map((data: any) => {

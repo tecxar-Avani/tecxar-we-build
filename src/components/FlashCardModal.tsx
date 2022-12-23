@@ -45,11 +45,14 @@ const onDelete = (id:any) =>{
         />
       );
     });
+   
   const userId = props.flashCard.userId;
   const questionId = props.flashCard?.questionId;
   const index = props.flashCard.index;
   const arrayLength = props.flashCard.arrayLength;
   const editQuestion = props.flashCard.editQuestion;
+
+  console.log("11111111111111111111111",props.flashCard)
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       if(data == "Again"){
@@ -65,10 +68,7 @@ const onDelete = (id:any) =>{
               editQuestion
             );
           } else {
-            props.againCallback(
-              props.defaultQuestionIndex - 1,
-              data
-            );
+            props.againCallback(props.defaultQuestionIndex - 1);
           }
         }
       } 

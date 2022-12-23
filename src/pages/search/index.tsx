@@ -31,7 +31,7 @@ const SearchPage = (props: any) => {
       "(\\#[-a-z\\d_]*)?$",
     "i"
   );
-
+console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
   const searchResult = (url: string) => {
     const validUrl = pattern.test(url);
 
@@ -55,7 +55,7 @@ const SearchPage = (props: any) => {
   }, [router]);
 
   useEffect(() => {
-    if (buildList.box.length > 0) {
+    if (buildList.box.length > 0 && props.isLoggedIn) {
       setVideosData(buildList.box);
     }
   }, [buildList]);
@@ -73,12 +73,15 @@ const SearchPage = (props: any) => {
   }, [buildListByUrl]);
 
   useEffect(() => {
-    if (router && router.query.selfLearning && userBuilds?.box?.length > 0) {
+    if (router && router.query.selfLearning && userBuilds?.box?.length > 0 && props.isLoggedIn) {
       setVideosData(userBuilds.box);
-    } else {
+    } else if(buildList.box.length ==0 && props.isLoggedIn) {
       setVideosData(buildList.box);
     }
-  }, [userBuilds]);
+    else{
+      setVideosData(buildList.box);
+    }
+  }, [userBuilds,buildList]);
 
   return loading ? (
     <div className="w-100 d-flex justify-content-center mt-5 ">

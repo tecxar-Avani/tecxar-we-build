@@ -59,6 +59,8 @@ const NewBuild = (props: any) => {
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
   const [boxId, setBoxId] = useState();
   const [boxAwarenessID, setBoxAwarenessID] = useState();
+  const [isRefresh, setIsRefresh] = useState(false);
+
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
@@ -196,7 +198,6 @@ const NewBuild = (props: any) => {
       buildCreatedBy.length > 0 &&
       buildCreatedBy[0] == userData.id
     ) {
-      console.log("editData", editData);
       dispatch(UpdateUsersBuild(editData));
     } else if (boxData.length > 19) {
       dispatch(addBuild(saveData));
@@ -268,8 +269,7 @@ const NewBuild = (props: any) => {
             return (
               <>
                 {
-                  // a few seconds ago
-                  // a minute ago
+                  
                   boxAwarenessID == data.sorting_order &&
                     titleLowerCase == data.review_type && (
                       <Form
@@ -493,6 +493,7 @@ const NewBuild = (props: any) => {
     };
     dispatch(addReviewResponse(data));
   };
+
   return (
     <>
       {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
@@ -518,7 +519,9 @@ const NewBuild = (props: any) => {
             difficultyLevel: any,
             url: string
           ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
-          buildId={buildId}
+          buildId={buildId} 
+          isRefresh = {isRefresh}
+          setIsRefresh={setIsRefresh}
         />
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
           <NewBuildBoxes
@@ -546,6 +549,19 @@ const NewBuild = (props: any) => {
             setBoxData={setBoxData}
             buildById={buildById}
             modalDot={(id: any) => showModal(id)}
+           Isrefresh={isRefresh}
+           setIsRefresh={(data:any)=>{
+            setIsRefresh(data) 
+            setBoxData([])
+            setArr([1])
+            setDataArray(init.map((i, index) => {
+              return {
+                id: Number(index + 1),
+                message: "",
+              };
+            }))}
+          }
+
           />
           <div className="position-absolute mkCard">
             {userArr &&
