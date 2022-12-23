@@ -24,6 +24,8 @@ import config from "@/configs";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 import BoxService from "@/services/box.service";
 import BoxReviewService from "@/services/boxReview.service";
+import { IUpdateBoxes } from "@/interfaces/boxes.interface";
+import { updateBoxesDto } from "@/dtos/boxes.dto";
 
 @Controller("/build")
 export class FlashController {
@@ -130,7 +132,7 @@ export class FlashController {
   async getTotalBuilds(@Req() req: RequestWithUser) {
     try {
       const { id } = req.user;
-      const boxbuildCount = await this.boxService.getTotalBuilds(id);
+      const boxbuildCount = await this.boxService.getTotalBoxes(id);
       const awernessCount = await this.reviewService.getTotalAwarenessById(id);
       const flashCardCount = await this.flashCardService.getTotalFlashCard(id);
 
@@ -359,10 +361,30 @@ export class FlashController {
     @Body() data: updateVideoBuildDto
   ) {
     try {
-      console.log("data", data);
       data.updated_by = req.user.id;
-      // const userBuild = await this.buildService.updateBuild(id, data);
-      return { data: [], message: "Build Updated successfully" };
+      const userBuild = await this.buildService.updateBuild(id, data);
+      if (data?.boxes?.length > 0) {
+        data.boxes.map(async (box: updateBoxesDto) => {
+          const boxId = box.sorting_order && Number(box.sorting_order);
+          const existingBox = await this.boxService.getBoxesById(id, boxId);
+          if (existingBox?.length > 0) {
+            existingBox.map(async (d: any) => {
+              const updateData = {
+                description: box.description,
+              };
+              await this.boxService.updateBox(d.id, updateData);
+            });
+          } else {
+            const boxData = {
+              sorting_order: box.sorting_order,
+              description: box.description,
+              build_id: id,
+            };
+            await this.boxService.createSingleBox(boxData);
+          }
+        });
+      }
+      return { data: userBuild, message: "Build Updated successfully" };
     } catch (error) {
       return {
         error: {

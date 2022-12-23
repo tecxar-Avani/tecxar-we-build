@@ -12,28 +12,64 @@ class BoxService {
     if (isEmpty(boxData)) {
       throw new HttpException(400, "Enter the build data");
     }
-    const createBuildData: IBoxes[] = await this.box.bulkCreate(boxData);
-    return createBuildData;
+    const createBoxData: IBoxes[] = await this.box.bulkCreate(boxData);
+    return createBoxData;
   }
 
-  public async getBuilds(): Promise<IBoxes[] | null> {
-    const videoBuilds: IBoxes[] | null = await this.box.findAll({
+  public async createSingleBox(boxData: IBoxes | any): Promise<IBoxes | null> {
+    if (isEmpty(boxData)) {
+      throw new HttpException(400, "Enter the build data");
+    }
+    const createBoxData: IBoxes = await this.box.create(boxData);
+    return createBoxData;
+  }
+
+  public async getBoxes(): Promise<IBoxes[] | null> {
+    const boxes: IBoxes[] | null = await this.box.findAll({
       raw: true,
     });
-    if (!videoBuilds) {
+    if (!boxes) {
       return null;
     } else {
-      return videoBuilds;
+      return boxes;
     }
   }
 
-  public async getTotalBuilds(userId: any): Promise<IBoxes[] | any> {
+  public async getBoxesById(
+    buildId: number,
+    sorting_order: number
+  ): Promise<IBoxes[] | null> {
+    const boxes: IBoxes[] | null = await this.box.findAll({
+      where: { sorting_order: sorting_order, build_id: buildId },
+      raw: true,
+    });
+    if (!boxes) {
+      return null;
+    } else {
+      return boxes;
+    }
+  }
+
+  public async getTotalBoxes(userId: any): Promise<IBoxes[] | any> {
     const query = `SELECT COUNT(*) AS boxes FROM video_builds AS vb
       LEFT JOIN boxes box on vb.id = box.build_id
       where vb.created_by = ${userId} `;
-    const BuildById: IBoxes[] = await DB.sequelize.query(query, { type: QueryTypes.SELECT });
+    const boxByUserId: IBoxes[] = await DB.sequelize.query(query, {
+      type: QueryTypes.SELECT,
+    });
+    return boxByUserId;
+  }
 
-    return BuildById;
+  public async updateBox(id: number, data: any): Promise<IBoxes[] | null> {
+    const boxUpdate: any | null = await this.box.update(
+      { ...data },
+      { where: { id: id } }
+    );
+    if (!boxUpdate) {
+      return null;
+    } else {
+      return boxUpdate;
+    }
   }
 }
 export default BoxService;

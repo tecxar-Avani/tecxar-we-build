@@ -51,7 +51,7 @@ export class AuthController {
             expires: new Date(Date.now() + 2700000),
           })
          .redirect(`${config.urlHost}${lastPage}`);
-        //  .redirect(`https://webuild.tecxar.io/${lastPage}`);
+          // .redirect(`https://webuild.tecxar.io/${lastPage}`);
       } else if(!user){
         const data = {
           user_name: userName,
@@ -79,11 +79,11 @@ export class AuthController {
               expires: new Date(Date.now() + 2700000),
             })
               .redirect(`${config.urlHost}${lastPage}`);
-            // .redirect(`https://webuild.tecxar.io/${lastPage}`);
+            //  .redirect(`https://webuild.tecxar.io/${lastPage}`);
         } else {
           res
-            .redirect(`${config.urlHost}${lastPage}`);
-            //.redirect(`https://webuild.tecxar.io/${lastPage}`);
+           .redirect(`${config.urlHost}${lastPage}`);
+            // .redirect(`https://webuild.tecxar.io/${lastPage}`);
         }
       }
       else if(user && user.is_blocked == 2){
@@ -109,12 +109,12 @@ export class AuthController {
             .cookie("authorization", token, {
               expires: new Date(Date.now() + 2700000),
             })
-            //  .redirect(`${config.urlHost}${lastPage}`);
-              .redirect(`https://webuild.tecxar.io/${lastPage}`);
+              .redirect(`${config.urlHost}${lastPage}`);
+              // .redirect(`https://webuild.tecxar.io/${lastPage}`);
         } else {
           res
-          //  .redirect(`${config.urlHost}${lastPage}`);
-            .redirect(`https://webuild.tecxar.io/${lastPage}`);
+          .redirect(`${config.urlHost}${lastPage}`);
+            // .redirect(`https://webuild.tecxar.io/${lastPage}`);
         }
       }
       else{

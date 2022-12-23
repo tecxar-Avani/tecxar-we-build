@@ -17,6 +17,7 @@ import {
   addBuild,
   buildSelector,
   getBuildById,
+  getBuildByUrl,
   UpdateUsersBuild,
 } from "../../store/reducers/build.reducer";
 import {
@@ -39,7 +40,7 @@ const NewBuild = (props: any) => {
   const { flashCardList } = useAppSelector(flashCardSelector);
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const { buildById } = useAppSelector(buildSelector);
+  const { buildById,buildListByUrl } = useAppSelector(buildSelector);
   const { userData } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
@@ -137,6 +138,19 @@ const NewBuild = (props: any) => {
       setArr(data.map((d: any) => d.id));
     }
   }, [buildById]);
+
+   useEffect(() => {
+     if (buildListByUrl.data) {
+      setArr([1])
+       setDataArray(init.map((i, index) => {
+         return {
+           id: Number(index + 1),
+           message: "",
+         };
+       }));
+     
+     }
+   }, [buildListByUrl]);
 
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardList?.rows?.flashBuild?.build;
