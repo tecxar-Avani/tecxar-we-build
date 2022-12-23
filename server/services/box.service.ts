@@ -36,8 +36,8 @@ class BoxService {
   }
 
   public async getBoxesById(
-    buildId: number,
-    sorting_order: number
+    buildId: number | undefined,
+    sorting_order: number | undefined
   ): Promise<IBoxes[] | null> {
     const boxes: IBoxes[] | null = await this.box.findAll({
       where: { sorting_order: sorting_order, build_id: buildId },

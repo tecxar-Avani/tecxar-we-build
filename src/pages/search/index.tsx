@@ -22,6 +22,8 @@ const SearchPage = (props: any) => {
   const { loading, buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
   const [videosData, setVideosData] = useState<IVideoBuild[]>([]);
+  const [buildListData, setBuildListData] = useState(buildList?.box);
+
   const pattern = new RegExp(
     "^(https?:\\/\\/)?" + // protocol
       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
@@ -31,7 +33,6 @@ const SearchPage = (props: any) => {
       "(\\#[-a-z\\d_]*)?$",
     "i"
   );
-console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
   const searchResult = (url: string) => {
     const validUrl = pattern.test(url);
 
@@ -43,6 +44,14 @@ console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
       dispatch(getBuildByUrl(searchData));
     }
   };
+
+   useEffect(() => {
+     setBuildListData(buildList?.box);
+   }, [buildList]);
+
+   useEffect(() => {
+     setBuildListData([]);
+   }, [buildListByUrl]);
 
   useEffect(() => {
     if (router?.query?.selfLearning && props.isLoggedIn == true) {
@@ -73,15 +82,19 @@ console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
   }, [buildListByUrl]);
 
   useEffect(() => {
-    if (router && router.query.selfLearning && userBuilds?.box?.length > 0 && props.isLoggedIn) {
+    if (
+      router &&
+      router.query.selfLearning &&
+      userBuilds?.box?.length > 0 &&
+      props.isLoggedIn
+    ) {
       setVideosData(userBuilds.box);
-    } else if(buildList.box.length ==0 && props.isLoggedIn) {
+    } else if (buildList.box.length == 0 && props.isLoggedIn) {
+      setVideosData(buildList.box);
+    } else {
       setVideosData(buildList.box);
     }
-    else{
-      setVideosData(buildList.box);
-    }
-  }, [userBuilds,buildList]);
+  }, [userBuilds, buildList]);
 
   return loading ? (
     <div className="w-100 d-flex justify-content-center mt-5 ">
@@ -93,7 +106,8 @@ console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
       {router && router.query.selfLearning ? (
         <HeaderTitle
           title={
-            buildListByUrl.allBuilds.length > 0 ? (
+            buildListByUrl.allBuilds.length > 0 &&
+            buildListData?.length == 0 ? (
               <p className="mb-0">
                 <div className="text-center my-2 headerSizeInsearch">
                   We do not have anything matching your search. Please try
@@ -103,12 +117,14 @@ console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
                 </div>
                 <br></br> Existing Builds
               </p>
-            ) : buildListByUrl.data?.length > 0 ? (
+            ) : buildListByUrl.data?.length > 0 &&
+              buildListData?.length == 0 ? (
               <div className="text-center my-2 headerSizeInsearch">
                 Lucky you! Nothing exists for this URL. To start your build,
                 click the video below
               </div>
-            ) : buildListByUrl?.results?.length > 0 ? (
+            ) : buildListByUrl?.results?.length > 0 &&
+              buildListData?.length == 0 ? (
               "Results"
             ) : (
               "Learn something new about yourself"
@@ -119,7 +135,8 @@ console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
       ) : (
         <HeaderTitle
           title={
-            buildListByUrl.allBuilds.length > 0 ? (
+            buildListByUrl.allBuilds.length > 0 &&
+            buildListData?.length == 0 ? (
               <p className="mb-0 ">
                 <div className="text-center my-2 headerSizeInsearch">
                   We do not have anything matching your search. Please try
@@ -129,12 +146,14 @@ console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
                 </div>
                 <br></br> Existing Builds
               </p>
-            ) : buildListByUrl.data?.length > 0 ? (
+            ) : buildListByUrl.data?.length > 0 &&
+              buildListData?.length == 0 ? (
               <div className="text-center my-2 headerSizeInsearch">
                 Lucky you! Nothing exists for this URL. To start your build,
                 click the video below"
               </div>
-            ) : buildListByUrl?.results?.length > 0 ? (
+            ) : buildListByUrl?.results?.length > 0 &&
+              buildListData?.length == 0 ? (
               "Results"
             ) : (
               "Want to learn from others’ builds?"
@@ -149,12 +168,13 @@ console.log("boxesboxesboxes", buildList, buildListByUrl, userBuilds)
           const { id } = videoData;
           const videoId = videoData.new_video_id
             ? videoData.new_video_id
-            :videoData.newVideoId ? videoData.newVideoId :
-             videoData.video_id
+            : videoData.newVideoId
+            ? videoData.newVideoId
+            : videoData.video_id
             ? videoData.video_id
             : id;
 
-          return buildListByUrl.data?.length === 1 ? (
+          return buildListByUrl.data?.length === 1 && buildListData.length == 0 ? (
             <div
               className="d-flex justify-content-center mt-4 pb-2"
               key={index}

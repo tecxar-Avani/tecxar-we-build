@@ -3,7 +3,7 @@ import { HttpException } from "@/exceptions/HttpException";
 import { IVideoBuild } from "@/interfaces/videoBuilds.interface";
 import DB from "@databases";
 import { isEmpty } from "class-validator";
-import { Op, QueryTypes } from "sequelize";
+import { Op, QueryTypes, fn, col, where, Sequelize } from "sequelize";
 
 class BuildService {
   private videoBuild = DB.videoBuild;
@@ -75,7 +75,7 @@ class BuildService {
   }
 
   public async getUsersBuildByUrl(
-    url: string,
+    url?: string,
     search?: string
   ): Promise<IVideoBuild[] | null> {
     const searchFilter = [];
@@ -92,7 +92,13 @@ class BuildService {
           potential_polarization: {
             [Op.like]: `%${search}%`,
           },
-        }
+        },
+        Sequelize.where(Sequelize.fn("lower", Sequelize.col("title")), {
+          [Op.like]: `%${search}%`,
+        }),
+        Sequelize.where(Sequelize.fn("lower", Sequelize.col("description")), {
+          [Op.like]: `%${search}%`,
+        })
       );
       if (
         search === "low" ||
@@ -110,10 +116,10 @@ class BuildService {
       where.push({ [Op.or]: searchFilter });
     }
 
-    if (url) {
+    if (url && url != "undefined" && url != undefined) {
       where.push({ video_url: url });
     }
-    
+
     const option: {
       nest?: boolean;
       subQuery: boolean;
@@ -133,9 +139,9 @@ class BuildService {
         "provider",
         "description",
         "duration",
-       "new_video_id",
+        "new_video_id",
         "published_at",
-       "thumbnails",
+        "thumbnails",
         "title",
         "embed_url",
         "video_id",
@@ -143,7 +149,6 @@ class BuildService {
         "updated_by",
         "createdAt",
         "updatedAt",
-
       ],
       nest: true,
       where: where,
@@ -178,16 +183,14 @@ class BuildService {
             [Op.like]: `%${search}%`,
           },
         },
-        {
-          title: {
-            [Op.like]: `%${search}%`,
-          },
-        },
-        {
-          description: {
-            [Op.like]: `%${search}%`,
-          },
-        }
+
+        Sequelize.where(Sequelize.fn("lower", Sequelize.col("title")), {
+          [Op.like]: `%${search}%`,
+        }),
+
+        Sequelize.where(Sequelize.fn("lower", Sequelize.col("description")), {
+          [Op.like]: `%${search}%`,
+        }),
       );
       if (
         search === "low" ||
@@ -209,7 +212,7 @@ class BuildService {
     }
 
     if (userId && userId != undefined) {
-      where.push({ created_by: {  [Op.not]:userId} });
+      where.push({ created_by: { [Op.not]: userId } });
     }
     whereStatement = {
       [Op.and]: where,
@@ -222,7 +225,7 @@ class BuildService {
       limit: number;
       order: any;
       where: any;
-      logging:any
+      logging: any;
     } = {
       attributes: [
         "id",
@@ -246,7 +249,7 @@ class BuildService {
       raw: true,
       limit: 10,
       subQuery: false,
-      logging:console.log
+      logging: console.log,
     };
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
       option

@@ -16,6 +16,7 @@ import {
   IBuildRowsCountResponse,
 } from "../../../@types/responses";
 import { IBoxes, IVideoBuild } from "../../../@types/common";
+import Search from "antd/lib/input/Search";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -84,7 +85,7 @@ export const getUsersBuild: any = createAsyncThunk(`build/`, async () => {
 
 export const UpdateUsersBuild = createAsyncThunk(
   `build/update/`,
-  async (updateBuildData: IVideoBuild) => {
+  async (updateBuildData: IVideoBuild, { dispatch }) => {
     const id = Number(updateBuildData.id);
     const editData = {
       id: Number(updateBuildData.id),
@@ -92,9 +93,11 @@ export const UpdateUsersBuild = createAsyncThunk(
       type_of_video: updateBuildData.type_of_video,
       potential_polarization: updateBuildData.potential_polarization,
       difficulty_level: updateBuildData.difficulty_level,
-      boxes:updateBuildData.boxes
+      boxes: updateBuildData.boxes,
     };
     const { status, data } = await BuildService.UpdateBuildById(id, editData);
+    dispatch(getUsersBuild);
+
     return { status, data };
   }
 );
@@ -203,7 +206,7 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
-             buildListByUrl: initialState.buildListByUrl,
+            buildListByUrl: initialState.buildListByUrl,
             buildList: action.payload.rows,
             boxes: action.payload.boxes,
           };
@@ -269,7 +272,7 @@ const buildSlice = createSlice({
           return {
             ...state,
             loading: false,
-             buildListByUrl: initialState.buildListByUrl,
+            buildListByUrl: initialState.buildListByUrl,
             userBuilds: action.payload.data,
           };
         } else {
@@ -298,6 +301,8 @@ const buildSlice = createSlice({
       .addCase(UpdateUsersBuild.fulfilled, (state, action) => {
         if (action.payload.status) {
           toast.success(action.payload.data.message);
+          Router.push("/search?selfLearning=true");
+
           return {
             ...state,
             loading: false,

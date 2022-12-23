@@ -32,8 +32,8 @@ const NewBuildBoxes = (props: any) => {
                   }}
                   description={itemData.message}
                   boxId={itemData.boxId}
-                  Isrefresh = {props.Isrefresh}
-                  setIsRefresh = {props.setIsRefresh}
+                  isRefresh={props.isRefresh}
+                  setIsRefresh={props.setIsRefresh}
                 />
               ))}
             </Row>

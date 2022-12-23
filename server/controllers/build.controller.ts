@@ -367,7 +367,7 @@ export class FlashController {
         data.boxes.map(async (box: updateBoxesDto) => {
           const boxId = box.sorting_order && Number(box.sorting_order);
           const existingBox = await this.boxService.getBoxesById(id, boxId);
-          if (existingBox?.length > 0) {
+          if (existingBox && existingBox.length > 0) {
             existingBox.map(async (d: any) => {
               const updateData = {
                 description: box.description,

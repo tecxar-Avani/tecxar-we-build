@@ -13,7 +13,6 @@ const SideBar = (toggle: any) => {
   const { buildList, userBuilds, buildListByUrl } =
     useAppSelector(buildSelector);
   const router = useRouter();
-  // const url = window.location.origin;
   const [sideBarBG, setSideBarBG] = useState("profileBG");
   const [modal5Open, setModal5Open] = useState(false);
   const [buildListData, setBuildListData] = useState(buildList?.box);
@@ -48,14 +47,6 @@ const SideBar = (toggle: any) => {
       (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
       (userBuilds?.data?.length > 0&& buildListData?.length == 0) ||
       (buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)
-
-      // (buildListByUrl.allBuilds &&
-      //         buildListByUrl.allBuilds.length > 0 &&
-      //         buildListData?.length == 0) || (!buildListByUrl.allBuilds &&
-      //           buildListByUrl?.box?.length == 0 &&
-      //           buildListByUrl.data?.length > 0 &&
-      //           buildListData?.length == 0) || ( buildListByUrl?.results?.length > 0 &&
-      //             buildListData?.length == 0)
     ) {
       setSideBarBG("profileBG");
     }

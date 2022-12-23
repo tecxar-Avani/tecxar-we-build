@@ -47,7 +47,7 @@ class BuildService {
   addBuild(buildData: any) {
     return API.post(`/build/create`, buildData);
   }
-  deleteBuildById(id:any){
+  deleteBuildById(id: any) {
     return API.delete(`/build/deleteBuild/${id}`);
   }
 }
