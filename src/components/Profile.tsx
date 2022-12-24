@@ -149,7 +149,7 @@ const ProfileCard = (props: any) => {
                 width="41"
                 className="mx-2 button"
                 onClick={() => onBlock(props.profile.id)}
-              />{" "}
+              />
               <figcaption> Block </figcaption>
             </figure>
           )}
@@ -161,7 +161,7 @@ const ProfileCard = (props: any) => {
                 width="41"
                 className="mx-2 button"
                 onClick={() => onUnBlock(props.profile.id)}
-              />{" "}
+              />
               <figcaption> Unblock </figcaption>
             </figure>
           )}
@@ -173,7 +173,7 @@ const ProfileCard = (props: any) => {
                 width="41"
                 className="mx-2 button"
                 onClick={() => onDelete(props.profile.id)}
-              />{" "}
+              />
               <figcaption> Delete </figcaption>
             </figure>
           )}

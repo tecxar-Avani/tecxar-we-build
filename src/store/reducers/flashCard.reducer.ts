@@ -42,6 +42,9 @@ export const createFlashCardResponse = createAsyncThunk(
       
       createFlashCardResponseData
     );
+    
+    dispatch(getFlashCardByBuildId(createFlashCardResponseData.build_id))
+    dispatch(getFlashCardByUser())
     return { status, data };
   }
 );

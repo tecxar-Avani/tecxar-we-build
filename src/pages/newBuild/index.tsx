@@ -208,7 +208,6 @@ const NewBuild = (props: any) => {
       video_url: url,
       id: buildId,
     };
-    console.log("editData", editData);
     const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
     if (
       buildCreatedBy &&

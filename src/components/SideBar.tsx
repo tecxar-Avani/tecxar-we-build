@@ -44,7 +44,7 @@ const SideBar = (toggle: any) => {
     if (
       (buildListByUrl?.data && buildListByUrl?.data?.length > 0 && buildListData?.length == 0) ||
       (buildListByUrl?.results && buildListByUrl?.results?.length > 0 && buildListData?.length == 0) ||
-      (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
+      // (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
       (userBuilds?.data?.length > 0&& buildListData?.length == 0) ||
       (buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)
     ) {
