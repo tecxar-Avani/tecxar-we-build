@@ -19,6 +19,7 @@ const OuterBox = (props: any) => {
   }, [props.isRefresh]);
 
   const handleChange = (event: any) => {
+
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
     let BoxData = { sorting_order: id, description: value };
@@ -31,6 +32,7 @@ const OuterBox = (props: any) => {
       // &&
       // !props.arr.includes(propsId)
     ) {
+     
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
     }
@@ -42,14 +44,14 @@ const OuterBox = (props: any) => {
         {props.visible && (
           <Form form={form} name="formTwo" className="textBoxInner">
             <div className="position-relative position-relative-example">
-              <Form.Item name={`message${props.id}`}>
+              <Form.Item name={`message${props.id}`} noStyle={true}>
                 <TextArea
                   //  value={props?.description}
                   key={props.description ? props.description : ""}
                   maxLength={150}
                   autoSize={{ minRows: 5, maxRows: 5 }}
                   defaultValue={props.description ? props.description : ""}
-                  onInput={handleChange}
+                  onChange={handleChange}
                   id={props.id}
                   onFocus={() => {
                     const data = {
@@ -69,7 +71,7 @@ const OuterBox = (props: any) => {
                   }
                 />
               </Form.Item>
-              <Form.Item></Form.Item>
+             
               {props.awarenessList &&
                 props.awarenessList.length > 0 &&
                 props.awarenessList.map((data: any) => {

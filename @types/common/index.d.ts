@@ -59,7 +59,8 @@ export interface IFlashCardsResponse {
   response_type?: ResponseEnumType;
   flash_card_id?: number;
   created_by?: number;
-  createdAt?: Date
+  createdAt?: Date;
+  build_id?:number;
 }
 export interface IUpdateFlashCards {
   id?: number;

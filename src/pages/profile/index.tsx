@@ -105,21 +105,21 @@ const Profile = (props: any) => {
     //   ? flashCardArr[index + 1].id
     //   : flashCardArr[0].id;
     
-    if (data == "again") {
-      console.log("flashCardArr", index);
-      
-      setModal3Open({
-        content:
-          index == 0 ? flashCardArr[0].question : flashCardArr[index].question,
-        footer: ["Reveal Answer"],
-        questionId: index == 0 ? flashCardArr[0].id : flashCardArr[index].id,
-        index: index == 0 ? 0 : index - 1,
-        arrayLength: flashCardArr.length,
-        onOk: modal4Open,
-      });
-
-      setRevealAns(true);
-    } else {
+    // if (data == "again") {
+    //   const editQuestion = flashCardArr[index]?.id;
+    //   setModal3Open({
+    //     content:
+    //       index == 0 ? flashCardArr[0].question : flashCardArr[index]?.question,
+    //     footer: ["Reveal Answer"],
+    //     questionId: index == 0 ? flashCardArr[0].id : flashCardArr[index]?.id,
+    //     index: index == 0 ? 0 : setDefaultQuestionIndex(index - 1),
+    //     arrayLength: flashCardArr.length,
+    //     onOk: modal4Open,
+    //     editQuestion: editQuestion,
+    //   });
+    
+    //   setRevealAns(true);
+    // } else {
       if (defaultQuestionIndex == flashCardArr.length) {
         setModal3Open({
           content: "Congratulations! You have finished your deck",
@@ -131,7 +131,6 @@ const Profile = (props: any) => {
         setDefaultQuestionIndex(0)
       } else {
         const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
-        console.log("##defaultQuestionIndex###", defaultQuestionIndex);
         setDefaultQuestionIndex(defaultQuestionIndex + 1);
         setModal3Open({
           content: flashCardArr[defaultQuestionIndex]?.question,
@@ -145,7 +144,7 @@ const Profile = (props: any) => {
         });
         setRevealAns(true);
       }
-    }
+    // }
   };
 
   const handleSubmit = (data: any) => {
@@ -223,7 +222,7 @@ const Profile = (props: any) => {
                 onChange={(e) => {
                   setFilterParam(e.target.value);
                 }}
-                className="filterInProfile py-2 mt-4 mb-3"
+                className="filterInProfile py-2 mt-5 mb-3"
                 aria-label="Filter Countries By Region"
               >
                 <option value="All" className="filterInProfile">
@@ -241,6 +240,7 @@ const Profile = (props: any) => {
             <Row className="m-0">
               {filterParam == "All"
                 ? usersList.map((user: any, index: number) => {
+               
                     const profile = {
                       id: user.id,
                       title: user.user_name,
@@ -253,14 +253,14 @@ const Profile = (props: any) => {
                       bottomTitle: user.tag_line,
                       boxRightTitle: "Awareness",
                       boxValueRight: user.awareness,
-                      blockIcon: "block.svg",
-                      UnBlockIcon: "unBlock.svg",
+                      blockIcon: user.is_blocked == 1 ? '' :"block.svg",
+                      UnBlockIcon: user.is_blocked == 0 ? '' :"unBlock.svg",
                       deleteIcon: "delete.svg",
                     };
 
                     return (
                       <Col md={3} key={index}>
-                        <ProfileCard className="AllProfile" profile={profile} />
+                        <ProfileCard className="AllProfile" profile={profile}/>
                       </Col>
                     );
                   })
@@ -278,8 +278,8 @@ const Profile = (props: any) => {
                       bottomTitle: user.tag_line,
                       boxRightTitle: "Awareness",
                       boxValueRight: user.awareness,
-                      blockIcon: "block.svg",
-                      UnBlockIcon: "unBlock.svg",
+                      blockIcon: user.is_blocked == 1 ? '' :"block.svg",
+                      UnBlockIcon: user.is_blocked == 0 ? '' :"unBlock.svg",
                       deleteIcon: "delete.svg",
                     };
                     return (
@@ -302,8 +302,8 @@ const Profile = (props: any) => {
                       bottomTitle: user.tag_line,
                       boxRightTitle: "Awareness",
                       boxValueRight: user.awareness,
-                      blockIcon: "block.svg",
-                      UnBlockIcon: "unBlock.svg",
+                      blockIcon: user.is_blocked == 1 ? '' :"block.svg",
+                      UnBlockIcon: user.is_blocked == 0 ? '' :"unBlock.svg",
                       deleteIcon: "delete.svg",
                     };
                     return (
@@ -325,8 +325,8 @@ const Profile = (props: any) => {
                       bottomTitle: user.tag_line,
                       boxRightTitle: "Awareness",
                       boxValueRight: user.awareness,
-                      blockIcon: "block.svg",
-                      UnBlockIcon: "unBlock.svg",
+                      blockIcon: user.is_blocked == 1 ? '' :"block.svg",
+                      UnBlockIcon: user.is_blocked == 0 ? '' :"unBlock.svg",
                       deleteIcon: "delete.svg",
                     };
 
@@ -404,7 +404,6 @@ const Profile = (props: any) => {
         }}
         defaultQuestionIndex={defaultQuestionIndex}
         againCallback={(defaultQuestionIndex: any) => {
-          console.log("@@@@@@@@", defaultQuestionIndex);
           questionData(defaultQuestionIndex, "again");
         }}
         //  setDefaultQuestionIndex = {setDefaultQuestionIndex}

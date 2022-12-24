@@ -157,6 +157,7 @@ class BuildService {
       subQuery: false,
       logging: console.log,
     };
+    
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
       option
     );

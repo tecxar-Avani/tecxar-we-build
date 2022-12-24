@@ -4,15 +4,22 @@ import Image from "react-bootstrap/Image";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { createFlashCardResponse, deleteFlashCardById,flashCardSelector } from "../store/reducers/flashCard.reducer";
 import AddFlashCardModal from "./AddFlashCardModal";
+import { useRouter } from "next/router";
+
 
 const FlashCardModal = (props: any) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const buildId = Number(router.query.id);
+
+
   useEffect(() => {
   
   }, [props]);
 const onDelete = (id:any) =>{
      dispatch(deleteFlashCardById(id))
 }
+
   const headerIcon = ["deleteFlash.svg", "edit.svg"];
   const title =
     headerIcon &&
@@ -27,9 +34,9 @@ const onDelete = (id:any) =>{
             if (btn == "edit.svg") {
               const indexValue = index;
               const flashCardData = {
-                question: props.flashCardArr[indexValue].question,
-                answer: props.flashCardArr[indexValue].answer,
-                id:props.flashCardArr[indexValue].id,
+                question: props.flashCardArr[indexValue]?.question,
+                answer: props.flashCardArr[indexValue]?.answer,
+                id:props.flashCardArr[indexValue]?.id,
               };
             
               props.setEditFlashCardData(flashCardData);
@@ -74,7 +81,8 @@ const onDelete = (id:any) =>{
       else{
         const flashCardResponseData = {
           response_type : data,
-          flash_card_id : questionId
+          flash_card_id : questionId,
+          build_id:buildId
         }
         dispatch(createFlashCardResponse(flashCardResponseData))
         if (index <= arrayLength) {
@@ -139,7 +147,6 @@ const onDelete = (id:any) =>{
       >
         <div className="p-4">{props?.flashCard?.content}</div>
       </Modal>
-
       <AddFlashCardModal
         modal2Open={props.addFlashCard}
         setModal2Open={() => props.setAddFlashcard()}

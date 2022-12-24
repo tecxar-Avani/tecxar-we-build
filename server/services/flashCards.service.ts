@@ -99,15 +99,15 @@ class FlashCardService {
                     FROM flash_cards As fc
                     LEFT JOIN users AS u ON fc.created_by = u.id
                     LEFT JOIN  flash_cards_response AS fr ON fc.id = fr.flash_card_id
-                    WHERE fc.build_id = ${buildId}
+                    WHERE fc.build_id = ${buildId} AND u.is_blocked = 0
                     group by fc.id
                     ORDER BY CAST(fr.response_type AS CHAR) desc; `;
     const userQuery = `SELECT u.user_name,u.id AS user_id
                     FROM flash_cards As fc
                     LEFT JOIN users AS u ON fc.created_by = u.id
                     LEFT JOIN  flash_cards_response AS fr ON fc.id = fr.flash_card_id
-                    WHERE fc.build_id = ${buildId}
-                    group by fc.id
+                    WHERE fc.build_id = ${buildId} AND u.is_blocked = 0
+                    group by u.id
                     ORDER BY CAST(fr.response_type AS CHAR) desc; `;                
     const getFlashCardBuildId: IFlashCards[] = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
@@ -188,7 +188,22 @@ class FlashCardService {
     return { build: getFlashCardBuildId, users: getFlashCardUsers };
   }
 
-  public async getFlashCard(userId: number): Promise<IFlashCards[] | null> {
+  public async getFlashCard(
+    userId: number
+  ): Promise<IFlashCards[] | any> {
+    const query = `SELECT fc.id,fc.question,fc.answer , fr.response_type
+    FROM flash_cards As fc
+    LEFT JOIN  flash_cards_response AS fr ON fc.id = fr.flash_card_id
+    WHERE fc.created_by = ${userId} 
+    group by fc.id
+    ORDER BY CAST(fr.response_type AS CHAR) desc; `;           
+    const flashCards : IFlashCards[] = await DB.sequelize.query(query, {
+      type: QueryTypes.SELECT,
+    });
+    return flashCards ;
+  }
+
+  public async getFlashCard1(userId: number): Promise<IFlashCards[] | null> {
       const where = { "$flashCard.created_by$": userId };
       const include = [
         {

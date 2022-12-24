@@ -96,11 +96,12 @@ const SearchPage = (props: any) => {
     }
   }, [userBuilds, buildList]);
 
-  return loading ? (
-    <div className="w-100 d-flex justify-content-center mt-5 ">
-      <Spin delay={100} />
-    </div>
-  ) : (
+  return (
+  // loading ? (
+  //   <div className="w-100 d-flex justify-content-center mt-5 ">
+  //     <Spin delay={100} />
+  //   </div>
+  // ) : (
     <div className="mx-4">
       <SearchBar searchResult={searchResult} />
       {router && router.query.selfLearning ? (
@@ -200,7 +201,7 @@ const SearchPage = (props: any) => {
         })}
       </Row>
     </div>
-  );
-};
+  )
+      };
 
 export default SearchPage;
