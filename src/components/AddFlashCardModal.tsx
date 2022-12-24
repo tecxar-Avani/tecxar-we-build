@@ -8,10 +8,10 @@ const { TextArea } = Input;
 const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
   const [modal5Open, setModal5Open] = useState(false);
-  const handleCancel = () =>{
-    setModal5Open(false)
-  }
-  
+  const handleCancel = () => {
+    setModal5Open(false);
+  };
+
   return (
     <>
       <Modal
@@ -25,7 +25,7 @@ const AddFlashCardModal = (props: any) => {
           props.setModal2Open(false);
         }}
         className="flashCardsModal"
-        destroyOnClose = {true}
+        destroyOnClose={true}
         footer={
           <Button
             form="form"
@@ -36,7 +36,6 @@ const AddFlashCardModal = (props: any) => {
           >
             Save
           </Button>
-          
         }
       >
         <Form
@@ -73,14 +72,16 @@ const AddFlashCardModal = (props: any) => {
               maxLength={100}
               rows={4}
               defaultValue={props?.flashCardData?.answer}
-
             />
           </Form.Item>
         </Form>
       </Modal>
-      <LogInButton title="" open={modal5Open} className="btnrv" handleCancel={handleCancel}/>
-       
-      
+      {/* <LogInButton
+        title=""
+        open={modal5Open}
+        className="btnrv"
+        handleCancel={handleCancel}
+      /> */}
     </>
   );
 };

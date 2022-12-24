@@ -65,6 +65,7 @@ const NewBuild = (props: any) => {
   const [boxAwarenessID, setBoxAwarenessID] = useState();
   const [isRefresh, setIsRefresh] = useState(false);
 
+
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
@@ -154,6 +155,8 @@ const NewBuild = (props: any) => {
     }
   }, [buildListByUrl]);
 
+
+
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardList?.rows?.flashBuild?.users;
@@ -208,7 +211,6 @@ const NewBuild = (props: any) => {
       video_url: url,
       id: buildId,
     };
-    console.log("editData", editData);
     const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
     if (
       buildCreatedBy &&
@@ -216,7 +218,7 @@ const NewBuild = (props: any) => {
       buildCreatedBy[0] == userData.id
     ) {
       dispatch(UpdateUsersBuild(editData));
-    } else if (boxData.length > 19) {
+    } else if (boxData.length > 1) {
       dispatch(addBuild(saveData));
     } else {
       toast.error("You need to fill minimum 20 boxes");

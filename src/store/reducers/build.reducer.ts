@@ -61,6 +61,7 @@ export const getBuildByUrl: any = createAsyncThunk(
     return { status: data.status, rows: data };
   }
 );
+
 export const getBuildById: any = createAsyncThunk(
   `build/get/id`,
   async (id: number): Promise<IBuildRowsCountResponse> => {

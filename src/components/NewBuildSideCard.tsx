@@ -28,6 +28,7 @@ const NewBuildSideCard = (props: any) => {
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
+  const [auth, setAuth] = useState();
 
   useEffect(() => {
     dispatch(getBuildById(props.id));
@@ -40,9 +41,9 @@ const NewBuildSideCard = (props: any) => {
   const deleteBuild = () => {
     dispatch(deleteBuildId(props.id));
   };
-  
+
   const userId = buildById?.data?.map((a: any) => a.created_by);
-  
+
   return (
     <>
       <div>
@@ -161,8 +162,8 @@ const NewBuildSideCard = (props: any) => {
                 <button
                   className="high-btn2"
                   name="Practical"
-                  onClick={(e:any) => {
-                     setVideoType(e.target.name);
+                  onClick={(e: any) => {
+                    setVideoType(e.target.name);
                     setType(false);
                   }}
                 >
@@ -172,8 +173,8 @@ const NewBuildSideCard = (props: any) => {
                 <button
                   className="high-btn2"
                   name="Theoretical"
-                  onClick={(e:any) => {
-                     setVideoType(e.target.name);
+                  onClick={(e: any) => {
+                    setVideoType(e.target.name);
                     setType(false);
                   }}
                 >
@@ -333,16 +334,16 @@ const NewBuildSideCard = (props: any) => {
           {/* {props.isLoggedIn === true ? ( */}
           <div
             className="save bd-highlight cursor-pointer"
-            onClick={() =>
-              props.isLoggedIn === true
+            onClick={() => {
+              props.isLoggedIn === true || auth != undefined
                 ? props.onSave(
                     videoType,
                     polarisationLevel,
                     difficultyLevel,
                     url
                   )
-                : setModal5Open(true)
-            }
+                : setModal5Open(true);
+            }}
             style={
               props.id == undefined ||
               props.id == "undefined" ||
@@ -353,14 +354,30 @@ const NewBuildSideCard = (props: any) => {
           >
             <Image src="/img/save.svg" className="ms-2" alt="no image" />
           </div>
-          <div className="backward bd-highlight cursor-pointer" >
-            <Image src="/img/backward.svg" className="ms-5 me-1" 
-            onClick={() =>{setDifficultyLevel("low"),setPolarisationLevel("low"),setVideoType("theory"),props?.setIsRefresh(true)}}/>
+          <div className="backward bd-highlight cursor-pointer">
+            <Image
+              src="/img/backward.svg"
+              className="ms-5 me-1"
+              onClick={() => {
+                setDifficultyLevel("low"),
+                  setPolarisationLevel("low"),
+                  setVideoType("theory"),
+                  props?.setIsRefresh(true);
+              }}
+            />
           </div>
 
-          <div className=" forward bd-highlight cursor-pointer" >
-            <Image src="/img/forward.svg" className="me-5" 
-            onClick={() =>{setDifficultyLevel("low"),setPolarisationLevel("low"),setVideoType("theory"),props?.setIsRefresh(true)}}/>
+          <div className=" forward bd-highlight cursor-pointer">
+            <Image
+              src="/img/forward.svg"
+              className="me-5"
+              onClick={() => {
+                setDifficultyLevel("low"),
+                  setPolarisationLevel("low"),
+                  setVideoType("theory"),
+                  props?.setIsRefresh(true);
+              }}
+            />
           </div>
           {/* <Link href={`../`}> */}
           <div
@@ -382,6 +399,11 @@ const NewBuildSideCard = (props: any) => {
         open={modal5Open}
         className="btnrv"
         handleCancel={handleCancel}
+        isLoggedIn={props.isLoggedIn}
+        setAuth={(data: any) => {
+          setAuth(data);
+          setModal5Open(false);
+        }}
       />
     </>
   );
