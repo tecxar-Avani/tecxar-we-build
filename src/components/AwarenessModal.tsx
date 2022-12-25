@@ -2,12 +2,13 @@ import { Input, Modal, Button, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
 import LogInButton from "./LogInButton";
-import moment from "moment";
 
 const { Search } = Input;
 
 const AwarenessModal = (props: any) => {
   const [modal5Open, setModal5Open] = useState(false);
+    const [auth, setAuth] = useState();
+
   const handleCancel = () => {
     setModal5Open(false);
   };
@@ -43,7 +44,7 @@ const AwarenessModal = (props: any) => {
           form={form}
           id="form"
           onFinish={(data: any) =>
-            props.isLoggedIn
+            props.isLoggedIn || auth != undefined
               ? props.handleSubmit(props.handleSubmit(data, props.title))
               : setModal5Open(true)
           }
@@ -76,12 +77,17 @@ const AwarenessModal = (props: any) => {
           </Form.Item>
         </Form>
       </Modal>
-      {/* <LogInButton
+      <LogInButton
         title=""
         open={modal5Open}
         className="btnrv"
         handleCancel={handleCancel}
-      /> */}
+        isLoggedIn={props.isLoggedIn}
+        setAuth={(data: any) => {
+          setAuth(data);
+          setModal5Open(false);
+        }}
+      />
     </div>
   );
 };

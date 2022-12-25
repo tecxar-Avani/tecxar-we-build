@@ -16,6 +16,7 @@ const SideBar = (toggle: any) => {
   const [sideBarBG, setSideBarBG] = useState("profileBG");
   const [modal5Open, setModal5Open] = useState(false);
   const [buildListData, setBuildListData] = useState(buildList?.box);
+  const [auth, setAuth] = useState();
 
   useEffect(() => {
     setBuildListData(buildList?.box);
@@ -42,11 +43,15 @@ const SideBar = (toggle: any) => {
 
   useEffect(() => {
     if (
-      (buildListByUrl?.data && buildListByUrl?.data?.length > 0 && buildListData?.length == 0) ||
-      (buildListByUrl?.results && buildListByUrl?.results?.length > 0 && buildListData?.length == 0) ||
+      (buildListByUrl?.data &&
+        buildListByUrl?.data?.length > 0 &&
+        buildListData?.length == 0) ||
+      (buildListByUrl?.results &&
+        buildListByUrl?.results?.length > 0 &&
+        buildListData?.length == 0) ||
       // (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
-      (userBuilds?.data?.length > 0&& buildListData?.length == 0) ||
-      (buildListByUrl?.allBuilds?.length > 0  && buildListData?.length == 0)
+      (userBuilds?.data?.length > 0 && buildListData?.length == 0) ||
+      (buildListByUrl?.allBuilds?.length > 0 && buildListData?.length == 0)
     ) {
       setSideBarBG("profileBG");
     }
@@ -81,9 +86,21 @@ const SideBar = (toggle: any) => {
                 <Image src={`/img/book.png`} className="img-fluid" />
               </a>
             </Link>
-            <Link href={toggle.isLoggedIn ? "/profile" : router.asPath}>
+            <Link
+              href={
+                toggle.isLoggedIn || auth != undefined
+                  ? "/profile"
+                  : router.asPath
+              }
+            >
               <a>
-                <span onClick={(e) => setModal5Open(!toggle.isLoggedIn)}>
+                <span
+                  onClick={(e) =>
+                    toggle.isLoggedIn || auth != undefined
+                      ? setModal5Open(false)
+                      : setModal5Open(true)
+                  }
+                >
                   <Image src={`/img/profile.png`} className="img-fluid" />
                 </span>
               </a>
@@ -96,12 +113,17 @@ const SideBar = (toggle: any) => {
           </div>
         </Sider>
       </div>
-      {/* <LogInButton
+      <LogInButton
         title=""
         open={modal5Open}
         className="btnrv"
         handleCancel={handleCancel}
-      /> */}
+        isLoggedIn={toggle.isLoggedIn}
+        setAuth={(data: any) => {
+          setAuth(data);
+          setModal5Open(false);
+        }}
+      />
     </>
   );
 };

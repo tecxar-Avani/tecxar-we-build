@@ -3,13 +3,10 @@ import React, { useEffect, useState } from "react";
 import GoogleButton from "react-google-button";
 const cookieCutter = require("cookie-cutter");
 
-const { Search } = Input;
-const { TextArea } = Input;
-
 const LogInButton = (props: any) => {
   const [checkAuth, setCheckAuth] = useState(false);
   let authVal: any;
-  console.log("props.isLoggedIn", props);
+
   useEffect(() => {
     if (
       props.isLoggedIn == false ||
@@ -18,7 +15,6 @@ const LogInButton = (props: any) => {
     ) {
       const timer = setInterval(() => {
         authVal = cookieCutter.get("authorization");
-        console.log("Hello Heyyyy", authVal);
         if (authVal) {
           props.setAuth(authVal);
         }

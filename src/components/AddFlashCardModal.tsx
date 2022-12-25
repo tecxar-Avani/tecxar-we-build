@@ -8,6 +8,8 @@ const { TextArea } = Input;
 const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
   const [modal5Open, setModal5Open] = useState(false);
+  const [auth, setAuth] = useState();
+
   const handleCancel = () => {
     setModal5Open(false);
   };
@@ -42,7 +44,7 @@ const AddFlashCardModal = (props: any) => {
           form={form}
           id="form"
           onFinish={(data) => {
-            props.isLoggedIn
+            props.isLoggedIn || auth != undefined
               ? props.handleSubmit({
                   ...data,
                   id:
@@ -76,12 +78,17 @@ const AddFlashCardModal = (props: any) => {
           </Form.Item>
         </Form>
       </Modal>
-      {/* <LogInButton
+      <LogInButton
         title=""
         open={modal5Open}
         className="btnrv"
         handleCancel={handleCancel}
-      /> */}
+        isLoggedIn={props.isLoggedIn}
+        setAuth={(data: any) => {
+          setAuth(data);
+          setModal5Open(false);
+        }}
+      />
     </>
   );
 };
