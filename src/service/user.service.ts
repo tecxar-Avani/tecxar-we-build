@@ -6,18 +6,19 @@ class UserService {
     return API.get(`/auth/`);
   }
 
-getAllUsers() {
-  return API.get(`/users/`);
-}
+  getAllUsers() {
+    return API.get(`/users/`);
+  }
 
   getUserByMail() {
-    return API.get(`/users/userByEmail`)
+    return API.get(`/users/userByEmail`);
   }
-  updateUserById(id:number,userData:any){
-    return API.put(`/users/update/${id}`,userData)
+  updateUserById(id: number, userData: any) {
+    return API.put(`/users/update/${id}`, userData);
   }
-  totalbuilds(){
-    return API.get(`/build/totalbuilds`)
+
+  totalbuilds() {
+    return API.get(`/build/totalbuilds`);
   }
 }
 export default new UserService();

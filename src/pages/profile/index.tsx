@@ -77,9 +77,9 @@ const Profile = (props: any) => {
       totalCount &&
       totalCount.flashCardCount &&
       totalCount.flashCardCount.map((a: any) => a.flashCard),
+    userRole: userData.userData.role_id,
     logout: "Log out",
   };
-
   const onEdit = (e: any) => {
     const data = {
       id: userData.userData.id,
@@ -98,13 +98,12 @@ const Profile = (props: any) => {
   };
 
   const questionData = (index?: any, data?: any, questionId?: number) => {
-
     const findLastValue = flashCardArr[flashCardArr.length - 1];
     const lastQuestionId = findLastValue && findLastValue.id;
     // const editQuestion = index
     //   ? flashCardArr[index + 1].id
     //   : flashCardArr[0].id;
-    
+
     // if (data == "again") {
     //   const editQuestion = flashCardArr[index]?.id;
     //   setModal3Open({
@@ -117,33 +116,33 @@ const Profile = (props: any) => {
     //     onOk: modal4Open,
     //     editQuestion: editQuestion,
     //   });
-    
+
     //   setRevealAns(true);
     // } else {
-      if (defaultQuestionIndex == flashCardArr.length) {
-        setModal3Open({
-          content: "Congratulations! You have finished your deck",
-          footer: [],
-          onOk: modal4Open,
-          qaData: flashCardArr,
-        });
-        setRevealAns(true);
-        setDefaultQuestionIndex(0)
-      } else {
-        const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
-        setDefaultQuestionIndex(defaultQuestionIndex + 1);
-        setModal3Open({
-          content: flashCardArr[defaultQuestionIndex]?.question,
-          footer: ["Reveal Answer"],
-          questionId: flashCardArr[defaultQuestionIndex]?.id,
-          index: defaultQuestionIndex,
-          arrayLength: flashCardArr.length,
-          onOk: modal4Open,
-          editQuestion: editQuestion,
-          qaData: flashCardArr,
-        });
-        setRevealAns(true);
-      }
+    if (defaultQuestionIndex == flashCardArr.length) {
+      setModal3Open({
+        content: "Congratulations! You have finished your deck",
+        footer: [],
+        onOk: modal4Open,
+        qaData: flashCardArr,
+      });
+      setRevealAns(true);
+      setDefaultQuestionIndex(0);
+    } else {
+      const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
+      setDefaultQuestionIndex(defaultQuestionIndex + 1);
+      setModal3Open({
+        content: flashCardArr[defaultQuestionIndex]?.question,
+        footer: ["Reveal Answer"],
+        questionId: flashCardArr[defaultQuestionIndex]?.id,
+        index: defaultQuestionIndex,
+        arrayLength: flashCardArr.length,
+        onOk: modal4Open,
+        editQuestion: editQuestion,
+        qaData: flashCardArr,
+      });
+      setRevealAns(true);
+    }
     // }
   };
 
@@ -240,7 +239,6 @@ const Profile = (props: any) => {
             <Row className="m-0">
               {filterParam == "All"
                 ? usersList.map((user: any, index: number) => {
-               
                     const profile = {
                       id: user.id,
                       title: user.user_name,
@@ -253,14 +251,14 @@ const Profile = (props: any) => {
                       bottomTitle: user.tag_line,
                       boxRightTitle: "Awareness",
                       boxValueRight: user.awareness,
-                      blockIcon: user.is_blocked == 1 ? '' :"block.svg",
-                      UnBlockIcon: user.is_blocked == 0 ? '' :"unBlock.svg",
+                      blockIcon: user.is_blocked == 1 ? "" : "block.svg",
+                      UnBlockIcon: user.is_blocked == 0 ? "" : "unBlock.svg",
                       deleteIcon: "delete.svg",
                     };
 
                     return (
                       <Col md={3} key={index}>
-                        <ProfileCard className="AllProfile" profile={profile}/>
+                        <ProfileCard className="AllProfile" profile={profile} />
                       </Col>
                     );
                   })
@@ -278,8 +276,8 @@ const Profile = (props: any) => {
                       bottomTitle: user.tag_line,
                       boxRightTitle: "Awareness",
                       boxValueRight: user.awareness,
-                      blockIcon: user.is_blocked == 1 ? '' :"block.svg",
-                      UnBlockIcon: user.is_blocked == 0 ? '' :"unBlock.svg",
+                      blockIcon: user.is_blocked == 1 ? "" : "block.svg",
+                      UnBlockIcon: user.is_blocked == 0 ? "" : "unBlock.svg",
                       deleteIcon: "delete.svg",
                     };
                     return (
@@ -302,8 +300,8 @@ const Profile = (props: any) => {
                       bottomTitle: user.tag_line,
                       boxRightTitle: "Awareness",
                       boxValueRight: user.awareness,
-                      blockIcon: user.is_blocked == 1 ? '' :"block.svg",
-                      UnBlockIcon: user.is_blocked == 0 ? '' :"unBlock.svg",
+                      blockIcon: user.is_blocked == 1 ? "" : "block.svg",
+                      UnBlockIcon: user.is_blocked == 0 ? "" : "unBlock.svg",
                       deleteIcon: "delete.svg",
                     };
                     return (
@@ -325,8 +323,8 @@ const Profile = (props: any) => {
                       bottomTitle: user.tag_line,
                       boxRightTitle: "Awareness",
                       boxValueRight: user.awareness,
-                      blockIcon: user.is_blocked == 1 ? '' :"block.svg",
-                      UnBlockIcon: user.is_blocked == 0 ? '' :"unBlock.svg",
+                      blockIcon: user.is_blocked == 1 ? "" : "block.svg",
+                      UnBlockIcon: user.is_blocked == 0 ? "" : "unBlock.svg",
                       deleteIcon: "delete.svg",
                     };
 

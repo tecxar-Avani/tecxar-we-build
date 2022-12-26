@@ -92,6 +92,36 @@ class FlashCardService {
     return getFlashCard;
   }
 
+  public async getFlashCardResponseByCard(
+    userId: number,
+    cardId: number
+  ): Promise<IFlashCardsResponse[] | null> {
+    const where = { created_by: userId, flash_card_id: cardId };
+    const options: {
+      raw: boolean;
+      where: any;
+      order: any;
+      limit?: number;
+      offset?: number;
+      include?: any;
+      attributes?: any;
+      logging?: any;
+      nest?: boolean;
+      subQuery: boolean;
+    } = {
+      attributes: ["id", "flash_card_id", "response_type", "created_by"],
+      logging: console.log,
+      order: [["id", "ASC"]],
+      where: where,
+      subQuery: false,
+      nest: true,
+      raw: true,
+    };
+    const getFlashCard: IFlashCardsResponse[] =
+      await this.flashCardsResponse.findAll(options);
+    return getFlashCard;
+  }
+
   public async getFlashCardByBuildId(
     buildId: number
   ): Promise<IFlashCards[] | any> {
@@ -108,14 +138,17 @@ class FlashCardService {
                     LEFT JOIN  flash_cards_response AS fr ON fc.id = fr.flash_card_id
                     WHERE fc.build_id = ${buildId} AND u.is_blocked = 0
                     group by u.id
-                    ORDER BY CAST(fr.response_type AS CHAR) desc; `;                
+                    ORDER BY CAST(fr.response_type AS CHAR) desc; `;
     const getFlashCardBuildId: IFlashCards[] = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
     });
-     const getFlashCardUsers: IFlashCards[] = await DB.sequelize.query(userQuery, {
-       type: QueryTypes.SELECT,
-     });
-    return { build: getFlashCardBuildId, users: getFlashCardUsers };;
+    const getFlashCardUsers: IFlashCards[] = await DB.sequelize.query(
+      userQuery,
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
+    return { build: getFlashCardBuildId, users: getFlashCardUsers };
   }
 
   public async getFlashCardByBuildId1(
@@ -188,55 +221,53 @@ class FlashCardService {
     return { build: getFlashCardBuildId, users: getFlashCardUsers };
   }
 
-  public async getFlashCard(
-    userId: number
-  ): Promise<IFlashCards[] | any> {
+  public async getFlashCard(userId: number): Promise<IFlashCards[] | any> {
     const query = `SELECT fc.id,fc.question,fc.answer , fr.response_type
     FROM flash_cards As fc
     LEFT JOIN  flash_cards_response AS fr ON fc.id = fr.flash_card_id
     WHERE fc.created_by = ${userId} 
     group by fc.id
-    ORDER BY CAST(fr.response_type AS CHAR) desc; `;           
-    const flashCards : IFlashCards[] = await DB.sequelize.query(query, {
+    ORDER BY CAST(fr.response_type AS CHAR) desc; `;
+    const flashCards: IFlashCards[] = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
     });
-    return flashCards ;
+    return flashCards;
   }
 
   public async getFlashCard1(userId: number): Promise<IFlashCards[] | null> {
-      const where = { "$flashCard.created_by$": userId };
-      const include = [
-        {
-          model: FlashCards,
-          as: "flashCard",
-          attributes: [],
-        },
-      ];
-      const options: {
-        raw: boolean;
-        where: any;
-        order: any;
-        include?: any;
-        attributes?: any;
-        logging?: any;
-        subQuery: boolean;
-      } = {
-        attributes: [
-          "flashCard.id",
-          "flashCard.build_id",
-          "flashCard.question",
-          "flashCard.answer",
-          "flashCard.created_by",
-        ],
-        logging: console.log,
-        order: [["id", "ASC"]],
-        where: where,
-        subQuery: false,
-        include: include,
-        raw: true,
-      };
-       const flashCards: IFlashCards[] | any =
-         await this.flashCardsResponse.findAll(options);
+    const where = { "$flashCard.created_by$": userId };
+    const include = [
+      {
+        model: FlashCards,
+        as: "flashCard",
+        attributes: [],
+      },
+    ];
+    const options: {
+      raw: boolean;
+      where: any;
+      order: any;
+      include?: any;
+      attributes?: any;
+      logging?: any;
+      subQuery: boolean;
+    } = {
+      attributes: [
+        "flashCard.id",
+        "flashCard.build_id",
+        "flashCard.question",
+        "flashCard.answer",
+        "flashCard.created_by",
+      ],
+      logging: console.log,
+      order: [["id", "ASC"]],
+      where: where,
+      subQuery: false,
+      include: include,
+      raw: true,
+    };
+    const flashCards: IFlashCards[] | any =
+      await this.flashCardsResponse.findAll(options);
     // const flashCards: IFlashCards[] | null = await this.flashCardsResponse.findAll({
     //   where: { created_by: userId },
     //   raw: true,
@@ -286,6 +317,22 @@ class FlashCardService {
       return null;
     } else {
       return flashCardByUpdate;
+    }
+  }
+
+  public async updateFlashCardResponse(
+    id: number,
+    data: any
+  ): Promise<IFlashCards | null> {
+    const flashCardRespUpdate: any | null = await this.flashCardsResponse.update(
+      { ...data },
+      { where: { id: id } }
+    );
+
+    if (!flashCardRespUpdate) {
+      return null;
+    } else {
+      return flashCardRespUpdate;
     }
   }
 

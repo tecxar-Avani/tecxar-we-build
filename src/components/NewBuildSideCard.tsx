@@ -16,7 +16,7 @@ import LogInButton from "./LogInButton";
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
   const { buildById } = useAppSelector(buildSelector);
-  const { userData } = useAppSelector(userSelector);
+  const { userData, loggedInUser } = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
   const polarisations = useRef(null);
   const [difficulty, setDifficulty] = useState(false);
@@ -43,7 +43,6 @@ const NewBuildSideCard = (props: any) => {
   };
 
   const userId = buildById?.data?.map((a: any) => a.created_by);
-
   return (
     <>
       <div>
@@ -335,7 +334,7 @@ const NewBuildSideCard = (props: any) => {
           <div
             className="save bd-highlight cursor-pointer"
             onClick={() => {
-              props.isLoggedIn === true || auth != undefined
+              props.isLoggedIn === true || loggedInUser?.length > 0
                 ? props.onSave(
                     videoType,
                     polarisationLevel,
@@ -400,10 +399,10 @@ const NewBuildSideCard = (props: any) => {
         className="btnrv"
         handleCancel={handleCancel}
         isLoggedIn={props.isLoggedIn}
-        setAuth={(data: any) => {
-          setAuth(data);
-          setModal5Open(false);
-        }}
+        // setAuth={(data: any) => {
+        //   setAuth(data);
+        //   setModal5Open(false);
+        // }}
       />
     </>
   );

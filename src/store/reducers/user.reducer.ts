@@ -5,18 +5,13 @@ import {
   PayloadAction,
   AsyncThunk,
   AnyAction,
-  AsyncThunkAction,
-  Dispatch,
 } from "@reduxjs/toolkit";
 import userService from "../../service/user.service";
-import {
-  IBoxes,
-  ICreateUser,
-  ICurrentUser,
-  IUpdateUser,
-} from "../../../@types/common";
+import { ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
 import { IUserResponseRowsCountResponse } from "../../../@types/responses";
 import { toast } from "react-toastify";
+const cookieCutter = require("cookie-cutter");
+
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -25,6 +20,14 @@ export const getUserAuth = createAsyncThunk(
   `userAuth/get`,
   async (): Promise<ICurrentUser> => {
     const { data } = await userService.userAuthentication();
+    return data;
+  }
+);
+
+export const getAuthCookie = createAsyncThunk(
+  `/cookie`,
+  async (): Promise<ICurrentUser> => {
+    const data = await cookieCutter.get("authorization");
     return data;
   }
 );
@@ -42,7 +45,7 @@ export const getUserByEmail = createAsyncThunk(
   `users/userByEmail`,
   async (): Promise<ICurrentUser> => {
     const { data } = await userService.getUserByMail();
-    const id = data.id
+    const id = data.id;
     return data;
   }
 );
@@ -50,16 +53,15 @@ export const getUserByEmail = createAsyncThunk(
 export const updateUserById = createAsyncThunk(
   `users/update/`,
   async (updateUser: IUpdateUser, { dispatch }) => {
-  
     const id = Number(updateUser.id);
     const user_data = {
-       user_name : updateUser.user_name,
-     is_blocked : updateUser?.is_blocked
-  }
-    const { status, data } = await userService.updateUserById(id,user_data);
+      user_name: updateUser.user_name,
+      is_blocked: updateUser?.is_blocked,
+    };
+    const { status, data } = await userService.updateUserById(id, user_data);
     dispatch(getAllUsers());
-    dispatch(getUserByEmail())
-    dispatch(totalbuilds())
+    dispatch(getUserByEmail());
+    dispatch(totalbuilds());
     return { status, data };
   }
 );
@@ -73,25 +75,25 @@ interface State {
   id: number;
   loading: boolean;
   error: string | undefined;
-  loggedInUser: ICurrentUser;
+  loggedInUser: any;
   userData: ICreateUser;
   usersList: ICreateUser[];
-  editUser:IUserResponseRowsCountResponse | any
-  totalCount:IUserResponseRowsCountResponse | any;
+  editUser: IUserResponseRowsCountResponse | any;
+  totalCount: IUserResponseRowsCountResponse | any;
 }
 
 const initialState: State = {
-  loggedInUser: {},
+  loggedInUser: [],
   userData: {},
   loading: false,
   error: undefined,
   id: 0,
   usersList: [],
-  editUser:{
+  editUser: {
     status: true,
     rows: [],
   },
-  totalCount:{
+  totalCount: {
     status: true,
     rows: [],
   },
@@ -116,6 +118,21 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserAuth.fulfilled, (state, action) => {
+        if (action.payload) {
+          return {
+            ...state,
+            loading: false,
+            loggedInUser: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            loggedInUser: initialState.loggedInUser,
+          };
+        }
+      })
+      .addCase(getAuthCookie.fulfilled, (state, action) => {
         if (action.payload) {
           return {
             ...state,
@@ -160,7 +177,6 @@ const userSlice = createSlice({
           };
         }
       })
-
       .addCase(getAllUsers.fulfilled, (state, action) => {
         if (action.payload) {
           return {
@@ -176,7 +192,6 @@ const userSlice = createSlice({
           };
         }
       })
-
       .addCase(updateUserById.fulfilled, (state, action) => {
         if (action.payload.status) {
           toast.success(action.payload.data.message);
@@ -206,4 +221,3 @@ const userSlice = createSlice({
 export const userReducer = userSlice.reducer;
 export const userSelector = (state: RootState) => state.users;
 export const { userData, loggedInUser } = userSlice.actions;
-

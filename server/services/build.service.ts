@@ -25,6 +25,7 @@ class BuildService {
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll({
       where: { created_by: userId },
       raw: true,
+      logging:true
     });
 
     if (!videoBuilds) {
@@ -157,7 +158,7 @@ class BuildService {
       subQuery: false,
       logging: console.log,
     };
-    
+
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
       option
     );
@@ -191,7 +192,7 @@ class BuildService {
 
         Sequelize.where(Sequelize.fn("lower", Sequelize.col("description")), {
           [Op.like]: `%${search}%`,
-        }),
+        })
       );
       if (
         search === "low" ||

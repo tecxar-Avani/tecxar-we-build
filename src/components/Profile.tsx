@@ -55,7 +55,12 @@ const ProfileCard = (props: any) => {
         className={`${props.className} profile text-center border-bottom pb-3 position-relative`}
       >
         <div className="d-flex justify-content-end align-items-center py-2 px-4">
-          <Button className="logOut" type="primary" onClick={() => logout()} href={`/`}>
+          <Button
+            className="logOut"
+            type="primary"
+            onClick={() => logout()}
+            href={`/`}
+          >
             {props.profile.logout}
           </Button>
         </div>
@@ -149,6 +154,11 @@ const ProfileCard = (props: any) => {
                 width="41"
                 className="mx-2 button"
                 onClick={() => onBlock(props.profile.id)}
+                style={
+                  props.profile?.userRole && props.profile.userRole == 1
+                    ? { pointerEvents: "none", opacity: 0.4 }
+                    : {}
+                }
               />
               <figcaption> Block </figcaption>
             </figure>
@@ -161,6 +171,11 @@ const ProfileCard = (props: any) => {
                 width="41"
                 className="mx-2 button"
                 onClick={() => onUnBlock(props.profile.id)}
+                style={
+                  props.profile?.userRole && props.profile.userRole == 1
+                    ? { pointerEvents: "none", opacity: 0.4 }
+                    : {}
+                }
               />
               <figcaption> Unblock </figcaption>
             </figure>
@@ -173,6 +188,11 @@ const ProfileCard = (props: any) => {
                 width="41"
                 className="mx-2 button"
                 onClick={() => onDelete(props.profile.id)}
+                style={
+                  props.profile?.userRole && props.profile.userRole == 1
+                    ? { pointerEvents: "none", opacity: 0.4 }
+                    : {}
+                }
               />
               <figcaption> Delete </figcaption>
             </figure>

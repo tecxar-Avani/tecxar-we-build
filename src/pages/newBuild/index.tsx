@@ -44,7 +44,7 @@ const NewBuild = (props: any) => {
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
   const { buildById, buildListByUrl } = useAppSelector(buildSelector);
-  const { userData } = useAppSelector(userSelector);
+  const { userData, loggedInUser } = useAppSelector(userSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
@@ -58,7 +58,6 @@ const NewBuild = (props: any) => {
   const [awarenessIndex, setAwarenessIndex] = useState(false);
   const [challengeModal, setChallengeModal] = useState(false);
   const [challengeData, setChallengeData] = useState([]);
-  const [challengeArr, setChallengeArr] = useState([{}]);
   const [challengeTitle, setChallengeTitle] = useState();
   const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
   const [boxId, setBoxId] = useState();
@@ -265,9 +264,6 @@ const NewBuild = (props: any) => {
     setChallengeModal(false);
   };
 
-  // useEffect(()=>{
-  //   setChallengeArr(unique)
-  // },[unique])
   const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
   const content = (title: any) => {
     const titleLowerCase = title.toLowerCase();
@@ -336,7 +332,7 @@ const NewBuild = (props: any) => {
                           data.review_type == "resistance" ? "yellowBtn" : ""
                         }`}
                         style={
-                          props.isLoggedIn
+                          props.isLoggedIn || loggedInUser?.length > 0
                             ? {}
                             : { pointerEvents: "none", opacity: 0.4 }
                         }
@@ -709,7 +705,11 @@ const NewBuild = (props: any) => {
             ? "Resistance"
             : ""
         }`}
-        header={`${props.isLoggedIn ? `${userData.user_name}'s` : ""} ${
+        header={`${
+          props.isLoggedIn || loggedInUser?.length > 0
+            ? `${userData.user_name}'s`
+            : ""
+        } ${
           accept
             ? "Acceptance"
             : inspiration

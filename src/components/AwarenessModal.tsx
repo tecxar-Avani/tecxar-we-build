@@ -2,18 +2,19 @@ import { Input, Modal, Button, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState } from "react";
 import LogInButton from "./LogInButton";
+import { userSelector } from "../store/reducers/user.reducer";
+import { useAppSelector } from "../hooks";
 
 const { Search } = Input;
 
 const AwarenessModal = (props: any) => {
   const [modal5Open, setModal5Open] = useState(false);
-    const [auth, setAuth] = useState();
+  const { loggedInUser } = useAppSelector(userSelector);
 
   const handleCancel = () => {
     setModal5Open(false);
   };
   const [form] = Form.useForm();
-  const today = new Date();
 
   return (
     <div className="awarenessModal">
@@ -30,6 +31,7 @@ const AwarenessModal = (props: any) => {
               key="submit"
               htmlType="submit"
               className="openmodal"
+             
             >
               Add
             </Button>
@@ -44,7 +46,7 @@ const AwarenessModal = (props: any) => {
           form={form}
           id="form"
           onFinish={(data: any) =>
-            props.isLoggedIn || auth != undefined
+            props.isLoggedIn || loggedInUser?.length > 0
               ? props.handleSubmit(props.handleSubmit(data, props.title))
               : setModal5Open(true)
           }
@@ -83,10 +85,10 @@ const AwarenessModal = (props: any) => {
         className="btnrv"
         handleCancel={handleCancel}
         isLoggedIn={props.isLoggedIn}
-        setAuth={(data: any) => {
-          setAuth(data);
-          setModal5Open(false);
-        }}
+        // setAuth={(data: any) => {
+        //   setAuth(data);
+        //   setModal5Open(false);
+        // }}
       />
     </div>
   );

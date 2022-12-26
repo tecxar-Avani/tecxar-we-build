@@ -1,6 +1,8 @@
 import { Input, Modal, Button, Form } from "antd";
+import { useAppSelector } from "../hooks";
 import React, { useState } from "react";
 import LogInButton from "./LogInButton";
+import { userSelector } from "../store/reducers/user.reducer";
 
 const { Search } = Input;
 const { TextArea } = Input;
@@ -9,6 +11,7 @@ const AddFlashCardModal = (props: any) => {
   const [form] = Form.useForm();
   const [modal5Open, setModal5Open] = useState(false);
   const [auth, setAuth] = useState();
+  const { loggedInUser } = useAppSelector(userSelector);
 
   const handleCancel = () => {
     setModal5Open(false);
@@ -44,16 +47,18 @@ const AddFlashCardModal = (props: any) => {
           form={form}
           id="form"
           onFinish={(data) => {
-            props.isLoggedIn || auth != undefined
-              ? props.handleSubmit({
-                  ...data,
-                  id:
-                    props.defaultQuestionIndex &&
-                    props.flashCardArr &&
-                    props.flashCardArr[props.defaultQuestionIndex]?.id,
-                })
-              : setModal5Open(true);
-            form.resetFields();
+            if (props.isLoggedIn || loggedInUser?.length > 0) {
+              props.handleSubmit({
+                ...data,
+                id:
+                  props.defaultQuestionIndex &&
+                  props.flashCardArr &&
+                  props.flashCardArr[props.defaultQuestionIndex]?.id,
+              });
+              form.resetFields();
+            } else {
+              setModal5Open(true);
+            }
           }}
           layout="vertical"
           autoComplete="off"
@@ -84,10 +89,10 @@ const AddFlashCardModal = (props: any) => {
         className="btnrv"
         handleCancel={handleCancel}
         isLoggedIn={props.isLoggedIn}
-        setAuth={(data: any) => {
-          setAuth(data);
-          setModal5Open(false);
-        }}
+        // setAuth={(data: any) => {
+        //   setAuth(data);
+        //   setModal5Open(false);
+        // }}
       />
     </>
   );

@@ -2,33 +2,35 @@ import { Input, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import GoogleButton from "react-google-button";
 const cookieCutter = require("cookie-cutter");
+import { useAppDispatch, useAppSelector } from "../hooks";
+import {
+  getAuthCookie,
+  getUserByEmail,
+  userSelector,
+} from "../store/reducers/user.reducer";
 
 const LogInButton = (props: any) => {
-  const [checkAuth, setCheckAuth] = useState(false);
-  let authVal: any;
+  const { loggedInUser } = useAppSelector(userSelector);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (
-      props.isLoggedIn == false ||
-      props.isLoggedIn == undefined ||
-      props.isLoggedIn == "undefined"
-    ) {
-      const timer = setInterval(() => {
-        authVal = cookieCutter.get("authorization");
-        if (authVal) {
-          props.setAuth(authVal);
-        }
-        // return () => clearInterval(timer);
-      }, 15000);
-    }
-  }, [checkAuth]);
+  const getCookie = () => {
+    setTimeout(() => {
+      dispatch(getAuthCookie());
+      dispatch(getUserByEmail());
+      console.log("This will run after 1 second!");
+    }, 10000);
+    // const timer = setInterval(() => {
+    //   dispatch(getAuthCookie());
+    //   dispatch(getUserByEmail());
+    // }, 10000);
+  };
 
   return (
     <>
       <Modal
         title=""
         centered
-        open={props.open}
+        open={loggedInUser?.length > 0 ? false : props.open}
         className="btnrv"
         onCancel={props.handleCancel}
       >
@@ -36,11 +38,14 @@ const LogInButton = (props: any) => {
           <GoogleButton
             className="m-auto googleButton"
             onClick={() => {
-              props.isLoggedIn == false ||
-              props.isLoggedIn == undefined ||
-              props.isLoggedIn == "undefined"
-                ? setCheckAuth(true)
-                : setCheckAuth(false);
+              if (
+                props.isLoggedIn == false ||
+                props.isLoggedIn == undefined ||
+                props.isLoggedIn == "undefined" ||
+                loggedInUser?.length == 0
+              ) {
+                getCookie();
+              }
               window.open(`/api/google`, "_blank");
             }}
           />

@@ -15,12 +15,14 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
 import { IVideoBuild } from "../../../@types/common";
+import { getAuthCookie, userSelector } from "../../store/reducers/user.reducer";
 
 const SearchPage = (props: any) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { loading, buildList, buildListByUrl, userBuilds } =
     useAppSelector(buildSelector);
+  const { loggedInUser } = useAppSelector(userSelector);
   const [videosData, setVideosData] = useState<IVideoBuild[]>([]);
   const [buildListData, setBuildListData] = useState(buildList?.box);
 
@@ -54,9 +56,12 @@ const SearchPage = (props: any) => {
   }, [buildListByUrl]);
 
   useEffect(() => {
-    if (router?.query?.selfLearning && props.isLoggedIn == true) {
+    if (
+      router?.query?.selfLearning &&
+      (props.isLoggedIn == true || loggedInUser?.length > 0)
+    ) {
       dispatch(getUsersBuild());
-    } else if (props.isLoggedIn == true) {
+    } else if (props.isLoggedIn == true || loggedInUser?.length > 0) {
       dispatch(getOthersBuilds());
     } else {
       dispatch(getBuilds());
@@ -64,14 +69,17 @@ const SearchPage = (props: any) => {
   }, [router]);
 
   useEffect(() => {
-    if (buildList.box.length > 0 && props.isLoggedIn) {
+    if (
+      buildList.box.length > 0 &&
+      (props.isLoggedIn || loggedInUser?.length > 0)
+    ) {
       setVideosData(buildList.box);
     }
   }, [buildList]);
 
   useEffect(() => {
     if (buildListByUrl.box.length > 0) {
-      setVideosData(buildList.box);
+      setVideosData(buildListByUrl.box);
     } else if (buildListByUrl.data.length > 0) {
       setVideosData(buildListByUrl.data);
     } else if (buildListByUrl?.allBuilds?.length > 0) {
@@ -81,15 +89,19 @@ const SearchPage = (props: any) => {
     }
   }, [buildListByUrl]);
 
+
   useEffect(() => {
     if (
       router &&
       router.query.selfLearning &&
-      userBuilds?.box?.length > 0 &&
-      props.isLoggedIn
+      userBuilds?.box &&
+      (props.isLoggedIn || loggedInUser?.length > 0)
     ) {
       setVideosData(userBuilds.box);
-    } else if (buildList.box.length == 0 && props.isLoggedIn) {
+    } else if (
+      buildList.box.length == 0 &&
+      (props.isLoggedIn || loggedInUser?.length > 0)
+    ) {
       setVideosData(buildList.box);
     } else {
       setVideosData(buildList.box);

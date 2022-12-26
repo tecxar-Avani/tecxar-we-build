@@ -1,11 +1,10 @@
 import TextArea from "antd/lib/input/TextArea";
 import React, { useEffect } from "react";
 import { Col } from "react-bootstrap";
-import { Button, Form } from "antd";
-import { useAppSelector, useAppDispatch } from "../hooks";
-import { buildSelector, getBuildById } from "@/store/reducers/build.reducer";
-import { useRouter } from "next/router";
-import { getUserByEmail, userSelector } from "@/store/reducers/user.reducer";
+import { Form } from "antd";
+import { useAppSelector } from "../hooks";
+import { buildSelector } from "@/store/reducers/build.reducer";
+import { userSelector } from "@/store/reducers/user.reducer";
 
 const OuterBox = (props: any) => {
   const { buildById } = useAppSelector(buildSelector);

@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAppSelector } from "../hooks";
 import { buildSelector } from "@/store/reducers/build.reducer";
+import { userSelector } from "@/store/reducers/user.reducer";
+
 import LogInButton from "./LogInButton";
 
 const { Sider } = Layout;
@@ -16,6 +18,8 @@ const SideBar = (toggle: any) => {
   const [sideBarBG, setSideBarBG] = useState("profileBG");
   const [modal5Open, setModal5Open] = useState(false);
   const [buildListData, setBuildListData] = useState(buildList?.box);
+  const { loggedInUser } = useAppSelector(userSelector);
+
   const [auth, setAuth] = useState();
 
   useEffect(() => {
@@ -88,7 +92,7 @@ const SideBar = (toggle: any) => {
             </Link>
             <Link
               href={
-                toggle.isLoggedIn || auth != undefined
+                toggle.isLoggedIn || loggedInUser?.length > 0
                   ? "/profile"
                   : router.asPath
               }
@@ -96,7 +100,7 @@ const SideBar = (toggle: any) => {
               <a>
                 <span
                   onClick={(e) =>
-                    toggle.isLoggedIn || auth != undefined
+                    toggle.isLoggedIn || loggedInUser?.length > 0
                       ? setModal5Open(false)
                       : setModal5Open(true)
                   }
@@ -119,10 +123,10 @@ const SideBar = (toggle: any) => {
         className="btnrv"
         handleCancel={handleCancel}
         isLoggedIn={toggle.isLoggedIn}
-        setAuth={(data: any) => {
-          setAuth(data);
-          setModal5Open(false);
-        }}
+        // setAuth={(data: any) => {
+        //   setAuth(data);
+        //   setModal5Open(false);
+        // }}
       />
     </>
   );

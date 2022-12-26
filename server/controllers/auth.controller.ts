@@ -50,9 +50,8 @@ export class AuthController {
           .cookie("authorization", token, {
             expires: new Date(Date.now() + 2700000),
           })
-         .redirect(`${config.urlHost}${lastPage}`);
-          // .redirect(`https://webuild.tecxar.io/${lastPage}`);
-      } else if(!user){
+          .redirect(`${config.urlHost}${lastPage}`);
+      } else if (!user) {
         const data = {
           user_name: userName,
           profile_id: googleProfileId,
@@ -78,20 +77,19 @@ export class AuthController {
             .cookie("authorization", token, {
               expires: new Date(Date.now() + 2700000),
             })
-              .redirect(`${config.urlHost}${lastPage}`);
-            //  .redirect(`https://webuild.tecxar.io/${lastPage}`);
+            .redirect(`${config.urlHost}${lastPage}`);
         } else {
-          res
-           .redirect(`${config.urlHost}${lastPage}`);
-            // .redirect(`https://webuild.tecxar.io/${lastPage}`);
+          res.redirect(`${config.urlHost}${lastPage}`);
         }
-      }
-      else if(user && user.is_blocked == 2){
+      } else if (user && user.is_blocked == 2) {
         const data = {
           is_blocked: 0,
         };
-        const userId = user.id
-        const updateUser = await this.userService.updateUserProfile(userId,data);
+        const userId = user.id;
+        const updateUser = await this.userService.updateUserProfile(
+          userId,
+          data
+        );
         if (updateUser) {
           req.user = user;
           const token = await jwt.sign(
@@ -109,22 +107,16 @@ export class AuthController {
             .cookie("authorization", token, {
               expires: new Date(Date.now() + 2700000),
             })
-              .redirect(`${config.urlHost}${lastPage}`);
-              // .redirect(`https://webuild.tecxar.io/${lastPage}`);
+            .redirect(`${config.urlHost}${lastPage}`);
         } else {
-          res
-          .redirect(`${config.urlHost}${lastPage}`);
-            // .redirect(`https://webuild.tecxar.io/${lastPage}`);
+          res.redirect(`${config.urlHost}${lastPage}`);
         }
+      } else if (user && user.is_blocked == 1) {
+        res.send("You are blocked by Admin");
+      } else {
+        res.redirect(`${config.urlHost}${lastPage}`);
       }
-      else{
-        // res.redirect(`${config.urlHost}${lastPage}`)
-        res.send("You are blocked by Admin")
-        // .redirect(`https://webuild.tecxar.io/${lastPage}`);
-        return{
-          message:"You are blocked by Admin"
-        }
-      }
+      return res;
     } catch (error) {
       return {
         error: {
@@ -132,7 +124,8 @@ export class AuthController {
           message: (error as Error).message,
         },
       };
-    }
+    } 
+  
   }
 
   @Get("/google_fail")

@@ -28,11 +28,11 @@ import {
 import { RequestWithUser } from "@/interfaces/auth.interface";
 
 @Controller("/flashcard")
-@UseBefore(authMiddleware)
 export class FlashController {
   private flashCardService = new FlashCardService();
 
   @Post("/create")
+  @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new flash card" })
   async createFlashCard(
@@ -58,7 +58,7 @@ export class FlashController {
 
   @Post("/flashcardresponse")
   @HttpCode(201)
-  // @UseBefore(authMiddleware)
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Create a new FlashCard Response" })
   async flashcardResponse(
     @Body() flashcardResponseData: flashCardResponseDto,
@@ -66,13 +66,24 @@ export class FlashController {
   ) {
     try {
       flashcardResponseData.created_by = req.user.id;
-      const createFlashCardResponseData: IFlashCardsResponse | null =
+      const existingRes =
+        await this.flashCardService.getFlashCardResponseByCard(
+          req.user.id,
+          flashcardResponseData.flash_card_id
+        );
+      if (existingRes && existingRes.length > 0) {
+        await this.flashCardService.updateFlashCardResponse(existingRes[0].id, {
+          response_type: flashcardResponseData.response_type,
+        });
+      } else {
         await this.flashCardService.createFlashCardResponse(
           flashcardResponseData
         );
+      }
+
       return {
         status: true,
-        data: createFlashCardResponseData,
+        data: [],
         message: "FlashCard response added successfully.",
       };
     } catch (error) {
