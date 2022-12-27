@@ -38,7 +38,7 @@ const AddFlashCardModal = (props: any) => {
             className="openmodal"
             // type="text"
           >
-            Save
+            Add
           </Button>
         }
       >
@@ -67,7 +67,7 @@ const AddFlashCardModal = (props: any) => {
               key={1}
               showCount
               maxLength={100}
-              rows={4}
+              rows={3}
               defaultValue={props?.flashCardData?.question}
             />
           </Form.Item>
@@ -76,7 +76,7 @@ const AddFlashCardModal = (props: any) => {
               key={2}
               showCount
               maxLength={100}
-              rows={4}
+              rows={3}
               defaultValue={props?.flashCardData?.answer}
             />
           </Form.Item>
