@@ -58,7 +58,6 @@ const onDelete = (id:any) =>{
   const index = props.flashCard.index;
   const arrayLength = props.flashCard.arrayLength;
   const editQuestion = props.flashCard.editQuestion;
-
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
       if(data == "Again"){

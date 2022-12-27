@@ -693,7 +693,7 @@ const isAccepted = (challenge_id:any) =>{
           questionId: number,
           index: number
         ) => {
-          questionData(userId, index - 1);
+          questionData(userId, index);
         }}
       />
       <AwarenessModal

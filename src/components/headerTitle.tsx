@@ -11,7 +11,7 @@ const HeaderTitle = (props: any) => {
           "Lucky you! Nothing exists for this URL. To start your build, click the video below"
           ? "centerHeader"
           : props.className
-      } mx-2`}
+      } mx-2 fixTitle`}
     >
       <h1>{props.title}</h1>
     </div>

@@ -22,6 +22,13 @@ body,
 // .ant-layout.site-layout {
 //   margin-left: 125px;
 // }
+.fixTitle{
+  font-family: 'Arimo'!important;
+font-style: normal !important;
+font-weight: 700 !important;
+font-size: 30px !important;
+line-height: 34px !important;
+}
 
 .boxesMain {
   .innerBoxs {
@@ -161,10 +168,11 @@ body,
 }
 
 .videoCard {
-  display: inline-flex;
+  // display: inline-flex;
   // max-width: 1500px;
   width: 100%;
   overflow-x: scroll;
+  margin-left: 13px;
 }
 
 .videoProfile {
@@ -221,6 +229,11 @@ body,
   line-height: 23px;
 }
 
+.ant-modal-body {
+  text-align: center;
+  margin: 9px;
+}
+
 .flashCards {
   position: absolute;
   bottom: 18px;
@@ -233,6 +246,12 @@ body,
     bottom: 20px;
     right: 9px;
 }
+.ant-modal-body {
+  text-align: center;
+  margin: 9px;
+  padding-bottom: 0px !important;
+}
+
 }
 
 .flashCardsContent {
@@ -350,10 +369,6 @@ body,
   font-family: "Arimo";
 }
 
-.ant-modal-body {
-  text-align: center;
-  margin: 9px;
-}
 
 .ant-modal-header {
   border-bottom: 0;
@@ -363,6 +378,7 @@ body,
 .ant-modal-footer {
   text-align: center;
   border-top: none;
+  margin-top: -16px;
 }
 
 .ant-btn {
