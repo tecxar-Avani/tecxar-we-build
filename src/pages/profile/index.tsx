@@ -104,21 +104,21 @@ const Profile = (props: any) => {
     //   ? flashCardArr[index + 1].id
     //   : flashCardArr[0].id;
 
-    // if (data == "again") {
-    //   const editQuestion = flashCardArr[index]?.id;
-    //   setModal3Open({
-    //     content:
-    //       index == 0 ? flashCardArr[0].question : flashCardArr[index]?.question,
-    //     footer: ["Reveal Answer"],
-    //     questionId: index == 0 ? flashCardArr[0].id : flashCardArr[index]?.id,
-    //     index: index == 0 ? 0 : setDefaultQuestionIndex(index - 1),
-    //     arrayLength: flashCardArr.length,
-    //     onOk: modal4Open,
-    //     editQuestion: editQuestion,
-    //   });
+    if (data == "again") {
+      const editQuestion = flashCardArr[index]?.id;
+      setModal3Open({
+        content:
+          index == 0 ? flashCardArr[0].question : flashCardArr[index]?.question,
+        footer: ["Reveal Answer"],
+        questionId: index == 0 ? flashCardArr[0].id : flashCardArr[index]?.id,
+        index: index == 0 ? 0 : index ,
+        arrayLength: flashCardArr.length,
+        onOk: modal4Open,
+         editQuestion: editQuestion,
+      });
 
-    //   setRevealAns(true);
-    // } else {
+      setRevealAns(true);
+    } else {
     if (defaultQuestionIndex == flashCardArr.length) {
       setModal3Open({
         content: "Congratulations! You have finished your deck",
@@ -143,7 +143,7 @@ const Profile = (props: any) => {
       });
       setRevealAns(true);
     }
-    // }
+     }
   };
 
   const handleSubmit = (data: any) => {
@@ -406,6 +406,7 @@ const Profile = (props: any) => {
         }}
         //  setDefaultQuestionIndex = {setDefaultQuestionIndex}
       />
+      
       <Modal
         title="Edit Your Name"
         open={editName}

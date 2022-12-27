@@ -16,7 +16,6 @@ const AddFlashCardModal = (props: any) => {
   const handleCancel = () => {
     setModal5Open(false);
   };
-
   return (
     <>
       <Modal
@@ -55,7 +54,7 @@ const AddFlashCardModal = (props: any) => {
                   props.flashCardArr &&
                   props.flashCardArr[props.defaultQuestionIndex]?.id,
               });
-              form.resetFields();
+              props.defaultQuestionIndex ?  props.setModal2Open(false) :form.resetFields();
             } else {
               setModal5Open(true);
             }
