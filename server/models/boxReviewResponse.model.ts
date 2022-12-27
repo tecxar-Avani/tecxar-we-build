@@ -34,12 +34,17 @@ export default class BoxReviewsResponse
   @Column(DataType.TEXT)
   public comment: string;
 
+  @Column(DataType.TINYINT)
+  public is_accepted : number;
+
   @AllowNull(false)
   @ForeignKey(() => BoxReviews)
   @Column(DataType.INTEGER)
   public boxReview_id: number;
   @BelongsTo(() => BoxReviews)
   public boxReview: BoxReviews;
+
+
 
   @AllowNull(false)
   @ForeignKey(() => User)
@@ -53,4 +58,6 @@ export default class BoxReviewsResponse
 
   @Column(DataType.DATE)
   public readonly updatedAt!: Date;
+
+
 }

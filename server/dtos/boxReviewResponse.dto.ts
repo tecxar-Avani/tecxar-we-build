@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { IBoxReviewsResponse, IUpdateBoxReviewsResponse, ReviewResponseTypeEnumType } from '@/interfaces/boxReviewResponse';
 import { IBoxReviews, ReviewTypeEnumType, IUpdateBoxReviews } from '@/interfaces/boxreviews.interface';
-import { IsNumber, IsString, IsDate, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsDate, IsOptional, IsBoolean } from 'class-validator';
 
 export class BoxReviewResponseDto implements IBoxReviewsResponse {
     @IsOptional()
@@ -19,6 +19,9 @@ export class BoxReviewResponseDto implements IBoxReviewsResponse {
     
     @IsNumber()
     build_id?:number
+
+    @IsOptional()
+    is_accepted?:number;
 
     @IsOptional()
     @IsNumber()
@@ -45,4 +48,8 @@ export class updateBoxreviewResponseDto implements IUpdateBoxReviewsResponse {
     @IsOptional()
     @IsString()
     comment?: string;
+
+    @IsOptional()
+    @IsNumber()
+    is_accepted?:number;
 }

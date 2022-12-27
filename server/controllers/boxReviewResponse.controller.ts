@@ -10,13 +10,14 @@ import {
   Post,
   QueryParam,
   Param,
+  Put,
 } from "routing-controllers";
 import { OpenAPI } from "routing-controllers-openapi";
 import authMiddleware from "@/middlewares/auth.middleware";
 import { RequestWithUser } from "@/interfaces/auth.interface";
 import BoxResponseService from "@/services/boxReviewResponse.service";
 import { IBoxReviewsResponse } from "@/interfaces/boxReviewResponse";
-import { BoxReviewResponseDto } from "@/dtos/boxReviewResponse.dto";
+import { BoxReviewResponseDto, updateBoxreviewResponseDto } from "@/dtos/boxReviewResponse.dto";
 
 @Controller("/reviewResponse")
 //  @UseBefore(authMiddleware)
@@ -70,6 +71,26 @@ export class BoxReviewResponseController {
       const reviewResponseDataByAwareness = await this.reviewResponseService.getReviewsResponseByAwareness(id);
 
       return reviewResponseDataByAwareness;
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
+  @Put("/update/:id")
+  @UseBefore(authMiddleware)
+  @OpenAPI({ summary: "Update BoxReview Response " })
+  async updateBoxReviewResponseByAwarenessId(
+    @Param("id") id: number,
+    @Body() data: updateBoxreviewResponseDto
+  ) {
+    try {
+      const userBuild = await this.reviewResponseService.updateReviewsResponseByAwareness(id, data);
+      return { userBuild, message: "You accepted the review response" };
     } catch (error) {
       return {
         error: {

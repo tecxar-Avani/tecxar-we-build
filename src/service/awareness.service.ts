@@ -19,5 +19,9 @@ class AwarenessService {
   getReviewsResponseByAwareness(review_id:number | undefined){
     return API.get(`/reviewResponse/${review_id}`)
   }
+
+  updateBoxReviewResponseByAwarenessId(id: number, data: any) {
+    return API.put(`/reviewResponse/update/${id}`, data);
+  }
  }
 export default new AwarenessService();

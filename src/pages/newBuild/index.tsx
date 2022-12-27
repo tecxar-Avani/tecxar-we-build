@@ -25,6 +25,7 @@ import {
   addReviewResponse,
   awarenessSelector,
   getAwarenessByBoxId,
+  updateBoxReviewResponseByAwarenessId,
 } from "../../store/reducers/awareness.reducer";
 import { Button, Form } from "antd";
 import TextArea from "antd/lib/input/TextArea";
@@ -264,6 +265,18 @@ const NewBuild = (props: any) => {
     setChallengeModal(false);
   };
 
+//boxReviewResponse
+
+const isAccepted = (challenge_id:any) =>{
+  const data = {
+    is_accepted : 1,
+    id : challenge_id,
+    build_id:buildId,
+  }
+  console.log(data)
+   dispatch(updateBoxReviewResponseByAwarenessId(data));
+}
+
   const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
   const content = (title: any) => {
     const titleLowerCase = title.toLowerCase();
@@ -382,7 +395,7 @@ const NewBuild = (props: any) => {
                             value={data.challenge}
                             readOnly={true}
                           ></TextArea>
-
+                        
                           <Button
                             key="submit"
                             type="primary"
@@ -390,14 +403,14 @@ const NewBuild = (props: any) => {
                             style={
                               buildCreatedBy &&
                               buildCreatedBy[0] &&
-                              buildCreatedBy[0] == userData.id
+                              buildCreatedBy[0] == userData.id && data.is_accepted == 0
                                 ? {}
                                 : { pointerEvents: "none", opacity: -0.6 }
                             }
-                            onClick={() =>
-                              toast.success(
-                                `You accepted the ${data.review_type}`
-                              )
+                            onClick={() => isAccepted(data.challenge_id)
+                              // toast.success(
+                              //   `You accepted the ${data.review_type}`
+                              // )
                             }
                           >
                             {data.review_type == "acceptance"
