@@ -33,8 +33,9 @@ export class GoogleAuthentication implements ExpressMiddlewareInterface {
   use(req: Request | any, res: Response, next: NextFunction): any {
     return this.authenticate((err: any, user: any, info: any) => {
       if (err || !user) {
-        res.redirect(`${config.urlHost}${this.lastPage}`);
-        return next(new UnauthorizedError(info));
+        res.redirect(`${config.urlHost}/`);
+        return res
+        // return next(new UnauthorizedError(info));
       }
 
       req.user = user;
