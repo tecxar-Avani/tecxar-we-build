@@ -94,6 +94,7 @@ export class FlashController {
   }
 
   @Get("/")
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Get all flashCard of users" })
   async getFlashCard(@Req() req: RequestWithUser) {
     try {

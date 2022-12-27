@@ -345,7 +345,7 @@ const Profile = (props: any) => {
         isLoggedIn={props.isLoggedIn}
         modal={revealAns}
         flashCard={modal3Open}
-        setmodalOpen={setRevealAns}
+        setmodalOpen={(data:boolean)=>{setRevealAns(data); setDefaultQuestionIndex(0)}}
         modalVisible={revealAns}
         responseCallback={(
           questionId: number,
@@ -354,7 +354,7 @@ const Profile = (props: any) => {
           title: any,
           editQuestion?: number
         ) => {
-          const questionFilter = flashCardArr.filter(
+          const questionFilter = flashCardArr && flashCardArr.length>0 && flashCardArr.filter(
             (F: any) => F.id == questionId
           );
           questionFilter.length > 0 &&
