@@ -41,7 +41,7 @@ class BoxService {
       throw new HttpException(400, "Enter ID");
     }
     const query = `SELECT br.id,br.box_id, br.review_type, br.comment,brr.comment AS challenge,brr.review_type AS response_review ,br.createdAt AS acceptance_time ,brr.createdAt AS review_time ,
-    u.user_name AS acceptance_user, us.user_name AS challenge_user,box.sorting_order
+    u.user_name AS acceptance_user, us.user_name AS challenge_user,box.sorting_order,brr.id AS challenge_id,brr.is_accepted
                         FROM
                       boxes box
                       INNER JOIN box_reviews br ON box.id = br.box_id

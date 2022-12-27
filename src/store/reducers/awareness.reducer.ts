@@ -15,6 +15,7 @@ import {
   IBoxReviewsResponse,
   ICreateFlashCard,
   IFlashCard,
+  IUpdateBoxReviewsResponse,
 } from "../../../@types/common";
 import AwarenessService from "../../service/awareness.service";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
@@ -64,6 +65,23 @@ export const getReviewResponseByAwarenessId = createAsyncThunk(
   }
 );
 
+export const updateBoxReviewResponseByAwarenessId = createAsyncThunk(
+  `reviewResponse/update/`,
+  async (updateBoxReviewResponse: IUpdateBoxReviewsResponse, { dispatch }) => {
+    const id = Number(updateBoxReviewResponse.id);
+    const editData = {
+      is_accepted : updateBoxReviewResponse.is_accepted
+      
+    };
+    const { status, data } = await AwarenessService.updateBoxReviewResponseByAwarenessId(
+      id,
+      editData
+    );
+    dispatch(getAwarenessByBoxId(updateBoxReviewResponse?.build_id));
+    return { status, data };
+  }
+);
+
 interface State {
   id: number;
   awareness: IBoxReviews;
@@ -72,6 +90,7 @@ interface State {
   awarenessList: IBuildReviewRowsCountResponse | any;
   reviewResponseData : IBoxReviewsResponse;
   reviewResponseList : IReviewResponseRowsCountResponse;
+  updateReviewResponse : IReviewResponseRowsCountResponse;
 }
 
 const initialState: State = {
@@ -83,6 +102,10 @@ const initialState: State = {
   awarenessList: {
     status: true,
     rows: [],
+  },
+  updateReviewResponse:{
+    status:true,
+    rows:[],
   },
   reviewResponseData:{},
   reviewResponseList:{
@@ -190,7 +213,22 @@ const awarenessSlice = createSlice({
           };
         }
       })
-
+      .addCase(updateBoxReviewResponseByAwarenessId.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            updateReviewResponse: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            updateReviewResponse: action.payload.data.updateReviewResponse,
+          };
+        }
+      })
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;
       })

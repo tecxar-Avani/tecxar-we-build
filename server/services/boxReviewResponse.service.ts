@@ -73,7 +73,21 @@ class BoxResponseService {
     }
   }
 
+public async updateReviewsResponseByAwareness(
+  id: number,
+  data: any,
+): Promise<IBoxReviewsResponse | null> {
+  const reviewResponseByUpdate: any | null = await this.reviews.update(
+    { ...data },
+    { where: { id: id } }
+  );
 
+  if (!reviewResponseByUpdate) {
+    return null;
+  } else {
+    return reviewResponseByUpdate;
+  }
+}
 //   public async getTotalAwarenessById(
 //     userId: any
 //   ): Promise<IBoxReviewsResponse[] | any> {

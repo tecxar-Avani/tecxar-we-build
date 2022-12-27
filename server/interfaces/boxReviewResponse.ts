@@ -12,7 +12,7 @@ export enum ReviewResponseTypeEnumType {
     comment: string;
     created_by?: number;
     createdAt?: Date;
-   
+    is_accepted?:number;
   }
   
   
@@ -22,5 +22,6 @@ export enum ReviewResponseTypeEnumType {
     review_type?: ReviewResponseTypeEnumType;
     comment?: string;
     created_by?: number;
+    is_accepted?:number;
   }
   

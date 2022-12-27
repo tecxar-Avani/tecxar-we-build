@@ -79,6 +79,7 @@ export interface IBoxReviews {
   created_by?: number;
   createdAt?: Date;
   build_id?:number;
+  is_accepted?:number;
 }
 export interface ICreateFlashCard {
   question: string;
@@ -135,3 +136,15 @@ export interface IBoxReviewsResponse {
   createdAt?: Date;
  build_id?:number;
 }
+
+export interface IUpdateBoxReviewsResponse {
+  id?: number;
+  boxReview_id?: number;
+  review_type?: ReviewResponseTypeEnumType;
+  comment?: string;
+  created_by?: number;
+  createdAt?: Date;
+ build_id?:number;
+ is_accepted?:number;
+}
+
