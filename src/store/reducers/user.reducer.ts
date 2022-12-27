@@ -10,6 +10,7 @@ import userService from "../../service/user.service";
 import { ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
 import { IUserResponseRowsCountResponse } from "../../../@types/responses";
 import { toast } from "react-toastify";
+import  Router from "next/router"
 const cookieCutter = require("cookie-cutter");
 
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
@@ -194,6 +195,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUserById.fulfilled, (state, action) => {
         if (action.payload.status) {
+          Router.reload()
           toast.success(action.payload.data.message);
           return {
             ...state,
