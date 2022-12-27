@@ -171,7 +171,7 @@ line-height: 34px !important;
   // display: inline-flex;
   // max-width: 1500px;
   width: 100%;
-  overflow-x: scroll;
+  // overflow-x: scroll;
   margin-left: 13px;
 }
 
@@ -573,8 +573,15 @@ line-height: 34px !important;
     bottom: 15px;
     right: 9px;
   }
+  
+ 
 }
+.awarenessDotModal {
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
 .challenge-textbox-main {
   position: relative;
 }
@@ -1120,9 +1127,7 @@ h6 {
   -ms-overflow-style: none;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
+
 
 .img-rounded {
   border-radius: 50%;
@@ -1183,3 +1188,32 @@ h6 {
 .headerSizeInsearch{
   font-size: 20px !important;
 }
+
+/* width */
+::-webkit-scrollbar {
+  // width: 1089px;
+height: 10px;
+  width: 5px;
+ 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  // border-radius: 3px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #636262; 
+  border-radius: 5px;
+}
+
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #636262;
+  // border-radius: 3px;
+}
+
+
