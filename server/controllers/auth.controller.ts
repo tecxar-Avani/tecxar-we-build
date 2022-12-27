@@ -118,6 +118,8 @@ export class AuthController {
       }
       return res;
     } catch (error) {
+      // const lastPage = "/";
+      //  res.redirect(`${config.urlHost}${lastPage}`);
       return {
         error: {
           code: 500,
@@ -125,7 +127,10 @@ export class AuthController {
         },
       };
     } 
-  
+    // finally{
+    //   const lastPage = "/";
+    //   res.redirect(`${config.urlHost}${lastPage}`);
+    // }
   }
 
   @Get("/google_fail")

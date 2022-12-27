@@ -39,7 +39,7 @@ const OuterBox = (props: any) => {
   const userId = buildById?.data?.map((a: any) => a.created_by);
   return (
     <Col sm={4} className="p-0">
-      <div className="innerBoxs p-3 w-100 " style={{ height: "170px" }}>
+      <div className="innerBoxs p-3 w-100 " style={{ height: "195px" }}>
         {props.visible && (
           <Form form={form} name="formTwo" className="textBoxInner">
             <div className="position-relative position-relative-example">
@@ -48,7 +48,7 @@ const OuterBox = (props: any) => {
                   //  value={props?.description}
                   key={props.description ? props.description : ""}
                   maxLength={150}
-                  autoSize={{ minRows: 5, maxRows: 5 }}
+                  autoSize={{ minRows: 6, maxRows: 6 }}
                   defaultValue={props.description ? props.description : ""}
                   onChange={handleChange}
                   id={props.id}

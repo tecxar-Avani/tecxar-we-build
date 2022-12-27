@@ -20,10 +20,12 @@ export class Authenticate implements ExpressMiddlewareInterface {
 }
 
 export class GoogleAuthentication implements ExpressMiddlewareInterface {
+  lastPage = "/";
+
   authenticate = (callback: any) =>
     passport.authenticate(
       "google",
-      { failureRedirect: "/", session: false },
+      { failureRedirect: "/google_fail", session: false },
 
       callback
     );

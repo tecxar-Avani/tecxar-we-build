@@ -302,9 +302,7 @@ const buildSlice = createSlice({
       .addCase(UpdateUsersBuild.fulfilled, (state, action) => {
         if (action.payload.status) {
           toast.success(action.payload.data.message);
-          Router.push({
-            pathname: "/search?selfLearning=true",
-          });
+          Router.push("/search?selfLearning=true");
 
           return {
             ...state,
