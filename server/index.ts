@@ -36,13 +36,15 @@ class App {
     this.initializeMiddlewares();
 
     this.initializeRoutes();
-    passport.serializeUser(function (user: any, done) {
-      done(null, user);
-    });
+    this.app.use(passport.initialize());
+    this.app.use(passport.session());
+    // passport.serializeUser(function (user: any, done) {
+    //   done(null, user);
+    // });
 
-    passport.deserializeUser(function (user: any, done) {
-      done(null, user);
-    });
+    // passport.deserializeUser(function (user: any, done) {
+    //   done(null, user);
+    // });
   }
 
   public listen() {

@@ -118,19 +118,14 @@ export class AuthController {
       }
       return res;
     } catch (error) {
-      // const lastPage = "/";
-      //  res.redirect(`${config.urlHost}${lastPage}`);
-      return {
-        error: {
-          code: 500,
-          message: (error as Error).message,
-        },
-      };
+      return res.redirect(`${config.urlHost}`);
+      // return {
+      //   error: {
+      //     code: 500,
+      //     message: (error as Error).message,
+      //   },
+      // };
     } 
-    // finally{
-    //   const lastPage = "/";
-    //   res.redirect(`${config.urlHost}${lastPage}`);
-    // }
   }
 
   @Get("/google_fail")

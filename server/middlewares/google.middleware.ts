@@ -20,12 +20,10 @@ export class Authenticate implements ExpressMiddlewareInterface {
 }
 
 export class GoogleAuthentication implements ExpressMiddlewareInterface {
-  lastPage = "/";
-
   authenticate = (callback: any) =>
     passport.authenticate(
       "google",
-      { failureRedirect: "/google_fail", session: false },
+      { failureRedirect: "https://webuild.tecxar.io/", session: false },
 
       callback
     );
@@ -33,8 +31,8 @@ export class GoogleAuthentication implements ExpressMiddlewareInterface {
   use(req: Request | any, res: Response, next: NextFunction): any {
     return this.authenticate((err: any, user: any, info: any) => {
       if (err || !user) {
-        res.redirect(`${config.urlHost}/`);
-        return res
+        return res.redirect(`https://webuild.tecxar.io/`);
+        // return res
         // return next(new UnauthorizedError(info));
       }
 
