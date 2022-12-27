@@ -161,10 +161,11 @@ body,
 }
 
 .videoCard {
-  display: inline-flex;
+  // display: inline-flex;
   // max-width: 1500px;
   width: 100%;
   overflow-x: scroll;
+  margin-left: 13px;
 }
 
 .videoProfile {

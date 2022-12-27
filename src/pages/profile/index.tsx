@@ -174,7 +174,7 @@ const Profile = (props: any) => {
           title="Your builds"
           className="title-list-of-profile py-2 my-2"
         />
-        <div className="m-0 pb-2 videoCard overflow-x-scroll">
+        <div className="pb-2 videoCard overflow-x-scroll">
           <div className="overflow-auto">
             <div className="d-flex overflow-auto">
               {userBuilds &&

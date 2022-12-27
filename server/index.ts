@@ -17,7 +17,6 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import session from "express-session"
-import flash from "connect-flash";
 
 class App {
   public app: express.Application;
@@ -108,7 +107,6 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
-    this.app.use(flash());
 
     // if (config.express.useMonitor) {
     //   StatusMonitor.mount(this.app);

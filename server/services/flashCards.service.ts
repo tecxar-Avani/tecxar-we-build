@@ -321,13 +321,11 @@ class FlashCardService {
   }
 
   public async updateFlashCardResponse(
-    id: number,
+    id: number | undefined,
     data: any
   ): Promise<IFlashCards | null> {
-    const flashCardRespUpdate: any | null = await this.flashCardsResponse.update(
-      { ...data },
-      { where: { id: id } }
-    );
+    const flashCardRespUpdate: any | null =
+      await this.flashCardsResponse.update({ ...data }, { where: { id: id } });
 
     if (!flashCardRespUpdate) {
       return null;
