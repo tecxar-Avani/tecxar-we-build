@@ -68,7 +68,7 @@ const onDelete = (id:any) =>{
               data,
               userId,
               questionId,
-              index,
+              index - 1,
               arrayLength,
               title,
               editQuestion
