@@ -5,12 +5,14 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { createFlashCardResponse, deleteFlashCardById,flashCardSelector } from "../store/reducers/flashCard.reducer";
 import AddFlashCardModal from "./AddFlashCardModal";
 import { useRouter } from "next/router";
+import LogInButton from "./LogInButton";
 
 
 const FlashCardModal = (props: any) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const buildId = Number(router.query.id);
+  const [modal5Open, setModal5Open] = useState(false);
 
 
   useEffect(() => {
@@ -19,7 +21,9 @@ const FlashCardModal = (props: any) => {
 const onDelete = (id:any) =>{
      dispatch(deleteFlashCardById(id))
 }
-
+const handleCancel = () => {
+  setModal5Open(false);
+};
   const headerIcon = ["deleteFlash.svg", "edit.svg"];
   const title =
     headerIcon &&
@@ -83,13 +87,20 @@ const onDelete = (id:any) =>{
           flash_card_id : questionId,
           build_id:buildId
         }
-        dispatch(createFlashCardResponse(flashCardResponseData))
-        if (index <= arrayLength) {
-          if (userId) {
-            props.questionCallback(userId, index, questionId);
-          } else {
-            props.questionCallback(index, questionId);
-            }}
+        // if(props.isLoggedIn){
+          dispatch(createFlashCardResponse(flashCardResponseData))
+          if (index <= arrayLength) {
+            if (userId) {
+              props.questionCallback(userId, index, questionId);
+            } else {
+              props.questionCallback(index, questionId);
+              }}
+        // }
+        // else{
+        //   setModal5Open(true);
+        // }
+      
+        
       }
       // add dispatch API here instead of console
    
@@ -155,6 +166,17 @@ const onDelete = (id:any) =>{
         handleSubmit={props.handleSubmit}
         defaultQuestionIndex={props.defaultQuestionIndex}
         isLoggedIn={props.isLoggedIn}
+      />
+         <LogInButton
+        title=""
+        open={modal5Open}
+        className="btnrv"
+        handleCancel={handleCancel}
+        isLoggedIn={props.isLoggedIn}
+        // setAuth={(data: any) => {
+        //   setAuth(data);
+        //   setModal5Open(false);
+        // }}
       />
     </>
   );

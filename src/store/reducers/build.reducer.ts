@@ -274,6 +274,7 @@ const buildSlice = createSlice({
             ...state,
             loading: false,
             buildListByUrl: initialState.buildListByUrl,
+            // boxes:initialState.boxes,
             userBuilds: action.payload.data,
           };
         } else {

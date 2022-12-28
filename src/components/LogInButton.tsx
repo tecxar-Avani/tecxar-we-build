@@ -32,6 +32,7 @@ const LogInButton = (props: any) => {
         centered
         open={loggedInUser?.length > 0 ? false : props.open}
         className="btnrv"
+        destroyOnClose={true}
         onCancel={props.handleCancel}
       >
         <div className="mb-n3">
