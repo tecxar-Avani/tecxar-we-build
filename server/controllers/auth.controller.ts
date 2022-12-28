@@ -28,7 +28,7 @@ export class AuthController {
     @Res() res: Response
   ) {
     try {
-      const lastPage = "/";
+      const lastPage = "?isLoggedIn";
       const userEmail = req.user._json.email;
       const userName = req.user._json.name;
       const googleProfileId = req.user._json.sub;
@@ -125,7 +125,7 @@ export class AuthController {
       //     message: (error as Error).message,
       //   },
       // };
-    } 
+    }
   }
 
   @Get("/google_fail")

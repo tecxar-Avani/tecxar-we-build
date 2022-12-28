@@ -20,15 +20,35 @@ const SideBar = (toggle: any) => {
   const [buildListData, setBuildListData] = useState(buildList?.box);
   const { loggedInUser } = useAppSelector(userSelector);
 
-  const [auth, setAuth] = useState();
-
   useEffect(() => {
     setBuildListData(buildList?.box);
   }, [buildList]);
 
   useEffect(() => {
     setBuildListData([]);
-  }, [buildListByUrl]);
+  }, [buildListByUrl, userBuilds]);
+
+  useEffect(() => {
+    if (buildListByUrl?.data?.length > 0 && buildListData?.length === 0) {
+      setSideBarBG("profileBG");
+    } else if (
+      buildListByUrl.results?.length > 0 &&
+      buildListData?.length == 0
+    ) {
+      setSideBarBG("profileBG");
+    } else if (userBuilds?.data?.length > 0 && buildListData?.length == 0) {
+      setSideBarBG("profileBG");
+    } else if (
+      buildListByUrl?.allBuilds?.length > 0 &&
+      buildListData?.length == 0
+    ) {
+      setSideBarBG("profileBG");
+    } else if (router.asPath == "/search?selfLearning=true") {
+      setSideBarBG("SelfLearningBG");
+    } else if (router.asPath == "/search?selfLeaning=false") {
+      setSideBarBG("ThingsLearningBG");
+    }
+  }, [userBuilds, buildListByUrl, buildListData]);
 
   useEffect(() => {
     if (router.asPath == "/search?selfLearning=true") {
@@ -44,22 +64,6 @@ const SideBar = (toggle: any) => {
       setSideBarBG("UserGuideBG");
     }
   }, [router.asPath]);
-
-  useEffect(() => {
-    if (
-      (buildListByUrl?.data &&
-        buildListByUrl?.data?.length > 0 &&
-        buildListData?.length == 0) ||
-      (buildListByUrl?.results &&
-        buildListByUrl?.results?.length > 0 &&
-        buildListData?.length == 0) ||
-      // (userBuilds?.box?.length > 0 && buildListData?.length == 0)||
-      (userBuilds?.data?.length > 0 && buildListData?.length == 0) ||
-      (buildListByUrl?.allBuilds?.length > 0 && buildListData?.length == 0)
-    ) {
-      setSideBarBG("profileBG");
-    }
-  }, [buildList, userBuilds, buildListByUrl, buildListData]);
 
   const handleCancel = () => {
     setModal5Open(false);

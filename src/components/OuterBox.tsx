@@ -28,8 +28,6 @@ const OuterBox = (props: any) => {
     } else if (
       props.boxId &&
       value.length === 150
-      // &&
-      // !props.arr.includes(propsId)
     ) {
      
       props.setBoxData(BoxData);

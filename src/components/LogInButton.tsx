@@ -18,11 +18,7 @@ const LogInButton = (props: any) => {
       dispatch(getAuthCookie());
       dispatch(getUserByEmail());
       console.log("This will run after 1 second!");
-    }, 10000);
-    // const timer = setInterval(() => {
-    //   dispatch(getAuthCookie());
-    //   dispatch(getUserByEmail());
-    // }, 10000);
+    }, 7000);
   };
 
   return (
