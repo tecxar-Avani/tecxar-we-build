@@ -29,7 +29,7 @@ const AddFlashCardModal = (props: any) => {
           props.setModal2Open(false);
         }}
         className="flashCardsModal"
-        destroyOnClose={ props.defaultQuestionIndex ? true : false}
+        destroyOnClose={true}
         footer={
           <Button
             form="form"

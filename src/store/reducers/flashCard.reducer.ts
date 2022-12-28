@@ -17,6 +17,7 @@ import {
   IUpdateFlashCards,
 } from "../../../@types/common";
 import flashCardService from "../../service/flashCard.service";
+import { totalbuilds } from "./user.reducer";
 
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
@@ -90,6 +91,7 @@ export const deleteFlashCardById = createAsyncThunk(
   async (Id: number, { dispatch }) => {
   const { status, data } = await flashCardService.deleteFlashCardById(Id);
   dispatch(getFlashCardByUser())
+  dispatch(totalbuilds())
   return { status,data };
 });
 // export const deleteFlashCardId = createAsyncThunk(`flashcard/deleteFlashCard/`, async (Id: number, { dispatch }) => {
