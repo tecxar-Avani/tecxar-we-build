@@ -572,12 +572,20 @@ line-height: 34px !important;
     position: absolute;
     bottom: 15px;
     right: 9px;
-  }
-  
- 
+  }   
 }
 .awarenessDotModal {
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+.awarenessModal{
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+.textBoxInner{
   ::-webkit-scrollbar {
     display: none;
   }
@@ -1141,7 +1149,6 @@ h6 {
   height: 42px;
   border-radius: 5px;
   text-align: center;
-  margin-left: 900px;
 }
 
 .searchBar {
@@ -1189,6 +1196,7 @@ h6 {
   font-size: 20px !important;
 }
 
+.videoCard {
 /* width */
 ::-webkit-scrollbar {
   // width: 1089px;
@@ -1216,4 +1224,4 @@ height: 10px;
   // border-radius: 3px;
 }
 
-
+}

@@ -180,11 +180,11 @@ const Profile = (props: any) => {
               {userBuilds &&
                 userBuilds?.box?.map((videoData: any, index: number) => (
                   <Col md={4} key={index} className="videoProfile ">
-                    <Link href={`/newBuild?id=${videoData.id}`}>
-                      <a>
-                        <VideoCard VideoCardData={videoData} />
-                      </a>
-                    </Link>
+                    <Link href={`/newBuild?id=${videoData.id}&&videoId=${videoData.video_id}`}>
+                <a>
+                  <VideoCard VideoCardData={videoData} />
+                </a>
+              </Link>
                   </Col>
                 ))}
             </div>
@@ -201,27 +201,33 @@ const Profile = (props: any) => {
             {userBuildList &&
               userBuildList?.box?.map((videoData: any, index: number) => (
                 <Col md={4} key={index} className="videoProfile">
-                  <Link href={`/newBuild?id=${videoData.videoId}`}>
+                  {/* <Link href={`/newBuild?id=${videoData.videoId}`}>
                     <a>
                       <VideoCard VideoCardData={videoData} />
                     </a>
-                  </Link>
+                  </Link> */}
+                     <Link href={`/newBuild?id=${videoData.id}&&videoId=${videoData.video_id}`}>
+                <a>
+                  <VideoCard VideoCardData={videoData} />
+                </a>
+              </Link>
                 </Col>
               ))}
           </Row>
         </div>
         {userData.userData.role_id == 1 ? (
-          <div className="pb-2">
-            <div className="d-flex">
+          <div className="pb-2 row">
+            <div className="d-flex justify-content-between">
               <HeaderTitle
                 title="Total list of Profiles"
                 className="title-list-of-profile py-2 mt-4 mb-3"
               />
+              <div className="w-50 align-self-center d-flex justify-content-end">
               <select
                 onChange={(e) => {
                   setFilterParam(e.target.value);
                 }}
-                className="filterInProfile py-2 mt-5 mb-3"
+                className="filterInProfile"
                 aria-label="Filter Countries By Region"
               >
                 <option value="All" className="filterInProfile">
@@ -234,6 +240,7 @@ const Profile = (props: any) => {
                   Unblock Users
                 </option>
               </select>
+              </div>
               <span className="focus"></span>
             </div>
             <Row className="m-0">

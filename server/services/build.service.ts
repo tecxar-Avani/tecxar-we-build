@@ -94,6 +94,9 @@ class BuildService {
             [Op.like]: `%${search}%`,
           },
         },
+        Sequelize.where(Sequelize.fn("lower", Sequelize.col("type_of_video")), {
+          [Op.like]: `%${search}%`,
+        }),
         Sequelize.where(Sequelize.fn("lower", Sequelize.col("title")), {
           [Op.like]: `%${search}%`,
         }),
@@ -185,7 +188,9 @@ class BuildService {
             [Op.like]: `%${search}%`,
           },
         },
-
+        Sequelize.where(Sequelize.fn("lower", Sequelize.col("type_of_video")), {
+          [Op.like]: `%${search}%`,
+        }),
         Sequelize.where(Sequelize.fn("lower", Sequelize.col("title")), {
           [Op.like]: `%${search}%`,
         }),

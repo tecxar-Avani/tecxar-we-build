@@ -109,7 +109,6 @@ const NewBuild = (props: any) => {
 
   useEffect(() => {
     if (buildId) {
-      dispatch(getFlashCardByBuildId(buildId));
       dispatch(getBuildById(buildId));
       dispatch(getUserByEmail());
     }
@@ -117,6 +116,7 @@ const NewBuild = (props: any) => {
 
   useEffect(() => {
     dispatch(getAwarenessByBoxId(buildId));
+    dispatch(getFlashCardByBuildId(buildId));
   }, [buildId]);
 
   useEffect(() => {

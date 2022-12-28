@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -20,7 +21,8 @@ export type BoxAttributes = Optional<IBoxes, "id">;
 })
 export default class Boxes
   extends Model<IBoxes, BoxAttributes>
-  implements IBoxes {
+  implements IBoxes
+{
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
