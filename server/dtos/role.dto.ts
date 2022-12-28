@@ -1,36 +1,37 @@
-import { IRole, IUpdateRole } from '@interfaces/roles.interface';
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+/* eslint-disable prettier/prettier */
+import { IRole, IUpdateRole } from "@interfaces/roles.interface";
+import { IsDate, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class roleDto implements IRole {
-    @IsNumber()
-    id: number;
+  @IsNumber()
+  id: number;
 
-    @IsString()
-    role: string;
+  @IsString()
+  role: string;
 
-    @IsOptional()
-    @IsDate()
-    createdBy?: number;
+  @IsOptional()
+  @IsDate()
+  createdBy?: number;
 
-    @IsOptional()
-    @IsDate()
-    updatedBy?: number;
+  @IsOptional()
+  @IsDate()
+  updatedBy?: number;
 }
 
 export class updateroleDto implements IUpdateRole {
-    @IsOptional()
-    @IsNumber()
-    id?: number;
+  @IsOptional()
+  @IsNumber()
+  id?: number;
 
-    @IsOptional()
-    @IsString()
-    role?: string;
+  @IsOptional()
+  @IsString()
+  role?: string;
 
-    @IsOptional()
-    @IsDate()
-    createdBy?: number;
+  @IsOptional()
+  @IsDate()
+  createdBy?: number;
 
-    @IsOptional()
-    @IsDate()
-    updatedBy?: number;
+  @IsOptional()
+  @IsDate()
+  updatedBy?: number;
 }

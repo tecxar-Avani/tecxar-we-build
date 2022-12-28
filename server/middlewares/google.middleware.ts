@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Response, NextFunction, Request } from "express";
 import {
   ExpressMiddlewareInterface,

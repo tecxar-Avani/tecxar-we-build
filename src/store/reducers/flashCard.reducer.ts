@@ -2,16 +2,13 @@ import { RootState } from "../index";
 import {
   createAsyncThunk,
   createSlice,
-  createEntityAdapter,
   PayloadAction,
   AsyncThunk,
   AnyAction,
 } from "@reduxjs/toolkit";
-import Router from "next/router";
 import { toast } from "react-toastify";
 import { IFlashCardRowsCountResponse } from "../../../@types/responses";
 import {
-  ICreateFlashCard,
   IFlashCard,
   IFlashCardsResponse,
   IUpdateFlashCards,
