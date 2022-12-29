@@ -12,6 +12,7 @@ import LogInButton from "./LogInButton";
 const { Sider } = Layout;
 
 const SideBar = (toggle: any) => {
+  console.log("toggle", toggle);
   const { buildList, userBuilds, buildListByUrl } =
     useAppSelector(buildSelector);
   const router = useRouter();
@@ -19,6 +20,14 @@ const SideBar = (toggle: any) => {
   const [modal5Open, setModal5Open] = useState(false);
   const [buildListData, setBuildListData] = useState(buildList?.box);
   const { loggedInUser } = useAppSelector(userSelector);
+
+  useEffect(() => {
+    if (loggedInUser.length > 0) {
+      setTimeout(() => {
+        router.reload();
+      }, 3000);
+    }
+  }, [loggedInUser]);
 
   useEffect(() => {
     setBuildListData(buildList?.box);
