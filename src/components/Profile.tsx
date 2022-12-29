@@ -5,6 +5,7 @@ import { Image } from "react-bootstrap";
 import { Button } from "antd";
 const cookieCutter = require("cookie-cutter");
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 interface profileProps {
   className: string;
@@ -44,9 +45,11 @@ const ProfileCard = (props: any) => {
 
   const logout = () => {
     cookieCutter.set("authorization", "", { expires: new Date(0), path: "/" });
+    
     router.push({
       pathname: "/",
     });
+    toast.success("You are logged out successfully");
   };
 
   return (

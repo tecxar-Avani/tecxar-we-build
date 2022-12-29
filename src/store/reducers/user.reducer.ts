@@ -27,9 +27,10 @@ export const getUserAuth = createAsyncThunk(
 
 export const getAuthCookie = createAsyncThunk(
   `/cookie`,
-  async (): Promise<ICurrentUser> => {
+  async (): Promise<ICurrentUser|any> => {
     const data = await cookieCutter.get("authorization");
-    return data;
+    const msg = "You are logged in successfully"
+    return {data,msg};
   }
 );
 
@@ -81,6 +82,7 @@ interface State {
   usersList: ICreateUser[];
   editUser: IUserResponseRowsCountResponse | any;
   totalCount: IUserResponseRowsCountResponse | any;
+  toastLog : any;
 }
 
 const initialState: State = {
@@ -98,6 +100,7 @@ const initialState: State = {
     status: true,
     rows: [],
   },
+  toastLog:""
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -133,27 +136,37 @@ const userSlice = createSlice({
           };
         }
       })
-      .addCase(getAuthCookie.fulfilled, (state, action) => {
-        if (action.payload) {
-          if (
-            Router.asPath == "/" ||
-            Router.asPath == "/search?selfLearning=true" ||
-            Router.asPath == "/search?selfLeaning=false" ||
-            Router.asPath == "/profile" ||
-            Router.asPath == "/UserGuide"
-          ) {
-            Router.reload();
-          }
+      .addCase(getAuthCookie.fulfilled,(state, action) => {  
+        console.log("action @@@@@@@",action)
+       
+        if (action.payload?.data) {
+          toast.success('You are logged in successfully');
+          // setTimeout(() => {
+          //   Router.reload();
+          // }, 3000)
+          // if (
+          //   Router.asPath == "/" ||
+          //   Router.asPath == "/search?selfLearning=true" ||
+          //   Router.asPath == "/search?selfLeaning=false" ||
+          //   Router.asPath == "/profile" ||
+          //   Router.asPath == "/UserGuide"
+          // ) {
+          //    Router.reload();
+          //   //  Router.asPath == "/profile" ? toast.success("You are logged in successfully") :
+          // }
+         
           return {
             ...state,
             loading: false,
-            loggedInUser: action.payload,
+             toastLog:action.payload.msg,
+            loggedInUser: action.payload.data,
           };
         } else {
           return {
             ...state,
             loading: false,
             loggedInUser: initialState.loggedInUser,
+            toastLog:initialState.toastLog
           };
         }
       })

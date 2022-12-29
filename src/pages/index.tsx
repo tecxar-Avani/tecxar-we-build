@@ -4,12 +4,21 @@ import { Layout } from "antd";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAppSelector } from "../hooks";
+import { userSelector } from "@/store/reducers/user.reducer";
+import { Toast } from "react-toastify/dist/components";
 // import Link from "antd/lib/typography/Link";
 const { Content } = Layout;
 
-const Home: NextPage = () => {
+const Home: NextPage = (props) => {
+  console.log('props',props)
   const router = useRouter();
+  const { loggedInUser ,toastLog} = useAppSelector(userSelector);
 
+  // useEffect(() => {
+  //  console.log("WWWWWWWWWWWWWWWW",toastLog)
+  // }, [loggedInUser]);
+  console.log("WWWWWWWWWWWWWWWW",toastLog)
   useEffect(() => {
     if (router.asPath == "/?isLoggedIn") {
       window.close();

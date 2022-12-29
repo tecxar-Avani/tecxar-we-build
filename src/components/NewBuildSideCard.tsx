@@ -12,6 +12,8 @@ import {
   getBuildById,
 } from "@/store/reducers/build.reducer";
 import LogInButton from "./LogInButton";
+import { Modal, Tooltip } from "antd";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
@@ -24,15 +26,23 @@ const NewBuildSideCard = (props: any) => {
   const [type, setType] = useState(false);
   const typeVideo = useRef(null);
   const [videoType, setVideoType] = useState<any>("theory");
+  const [hoverEffect, setHoverEffect] = useState<boolean>(false);
   const [polarisationLevel, setPolarisationLevel] = useState<any>("low");
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
   const [auth, setAuth] = useState();
+  const { confirm } = Modal;
 
   useEffect(() => {
     dispatch(getBuildById(props.id));
   }, []);
+ 
+  useEffect(() => {
+    setTimeout(() => {
+      setHoverEffect(false)
+    }, 5000)
+  }, [hoverEffect]);
 
   const handleCancel = () => {
     setModal5Open(false);
@@ -42,6 +52,18 @@ const NewBuildSideCard = (props: any) => {
     dispatch(deleteBuildId(props.id));
   };
 
+  const showConfirm = () => {
+    confirm({
+      title: "Are you sure you want to delete build?",
+      icon: <ExclamationCircleFilled />,
+      onOk() {
+        deleteBuild();
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
   const userId = buildById?.data?.map((a: any) => a.created_by);
   return (
     <>
@@ -164,6 +186,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setVideoType(e.target.name);
                     setType(false);
+                    setHoverEffect(true);
                   }}
                 >
                   Practical
@@ -175,6 +198,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setVideoType(e.target.name);
                     setType(false);
+                    setHoverEffect(true);
                   }}
                 >
                   Theoretical
@@ -219,6 +243,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setPolarisationLevel(e.target.name);
                     setPolarisation(false);
+                    setHoverEffect(true);
                   }}
                 >
                   Low
@@ -229,6 +254,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setPolarisationLevel(e.target.name);
                     setPolarisation(false);
+                    setHoverEffect(true);
                   }}
                 >
                   Medium
@@ -240,6 +266,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setPolarisationLevel(e.target.name);
                     setPolarisation(false);
+                    setHoverEffect(true);
                   }}
                 >
                   High
@@ -250,6 +277,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setPolarisationLevel(e.target.name);
                     setPolarisation(false);
+                    setHoverEffect(true);
                   }}
                 >
                   Very High
@@ -288,6 +316,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setDifficultyLevel(e.target.name);
                     setDifficulty(false);
+                    setHoverEffect(true);
                   }}
                 >
                   Low
@@ -298,6 +327,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setDifficultyLevel(e.target.name);
                     setDifficulty(false);
+                    setHoverEffect(true);
                   }}
                 >
                   Medium
@@ -309,6 +339,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setDifficultyLevel(e.target.name);
                     setDifficulty(false);
+                    setHoverEffect(true);
                   }}
                 >
                   High
@@ -319,6 +350,7 @@ const NewBuildSideCard = (props: any) => {
                   onClick={(e: any) => {
                     setDifficultyLevel(e.target.name);
                     setDifficulty(false);
+                    setHoverEffect(true);
                   }}
                 >
                   Very High
@@ -327,70 +359,76 @@ const NewBuildSideCard = (props: any) => {
             )}
           </Overlay>
         </div>
-
-        <hr className="border-dark  ms-2  " />
-        <div className="d-flex owd bd-highlight">
-          {/* {props.isLoggedIn === true ? ( */}
-          <div
-            className="save bd-highlight cursor-pointer"
-            onClick={() => {
-              props.isLoggedIn === true || loggedInUser?.length > 0
-                ? props.onSave(
-                    videoType,
-                    polarisationLevel,
-                    difficultyLevel,
-                    url
-                  )
-                : setModal5Open(true);
-            }}
-            style={
-              props.id == undefined ||
-              props.id == "undefined" ||
-              (userId && userId.length > 0 && userId[0] == userData.id)
-                ? {}
-                : { pointerEvents: "none", opacity: 0.4 }
-            }
-          >
-            <Image src="/img/save.svg" className="ms-2" alt="no image" />
-          </div>
-          <div className="backward bd-highlight cursor-pointer">
-            <Image
-              src="/img/backward.svg"
-              className="ms-5 me-1"
+        <div className="px-2">
+          <hr className="border-dark" />
+          <div className="d-flex owd bd-highlight justify-content-between align-items-center">
+            {/* {props.isLoggedIn === true ? ( */}
+            <div
+              id={`${hoverEffect && "blink"}`}
+              className={`save bd-highlight cursor-pointer`}
               onClick={() => {
-                setDifficultyLevel("low"),
-                  setPolarisationLevel("low"),
-                  setVideoType("theory"),
-                  props?.setIsRefresh(true);
+                props.isLoggedIn === true || loggedInUser?.length > 0
+                  ? props.onSave(
+                      videoType,
+                      polarisationLevel,
+                      difficultyLevel,
+                      url
+                    )
+                  : setModal5Open(true);
               }}
-            />
-          </div>
+              style={
+                props.id == undefined ||
+                props.id == "undefined" ||
+                (userId && userId.length > 0 && userId[0] == userData.id)
+                  ? {}
+                  : { pointerEvents: "none", opacity: 0.4 }
+              }
+            >
+              {hoverEffect ? <Tooltip placement="bottom" title={'Click me to save your data'}>
+              <Image src="/img/save.svg" alt="no image" />
+              </Tooltip> : <Image src="/img/save.svg" alt="no image" /> }
+            </div>
+            <div className="d-flex">
+              <div className="backward bd-highlight cursor-pointer">
+                <Image
+                  src="/img/backward.svg"
+                  className="me-1"
+                  onClick={() => {
+                    setDifficultyLevel("low"),
+                      setPolarisationLevel("low"),
+                      setVideoType("theory"),
+                      props?.setIsRefresh(true);
+                  }}
+                />
+              </div>
 
-          <div className=" forward bd-highlight cursor-pointer">
-            <Image
-              src="/img/forward.svg"
-              className="me-5"
-              onClick={() => {
-                setDifficultyLevel("low"),
-                  setPolarisationLevel("low"),
-                  setVideoType("theory"),
-                  props?.setIsRefresh(true);
-              }}
-            />
+              <div className=" forward bd-highlight cursor-pointer">
+                <Image
+                  src="/img/forward.svg"
+                  className=""
+                  onClick={() => {
+                    setDifficultyLevel("low"),
+                      setPolarisationLevel("low"),
+                      setVideoType("theory"),
+                      props?.setIsRefresh(true);
+                  }}
+                />
+              </div>
+            </div>
+            {/* <Link href={`../`}> */}
+            <div
+              className="delt bd-highlight cursor-pointer"
+              onClick={showConfirm}
+              style={
+                userId && userId.length > 0 && userId[0] == userData.id
+                  ? {}
+                  : { pointerEvents: "none", opacity: 0.4 }
+              }
+            >
+              <Image src="/img/delt.svg" />
+            </div>
+            {/* </Link> */}
           </div>
-          {/* <Link href={`../`}> */}
-          <div
-            className="delt bd-highlight cursor-pointer"
-            onClick={deleteBuild}
-            style={
-              userId && userId.length > 0 && userId[0] == userData.id
-                ? {}
-                : { pointerEvents: "none", opacity: 0.4 }
-            }
-          >
-            <Image src="/img/delt.svg" className="me-3" />
-          </div>
-          {/* </Link> */}
         </div>
       </div>
       <LogInButton
