@@ -18,18 +18,13 @@ const OuterBox = (props: any) => {
   }, [props.isRefresh]);
 
   const handleChange = (event: any) => {
-
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
     let BoxData = { sorting_order: id, description: value };
     if (value.length === 150 && !props.arr.includes(propsId) && !props.boxId) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
-    } else if (
-      props.boxId &&
-      value.length === 150
-    ) {
-     
+    } else if (props.boxId && value.length === 150) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
     }
@@ -46,10 +41,11 @@ const OuterBox = (props: any) => {
                   //  value={props?.description}
                   key={props.description ? props.description : ""}
                   maxLength={150}
-                  autoSize={{ minRows: 6, maxRows: 6 }}
+                  autoSize={{ minRows: 7, maxRows: 7 }}
                   defaultValue={props.description ? props.description : ""}
                   onChange={handleChange}
                   id={props.id}
+                  className="textFontSize"
                   onFocus={() => {
                     const data = {
                       id: props.id,
@@ -68,7 +64,7 @@ const OuterBox = (props: any) => {
                   }
                 />
               </Form.Item>
-             
+
               {props.awarenessList &&
                 props.awarenessList.length > 0 &&
                 props.awarenessList.map((data: any) => {
