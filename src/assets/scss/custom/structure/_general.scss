@@ -1225,3 +1225,13 @@ height: 10px;
 }
 
 }
+.ant-modal-confirm {
+  .ant-modal-confirm-btns{
+    margin-top: 41px !important;
+    text-align: center;
+    }
+    .ant-modal-confirm-body .ant-modal-confirm-title{
+      text-align: left !important;
+      font-size: 18px;
+    }
+}

@@ -12,6 +12,9 @@ import {
   getBuildById,
 } from "@/store/reducers/build.reducer";
 import LogInButton from "./LogInButton";
+import { Modal } from "antd";
+import { ExclamationCircleFilled } from '@ant-design/icons';
+
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
@@ -29,6 +32,8 @@ const NewBuildSideCard = (props: any) => {
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
   const [auth, setAuth] = useState();
+  const { confirm } = Modal;
+
 
   useEffect(() => {
     dispatch(getBuildById(props.id));
@@ -42,6 +47,16 @@ const NewBuildSideCard = (props: any) => {
     dispatch(deleteBuildId(props.id));
   };
 
+  const showConfirm = () => {
+    confirm({
+      title: 'Are you sure you want to delete build?',
+      icon: <ExclamationCircleFilled />,
+      onOk(){deleteBuild()},
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
   const userId = buildById?.data?.map((a: any) => a.created_by);
   return (
     <>
@@ -381,7 +396,7 @@ const NewBuildSideCard = (props: any) => {
           {/* <Link href={`../`}> */}
           <div
             className="delt bd-highlight cursor-pointer"
-            onClick={deleteBuild}
+            onClick={showConfirm}
             style={
               userId && userId.length > 0 && userId[0] == userData.id
                 ? {}
