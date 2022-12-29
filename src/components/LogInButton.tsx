@@ -10,7 +10,7 @@ import {
 } from "../store/reducers/user.reducer";
 
 const LogInButton = (props: any) => {
-  const { loggedInUser } = useAppSelector(userSelector);
+  const { loggedInUser ,toastLog} = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
 
   const getCookie = () => {

@@ -840,10 +840,6 @@ hr {
   color: #f8f8f8;
 }
 
-.ant-tooltip-inner {
-  color: black;
-}
-
 .blue {
   margin-left: -1px;
 }
@@ -935,10 +931,28 @@ hr {
   }
 }
 
-.ant-tooltip-inner {
-  color: black;
+
+
+@keyframes blinking {
+  0% {
+    background-color: #7d159779;
+    border: 1px solid rgba(102, 102, 102, 0.342);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+  100% {
+    background-color: #1234ae5d;
+    border: 1px solid rgba(102, 102, 102, 0.342);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+}
+#blink {
+  animation: blinking 1s infinite;
 }
 
+.ant-tooltip-placement-bottom .ant-tooltip-arrow {
+  left: 24%;}
 .bulb {
   margin: 7px;
 
@@ -1216,7 +1230,7 @@ h6 {
   }
 }
 .textFontSize {
-  font-size: 12px;
+  font-size: 13px;
 }
 .ant-modal-confirm {
   .ant-modal-confirm-btns{
