@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>dashboard</title>
+        <title>Dashboard</title>
       </Head>
       <div className="d-flex flex-row h-full">
         <Link href={"/search?selfLearning=true"}>

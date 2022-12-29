@@ -10,7 +10,7 @@ import userService from "../../service/user.service";
 import { ICreateUser, ICurrentUser, IUpdateUser } from "../../../@types/common";
 import { IUserResponseRowsCountResponse } from "../../../@types/responses";
 import { toast } from "react-toastify";
-import  Router from "next/router"
+import Router from "next/router";
 const cookieCutter = require("cookie-cutter");
 
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
@@ -135,6 +135,15 @@ const userSlice = createSlice({
       })
       .addCase(getAuthCookie.fulfilled, (state, action) => {
         if (action.payload) {
+          if (
+            Router.asPath == "/" ||
+            Router.asPath == "/search?selfLearning=true" ||
+            Router.asPath == "/search?selfLeaning=false" ||
+            Router.asPath == "/profile" ||
+            Router.asPath == "/UserGuide"
+          ) {
+            Router.reload();
+          }
           return {
             ...state,
             loading: false,
@@ -195,7 +204,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUserById.fulfilled, (state, action) => {
         if (action.payload.status) {
-          Router.reload()
+          Router.reload();
           toast.success(action.payload.data.message);
           return {
             ...state,

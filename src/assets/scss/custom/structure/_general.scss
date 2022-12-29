@@ -22,12 +22,12 @@ body,
 // .ant-layout.site-layout {
 //   margin-left: 125px;
 // }
-.fixTitle{
-  font-family: 'Arimo'!important;
-font-style: normal !important;
-font-weight: 700 !important;
-font-size: 30px !important;
-line-height: 34px !important;
+.fixTitle {
+  font-family: "Arimo" !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 30px !important;
+  line-height: 34px !important;
 }
 
 .boxesMain {
@@ -68,12 +68,13 @@ line-height: 34px !important;
     color: black;
     background-color: #d4d4d4;
   }
-  .ant-input::placeholder{
+  .ant-input::placeholder {
     text-overflow: ellipsis;
     color: black;
     background-color: #d4d4d4;
   }
-  .ant-input:focus, .ant-input-focused ::placeholder{
+  .ant-input:focus,
+  .ant-input-focused ::placeholder {
     text-overflow: ellipsis;
     color: black;
     background-color: #d4d4d4;
@@ -239,19 +240,18 @@ line-height: 34px !important;
   bottom: 18px;
   right: 45px;
 }
-.flashCardsModal{
+.flashCardsModal {
   cursor: pointer;
   .ant-input-textarea-show-count::after {
     position: absolute;
     bottom: 20px;
     right: 9px;
-}
-.ant-modal-body {
-  text-align: center;
-  margin: 9px;
-  padding-bottom: 0px !important;
-}
-
+  }
+  .ant-modal-body {
+    text-align: center;
+    margin: 9px;
+    padding-bottom: 0px !important;
+  }
 }
 
 .flashCardsContent {
@@ -368,7 +368,6 @@ line-height: 34px !important;
 .ant-modal {
   font-family: "Arimo";
 }
-
 
 .ant-modal-header {
   border-bottom: 0;
@@ -524,7 +523,6 @@ line-height: 34px !important;
   }
 }
 
-
 .awarenessModal {
   .ant-modal {
     margin-left: 754px !important;
@@ -572,20 +570,19 @@ line-height: 34px !important;
     position: absolute;
     bottom: 15px;
     right: 9px;
-  }   
+  }
 }
 .awarenessDotModal {
-
   ::-webkit-scrollbar {
     display: none;
   }
 }
-.awarenessModal{
+.awarenessModal {
   ::-webkit-scrollbar {
     display: none;
   }
 }
-.textBoxInner{
+.textBoxInner {
   ::-webkit-scrollbar {
     display: none;
   }
@@ -1135,8 +1132,6 @@ h6 {
   -ms-overflow-style: none;
 }
 
-
-
 .img-rounded {
   border-radius: 50%;
 }
@@ -1154,8 +1149,6 @@ h6 {
 .searchBar {
   width: 1430px;
 }
-
-
 
 .centerHeader {
   text-align: center !important;
@@ -1192,38 +1185,38 @@ h6 {
   margin-top: 30px;
 }
 
-.headerSizeInsearch{
+.headerSizeInsearch {
   font-size: 20px !important;
 }
 
 .videoCard {
-/* width */
-::-webkit-scrollbar {
-  // width: 1089px;
-height: 10px;
-  width: 5px;
- 
+  /* width */
+  ::-webkit-scrollbar {
+    // width: 1089px;
+    height: 10px;
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    // border-radius: 3px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #636262;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #636262;
+    // border-radius: 3px;
+  }
 }
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-  // border-radius: 3px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #636262; 
-  border-radius: 5px;
-}
-
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #636262;
-  // border-radius: 3px;
-}
-
+.textFontSize {
+  font-size: 12px;
 }
 .ant-modal-confirm {
   .ant-modal-confirm-btns{
