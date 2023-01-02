@@ -273,7 +273,6 @@ const isAccepted = (challenge_id:any) =>{
     id : challenge_id,
     build_id:buildId,
   }
-  console.log(data)
    dispatch(updateBoxReviewResponseByAwarenessId(data));
 }
 

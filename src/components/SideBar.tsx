@@ -12,7 +12,6 @@ import LogInButton from "./LogInButton";
 const { Sider } = Layout;
 
 const SideBar = (toggle: any) => {
-  console.log("toggle", toggle);
   const { buildList, userBuilds, buildListByUrl } =
     useAppSelector(buildSelector);
   const router = useRouter();

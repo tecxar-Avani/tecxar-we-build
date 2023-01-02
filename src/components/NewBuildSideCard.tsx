@@ -60,7 +60,6 @@ const NewBuildSideCard = (props: any) => {
         deleteBuild();
       },
       onCancel() {
-        console.log("Cancel");
       },
     });
   };

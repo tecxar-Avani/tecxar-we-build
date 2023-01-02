@@ -17,7 +17,6 @@ const LogInButton = (props: any) => {
     setTimeout(() => {
       dispatch(getAuthCookie());
       dispatch(getUserByEmail());
-      console.log("This will run after 1 second!");
     }, 7000);
   };
 

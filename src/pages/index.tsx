@@ -11,14 +11,10 @@ import { Toast } from "react-toastify/dist/components";
 const { Content } = Layout;
 
 const Home: NextPage = (props) => {
-  console.log('props',props)
   const router = useRouter();
   const { loggedInUser ,toastLog} = useAppSelector(userSelector);
 
-  // useEffect(() => {
-  //  console.log("WWWWWWWWWWWWWWWW",toastLog)
-  // }, [loggedInUser]);
-  console.log("WWWWWWWWWWWWWWWW",toastLog)
+ 
   useEffect(() => {
     if (router.asPath == "/?isLoggedIn") {
       window.close();

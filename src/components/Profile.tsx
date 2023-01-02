@@ -1,11 +1,12 @@
 import { updateUserById, userSelector } from "@/store/reducers/user.reducer";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import React from "react";
+import React, { useEffect } from "react";
 import { Image } from "react-bootstrap";
 import { Button } from "antd";
 const cookieCutter = require("cookie-cutter");
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import { delay } from "@reduxjs/toolkit/dist/utils";
 
 interface profileProps {
   className: string;
@@ -43,15 +44,12 @@ const ProfileCard = (props: any) => {
     dispatch(updateUserById(userData));
   };
 
-  const logout = () => {
-    cookieCutter.set("authorization", "", { expires: new Date(0), path: "/" });
-    
-    router.push({
-      pathname: "/",
-    });
-    toast.success("You are logged out successfully");
+  const logout =  async() => {
+    await router.push("/")
+    await  toast.success("You are logged out successfully"); 
+   cookieCutter.set("authorization", "", { expires: new Date(0)})
   };
-
+  
   return (
     <>
       <div

@@ -136,11 +136,21 @@ const userSlice = createSlice({
           };
         }
       })
-      .addCase(getAuthCookie.fulfilled,(state, action) => {  
-        console.log("action @@@@@@@",action)
-       
+      .addCase(getAuthCookie.fulfilled,(state, action) => {        
         if (action.payload?.data) {
-          toast.success('You are logged in successfully');
+          if (
+              Router.asPath == "/" ||
+              Router.asPath == "/search?selfLearning=true" ||
+              Router.asPath == "/search?selfLeaning=false" ||
+              Router.asPath == "/profile" ||
+              Router.asPath == "/UserGuide"
+            ){
+              toast.success('You are logged in successfully');
+
+            }
+            else{
+            toast.success('You are logged in successfully Please save your data ');
+            }
           // setTimeout(() => {
           //   Router.reload();
           // }, 3000)
