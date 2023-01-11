@@ -148,3 +148,17 @@ export interface IUpdateBoxReviewsResponse {
  is_accepted?:number;
 }
 
+export interface IGroup {
+  id?:number;
+  title?:string;
+  boxes?:[]
+}
+
+export interface IGroupBoxes{
+  title?:string;
+  group_id?:number;
+  build_id?:number;
+  box_id?:number;
+  description?:string;
+  sorting_order?:number;
+}

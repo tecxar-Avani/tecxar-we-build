@@ -100,7 +100,6 @@ export class updateVideoBuildDto implements IUpdateVideoBuild {
   difficulty_level?: any;
 
   @IsOptional()
-  @IsArray()
   boxes?: any;
 
   @IsOptional()

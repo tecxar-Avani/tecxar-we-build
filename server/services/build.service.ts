@@ -52,7 +52,8 @@ class BuildService {
     vb.video_id
     FROM video_builds AS vb
     LEFT JOIN boxes box on vb.id = box.build_id
-    where vb.id = ${id} `;
+    where vb.id = ${id}
+    order by box.sorting_order `;
     const BuildById: IVideoBuild[] = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
     });
@@ -265,6 +266,7 @@ class BuildService {
   }
 
   public async updateBuild(id: number, data: any): Promise<IVideoBuild | null> {
+
     const videoBuildsUpdate: any | null = await this.videoBuild.update(
       { ...data },
       { where: { id: id } }

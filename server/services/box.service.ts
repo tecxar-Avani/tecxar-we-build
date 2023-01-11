@@ -50,6 +50,28 @@ class BoxService {
     }
   }
 
+  // public async getBoxesByBuildId(
+  //   buildId: number | undefined
+  // ): Promise<IBoxes[] | null> {
+  //   const boxes: IBoxes[] | null = await this.box.findAll({
+  //     where: { build_id: buildId },
+  //     raw: true,
+  //   });
+  //   if (!boxes) {
+  //     return null;
+  //   } else {
+  //     return boxes;
+  //   }
+  // }
+  public async getBoxesByBuildId(buildId: any): Promise<IBoxes[] | null> {
+    const query = `SELECT sorting_order As id , description as message ,id as boxId  FROM webuild.boxes where build_id = ${buildId}`;
+    const boxes: IBoxes[] = await DB.sequelize.query(query, {
+      type: QueryTypes.SELECT,
+    });
+    return boxes;
+  }
+  
+
   public async getTotalBoxes(userId: any): Promise<IBoxes[] | any> {
     const query = `SELECT COUNT(*) AS boxes FROM video_builds AS vb
       LEFT JOIN boxes box on vb.id = box.build_id
@@ -61,9 +83,10 @@ class BoxService {
   }
 
   public async updateBox(id: number, data: any): Promise<IBoxes[] | null> {
+   
     const boxUpdate: any | null = await this.box.update(
       { ...data },
-      { where: { id: id } }
+      { where: { id: id} }
     );
     if (!boxUpdate) {
       return null;

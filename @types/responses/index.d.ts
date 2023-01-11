@@ -4,6 +4,7 @@ import {
   IBoxReviews,
   IBoxReviewsResponse,
   ICreateUser,
+  IGroup,
 } from "@types/common";
 
 interface IResponseBase {
@@ -55,3 +56,5 @@ interface IReviewResponseRowsCountResponse
 
 interface IUserResponseRowsCountResponse
   extends ISuccessPaginatedData<ICreateUser> {}
+
+interface IGroupRowsCountResponse extends ISuccessPaginatedData<IGroupBoxes> {}

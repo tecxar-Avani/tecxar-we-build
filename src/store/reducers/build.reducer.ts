@@ -17,6 +17,7 @@ import {
 } from "../../../@types/responses";
 import { IBoxes, IVideoBuild } from "../../../@types/common";
 import Search from "antd/lib/input/Search";
+import { getAwarenessByBoxId } from "./awareness.reducer";
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -98,7 +99,7 @@ export const UpdateUsersBuild = createAsyncThunk(
     };
     const { status, data } = await BuildService.UpdateBuildById(id, editData);
     dispatch(getUsersBuild);
-
+dispatch(getAwarenessByBoxId(updateBuildData.id))
     return { status, data };
   }
 );
@@ -302,8 +303,15 @@ const buildSlice = createSlice({
       })
       .addCase(UpdateUsersBuild.fulfilled, (state, action) => {
         if (action.payload.status) {
-          toast.success(action.payload.data.message);
-          Router.push("/search?selfLearning=true");
+         
+          if(action.payload.data.message == "Box Dragged successfully"){
+
+          }
+          else{
+            toast.success(action.payload.data.message);
+            Router.push("/search?selfLearning=true");
+          }
+        
 
           return {
             ...state,

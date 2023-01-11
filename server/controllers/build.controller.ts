@@ -360,31 +360,46 @@ export class FlashController {
     @Param("id") id: number,
     @Body() data: updateVideoBuildDto
   ) {
-    try {
+    try { 
       data.updated_by = req.user.id;
       const userBuild = await this.buildService.updateBuild(id, data);
-      if (data?.boxes?.length > 0) {
-        data.boxes.map(async (box: updateBoxesDto) => {
-          const boxId = box.sorting_order && Number(box.sorting_order);
-          const existingBox = await this.boxService.getBoxesById(id, boxId);
-          if (existingBox && existingBox.length > 0) {
-            existingBox.map(async (d: any) => {
+     
+      if (data?.boxes) { 
+        if(data.boxes.draggedArray?.length > 0){    
+        data.boxes.draggedArray.map(async (box: any) => {
               const updateData = {
-                description: box.description,
+                sorting_order:  box.id && Number(box.id)
               };
-              await this.boxService.updateBox(d.id, updateData);
-            });
-          } else {
-            const boxData = {
-              sorting_order: box.sorting_order,
-              description: box.description,
-              build_id: id,
-            };
-            await this.boxService.createSingleBox(boxData);
-          }
+              await this.boxService.updateBox(box.boxId, updateData);
         });
+        }
+        if(data.boxes.boxData?.length > 0){
+          data.boxes.boxData.map(async (box: updateBoxesDto) => {
+            const boxId = box.sorting_order && Number(box.sorting_order);
+            const existingBox = await this.boxService.getBoxesById(id, boxId);
+           
+            if (existingBox && existingBox.length > 0) {
+              existingBox.map(async (d: any) => {
+                const updateData = {
+                  description: box.description,
+                  sorting_order: box.sorting_order
+                };
+               
+                await this.boxService.updateBox(d.id, updateData);
+              });
+            } else {
+              const boxData = {
+                sorting_order: box.sorting_order,
+                description: box.description,
+                build_id: id,
+              };
+              await this.boxService.createSingleBox(boxData);
+            }
+          });
+        }
+       
       }
-      return { data: userBuild, message: "Build Updated successfully" };
+      return {  data: userBuild, message: data.boxes.draggedArray?.length > 0 ? "Box Dragged successfully" : "Build Updated successfully"};
     } catch (error) {
       return {
         error: {

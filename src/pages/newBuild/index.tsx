@@ -27,7 +27,7 @@ import {
   getAwarenessByBoxId,
   updateBoxReviewResponseByAwarenessId,
 } from "../../store/reducers/awareness.reducer";
-import { Button, Form } from "antd";
+import { Button, Form, Result } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
@@ -37,6 +37,12 @@ import {
 } from "../../store/reducers/user.reducer";
 import Head from "next/head";
 import moment from "moment";
+import { GetServerSideProps } from "next";
+import { DragDropContext, Droppable, DropResult, resetServerContext} from "react-beautiful-dnd";
+import { createGroup, getGroupBoxesByBuild ,groupSelector} from "@/store/reducers/group.reducer";
+import { IGroup } from "../../../@types/common";
+
+
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -44,8 +50,9 @@ const NewBuild = (props: any) => {
   const { flashCardList } = useAppSelector(flashCardSelector);
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const { buildById, buildListByUrl } = useAppSelector(buildSelector);
+  const { buildById, buildListByUrl ,boxes} = useAppSelector(buildSelector);
   const { userData, loggedInUser } = useAppSelector(userSelector);
+  const {groupList} = useAppSelector(groupSelector)
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
@@ -64,6 +71,9 @@ const NewBuild = (props: any) => {
   const [boxId, setBoxId] = useState();
   const [boxAwarenessID, setBoxAwarenessID] = useState();
   const [isRefresh, setIsRefresh] = useState(false);
+  const [activeSelection, setActiveSelection] = useState(false);
+  const [groupArray,setGroupArray] = useState<any>([]);
+
 
 
   const [boxData, setBoxData] = useState([]);
@@ -76,7 +86,9 @@ const NewBuild = (props: any) => {
       };
     })
   );
-
+  const [draggedArray ,setDraggedArray] = useState([])
+  let dragg:any;
+  const [completedTodos, setCompletedTodos] = useState([]);
   //Create Flash card
   const handleSubmit = (data: any) => {
     const flashCardData = {
@@ -111,6 +123,7 @@ const NewBuild = (props: any) => {
     if (buildId) {
       dispatch(getBuildById(buildId));
       dispatch(getUserByEmail());
+      dispatch(getGroupBoxesByBuild(buildId))
     }
   }, [buildId]);
 
@@ -189,7 +202,6 @@ const NewBuild = (props: any) => {
       }
     }
   };
-
   const onSave = (
     videoType: any,
     polarisationLevel: any,
@@ -207,7 +219,7 @@ const NewBuild = (props: any) => {
       type_of_video: videoType,
       potential_polarization: polarisationLevel,
       difficulty_level: difficultyLevel,
-      boxes: boxData,
+      boxes: {boxData:boxData},
       video_url: url,
       id: buildId,
     };
@@ -231,7 +243,15 @@ const NewBuild = (props: any) => {
     //   ?( dispatch(addBuild(saveData)))
     //   : toast.error("You need to fill minimum 20 boxes");
   };
-
+  useEffect(() => {
+    if(draggedArray && draggedArray.length > 0){
+      const editData = {
+        boxes: {draggedArray:draggedArray,boxData:boxData},
+        id: buildId,
+      };
+      dispatch(UpdateUsersBuild(editData));
+    } 
+  }, [draggedArray]);
   const handleChange = (e: any) => {
     setAwarenessIndex(e.description);
     setAwarenessBoxId(e.id);
@@ -516,9 +536,77 @@ const isAccepted = (challenge_id:any) =>{
     };
     dispatch(addReviewResponse(data));
   };
+//for drag and drop
 
-  return (
-    <>
+const onDragEnd = (Result:DropResult) =>{
+  const {source , destination} = Result
+  const val = dataArray.map((a) => a.id)
+
+  if(!destination) return;
+  if(destination.index === source.index) return;
+
+  let addBox
+  let active = val  
+
+
+  // if(source.droppableId === "boxesAll"){
+  //   addBox = active[source.index]
+  //   active.splice(source.index,1)
+  
+  // }
+ 
+  // if(destination.droppableId === "boxesAll"){
+  //   active.splice(destination.index, 0, addBox)
+
+  // }
+  
+    dragg = dataArray.map(el => el.id == source.index ?  {...el, id: destination.index}:  el.id == destination.index ?{...el, id: source.index}: el)
+
+    // setDataArray(dataArray.map(el => el.id == source.index ?  {...el, id: destination.index}:  el.id == destination.index ?{...el, id: source.index}: el)
+    // )
+      setDataArray(dragg)     
+      setDraggedArray(dragg)
+}
+
+// for grouping
+
+const groupSelect = () =>{
+  setActiveSelection(true)
+}
+
+const groupingSelection = (e:any) =>{
+  const groupId = e.target.value
+  // groupArray.push(groupId)
+  setGroupArray([...groupArray,groupId])
+ 
+}
+const submitGroup = (e:any) =>{
+  const groupData = {
+      title:e.groupName,
+      boxes:groupArray,
+  }
+  dispatch(createGroup(groupData))
+}
+const newGroupArray = []
+const arr2 = groupList.rows.groupBox
+ const arr3 = dataArray.filter(object1 => {
+  return !arr2?.some((object2: { id: number; }) => {
+    return object1.id === object2.id;
+  });
+});
+
+var results = arr2 && arr2.length>0 && arr2.reduce(function(results:any, org:any) {
+  (results[org.group_id] = results[org.group_id] || []).push(org);
+   return results;
+}, [])
+results && results.length>0 && results.shift()
+const mergedArray = results && results.length>0 && [ ...results, arr3 ]
+
+ newGroupArray.push(mergedArray)
+
+  return ( 
+    <>        <DragDropContext onDragEnd={onDragEnd} >
+
       {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
       {/* <>    */}
       {/* <Spin spinning={build.loading} delay={100}/> */}
@@ -545,11 +633,17 @@ const isAccepted = (challenge_id:any) =>{
           buildId={buildId}
           isRefresh={isRefresh}
           setIsRefresh={setIsRefresh}
+          groupSelect={groupSelect}
         />
+          {/* <Droppable droppableId="boxAll" >
+            {
+              (provided) => (<> */}
         <div className="w-100 px-4 pb-3 pt-4 mt-4">
+          
           <NewBuildBoxes
             setModal1Open={setAddFlashcard}
-            item={dataArray}
+            item={mergedArray && mergedArray.length>0 ? [] : dataArray}
+            mergedArray={mergedArray && mergedArray.length > 0 ? mergedArray : []}
             arr={arr}
             setArr={(value: any) => {
               setArr(value);
@@ -600,7 +694,17 @@ const isAccepted = (challenge_id:any) =>{
                 );
               }
             }}
+            completedTodos={completedTodos}
+            setCompletedTodos={setCompletedTodos}
+            activeSelection={activeSelection}
+            groupingSelection={groupingSelection}
+            submitGroup={submitGroup}
           />
+          {/* {provided.placeholder} */}
+           </div>
+            {/* </>)}
+              </Droppable> */}
+     
           <div className="position-absolute mkCard">
             {userArr &&
               userArr?.length > 0 &&
@@ -636,7 +740,8 @@ const isAccepted = (challenge_id:any) =>{
             />
           </div>
         </div>
-      </div>
+      
+      
       <AddFlashCardModal
         modal2Open={addFlashCardData}
         setModal2Open={setAddFlashcard}
@@ -783,8 +888,15 @@ const isAccepted = (challenge_id:any) =>{
         } `}
       />
       {/* </>} */}
+      </DragDropContext>
     </>
   );
 };
 
 export default NewBuild;
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+
+  resetServerContext()   // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+  return {props: { data : []}}
+
+}

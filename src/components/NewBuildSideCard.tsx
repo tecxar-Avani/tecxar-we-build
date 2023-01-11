@@ -64,6 +64,8 @@ const NewBuildSideCard = (props: any) => {
     });
   };
   const userId = buildById?.data?.map((a: any) => a.created_by);
+
+ 
   return (
     <>
       <div>
@@ -79,11 +81,17 @@ const NewBuildSideCard = (props: any) => {
 
         <hr className="border-dark" />
 
-        {/* <div className="mx-4">
-          <CustomButton title="Group" className="btn1 px-4 py-3 " />
-          <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 " />
+        <div className="mx-4">
+          <div onClick={props.groupSelect} style={
+                userId && userId.length > 0 && userId[0] == userData.id
+                  ? {}
+                  : { pointerEvents: "none", opacity: 0.4 }
+              }>
+          <CustomButton title="Group" className="btn1 px-4 py-3" />
+          </div>
+          {/* <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 " /> */}
         </div>
-        <hr className="border-dark" /> */}
+        <hr className="border-dark" />
         <div
           style={
             props.id == "undefined"
