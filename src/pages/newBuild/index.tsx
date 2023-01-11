@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   flashCardSelector,
@@ -551,19 +551,6 @@ const NewBuild = (props: any) => {
     if (!destination) return;
     if (destination.index === source.index) return;
 
-    let addBox;
-    let active = val;
-
-    // if(source.droppableId === "boxesAll"){
-    //   addBox = active[source.index]
-    //   active.splice(source.index,1)
-
-    // }
-
-    // if(destination.droppableId === "boxesAll"){
-    //   active.splice(destination.index, 0, addBox)
-
-    // }
 
     dragg = dataArray.map((el) =>
       el.id == source.index
@@ -610,6 +597,7 @@ const NewBuild = (props: any) => {
     });
   });
 
+
   var results = arr2.reduce(function (results: any, org: any) {
     (results[org.group_id] = results[org.group_id] || []).push(org);
     return results;
@@ -618,50 +606,42 @@ const NewBuild = (props: any) => {
   const mergedArray = [...results, arr3];
 
   return (
-    <>
-      {" "}
-      <DragDropContext onDragEnd={onDragEnd}>
-        {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
-        {/* <>    */}
-        {/* <Spin spinning={build.loading} delay={100}/> */}
-        <Head>
-          <title>New Build</title>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
-        </Head>
-        <div className="d-flex m-0 w-100">
-          <NewBuildSideCard
-            id={router.query.id}
-            videoId={router.query.videoId}
-            value={awarenessIndex}
-            Resistance={Resistance}
-            Acceptance={Acceptance}
-            Inspiration={Inspiration}
-            setAwarenessModal={setAwarenessModal}
-            isLoggedIn={props.isLoggedIn}
-            onSave={(
-              videoType: any,
-              polarisationLevel: any,
-              difficultyLevel: any,
-              url: string
-            ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
-            buildId={buildId}
-            isRefresh={isRefresh}
-            setIsRefresh={setIsRefresh}
-            groupSelect={groupSelect}
-          />
-          {/* <Droppable droppableId="boxAll" >
+    <Fragment>
+      <Head>
+        <title>New Build</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <div className="d-flex m-0 w-100">
+        <NewBuildSideCard
+          id={router.query.id}
+          videoId={router.query.videoId}
+          value={awarenessIndex}
+          Resistance={Resistance}
+          Acceptance={Acceptance}
+          Inspiration={Inspiration}
+          setAwarenessModal={setAwarenessModal}
+          isLoggedIn={props.isLoggedIn}
+          onSave={(
+            videoType: any,
+            polarisationLevel: any,
+            difficultyLevel: any,
+            url: string
+          ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
+          buildId={buildId}
+          isRefresh={isRefresh}
+          setIsRefresh={setIsRefresh}
+          groupSelect={groupSelect}
+        />
+        {/* <Droppable droppableId="boxAll" >
             {
               (provided) => (<> */}
-          <div className="w-100 px-4 pb-3 pt-4 mt-4">
-            {console.log("iiiiiiiiiiiiiiiiiiiiii", isSelectedGroupData)}
+        <div className="w-100 px-4 pb-3 pt-4 mt-4">
+          <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
             <NewBuildBoxes
               setModal1Open={setAddFlashcard}
-              item={activeSelection ? dataArray : []}
-              mergedArray={mergedArray}
-              isSelectedGroupData={isSelectedGroupData}
+             
+item={activeSelection ? dataArray : []}
+mergedArray={mergedArray}
               arr={arr}
               setArr={(value: any) => {
                 setArr(value);
@@ -718,195 +698,194 @@ const NewBuild = (props: any) => {
               groupingSelection={groupingSelection}
               submitGroup={submitGroup}
             />
-            {/* {provided.placeholder} */}
-          </div>
-          {/* </>)}
+          </DragDropContext>
+          {/* {provided.placeholder} */}
+        </div>
+        {/* </>)}
               </Droppable> */}
 
-          <div className="position-absolute mkCard">
-            {userArr &&
-              userArr?.length > 0 &&
-              userArr?.map((data: any) => {
-                return (
-                  <Card
-                    className="mt-3"
-                    onClick={() => {
-                      questionData(data.user_id);
-                    }}
-                  >
-                    <Card.Body className="d-flex justify-content-center align-items-center">
-                      {data.user_name.split(" ").map((a: any) => a.charAt(0))}
-                    </Card.Body>
-                  </Card>
-                );
-              })}
-          </div>
-          <div
-            className="position-absolute flash"
-            style={
-              buildIdForFlash == "undefined"
-                ? { pointerEvents: "none", opacity: 0.4 }
-                : {}
-            }
-          >
-            <Image
-              alt="flashCards"
-              src="../../../img/flashcardnewbuild.svg"
-              onClick={() => {
-                setAddFlashcard(true);
-              }}
-            />
-          </div>
+        <div className="position-absolute mkCard">
+          {userArr &&
+            userArr?.length > 0 &&
+            userArr?.map((data: any) => {
+              return (
+                <Card
+                  className="mt-3"
+                  onClick={() => {
+                    questionData(data.user_id);
+                  }}
+                >
+                  <Card.Body className="d-flex justify-content-center align-items-center">
+                    {data.user_name.split(" ").map((a: any) => a.charAt(0))}
+                  </Card.Body>
+                </Card>
+              );
+            })}
         </div>
+        <div
+          className="position-absolute flash"
+          style={
+            buildIdForFlash == "undefined"
+              ? { pointerEvents: "none", opacity: 0.4 }
+              : {}
+          }
+        >
+          <Image
+            alt="flashCards"
+            src="../../../img/flashcardnewbuild.svg"
+            onClick={() => {
+              setAddFlashcard(true);
+            }}
+          />
+        </div>
+      </div>
 
-        <AddFlashCardModal
-          modal2Open={addFlashCardData}
-          setModal2Open={setAddFlashcard}
-          visible={addFlashCardData}
-          handleSubmit={handleSubmit}
-          isLoggedIn={props.isLoggedIn}
-        />
+      <AddFlashCardModal
+        modal2Open={addFlashCardData}
+        setModal2Open={setAddFlashcard}
+        visible={addFlashCardData}
+        handleSubmit={handleSubmit}
+        isLoggedIn={props.isLoggedIn}
+      />
 
-        <FlashCardModal
-          isLoggedIn={props.isLoggedIn}
-          modal={revealAns}
-          flashCard={modal3Open}
-          setmodalOpen={setRevealAns}
-          modalVisible={revealAns}
-          responseCallback={(
-            data: any,
-            userId: number,
-            questionId: number,
-            index: number,
-            arrayLength: number
-          ) => {
-            const filterArray = flashCardArr?.filter(
-              (F: any) => F.user_id == userId
-            );
-            const questionFilter = filterArray?.filter(
-              (F: any) => F.id == questionId
-            );
-            questionFilter &&
-              questionFilter.length > 0 &&
-              questionFilter.map((ans: any) => {
-                const newData = {
-                  content: ans.answer,
-                  footer: ["Again", "Hard", "Good", "Easy"],
-                  onOk: modal4Open,
-                  userId: userId,
-                  questionId: questionId,
-                  index: index,
-                  arrayLength: arrayLength,
-                };
-                setModal3Open(newData);
-              });
-          }}
-          questionCallback={(
-            userId: number,
-            index: number,
-            questionId: number
-          ) => {
-            questionData(userId, index, questionId);
-          }}
-          againCallback={(
-            data: any,
-            userId: number,
-            questionId: number,
-            index: number
-          ) => {
-            questionData(userId, index);
-          }}
-        />
-        <AwarenessModal
-          awarenessModal={awarenessModal}
-          setAwarenessModal={(type: boolean) => {
-            setAwarenessIndex(false);
-            setAwarenessModal(type);
-          }}
-          visible={awarenessModal}
-          textValue={awarenessIndex}
-          handleSubmit={(comment: any, review: any) => {
-            handleData(comment, review);
-          }}
-          footer="Add"
-          id={awarenessIndex}
-          title={`${
-            accept
-              ? "Acceptance"
-              : inspiration
-              ? "Inspiration"
-              : resistance
-              ? "Resistance"
-              : ""
-          }`}
-          header={`${
-            props.isLoggedIn || loggedInUser?.length > 0
-              ? `${userData.user_name}'s`
-              : ""
-          } ${
-            accept
-              ? "Acceptance"
-              : inspiration
-              ? "Inspiration"
-              : resistance
-              ? "Resistance"
-              : ""
-          }`}
-          className={`${
-            accept
-              ? "accptanceModalBG"
-              : inspiration
-              ? "inspirationModalBG"
-              : resistance
-              ? "resistanceModalBG"
-              : ""
-          } `}
-          isLoggedIn={props.isLoggedIn}
-        />
-        <AwarenessTypeModal
-          open={open}
-          content={(title: any) => content(title)}
-          handleCancel={handleCancel}
-          handleOk={handleCancel}
-          btn="challenge"
-          title={`${
-            accept
-              ? "Acceptance"
-              : inspiration
-              ? "Inspiration"
-              : resistance
-              ? "Resistance"
-              : ""
-          }`}
-          className={`${
-            accept
-              ? "accptanceModalBG"
-              : inspiration
-              ? "inspirationModalBG"
-              : resistance
-              ? "resistanceModalBG"
-              : ""
-          } `}
-        />
-        <ChallengeModal
-          challengeModal={challengeModal}
-          content={challengeContent}
-          setChallengeModal={challengeClose}
-          btn="Add"
-          title={challengeTitle}
-          className={`${
-            accept
-              ? "accptanceModalBG"
-              : inspiration
-              ? "inspirationModalBG"
-              : resistance
-              ? "resistanceModalBG"
-              : ""
-          } `}
-        />
-        {/* </>} */}
-      </DragDropContext>
-    </>
+      <FlashCardModal
+        isLoggedIn={props.isLoggedIn}
+        modal={revealAns}
+        flashCard={modal3Open}
+        setmodalOpen={setRevealAns}
+        modalVisible={revealAns}
+        responseCallback={(
+          data: any,
+          userId: number,
+          questionId: number,
+          index: number,
+          arrayLength: number
+        ) => {
+          const filterArray = flashCardArr?.filter(
+            (F: any) => F.user_id == userId
+          );
+          const questionFilter = filterArray?.filter(
+            (F: any) => F.id == questionId
+          );
+          questionFilter &&
+            questionFilter.length > 0 &&
+            questionFilter.map((ans: any) => {
+              const newData = {
+                content: ans.answer,
+                footer: ["Again", "Hard", "Good", "Easy"],
+                onOk: modal4Open,
+                userId: userId,
+                questionId: questionId,
+                index: index,
+                arrayLength: arrayLength,
+              };
+              setModal3Open(newData);
+            });
+        }}
+        questionCallback={(
+          userId: number,
+          index: number,
+          questionId: number
+        ) => {
+          questionData(userId, index, questionId);
+        }}
+        againCallback={(
+          data: any,
+          userId: number,
+          questionId: number,
+          index: number
+        ) => {
+          questionData(userId, index);
+        }}
+      />
+      <AwarenessModal
+        awarenessModal={awarenessModal}
+        setAwarenessModal={(type: boolean) => {
+          setAwarenessIndex(false);
+          setAwarenessModal(type);
+        }}
+        visible={awarenessModal}
+        textValue={awarenessIndex}
+        handleSubmit={(comment: any, review: any) => {
+          handleData(comment, review);
+        }}
+        footer="Add"
+        id={awarenessIndex}
+        title={`${
+          accept
+            ? "Acceptance"
+            : inspiration
+            ? "Inspiration"
+            : resistance
+            ? "Resistance"
+            : ""
+        }`}
+        header={`${
+          props.isLoggedIn || loggedInUser?.length > 0
+            ? `${userData.user_name}'s`
+            : ""
+        } ${
+          accept
+            ? "Acceptance"
+            : inspiration
+            ? "Inspiration"
+            : resistance
+            ? "Resistance"
+            : ""
+        }`}
+        className={`${
+          accept
+            ? "accptanceModalBG"
+            : inspiration
+            ? "inspirationModalBG"
+            : resistance
+            ? "resistanceModalBG"
+            : ""
+        } `}
+        isLoggedIn={props.isLoggedIn}
+      />
+      <AwarenessTypeModal
+        open={open}
+        content={(title: any) => content(title)}
+        handleCancel={handleCancel}
+        handleOk={handleCancel}
+        btn="challenge"
+        title={`${
+          accept
+            ? "Acceptance"
+            : inspiration
+            ? "Inspiration"
+            : resistance
+            ? "Resistance"
+            : ""
+        }`}
+        className={`${
+          accept
+            ? "accptanceModalBG"
+            : inspiration
+            ? "inspirationModalBG"
+            : resistance
+            ? "resistanceModalBG"
+            : ""
+        } `}
+      />
+      <ChallengeModal
+        challengeModal={challengeModal}
+        content={challengeContent}
+        setChallengeModal={challengeClose}
+        btn="Add"
+        title={challengeTitle}
+        className={`${
+          accept
+            ? "accptanceModalBG"
+            : inspiration
+            ? "inspirationModalBG"
+            : resistance
+            ? "resistanceModalBG"
+            : ""
+        } `}
+      />
+    </Fragment>
   );
 };
 
