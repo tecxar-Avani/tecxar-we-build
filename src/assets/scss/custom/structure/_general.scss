@@ -41,7 +41,8 @@ body,
       border: 0.5px solid #000000;
     }
   }
-  .innerBoxsSelected{
+
+  .innerBoxsSelected {
     border: 0.3px solid rgba(0, 0, 0, 0.25);
     max-width: 360px;
     max-height: 227px;
@@ -64,6 +65,7 @@ body,
 .searchCard ::placeholder {
   text-align: center;
 }
+
 .searchCard {
   .ant-input:placeholder-shown {
     text-overflow: ellipsis;
@@ -71,17 +73,20 @@ body,
     background-color: #d4d4d4;
   }
 }
+
 .searchCard {
   .ant-input:placeholder-shown {
     text-overflow: ellipsis;
     color: black;
     background-color: #d4d4d4;
   }
+
   .ant-input::placeholder {
     text-overflow: ellipsis;
     color: black;
     background-color: #d4d4d4;
   }
+
   .ant-input:focus,
   .ant-input-focused ::placeholder {
     text-overflow: ellipsis;
@@ -249,13 +254,16 @@ body,
   bottom: 18px;
   right: 45px;
 }
+
 .flashCardsModal {
   cursor: pointer;
+
   .ant-input-textarea-show-count::after {
     position: absolute;
     bottom: 20px;
     right: 9px;
   }
+
   .ant-modal-body {
     text-align: center;
     margin: 9px;
@@ -525,8 +533,10 @@ body,
   border-radius: 7px;
   // margin-left: 754px;
 }
+
 .ant-modal-content {
   border-radius: 7px !important;
+
   .ant-modal-header {
     border-radius: 7px !important;
   }
@@ -540,6 +550,7 @@ body,
   .ant-modal-content {
     color: #000000;
     border-radius: 7px;
+
     .ant-modal-header {
       border-radius: 7px;
     }
@@ -581,21 +592,25 @@ body,
     right: 9px;
   }
 }
+
 .awarenessDotModal {
   ::-webkit-scrollbar {
     display: none;
   }
 }
+
 .awarenessModal {
   ::-webkit-scrollbar {
     display: none;
   }
 }
+
 .textBoxInner {
   ::-webkit-scrollbar {
     display: none;
   }
 }
+
 .challenge-textbox-main {
   position: relative;
 }
@@ -617,13 +632,14 @@ body,
   height: 27px;
   position: absolute;
   top: 36.5%;
-  right: -23px;
-  width: 50px;
+  right: -24px;
+  width: 51px;
   // height: 0px;
   // color: #000000;
   background-image: url("/public/redArrow.svg");
   background-position-y: 100%;
 }
+
 .side-Arrow:last-child::after {
   content: "";
   height: 27px;
@@ -636,10 +652,12 @@ body,
   background-image: unset;
   background-position-y: 100%;
 }
-.dragHover:hover{
+
+.dragHover:hover {
   box-shadow: 0 0 5px black;
   transform: scale(1.0);
 }
+
 // .arrow-red {
 //   width:100px;
 //   height:30px;
@@ -665,7 +683,7 @@ body,
 //   left:-531px;
 //   // height: 0px;
 //   // color: #000000;
- 
+
 //   background-image: url("/public/red-big.svg");
 //   background-position-y: 100%;
 // }
@@ -928,6 +946,7 @@ hr {
   .ant-modal-content {
     border-radius: 7px;
     background-color: #b2b5ed;
+
     .ant-modal-header {
       background-color: #b2b5ed;
       border-radius: 7px;
@@ -949,6 +968,7 @@ hr {
 }
 
 .resistanceModalBG {
+
   .ant-modal-content,
   .ant-modal-header {
     background-color: #e8abab;
@@ -978,6 +998,7 @@ hr {
 }
 
 .inspirationModalBG {
+
   .ant-modal-content,
   .ant-modal-header {
     background-color: #e0c0eb;
@@ -1006,6 +1027,7 @@ hr {
     padding: 0.5rem;
     border-radius: 5px;
   }
+
   100% {
     background-color: #1234ae5d;
     border: 1px solid rgba(102, 102, 102, 0.342);
@@ -1013,12 +1035,15 @@ hr {
     border-radius: 5px;
   }
 }
+
 #blink {
   animation: blinking 1s infinite;
 }
 
 .ant-tooltip-placement-bottom .ant-tooltip-arrow {
-  left: 24%;}
+  left: 24%;
+}
+
 .bulb {
   margin: 7px;
 
@@ -1037,7 +1062,7 @@ hr {
   padding: 1px;
 }
 
-.ant-form-item-label > label::after {
+.ant-form-item-label>label::after {
   content: none;
 }
 
@@ -1270,6 +1295,7 @@ h6 {
 }
 
 .videoCard {
+
   /* width */
   ::-webkit-scrollbar {
     // width: 1089px;
@@ -1295,43 +1321,51 @@ h6 {
     // border-radius: 3px;
   }
 }
+
 .textFontSize {
   font-size: 13px;
   border-radius: 4px;
 }
+
 .ant-modal-confirm {
-  .ant-modal-confirm-btns{
+  .ant-modal-confirm-btns {
     margin-top: 41px !important;
     text-align: center;
-    }
-    .ant-modal-confirm-body .ant-modal-confirm-title{
-      text-align: left !important;
-      font-size: 18px;
-    }
+  }
+
+  .ant-modal-confirm-body .ant-modal-confirm-title {
+    text-align: left !important;
+    font-size: 18px;
+  }
 }
-.groupSelection{
+
+.groupSelection {
   display: inherit;
   margin-top: -14px;
 }
-.groupSelectionNot{
+
+.groupSelectionNot {
   display: inherit;
   margin-top: -14px !important;
-  .ant-checkbox{
+
+  .ant-checkbox {
     display: none;
   }
-  
+
 }
-.ant-checkbox{
+
+.ant-checkbox {
   margin-top: -14px;
 }
+
 .ant-checkbox-inner {
   border-radius: 19px;
 }
 
 .group {
-//  .ant-form-item{
-// width: 900px;
-//  }
-   
-  
+  //  .ant-form-item{
+  // width: 900px;
+  //  }
+
+
 }
