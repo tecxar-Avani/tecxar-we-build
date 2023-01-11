@@ -25,7 +25,7 @@ export class GroupController {
   private groupService = new GroupService();
 
   @Post("/create")
-//   @UseBefore(authMiddleware)
+   @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new flash card" })
   async createFlashCard(

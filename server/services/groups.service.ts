@@ -49,7 +49,8 @@ class GroupService {
 
      LEFT JOIN all_groups AS g ON bg.group_id = g.id
 
-     where build_id = ${buildId}`;
+     where build_id = ${buildId}
+     group by box_id`;
      const getGroupBoxData: IGroupBoxData[] = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
     });

@@ -8,6 +8,8 @@ const NewBuildBoxes = (props: any) => {
   const groupArray = props.mergedArray && props.mergedArray.length >0 && props.mergedArray?.map((merge:any) => merge)
  
   // groupArray&& groupArray.length>0 && groupArray.shift()
+console.log("---------------------------",props.item)
+
   return (
     <Fragment>
       {props.item && props.item.length>0 ?
@@ -82,13 +84,14 @@ const NewBuildBoxes = (props: any) => {
         );
       }) 
       : 
-     groupArray && groupArray.length>0 && groupArray.map((data:any) => { return (
-
-    
+     groupArray && groupArray.length>0 && groupArray.map((data:any,index1:number) => { return (
+     
       data && data.length>0 &&  [...Array(Math.ceil(data && data.length / 3))].map((_rows, index) => {
        
-       
-        const arr = [...groupArray]
+      const groupTitle = data && data.length >0 && data.map((a:any) => {const data = {group_id: a.group_id,title:a.title}
+       return data})
+    
+        // const arr = [...data]
         const subArray = data
           .sort((a: any, b: any) => a.id - b.id)
           .slice(index * 3, index * 3 + 3);
@@ -101,7 +104,7 @@ const NewBuildBoxes = (props: any) => {
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  <div className="h-30 border border-color-25">
+                  <div className="h-30 border border-color-25">{data && data.title}
                     {props.activeSelection ?  
                     <Fragment>
                         <Form 

@@ -38,11 +38,18 @@ import {
 import Head from "next/head";
 import moment from "moment";
 import { GetServerSideProps } from "next";
-import { DragDropContext, Droppable, DropResult, resetServerContext} from "react-beautiful-dnd";
-import { createGroup, getGroupBoxesByBuild ,groupSelector} from "@/store/reducers/group.reducer";
+import {
+  DragDropContext,
+  Droppable,
+  DropResult,
+  resetServerContext,
+} from "react-beautiful-dnd";
+import {
+  createGroup,
+  getGroupBoxesByBuild,
+  groupSelector,
+} from "@/store/reducers/group.reducer";
 import { IGroup } from "../../../@types/common";
-
-
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -50,9 +57,9 @@ const NewBuild = (props: any) => {
   const { flashCardList } = useAppSelector(flashCardSelector);
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const { buildById, buildListByUrl ,boxes} = useAppSelector(buildSelector);
+  const { buildById, buildListByUrl, boxes } = useAppSelector(buildSelector);
   const { userData, loggedInUser } = useAppSelector(userSelector);
-  const {groupList} = useAppSelector(groupSelector)
+  const { groupList } = useAppSelector(groupSelector);
   const [arr, setArr] = useState([1]);
   const [awarenessModal, setAwarenessModal] = useState(false);
   const [accept, setAccept] = useState(false);
@@ -72,9 +79,8 @@ const NewBuild = (props: any) => {
   const [boxAwarenessID, setBoxAwarenessID] = useState();
   const [isRefresh, setIsRefresh] = useState(false);
   const [activeSelection, setActiveSelection] = useState(false);
-  const [groupArray,setGroupArray] = useState<any>([]);
-
-
+  const [groupArray, setGroupArray] = useState<any>([]);
+  const [isSelectedGroupData, setIsSelectedGroupData] = useState<any>([]);
 
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
@@ -86,8 +92,8 @@ const NewBuild = (props: any) => {
       };
     })
   );
-  const [draggedArray ,setDraggedArray] = useState([])
-  let dragg:any;
+  const [draggedArray, setDraggedArray] = useState([]);
+  let dragg: any;
   const [completedTodos, setCompletedTodos] = useState([]);
   //Create Flash card
   const handleSubmit = (data: any) => {
@@ -123,7 +129,7 @@ const NewBuild = (props: any) => {
     if (buildId) {
       dispatch(getBuildById(buildId));
       dispatch(getUserByEmail());
-      dispatch(getGroupBoxesByBuild(buildId))
+      dispatch(getGroupBoxesByBuild(buildId));
     }
   }, [buildId]);
 
@@ -167,8 +173,6 @@ const NewBuild = (props: any) => {
       );
     }
   }, [buildListByUrl]);
-
-
 
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardList?.rows?.flashBuild?.build;
@@ -219,7 +223,7 @@ const NewBuild = (props: any) => {
       type_of_video: videoType,
       potential_polarization: polarisationLevel,
       difficulty_level: difficultyLevel,
-      boxes: {boxData:boxData},
+      boxes: { boxData: boxData },
       video_url: url,
       id: buildId,
     };
@@ -244,13 +248,13 @@ const NewBuild = (props: any) => {
     //   : toast.error("You need to fill minimum 20 boxes");
   };
   useEffect(() => {
-    if(draggedArray && draggedArray.length > 0){
+    if (draggedArray && draggedArray.length > 0) {
       const editData = {
-        boxes: {draggedArray:draggedArray,boxData:boxData},
+        boxes: { draggedArray: draggedArray, boxData: boxData },
         id: buildId,
       };
       dispatch(UpdateUsersBuild(editData));
-    } 
+    }
   }, [draggedArray]);
   const handleChange = (e: any) => {
     setAwarenessIndex(e.description);
@@ -285,16 +289,16 @@ const NewBuild = (props: any) => {
     setChallengeModal(false);
   };
 
-//boxReviewResponse
+  //boxReviewResponse
 
-const isAccepted = (challenge_id:any) =>{
-  const data = {
-    is_accepted : 1,
-    id : challenge_id,
-    build_id:buildId,
-  }
-   dispatch(updateBoxReviewResponseByAwarenessId(data));
-}
+  const isAccepted = (challenge_id: any) => {
+    const data = {
+      is_accepted: 1,
+      id: challenge_id,
+      build_id: buildId,
+    };
+    dispatch(updateBoxReviewResponseByAwarenessId(data));
+  };
 
   const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
   const content = (title: any) => {
@@ -414,7 +418,7 @@ const isAccepted = (challenge_id:any) =>{
                             value={data.challenge}
                             readOnly={true}
                           ></TextArea>
-                        
+
                           <Button
                             key="submit"
                             type="primary"
@@ -422,11 +426,13 @@ const isAccepted = (challenge_id:any) =>{
                             style={
                               buildCreatedBy &&
                               buildCreatedBy[0] &&
-                              buildCreatedBy[0] == userData.id && data.is_accepted == 0
+                              buildCreatedBy[0] == userData.id &&
+                              data.is_accepted == 0
                                 ? {}
                                 : { pointerEvents: "none", opacity: -0.6 }
                             }
-                            onClick={() => isAccepted(data.challenge_id)
+                            onClick={
+                              () => isAccepted(data.challenge_id)
                               // toast.success(
                               //   `You accepted the ${data.review_type}`
                               // )
@@ -536,175 +542,187 @@ const isAccepted = (challenge_id:any) =>{
     };
     dispatch(addReviewResponse(data));
   };
-//for drag and drop
+  //for drag and drop
 
-const onDragEnd = (Result:DropResult) =>{
-  const {source , destination} = Result
-  const val = dataArray.map((a) => a.id)
+  const onDragEnd = (Result: DropResult) => {
+    const { source, destination } = Result;
+    const val = dataArray.map((a) => a.id);
 
-  if(!destination) return;
-  if(destination.index === source.index) return;
+    if (!destination) return;
+    if (destination.index === source.index) return;
 
-  let addBox
-  let active = val  
+    let addBox;
+    let active = val;
 
+    // if(source.droppableId === "boxesAll"){
+    //   addBox = active[source.index]
+    //   active.splice(source.index,1)
 
-  // if(source.droppableId === "boxesAll"){
-  //   addBox = active[source.index]
-  //   active.splice(source.index,1)
-  
-  // }
- 
-  // if(destination.droppableId === "boxesAll"){
-  //   active.splice(destination.index, 0, addBox)
+    // }
 
-  // }
-  
-    dragg = dataArray.map(el => el.id == source.index ?  {...el, id: destination.index}:  el.id == destination.index ?{...el, id: source.index}: el)
+    // if(destination.droppableId === "boxesAll"){
+    //   active.splice(destination.index, 0, addBox)
+
+    // }
+
+    dragg = dataArray.map((el) =>
+      el.id == source.index
+        ? { ...el, id: destination.index }
+        : el.id == destination.index
+        ? { ...el, id: source.index }
+        : el
+    );
 
     // setDataArray(dataArray.map(el => el.id == source.index ?  {...el, id: destination.index}:  el.id == destination.index ?{...el, id: source.index}: el)
     // )
-      setDataArray(dragg)     
-      setDraggedArray(dragg)
-}
+    setDataArray(dragg);
+    setDraggedArray(dragg);
+  };
 
-// for grouping
+  // for grouping
 
-const groupSelect = () =>{
-  setActiveSelection(true)
-}
+  const groupSelect = (data: any) => {
+    setActiveSelection(true);
+    groupList &&
+    groupList.rows &&
+    groupList.rows.groupBox &&
+    groupList.rows.groupBox.length > 0
+      ? setIsSelectedGroupData(dataArray)
+      : isSelectedGroupData.length === 0 && setActiveSelection(true);
+  };
 
-const groupingSelection = (e:any) =>{
-  const groupId = e.target.value
-  // groupArray.push(groupId)
-  setGroupArray([...groupArray,groupId])
- 
-}
-const submitGroup = (e:any) =>{
-  const groupData = {
-      title:e.groupName,
-      boxes:groupArray,
-  }
-  dispatch(createGroup(groupData))
-}
-const newGroupArray = []
-const arr2 = groupList.rows.groupBox
- const arr3 = dataArray.filter(object1 => {
-  return !arr2?.some((object2: { id: number; }) => {
-    return object1.id === object2.id;
+  const groupingSelection = (e: any) => {
+    const groupId = e.target.value;
+    setGroupArray([...groupArray, groupId]);
+  };
+
+  const submitGroup = (e: any) => {
+    const groupData = {
+      title: e.groupName,
+      boxes: groupArray,
+    };
+    dispatch(createGroup(groupData));
+  };
+  const arr2 = groupList.rows.groupBox ? groupList.rows.groupBox : [];
+  const arr3 = dataArray.filter((object1) => {
+    return !arr2?.some((object2: { id: number }) => {
+      return object1.id === object2.id;
+    });
   });
-});
 
-var results = arr2 && arr2.length>0 && arr2.reduce(function(results:any, org:any) {
-  (results[org.group_id] = results[org.group_id] || []).push(org);
-   return results;
-}, [])
-results && results.length>0 && results.shift()
-const mergedArray = results && results.length>0 && [ ...results, arr3 ]
+  var results = arr2.reduce(function (results: any, org: any) {
+    (results[org.group_id] = results[org.group_id] || []).push(org);
+    return results;
+  }, []);
+  results && results.length > 0 && results.shift();
+  const mergedArray = [...results, arr3];
 
- newGroupArray.push(mergedArray)
-
-  return ( 
-    <>        <DragDropContext onDragEnd={onDragEnd} >
-
-      {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
-      {/* <>    */}
-      {/* <Spin spinning={build.loading} delay={100}/> */}
-      <Head>
-        <title>New Build</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <div className="d-flex m-0 w-100">
-        <NewBuildSideCard
-          id={router.query.id}
-          videoId={router.query.videoId}
-          value={awarenessIndex}
-          Resistance={Resistance}
-          Acceptance={Acceptance}
-          Inspiration={Inspiration}
-          setAwarenessModal={setAwarenessModal}
-          isLoggedIn={props.isLoggedIn}
-          onSave={(
-            videoType: any,
-            polarisationLevel: any,
-            difficultyLevel: any,
-            url: string
-          ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
-          buildId={buildId}
-          isRefresh={isRefresh}
-          setIsRefresh={setIsRefresh}
-          groupSelect={groupSelect}
-        />
+  return (
+    <>
+      {" "}
+      <DragDropContext onDragEnd={onDragEnd}>
+        {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : */}
+        {/* <>    */}
+        {/* <Spin spinning={build.loading} delay={100}/> */}
+        <Head>
+          <title>New Build</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
+        <div className="d-flex m-0 w-100">
+          <NewBuildSideCard
+            id={router.query.id}
+            videoId={router.query.videoId}
+            value={awarenessIndex}
+            Resistance={Resistance}
+            Acceptance={Acceptance}
+            Inspiration={Inspiration}
+            setAwarenessModal={setAwarenessModal}
+            isLoggedIn={props.isLoggedIn}
+            onSave={(
+              videoType: any,
+              polarisationLevel: any,
+              difficultyLevel: any,
+              url: string
+            ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
+            buildId={buildId}
+            isRefresh={isRefresh}
+            setIsRefresh={setIsRefresh}
+            groupSelect={groupSelect}
+          />
           {/* <Droppable droppableId="boxAll" >
             {
               (provided) => (<> */}
-        <div className="w-100 px-4 pb-3 pt-4 mt-4">
-          
-          <NewBuildBoxes
-            setModal1Open={setAddFlashcard}
-            item={mergedArray && mergedArray.length>0 ? [] : dataArray}
-            mergedArray={mergedArray && mergedArray.length > 0 ? mergedArray : []}
-            arr={arr}
-            setArr={(value: any) => {
-              setArr(value);
-              if (value.length > 20) {
-                setDataArray([
-                  ...dataArray,
-                  {
-                    id: value.length,
-                    message: "",
-                  },
-                ]);
-              }
-            }}
-            onFocus={(data: any) => handleChange(data)}
-            awarenessList={awarenessList}
-            Acceptance={Acceptance}
-            Resistance={Resistance}
-            Inspiration={Inspiration}
-            boxData={boxData}
-            setBoxData={setBoxData}
-            buildById={buildById}
-            modalDot={(id: any) => showModal(id)}
-            isRefresh={isRefresh}
-            setIsRefresh={(data: any) => {
-              setIsRefresh(data);
-              if (buildById?.data) {
-                const data =
-                  buildById.data &&
-                  buildById.data.map((box: any) => {
-                    return {
-                      id: box.sorting_order,
-                      message: box.description,
-                      boxId: box.id,
-                    };
-                  });
-                setDataArray(data);
-                setArr(data.map((d: any) => d.id));
-              } else {
-                setBoxData([]);
-                setArr([1]);
-                setDataArray(
-                  init.map((i, index) => {
-                    return {
-                      id: Number(index + 1),
+          <div className="w-100 px-4 pb-3 pt-4 mt-4">
+            {console.log("iiiiiiiiiiiiiiiiiiiiii", isSelectedGroupData)}
+            <NewBuildBoxes
+              setModal1Open={setAddFlashcard}
+              item={activeSelection ? dataArray : []}
+              mergedArray={mergedArray}
+              isSelectedGroupData={isSelectedGroupData}
+              arr={arr}
+              setArr={(value: any) => {
+                setArr(value);
+                if (value.length > 20) {
+                  setDataArray([
+                    ...dataArray,
+                    {
+                      id: value.length,
                       message: "",
-                    };
-                  })
-                );
-              }
-            }}
-            completedTodos={completedTodos}
-            setCompletedTodos={setCompletedTodos}
-            activeSelection={activeSelection}
-            groupingSelection={groupingSelection}
-            submitGroup={submitGroup}
-          />
-          {/* {provided.placeholder} */}
-           </div>
-            {/* </>)}
+                    },
+                  ]);
+                }
+              }}
+              onFocus={(data: any) => handleChange(data)}
+              awarenessList={awarenessList}
+              Acceptance={Acceptance}
+              Resistance={Resistance}
+              Inspiration={Inspiration}
+              boxData={boxData}
+              setBoxData={setBoxData}
+              buildById={buildById}
+              modalDot={(id: any) => showModal(id)}
+              isRefresh={isRefresh}
+              setIsRefresh={(data: any) => {
+                setIsRefresh(data);
+                if (buildById?.data) {
+                  const data =
+                    buildById.data &&
+                    buildById.data.map((box: any) => {
+                      return {
+                        id: box.sorting_order,
+                        message: box.description,
+                        boxId: box.id,
+                      };
+                    });
+                  setDataArray(data);
+                  setArr(data.map((d: any) => d.id));
+                } else {
+                  setBoxData([]);
+                  setArr([1]);
+                  setDataArray(
+                    init.map((i, index) => {
+                      return {
+                        id: Number(index + 1),
+                        message: "",
+                      };
+                    })
+                  );
+                }
+              }}
+              completedTodos={completedTodos}
+              setCompletedTodos={setCompletedTodos}
+              activeSelection={activeSelection}
+              groupingSelection={groupingSelection}
+              submitGroup={submitGroup}
+            />
+            {/* {provided.placeholder} */}
+          </div>
+          {/* </>)}
               </Droppable> */}
-     
+
           <div className="position-absolute mkCard">
             {userArr &&
               userArr?.length > 0 &&
@@ -740,154 +758,153 @@ const mergedArray = results && results.length>0 && [ ...results, arr3 ]
             />
           </div>
         </div>
-      
-      
-      <AddFlashCardModal
-        modal2Open={addFlashCardData}
-        setModal2Open={setAddFlashcard}
-        visible={addFlashCardData}
-        handleSubmit={handleSubmit}
-        isLoggedIn={props.isLoggedIn}
-      />
 
-      <FlashCardModal
-        isLoggedIn={props.isLoggedIn}
-        modal={revealAns}
-        flashCard={modal3Open}
-        setmodalOpen={setRevealAns}
-        modalVisible={revealAns}
-        responseCallback={(
-          data: any,
-          userId: number,
-          questionId: number,
-          index: number,
-          arrayLength: number
-        ) => {
-          const filterArray = flashCardArr?.filter(
-            (F: any) => F.user_id == userId
-          );
-          const questionFilter = filterArray?.filter(
-            (F: any) => F.id == questionId
-          );
-          questionFilter &&
-            questionFilter.length > 0 &&
-            questionFilter.map((ans: any) => {
-              const newData = {
-                content: ans.answer,
-                footer: ["Again", "Hard", "Good", "Easy"],
-                onOk: modal4Open,
-                userId: userId,
-                questionId: questionId,
-                index: index,
-                arrayLength: arrayLength,
-              };
-              setModal3Open(newData);
-            });
-        }}
-        questionCallback={(
-          userId: number,
-          index: number,
-          questionId: number
-        ) => {
-          questionData(userId, index, questionId);
-        }}
-        againCallback={(
-          data: any,
-          userId: number,
-          questionId: number,
-          index: number
-        ) => {
-          questionData(userId, index);
-        }}
-      />
-      <AwarenessModal
-        awarenessModal={awarenessModal}
-        setAwarenessModal={(type: boolean) => {
-          setAwarenessIndex(false);
-          setAwarenessModal(type);
-        }}
-        visible={awarenessModal}
-        textValue={awarenessIndex}
-        handleSubmit={(comment: any, review: any) => {
-          handleData(comment, review);
-        }}
-        footer="Add"
-        id={awarenessIndex}
-        title={`${
-          accept
-            ? "Acceptance"
-            : inspiration
-            ? "Inspiration"
-            : resistance
-            ? "Resistance"
-            : ""
-        }`}
-        header={`${
-          props.isLoggedIn || loggedInUser?.length > 0
-            ? `${userData.user_name}'s`
-            : ""
-        } ${
-          accept
-            ? "Acceptance"
-            : inspiration
-            ? "Inspiration"
-            : resistance
-            ? "Resistance"
-            : ""
-        }`}
-        className={`${
-          accept
-            ? "accptanceModalBG"
-            : inspiration
-            ? "inspirationModalBG"
-            : resistance
-            ? "resistanceModalBG"
-            : ""
-        } `}
-        isLoggedIn={props.isLoggedIn}
-      />
-      <AwarenessTypeModal
-        open={open}
-        content={(title: any) => content(title)}
-        handleCancel={handleCancel}
-        handleOk={handleCancel}
-        btn="challenge"
-        title={`${
-          accept
-            ? "Acceptance"
-            : inspiration
-            ? "Inspiration"
-            : resistance
-            ? "Resistance"
-            : ""
-        }`}
-        className={`${
-          accept
-            ? "accptanceModalBG"
-            : inspiration
-            ? "inspirationModalBG"
-            : resistance
-            ? "resistanceModalBG"
-            : ""
-        } `}
-      />
-      <ChallengeModal
-        challengeModal={challengeModal}
-        content={challengeContent}
-        setChallengeModal={challengeClose}
-        btn="Add"
-        title={challengeTitle}
-        className={`${
-          accept
-            ? "accptanceModalBG"
-            : inspiration
-            ? "inspirationModalBG"
-            : resistance
-            ? "resistanceModalBG"
-            : ""
-        } `}
-      />
-      {/* </>} */}
+        <AddFlashCardModal
+          modal2Open={addFlashCardData}
+          setModal2Open={setAddFlashcard}
+          visible={addFlashCardData}
+          handleSubmit={handleSubmit}
+          isLoggedIn={props.isLoggedIn}
+        />
+
+        <FlashCardModal
+          isLoggedIn={props.isLoggedIn}
+          modal={revealAns}
+          flashCard={modal3Open}
+          setmodalOpen={setRevealAns}
+          modalVisible={revealAns}
+          responseCallback={(
+            data: any,
+            userId: number,
+            questionId: number,
+            index: number,
+            arrayLength: number
+          ) => {
+            const filterArray = flashCardArr?.filter(
+              (F: any) => F.user_id == userId
+            );
+            const questionFilter = filterArray?.filter(
+              (F: any) => F.id == questionId
+            );
+            questionFilter &&
+              questionFilter.length > 0 &&
+              questionFilter.map((ans: any) => {
+                const newData = {
+                  content: ans.answer,
+                  footer: ["Again", "Hard", "Good", "Easy"],
+                  onOk: modal4Open,
+                  userId: userId,
+                  questionId: questionId,
+                  index: index,
+                  arrayLength: arrayLength,
+                };
+                setModal3Open(newData);
+              });
+          }}
+          questionCallback={(
+            userId: number,
+            index: number,
+            questionId: number
+          ) => {
+            questionData(userId, index, questionId);
+          }}
+          againCallback={(
+            data: any,
+            userId: number,
+            questionId: number,
+            index: number
+          ) => {
+            questionData(userId, index);
+          }}
+        />
+        <AwarenessModal
+          awarenessModal={awarenessModal}
+          setAwarenessModal={(type: boolean) => {
+            setAwarenessIndex(false);
+            setAwarenessModal(type);
+          }}
+          visible={awarenessModal}
+          textValue={awarenessIndex}
+          handleSubmit={(comment: any, review: any) => {
+            handleData(comment, review);
+          }}
+          footer="Add"
+          id={awarenessIndex}
+          title={`${
+            accept
+              ? "Acceptance"
+              : inspiration
+              ? "Inspiration"
+              : resistance
+              ? "Resistance"
+              : ""
+          }`}
+          header={`${
+            props.isLoggedIn || loggedInUser?.length > 0
+              ? `${userData.user_name}'s`
+              : ""
+          } ${
+            accept
+              ? "Acceptance"
+              : inspiration
+              ? "Inspiration"
+              : resistance
+              ? "Resistance"
+              : ""
+          }`}
+          className={`${
+            accept
+              ? "accptanceModalBG"
+              : inspiration
+              ? "inspirationModalBG"
+              : resistance
+              ? "resistanceModalBG"
+              : ""
+          } `}
+          isLoggedIn={props.isLoggedIn}
+        />
+        <AwarenessTypeModal
+          open={open}
+          content={(title: any) => content(title)}
+          handleCancel={handleCancel}
+          handleOk={handleCancel}
+          btn="challenge"
+          title={`${
+            accept
+              ? "Acceptance"
+              : inspiration
+              ? "Inspiration"
+              : resistance
+              ? "Resistance"
+              : ""
+          }`}
+          className={`${
+            accept
+              ? "accptanceModalBG"
+              : inspiration
+              ? "inspirationModalBG"
+              : resistance
+              ? "resistanceModalBG"
+              : ""
+          } `}
+        />
+        <ChallengeModal
+          challengeModal={challengeModal}
+          content={challengeContent}
+          setChallengeModal={challengeClose}
+          btn="Add"
+          title={challengeTitle}
+          className={`${
+            accept
+              ? "accptanceModalBG"
+              : inspiration
+              ? "inspirationModalBG"
+              : resistance
+              ? "resistanceModalBG"
+              : ""
+          } `}
+        />
+        {/* </>} */}
       </DragDropContext>
     </>
   );
@@ -895,8 +912,6 @@ const mergedArray = results && results.length>0 && [ ...results, arr3 ]
 
 export default NewBuild;
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-
-  resetServerContext()   // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
-  return {props: { data : []}}
-
-}
+  resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+  return { props: { data: [] } };
+};

@@ -38,7 +38,7 @@ const OuterBox = (props: any) => {
     // position: "fixed",
     ...draggableStyle,
   });
-console.log("props",props)
+
   return (
     <Fragment>
       <Col sm={4} className="p-0 side-Arrow">

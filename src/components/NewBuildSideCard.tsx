@@ -65,7 +65,10 @@ const NewBuildSideCard = (props: any) => {
   };
   const userId = buildById?.data?.map((a: any) => a.created_by);
 
- 
+ const groupSelect = () =>{
+  props.groupSelect();
+  props.setIsSelectedGroupData;
+ }
   return (
     <>
       <div>
@@ -82,7 +85,7 @@ const NewBuildSideCard = (props: any) => {
         <hr className="border-dark" />
 
         <div className="mx-4">
-          <div onClick={props.groupSelect} style={
+          <div className="groupBox" onClick={groupSelect} style={
                 userId && userId.length > 0 && userId[0] == userData.id
                   ? {}
                   : { pointerEvents: "none", opacity: 0.4 }
