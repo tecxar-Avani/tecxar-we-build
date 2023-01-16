@@ -29,7 +29,7 @@ export const getAuthCookie = createAsyncThunk(
   `/cookie`,
   async (): Promise<ICurrentUser|any> => {
     const data = await cookieCutter.get("authorization");
-    const msg = "You are logged in successfully"
+    const msg = "You logged in successfully"
     return {data,msg};
   }
 );
@@ -145,11 +145,11 @@ const userSlice = createSlice({
               Router.asPath == "/profile" ||
               Router.asPath == "/UserGuide"
             ){
-              toast.success('You are logged in successfully');
+              toast.success('You logged in successfully');
 
             }
             else{
-            toast.success('You are logged in successfully Please save your data ');
+            toast.success('You  logged in successfully Please save your data ');
             }
           // setTimeout(() => {
           //   Router.reload();

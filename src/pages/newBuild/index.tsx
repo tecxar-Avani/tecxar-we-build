@@ -27,7 +27,7 @@ import {
   getAwarenessByBoxId,
   updateBoxReviewResponseByAwarenessId,
 } from "../../store/reducers/awareness.reducer";
-import { Button, Form, Result } from "antd";
+import { Button, Form, Modal, Result } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
@@ -46,10 +46,14 @@ import {
 } from "react-beautiful-dnd";
 import {
   createGroup,
+  deleteGroupById,
   getGroupBoxesByBuild,
   groupSelector,
+  UpdateGroup,
 } from "@/store/reducers/group.reducer";
 import { IGroup } from "../../../@types/common";
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import _ from "lodash";
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
@@ -80,7 +84,8 @@ const NewBuild = (props: any) => {
   const [isRefresh, setIsRefresh] = useState(false);
   const [activeSelection, setActiveSelection] = useState(false);
   const [groupArray, setGroupArray] = useState<any>([]);
-  const [isSelectedGroupData, setIsSelectedGroupData] = useState<any>([]);
+  const [activeUnGroup, setActiveUnGroup] = useState<any>(false);
+  const [groupTitle, setGroupTitle] = useState<any>("");
 
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
@@ -551,7 +556,6 @@ const NewBuild = (props: any) => {
     if (!destination) return;
     if (destination.index === source.index) return;
 
-
     dragg = dataArray.map((el) =>
       el.id == source.index
         ? { ...el, id: destination.index }
@@ -570,40 +574,67 @@ const NewBuild = (props: any) => {
 
   const groupSelect = (data: any) => {
     setActiveSelection(true);
-    groupList &&
-    groupList.rows &&
-    groupList.rows.groupBox &&
-    groupList.rows.groupBox.length > 0
-      ? setIsSelectedGroupData(dataArray)
-      : isSelectedGroupData.length === 0 && setActiveSelection(true);
+    // groupList &&
+    // groupList.rows &&
+    // groupList.rows.groupBox &&
+    // groupList.rows.groupBox.length > 0
+    //   ? setIsSelectedGroupData(dataArray)
+    //   : isSelectedGroupData.length === 0 && setActiveSelection(true);
   };
 
   const groupingSelection = (e: any) => {
     const groupId = e.target.value;
     setGroupArray([...groupArray, groupId]);
   };
-
   const submitGroup = (e: any) => {
+    setActiveSelection(false);
     const groupData = {
-      title: e.groupName,
+      title: groupTitle?.target?.value,
       boxes: groupArray,
+      buildId: buildId,
     };
-    dispatch(createGroup(groupData));
+    console.log("groupData", groupData);
+
+    if (!groupData.boxes || groupData?.boxes?.length == 0) {
+      toast.warning("please select the boxes");
+    } else if (!groupData.title) {
+      toast.warning("please add the group title");
+    } else {
+      activeSelection && groupList?.rows?.groupBox?.length !== 0
+        ? dispatch(UpdateGroup(groupData))
+        : dispatch(createGroup(groupData));
+      setGroupArray([]);
+    }
   };
   const arr2 = groupList.rows.groupBox ? groupList.rows.groupBox : [];
-  const arr3 = dataArray.filter((object1) => {
+  const notGroupedArray = dataArray.filter((object1) => {
     return !arr2?.some((object2: { id: number }) => {
       return object1.id === object2.id;
     });
   });
 
+  var groupIdArr = arr2?.length>0 ? _.groupBy(arr2, "group_id") : [];
+  var results =groupIdArr &&  _.toArray( groupIdArr )
+  const mergedArray = [...results, notGroupedArray];
+console.log("groupList",groupList)
+  const deleteGroup = () => {
+    dispatch(deleteGroupById(buildId));
+  };
 
-  var results = arr2.reduce(function (results: any, org: any) {
-    (results[org.group_id] = results[org.group_id] || []).push(org);
-    return results;
-  }, []);
-  results && results.length > 0 && results.shift();
-  const mergedArray = [...results, arr3];
+  const showConfirm = () => {
+    Modal.confirm({
+      title: "Are you sure you want to delete all Group?",
+      icon: <ExclamationCircleFilled />,
+      onOk() {
+        deleteGroup();
+      },
+      onCancel() {},
+    });
+  };
+  const unGroupSelect = () => {
+    showConfirm();
+    // setActiveUnGroup(true);
+  };
 
   return (
     <Fragment>
@@ -631,17 +662,22 @@ const NewBuild = (props: any) => {
           isRefresh={isRefresh}
           setIsRefresh={setIsRefresh}
           groupSelect={groupSelect}
+          activeSelection={activeSelection}
+          submitGroup={submitGroup}
+          groupList={groupList.rows.groupBox}
+          unGroupSelect={unGroupSelect}
         />
         {/* <Droppable droppableId="boxAll" >
             {
               (provided) => (<> */}
-        <div className="w-100 px-4 pb-3 pt-4 mt-4">
+        <div className="w-100 px-4 pb-3 pt-4 mt-4 newBuildBoxes">
           <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
             <NewBuildBoxes
               setModal1Open={setAddFlashcard}
-             
-item={activeSelection ? dataArray : []}
-mergedArray={mergedArray}
+              item={mergedArray?.length > 0 ? [] : dataArray}
+              // mergedArray={mergedArray}
+              //  item={activeUnGroup ? dataArray : []}
+              mergedArray={mergedArray}
               arr={arr}
               setArr={(value: any) => {
                 setArr(value);
@@ -697,6 +733,12 @@ mergedArray={mergedArray}
               activeSelection={activeSelection}
               groupingSelection={groupingSelection}
               submitGroup={submitGroup}
+              groupTitle={setGroupTitle}
+              groupList={groupList.rows.groupBox}
+              groupedData={
+                results && results.length > 0 && results 
+              }
+              notGroupedArray={notGroupedArray}
             />
           </DragDropContext>
           {/* {provided.placeholder} */}
@@ -733,6 +775,8 @@ mergedArray={mergedArray}
           <Image
             alt="flashCards"
             src="../../../img/flashcardnewbuild.svg"
+            width="60px"
+            height="60px"
             onClick={() => {
               setAddFlashcard(true);
             }}

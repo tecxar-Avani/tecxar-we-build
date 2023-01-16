@@ -18,7 +18,7 @@ export class groupsDto implements IGroups {
   updated_at?: Date;
 }
 
-export class updategroupsDto implements IUpdateGroups {
+export class updateGroupsDto implements IUpdateGroups {
   @IsOptional()
   @IsNumber()
   id?: number;

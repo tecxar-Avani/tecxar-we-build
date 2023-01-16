@@ -18,3 +18,9 @@ export interface IGroupBoxData {
   description?:string;
   sorting_order?:number;
 }
+
+export interface IDeleteGroups extends IGroupBoxData{
+  id?: number;
+  box_id?: number;
+  group_id?: number;
+}

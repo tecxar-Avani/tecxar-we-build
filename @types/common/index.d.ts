@@ -151,9 +151,16 @@ export interface IUpdateBoxReviewsResponse {
 export interface IGroup {
   id?:number;
   title?:string;
+  buildId?:number;
   boxes?:[]
 }
 
+export interface IUpdateGroup{
+  id?:number;
+  title?:string;
+  boxes?:[];
+  buildId?:number;
+}
 export interface IGroupBoxes{
   title?:string;
   group_id?:number;

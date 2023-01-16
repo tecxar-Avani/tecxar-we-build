@@ -34,8 +34,8 @@ body,
   .innerBoxs {
     border: 0.3px solid rgba(0, 0, 0, 0.25);
     max-width: 360px;
-    max-height: 202px;
-    min-height: 202px;
+    max-height: 213px;
+    min-height: 213px;
 
     TextArea {
       border: 0.5px solid #000000;
@@ -653,10 +653,10 @@ body,
   background-position-y: 100%;
 }
 
-.dragHover:hover {
-  box-shadow: 0 0 5px black;
-  transform: scale(1.0);
-}
+// .dragHover:hover {
+//   box-shadow: 0 0 5px black;
+//   transform: scale(1.0);
+// }
 
 // .arrow-red {
 //   width:100px;
@@ -673,18 +673,24 @@ body,
 // @keyframes a1 {
 //   90%,100%{flex-grow: 1}
 // }
-
-// .arrow-big-red ::after {
+.myCss {
+  position: relative;
+}
+.myCss .myArrowBottom {
+  position: absolute;
+  bottom: -31px;
+  width: 62%;
+  height: 64px;
+  left: 20%;
+}
+// .myCss .css-ov1ktg::after {
 //   content: "";
-//   height: 78px;
+//   height: 125px;
 //   position: absolute;
-//   top:149.5px;
-//   width: 559px;
-//   left:-531px;
-//   // height: 0px;
-//   // color: #000000;
-
-//   background-image: url("/public/red-big.svg");
+//   top: 157.5px;
+//   width: 754px;
+//   right: 150px;
+//   // background-image: url("/public/red-main.svg");
 //   background-position-y: 100%;
 // }
 .ant-modal-title {
@@ -755,7 +761,7 @@ body,
 }
 
 .btn2 {
-  background-color: #f8f8f8;
+  background-color: #69acda;
   color: black;
 }
 
@@ -795,7 +801,7 @@ hr {
 
 .flash {
   right: 21px;
-  bottom: 5px;
+  bottom: 25px;
 }
 
 .mkCard {
@@ -805,8 +811,8 @@ hr {
   .card {
     border: 1px solid black;
     border-radius: 6px;
-    height: 70px;
-    width: 50px;
+    height: 60px;
+    width: 40px;
     font-size: 20px;
     font-weight: 400;
     padding: 0px !important;
@@ -896,21 +902,23 @@ hr {
 
 .inspirationButton {
   background-color: #7d1597;
-  transform: translate(9%, 350%);
+  transform: translate(19%, 154%);
   color: #f8f8f8;
+  position: sticky;
+  z-index: 1;
 }
 
 .resistanceButton {
   background-color: #d91919;
   // transform: translate(105%, -11%);
-  transform: translate(115%, -45%);
+  transform: translate(105%, -128%);
   color: #f8f8f8;
   margin-left: -15px;
 }
 
 .acceptanceButton {
   background-color: #1235ae;
-  transform: translate(170%, -446%);
+  transform: translate(158%, -343%);
   color: #f8f8f8;
 }
 
@@ -989,12 +997,30 @@ hr {
 }
 
 .redpolygon {
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  clip-path: polygon(5% 66%, 100% 66%, 53% 3%);
   background-color: #d91919;
-  width: 298.04px;
-  height: 84.54px;
-  margin-top: -123px;
+  width: 264.04px;
+  height: 113.54px;
+  margin-top: -112px;
   margin-left: 1px;
+}
+
+.bluePolygon {
+  clip-path: polygon(48% 1%, 96% 100%, 48% 65%);
+  background-color: #1235ae;
+  width: 259.04px;
+  height: 200.54px;
+  margin-top: -201px;
+  margin-left: 16px;
+}
+
+.purplePolygon {
+  clip-path: polygon(48% 1%, 0 100%, 48% 65%);
+  background-color: #7d1597;
+  width: 259.04px;
+  height: 200.54px;
+  margin-top: -51px;
+  margin-left: 16px;
 }
 
 .inspirationModalBG {
@@ -1363,9 +1389,82 @@ h6 {
 }
 
 .groupBox {
-//  .ant-form-item{
-// width: 900px;
-//  }
+ .ant-form-item{
+width: 50%;
+ }
 text-align: center;
   
+}
+.group{
+  .ant-form-item{
+    width: 100%;
+  }
+  .ant-btn {
+    background-color: #579ebb;
+    color: white;
+    border-radius: 5px;
+  }
+  
+}
+.groupHeader{
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+}
+.width-btn{
+  width: 78px !important;
+}
+.activeSelection{
+  margin-top: 2px !important;
+  margin-bottom: -1px !important;
+}
+.textarea {
+  resize: none;
+}
+.hideTitle{
+  opacity: -0.4 ;
+}
+.dotSize{
+  
+  font-size: 15px;
+  width: 35px;
+  text-align: center;
+}
+.difficult{
+  height:93px
+}
+.ant-input:focus {
+  outline: none !important;
+  border:none;
+  box-shadow: none;
+}
+.submitButton{
+ 
+    padding: 26%;
+    /* margin: 7%; */
+    padding-left: 50%;
+    padding-right: 50%;
+
+}
+.submitButton1{
+  // height: 170px;
+}
+.dis .ant-checkbox-inner{
+  display: none;
+}
+.newBuildSideCard{
+  position: fixed;
+}
+.newBuildBoxes{
+  overflow-y: scroll;
+  overflow: auto;
+}
+.triangle{
+  margin-bottom: -50px
+}
+.newBuildBoxes{
+  margin-left:22%;
 }

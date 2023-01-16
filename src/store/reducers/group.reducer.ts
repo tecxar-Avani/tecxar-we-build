@@ -8,7 +8,7 @@ import {
 } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
-    IGroup,
+    IGroup, IUpdateGroup,
 } from "../../../@types/common";
 import groupService from "../../service/group.service";
 import { IGroupRowsCountResponse } from "../../../@types/responses";
@@ -25,7 +25,7 @@ export const createGroup = createAsyncThunk(
     const { status, data } = await groupService.addGroup(
       createGroupData
     );
-    dispatch(getGroupBoxesByBuild())
+    dispatch(getGroupBoxesByBuild(createGroupData.buildId))
     return { status, data };
   }
 );
@@ -38,6 +38,34 @@ export const getGroupBoxesByBuild = createAsyncThunk(
     return { status: data.status, rows: data };
   }
 );
+export const UpdateGroup = createAsyncThunk(
+  `group/update`,
+  async (updateGroup: IGroup, { dispatch }) => {
+     const id = Number(updateGroup.buildId);
+    const editData = {
+      boxes: updateGroup.boxes,
+      title: updateGroup.title,
+   
+    };
+    const { status, data } = await groupService.updateGroupById(
+      id,
+      editData
+    );
+    dispatch(getGroupBoxesByBuild(updateGroup.buildId))
+    return { status, data };
+  }
+);
+
+
+export const deleteGroupById = createAsyncThunk(
+  `group/deleteGroups/`,
+  async (Id: number, { dispatch }) => {
+    const { status, data } = await groupService.deleteGroupById(Id);
+    dispatch(getGroupBoxesByBuild(Id))
+
+    return { status, data };
+  }
+);
 
 interface State {
   id: number;
@@ -45,6 +73,8 @@ interface State {
   loading: boolean;
   error: string | undefined;
   groupList:IGroupRowsCountResponse;
+  editGroup: IUpdateGroup;
+
 }
 
 const initialState: State = {
@@ -52,6 +82,7 @@ const initialState: State = {
     status: true,
     rows: [],
   },
+  editGroup:{},
     group: {},
   loading: false,
   error: undefined,
@@ -107,6 +138,34 @@ const groupSlice = createSlice({
             ...state,
             loading: false,
             groupList: action.payload,
+          };
+        }
+      })
+      .addCase(UpdateGroup.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          toast.success(action.payload.data.message);
+          return {
+            ...state,
+            loading: false,
+            editGroup: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            editGroup: action.payload.data.editGroup,
+          };
+        }
+      })
+      .addCase(deleteGroupById.fulfilled, (state, action) => {
+        toast.success(action.payload.data.message);
+        if (action.payload.status) {
+          return { ...state, loading: false };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            allGroup: initialState.group,
           };
         }
       })

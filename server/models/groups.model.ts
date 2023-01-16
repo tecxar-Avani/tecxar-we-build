@@ -5,7 +5,7 @@ import { IGroups } from "@/interfaces/groups.interface";
 export type GroupAttributes = Optional<IGroups, "id">;
 
 @Table({
-  tableName: "groups",
+  tableName: "all_groups",
   createdAt: "createdAt",
   updatedAt: "updatedAt",
   timestamps: true,

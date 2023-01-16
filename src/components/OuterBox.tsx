@@ -7,6 +7,7 @@ import { buildSelector } from "@/store/reducers/build.reducer";
 import { userSelector } from "@/store/reducers/user.reducer";
 import { Draggable } from "react-beautiful-dnd";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
+import DisabledContext from "antd/lib/config-provider/DisabledContext";
 
 const OuterBox = (props: any) => {
   const { buildById } = useAppSelector(buildSelector);
@@ -38,6 +39,10 @@ const OuterBox = (props: any) => {
     // position: "fixed",
     ...draggableStyle,
   });
+
+  const group_Build_id = props?.groupList?.map((a:any) => a.id)
+  
+
   return (
     <Fragment>
       <Col sm={4} className="p-0 side-Arrow position-relative">
@@ -60,14 +65,14 @@ const OuterBox = (props: any) => {
                 provided.draggableProps.style
               )}
             >
-              {" "}
+              
               <Checkbox
                 className={`${
                   props.activeSelection ? "groupSelection" : "groupSelectionNot"
-                }`}
+                } ${group_Build_id?.includes(props.id)  && "dis"}`}
                 value={props.boxId}
-                //  checked={check}
                 onChange={props.groupingSelection}
+                //  {filteredArray ? indeterminate : []}
               >
                 <Form form={form} name="formTwo" className="textBoxInner">
                   {props.visible && (
@@ -75,7 +80,7 @@ const OuterBox = (props: any) => {
                       <div
                         className={`position-relative position-relative-example dragHover ${
                           boxIdForArrow
-                            ? "arrow-big-red"
+                            ? ""
                             : props.arr.length == props.id
                             ? "arrow-red"
                             : ""
@@ -123,7 +128,7 @@ const OuterBox = (props: any) => {
                               data.sorting_order == props.id ? (
                               <span onClick={() => props.modalDot(props.id)}>
                                 <span
-                                  className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
+                                  className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
                                   onClick={props.Inspiration}
                                 >
                                   I
@@ -133,7 +138,7 @@ const OuterBox = (props: any) => {
                               data.sorting_order == props.id ? (
                               <span onClick={() => props.modalDot(props.id)}>
                                 <span
-                                  className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
+                                  className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
                                   onClick={props.Acceptance}
                                 >
                                   A
@@ -143,7 +148,7 @@ const OuterBox = (props: any) => {
                               data.sorting_order == props.id ? (
                               <span onClick={() => props.modalDot(props.id)}>
                                 <span
-                                  className="position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
+                                  className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
                                   onClick={props.Resistance}
                                 >
                                   R
