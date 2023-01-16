@@ -42,10 +42,9 @@ const OuterBox = (props: any) => {
 
   const group_Build_id = props?.groupList?.map((a:any) => a.id)
   
-
   return (
     <Fragment>
-      <Col sm={4} className="p-0 side-Arrow position-relative">
+      <Col sm={4} className={`p-0 position-relative ${props.description ? "side-Arrow" : ""}`}>
         <Draggable
           key={props.id}
           draggableId={props.id.toString()}

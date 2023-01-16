@@ -403,9 +403,9 @@ const NewBuildSideCard = (props: any) => {
               )}
             </Overlay>
           </div>
-        </div>
+        </div>          <hr className="border-dark" />
+
         <div className="px-2">
-          <hr className="border-dark" />
           <div className="d-flex owd bd-highlight justify-content-between align-items-center">
             {/* {props.isLoggedIn === true ? ( */}
             <div

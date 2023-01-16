@@ -1447,7 +1447,7 @@ text-align: center;
     /* margin: 7%; */
     padding-left: 50%;
     padding-right: 50%;
-
+    background-color: #54a754;
 }
 .submitButton1{
   // height: 170px;
@@ -1467,4 +1467,7 @@ text-align: center;
 }
 .newBuildBoxes{
   margin-left:22%;
+}
+textarea {
+  resize: none;
 }

@@ -127,7 +127,7 @@ const groupArrayFilter = subArray?.length > 0 && ((props.groupedData.length>0 &&
 return (
                     <div className={`boxesMain`}>
                       <div className={`h-30 border border-color-25 groupHeader hideTitle}`}>
-                        {index == 0 ? subArray[0].title : 
+                        {index == 0 && subArray[0].title ? subArray[0].title  : 
                         props.activeSelection ? (
                           <Fragment>
                             <Form
