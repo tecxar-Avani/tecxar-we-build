@@ -976,7 +976,6 @@ hr {
 }
 
 .resistanceModalBG {
-
   .ant-modal-content,
   .ant-modal-header {
     background-color: #e8abab;
@@ -997,18 +996,20 @@ hr {
 }
 
 .redpolygon {
-  clip-path: polygon(5% 66%, 100% 66%, 53% 3%);
+  -webkit-clip-path: polygon(5% 66%, 100% 66%, 53% 3%);
+  clip-path: polygon(7% 66%, 100% 65%, 56.8% 4%);
   background-color: #d91919;
-  width: 264.04px;
+  width: 70%;
   height: 113.54px;
-  margin-top: -112px;
-  margin-left: 1px;
+  margin-top: -74px;
+  margin-left: -2px;
 }
 
 .bluePolygon {
-  clip-path: polygon(48% 1%, 96% 100%, 48% 65%);
+  -webkit-clip-path: polygon(48% 1%, 96% 100%, 48% 65%);
+  clip-path: polygon(48% -1%, 94% 100%, 49% 64%);
   background-color: #1235ae;
-  width: 259.04px;
+  width: 70%;
   height: 200.54px;
   margin-top: -201px;
   margin-left: 16px;
@@ -1017,14 +1018,13 @@ hr {
 .purplePolygon {
   clip-path: polygon(48% 1%, 0 100%, 48% 65%);
   background-color: #7d1597;
-  width: 259.04px;
+  width: 70%;
   height: 200.54px;
   margin-top: -51px;
   margin-left: 16px;
 }
 
 .inspirationModalBG {
-
   .ant-modal-content,
   .ant-modal-header {
     background-color: #e0c0eb;
@@ -1043,8 +1043,6 @@ hr {
     color: white;
   }
 }
-
-
 
 @keyframes blinking {
   0% {
@@ -1088,7 +1086,7 @@ hr {
   padding: 1px;
 }
 
-.ant-form-item-label>label::after {
+.ant-form-item-label > label::after {
   content: none;
 }
 
@@ -1321,7 +1319,6 @@ h6 {
 }
 
 .videoCard {
-
   /* width */
   ::-webkit-scrollbar {
     // width: 1089px;
@@ -1377,7 +1374,6 @@ h6 {
   .ant-checkbox {
     display: none;
   }
-
 }
 
 .ant-checkbox {
@@ -1389,14 +1385,13 @@ h6 {
 }
 
 .groupBox {
- .ant-form-item{
-width: 50%;
- }
-text-align: center;
-  
+  .ant-form-item {
+    width: 50%;
+  }
+  text-align: center;
 }
-.group{
-  .ant-form-item{
+.group {
+  .ant-form-item {
     width: 100%;
   }
   .ant-btn {
@@ -1404,67 +1399,62 @@ text-align: center;
     color: white;
     border-radius: 5px;
   }
-  
 }
-.groupHeader{
-  font-family: 'Arimo';
+.groupHeader {
+  font-family: "Arimo";
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 23px;
   text-align: center;
 }
-.width-btn{
+.width-btn {
   width: 78px !important;
 }
-.activeSelection{
+.activeSelection {
   margin-top: 2px !important;
   margin-bottom: -1px !important;
 }
 .textarea {
   resize: none;
 }
-.hideTitle{
-  opacity: -0.4 ;
+.hideTitle {
+  opacity: -0.4;
 }
-.dotSize{
-  
+.dotSize {
   font-size: 15px;
   width: 35px;
   text-align: center;
 }
-.difficult{
-  height:93px
+.difficult {
+  height: 93px;
 }
 .ant-input:focus {
   outline: none !important;
-  border:none;
+  border: none;
   box-shadow: none;
 }
-.submitButton{
- 
-    padding: 26%;
-    /* margin: 7%; */
-    padding-left: 50%;
-    padding-right: 50%;
-
+.submitButton {
+  padding: 26%;
+  /* margin: 7%; */
+  padding-left: 50%;
+  padding-right: 50%;
 }
-.submitButton1{
+.submitButton1 {
   // height: 170px;
 }
-.dis .ant-checkbox-inner{
+.dis .ant-checkbox-inner {
   display: none;
 }
-.newBuildSideCard{
-  position: fixed;
-}
-.newBuildBoxes{
-  overflow-y: scroll;
-  overflow: auto;
-}
-.triangle{
-  margin-bottom: -50px
-}
-.newBuildBoxes{
-  margin-left:22%;
+// .newBuildSideCard{
+//   position: fixed;
+// }
+// .newBuildBoxes{
+//   overflow-y: scroll;
+//   overflow: auto;
+//   margin-left:22%;
+// }
+.triangle {
+  min-height: calc(44vh - 50px);
+  height: calc(46vh - 50px);
 }

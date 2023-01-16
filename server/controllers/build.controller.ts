@@ -204,6 +204,7 @@ export class FlashController {
         version: "v3",
         auth: config.youtubeApiKey,
       });
+
       let finalDuration: any;
       const durationCalculation = (duration: any) => {
         let a = duration.match(/\d+/g);
@@ -255,7 +256,7 @@ export class FlashController {
             part: ["snippet,contentDetails"],
             id: [`${videoIdToSearch}`],
           }));
-
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@", response);
         for (let i = 0; i < response.data.items.length; i++) {
           const item = response.data.items[i];
           const videoUrl = item.snippet.thumbnails.default.url;
@@ -274,7 +275,7 @@ export class FlashController {
 
           const data = {
             videoId: videoIdToSearch,
-            thumbnails: item.snippet.thumbnails.default,
+            thumbnails: item.snippet.thumbnails.medium,
             description: item.snippet.description,
             title: item.snippet.title,
             publishedAt: item.snippet.publishedAt,
@@ -360,31 +361,31 @@ export class FlashController {
     @Param("id") id: number,
     @Body() data: updateVideoBuildDto
   ) {
-    try { 
+    try {
       data.updated_by = req.user.id;
       const userBuild = await this.buildService.updateBuild(id, data);
-     
-      if (data?.boxes) { 
-        if(data.boxes.draggedArray?.length > 0){    
-        data.boxes.draggedArray.map(async (box: any) => {
-              const updateData = {
-                sorting_order:  box.id && Number(box.id)
-              };
-              await this.boxService.updateBox(box.boxId, updateData);
-        });
+
+      if (data?.boxes) {
+        if (data.boxes.draggedArray?.length > 0) {
+          data.boxes.draggedArray.map(async (box: any) => {
+            const updateData = {
+              sorting_order: box.id && Number(box.id),
+            };
+            await this.boxService.updateBox(box.boxId, updateData);
+          });
         }
-        if(data.boxes.boxData?.length > 0){
+        if (data.boxes.boxData?.length > 0) {
           data.boxes.boxData.map(async (box: updateBoxesDto) => {
             const boxId = box.sorting_order && Number(box.sorting_order);
             const existingBox = await this.boxService.getBoxesById(id, boxId);
-           
+
             if (existingBox && existingBox.length > 0) {
               existingBox.map(async (d: any) => {
                 const updateData = {
                   description: box.description,
-                  sorting_order: box.sorting_order
+                  sorting_order: box.sorting_order,
                 };
-               
+
                 await this.boxService.updateBox(d.id, updateData);
               });
             } else {
@@ -397,9 +398,14 @@ export class FlashController {
             }
           });
         }
-       
       }
-      return {  data: userBuild, message: data.boxes.draggedArray?.length > 0 ? "Box Dragged successfully" : "Build Updated successfully"};
+      return {
+        data: userBuild,
+        message:
+          data.boxes.draggedArray?.length > 0
+            ? "Box Dragged successfully"
+            : "Build Updated successfully",
+      };
     } catch (error) {
       return {
         error: {

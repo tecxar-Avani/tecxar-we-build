@@ -71,21 +71,21 @@ const NewBuildSideCard = (props: any) => {
   return (
     <>
       <div className="newBuildSideCard">
-        <div className="videoProfile">
+        <div className="videoProfile pb-2 border-bottom border-dark">
           <iframe
             width="100%"
-            height="215"
+            height="100%"
             src={`//www.youtube.com/embed/${props.videoId}?autoplay=1&mute=1`}
             name="youtube embed"
             allow="autoplay; encrypted-media"
           ></iframe>
         </div>
 
-        <hr className="border-dark" />
+        {/* <hr className="border-dark" /> */}
 
-        <div className="d-flex">
+        <div className="d-flex justify-content-between align-items-center p-2 border-bottom border-dark">
           <div
-            className="groupBox px-2"
+            className="groupBox"
             onClick={groupSelect}
             style={
               userId && userId.length > 0 && userId[0] == userData.id
@@ -96,22 +96,20 @@ const NewBuildSideCard = (props: any) => {
             <CustomButton title="Group" className="btn1 px-3 py-2" />
           </div>
           {props.activeSelection && (
-            <div className="groupBox px-2 mx-2">
-             
-                <Button
-                  type="submit"
-                  className="submitButton"
-                  onClick={props.submitGroup}
-                >
-                  Submit
-                </Button>
-              
+            <div className="groupBox">
+              <Button
+                type="submit"
+                className="submitButton"
+                onClick={props.submitGroup}
+              >
+                Submit
+              </Button>
             </div>
           )}
           {/* <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 " /> */}
 
           <div
-            className="groupBox px-2 mx-2"
+            className="groupBox"
             onClick={props.unGroupSelect}
             style={
               userId && userId.length > 0 && userId[0] == userData.id
@@ -122,85 +120,72 @@ const NewBuildSideCard = (props: any) => {
             <CustomButton title="UnGroup" className="btn1 px-3 py-2" />
           </div>
         </div>
-        <hr className="border-dark" />
+        {/* <hr className="border-dark" /> */}
         <div
           style={
             props.id == "undefined"
               ? { pointerEvents: "none", opacity: 0.4 }
               : {}
           }
-          className="triangle"
+          className="triangle pb-2 border-bottom border-dark"
         >
-          <span
+          <CustomButton
             onClick={() => {
               props.value == "" ? {} : props.setAwarenessModal(true);
+              props.Inspiration;
             }}
-          >
-            <span onClick={props.Inspiration}>
-              <CustomButton
-                title="Inspiration"
-                className="inspirationButton"
-              />
-            </span>
-          </span>
-          <div>
-            <span
-              onClick={() => {
-                props.value == "" ? {} : props.setAwarenessModal(true);
-              }}
-              className="mb-0 mt-0"
-            >
-              <div className="purplePolygon" onClick={props.Inspiration} />
-              {/* <Image src="../img/polygon22.png" onClick={props.Inspiration} /> */}
-            </span>
-            
-            <span
-              onClick={() => {
-                props.value == "" ? {} : props.setAwarenessModal(true);
-              }}
-              className="mb-0 mt-0"
-            >
-              {/* <Image
+            title="Inspiration"
+            className="inspirationButton"
+          />
+          <div className="mt-2 pt-1">
+            {/* <Image src="../img/polygon22.png" onClick={props.Inspiration} /> */}
+
+            {/* <Image
                 src="../img/polygon24.png"
                 onClick={props.Acceptance}
                 className="blue"
               /> */}
-                          <div className="bluePolygon" onClick={props.Acceptance} />
-
-            </span>
-
             <div
+              className="purplePolygon"
               onClick={() => {
                 props.value == "" ? {} : props.setAwarenessModal(true);
+                props.Inspiration;
               }}
-            >
-              <span onClick={props.Acceptance}>
-                <CustomButton title="Acceptance" className="acceptanceButton" />
-              </span>
-            </div>
-          </div>
-
-          <span
-            onClick={() => {
-              props.value == "" ? {} : props.setAwarenessModal(true);
-            }}
-          >
-            <div className="redpolygon" onClick={props.Resistance} />
-          </span>
-
-          <span
-            onClick={() => {
-              props.value == "" ? {} : props.setAwarenessModal(true);
-            }}
-          >
-            <CustomButton
-              title="Resistance"
-              className="resistanceButton"
-              onClick={props.Resistance}
             />
-          </span>
+            <div
+              className="bluePolygon"
+              onClick={() => {
+                props.value == "" ? {} : props.setAwarenessModal(true);
+                props.Acceptance;
+              }}
+            />
+            <div
+              className="redpolygon"
+              onClick={() => {
+                props.value == "" ? {} : props.setAwarenessModal(true);
+                props.Resistance;
+              }}
+            />
+          </div>
+          <CustomButton
+            onClick={() => {
+              props.value == "" ? {} : props.setAwarenessModal(true);
+              props.Acceptance;
+            }}
+            title="Acceptance"
+            className="acceptanceButton"
+          />
+
+          <CustomButton
+            title="Resistance"
+            className="resistanceButton"
+            onClick={() => {
+              props.value == "" ? {} : props.setAwarenessModal(true);
+              props.Resistance;
+            }}
+          />
         </div>
-        <hr className="border-dark" />
+        {/* <hr className="border-dark" /> */}
 
         <div className="d-flex ml-2 ms-1 threeButton">
           <div className="text-center">

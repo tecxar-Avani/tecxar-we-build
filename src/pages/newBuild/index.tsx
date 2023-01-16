@@ -613,10 +613,10 @@ const NewBuild = (props: any) => {
     });
   });
 
-  var groupIdArr = arr2?.length>0 ? _.groupBy(arr2, "group_id") : [];
-  var results =groupIdArr &&  _.toArray( groupIdArr )
+  var groupIdArr = arr2?.length > 0 ? _.groupBy(arr2, "group_id") : [];
+  var results = groupIdArr && _.toArray(groupIdArr);
   const mergedArray = [...results, notGroupedArray];
-console.log("groupList",groupList)
+  console.log("groupList", groupList);
   const deleteGroup = () => {
     dispatch(deleteGroupById(buildId));
   };
@@ -642,7 +642,147 @@ console.log("groupList",groupList)
         <title>New Build</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="d-flex m-0 w-100">
+      <div className="d-flex h-full overflow-hidden gap-2">
+        <div className="w-25">
+          <NewBuildSideCard
+            id={router.query.id}
+            videoId={router.query.videoId}
+            value={awarenessIndex}
+            Resistance={Resistance}
+            Acceptance={Acceptance}
+            Inspiration={Inspiration}
+            setAwarenessModal={setAwarenessModal}
+            isLoggedIn={props.isLoggedIn}
+            onSave={(
+              videoType: any,
+              polarisationLevel: any,
+              difficultyLevel: any,
+              url: string
+            ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
+            buildId={buildId}
+            isRefresh={isRefresh}
+            setIsRefresh={setIsRefresh}
+            groupSelect={groupSelect}
+            activeSelection={activeSelection}
+            submitGroup={submitGroup}
+            groupList={groupList.rows.groupBox}
+            unGroupSelect={unGroupSelect}
+          />
+        </div>
+        <div className="w-100 overflow-auto">
+          <div className="w-100 px-4 pb-3 pt-4 mt-4 newBuildBoxes">
+            <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+              <NewBuildBoxes
+                setModal1Open={setAddFlashcard}
+                item={mergedArray?.length > 0 ? [] : dataArray}
+                // mergedArray={mergedArray}
+                //  item={activeUnGroup ? dataArray : []}
+                mergedArray={mergedArray}
+                arr={arr}
+                setArr={(value: any) => {
+                  setArr(value);
+                  if (value.length > 20) {
+                    setDataArray([
+                      ...dataArray,
+                      {
+                        id: value.length,
+                        message: "",
+                      },
+                    ]);
+                  }
+                }}
+                onFocus={(data: any) => handleChange(data)}
+                awarenessList={awarenessList}
+                Acceptance={Acceptance}
+                Resistance={Resistance}
+                Inspiration={Inspiration}
+                boxData={boxData}
+                setBoxData={setBoxData}
+                buildById={buildById}
+                modalDot={(id: any) => showModal(id)}
+                isRefresh={isRefresh}
+                setIsRefresh={(data: any) => {
+                  setIsRefresh(data);
+                  if (buildById?.data) {
+                    const data =
+                      buildById.data &&
+                      buildById.data.map((box: any) => {
+                        return {
+                          id: box.sorting_order,
+                          message: box.description,
+                          boxId: box.id,
+                        };
+                      });
+                    setDataArray(data);
+                    setArr(data.map((d: any) => d.id));
+                  } else {
+                    setBoxData([]);
+                    setArr([1]);
+                    setDataArray(
+                      init.map((i, index) => {
+                        return {
+                          id: Number(index + 1),
+                          message: "",
+                        };
+                      })
+                    );
+                  }
+                }}
+                completedTodos={completedTodos}
+                setCompletedTodos={setCompletedTodos}
+                activeSelection={activeSelection}
+                groupingSelection={groupingSelection}
+                submitGroup={submitGroup}
+                groupTitle={setGroupTitle}
+                groupList={groupList.rows.groupBox}
+                groupedData={results && results.length > 0 && results}
+                notGroupedArray={notGroupedArray}
+              />
+            </DragDropContext>
+            {/* {provided.placeholder} */}
+          </div>
+          {/* </>)}
+              </Droppable> */}
+
+          <div className="position-absolute mkCard">
+            {userArr &&
+              userArr?.length > 0 &&
+              userArr?.map((data: any) => {
+                return (
+                  <Card
+                    className="mt-3"
+                    onClick={() => {
+                      questionData(data.user_id);
+                    }}
+                  >
+                    <Card.Body className="d-flex justify-content-center align-items-center">
+                      {data.user_name.split(" ").map((a: any) => a.charAt(0))}
+                    </Card.Body>
+                  </Card>
+                );
+              })}
+          </div>
+          <div
+            className="position-absolute flash"
+            style={
+              buildIdForFlash == "undefined"
+                ? { pointerEvents: "none", opacity: 0.4 }
+                : {}
+            }
+          >
+            <Image
+              alt="flashCards"
+              src="../../../img/flashcardnewbuild.svg"
+              width="60px"
+              height="60px"
+              onClick={() => {
+                setAddFlashcard(true);
+              }}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="d-flex m-0 w-100" style={{ display: "none !important" }}>
         <NewBuildSideCard
           id={router.query.id}
           videoId={router.query.videoId}
@@ -735,9 +875,7 @@ console.log("groupList",groupList)
               submitGroup={submitGroup}
               groupTitle={setGroupTitle}
               groupList={groupList.rows.groupBox}
-              groupedData={
-                results && results.length > 0 && results 
-              }
+              groupedData={results && results.length > 0 && results}
               notGroupedArray={notGroupedArray}
             />
           </DragDropContext>

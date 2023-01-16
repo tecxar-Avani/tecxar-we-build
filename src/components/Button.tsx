@@ -6,11 +6,11 @@ import { Button } from "react-bootstrap";
 // }
 
 const CustomButton = (props: any) => {
-    return (
-
-        <Button variant={` ${props.className}`} >{props.title}</Button>
-
-    );
+  return (
+    <Button onClick={props.onClick} variant={` ${props.className}`}>
+      {props.title}
+    </Button>
+  );
 };
 
 export default CustomButton;
