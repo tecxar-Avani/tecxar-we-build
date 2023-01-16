@@ -71,8 +71,10 @@ const SideBar = (toggle: any) => {
     if (router.asPath == "/UserGuide") {
       setSideBarBG("UserGuideBG");
     }
+    if(router.asPath == "/"){
+      setSideBarBG("profileBG");
+    }
   }, [router.asPath]);
-
   const handleCancel = () => {
     setModal5Open(false);
   };
