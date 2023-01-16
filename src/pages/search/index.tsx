@@ -122,7 +122,7 @@ const SearchPage = (props: any) => {
             buildListByUrl.allBuilds.length > 0 &&
             buildListData?.length == 0 ? (
               <p className="mb-0">
-                <div className="text-center my-2 headerSizeInsearch">
+                <div className="text-center headerSizeInsearch">
                   We do not have anything matching your search. Please try
                   another word.
                   <br />

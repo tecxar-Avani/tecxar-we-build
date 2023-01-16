@@ -54,13 +54,14 @@ const Profile = (props: any) => {
     dispatch(getUserInteractedBuild());
     dispatch(getUsersBuild());
   }, []);
+  console.log("______________",userData.userData)
   const profileData = {
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
     dateOfJoined: `Date joined: ${moment(
       userData && userData.userData && userData.userData.createdAt
     ).format("MMM YYYY")} `,
-    boxLeftTitle: "Boxes",
+    boxLeftTitle: userData.userData.role_id == 1 ? "boxes mapped" : "Boxes",
     boxValueLeft:
       totalCount &&
       totalCount.boxbuildCount &&

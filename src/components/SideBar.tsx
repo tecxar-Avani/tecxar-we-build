@@ -96,12 +96,12 @@ const SideBar = (toggle: any) => {
           <div className="d-flex flex-column justify-content-between align-items-center">
             <Link href={"/search?selfLearning=true"}>
               <a>
-                <Image src={`/img/user-pre.png`} className="img-fluid" />
+                <Image src={`/img/user-pre.png`} className="img-fluid sideImg" />
               </a>
             </Link>
             <Link href="/search?selfLeaning=false">
               <a>
-                <Image src={`/img/book.png`} className="img-fluid" />
+                <Image src={`/img/book.png`} className="img-fluid sideImg" />
               </a>
             </Link>
             <Link
@@ -119,13 +119,13 @@ const SideBar = (toggle: any) => {
                       : setModal5Open(true)
                   }
                 >
-                  <Image src={`/img/profile.png`} className="img-fluid" />
+                  <Image src={`/img/profile.png`} className="img-fluid sideImg" />
                 </span>
               </a>
             </Link>
             <Link href="/UserGuide">
               <a>
-                <Image src={`/img/qa.png`} className="img-fluid" />
+                <Image src={`/img/qa.png`} className="img-fluid sideImg" />
               </a>
             </Link>
           </div>

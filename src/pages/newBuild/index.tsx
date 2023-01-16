@@ -27,7 +27,7 @@ import {
   getAwarenessByBoxId,
   updateBoxReviewResponseByAwarenessId,
 } from "../../store/reducers/awareness.reducer";
-import { Button, Form, Modal, Result } from "antd";
+import { Button, Form, Modal, Result, Spin } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
@@ -61,7 +61,7 @@ const NewBuild = (props: any) => {
   const { flashCardList } = useAppSelector(flashCardSelector);
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const { buildById, buildListByUrl, boxes } = useAppSelector(buildSelector);
+  const { buildById, buildListByUrl, boxes ,build} = useAppSelector(buildSelector);
   const { userData, loggedInUser } = useAppSelector(userSelector);
   const { groupList } = useAppSelector(groupSelector);
   const [arr, setArr] = useState([1]);
@@ -637,11 +637,16 @@ console.log("groupList",groupList)
   };
 
   return (
+    
+         
+ 
     <Fragment>
       <Head>
         <title>New Build</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+       {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : 
+       <Fragment> */}
       <div className="d-flex m-0 w-100">
         <NewBuildSideCard
           id={router.query.id}
@@ -928,8 +933,10 @@ console.log("groupList",groupList)
             ? "resistanceModalBG"
             : ""
         } `}
-      />
+      /> 
+      {/* </Fragment>} */}
     </Fragment>
+    
   );
 };
 
