@@ -42,8 +42,8 @@ export class GroupController {
         await this.groupService.createGroup(groupData);
         
         if(createGroupData?.id){       
-            const arr = []     
-             groupData.boxes.length > 0  &&  groupData.boxes.map((a) =>{ 
+            const arr:any= []     
+             groupData.boxes.length > 0  &&  groupData.boxes.map((a:any) =>{ 
               arr.push({group_id : createGroupData.id,box_id:a})
             return arr})  
           
@@ -97,8 +97,8 @@ export class GroupController {
       const createGroupData: IGroups | null =
         await this.groupService.createGroup(data);
         if(createGroupData?.id){       
-            const arr = []     
-            data.boxes.length > 0  &&  data.boxes.map((a) =>{ 
+            const arr:any = []     
+            data.boxes.length > 0  &&  data.boxes.map((a:any) =>{ 
               arr.push({group_id : createGroupData.id,box_id:a})
             return arr})  
          const boxData = await this.groupService.createGroupBoxes(arr);
