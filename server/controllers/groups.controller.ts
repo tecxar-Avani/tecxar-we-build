@@ -48,7 +48,6 @@ export class GroupController {
             return arr})  
           
          const boxData = await this.groupService.createGroupBoxes(arr);
-         console.log("boxData",boxData)
             return {
               status: true,
               data: createGroupData,
@@ -103,7 +102,6 @@ export class GroupController {
             return arr})  
          const boxData = await this.groupService.createGroupBoxes(arr);
         
-         console.log("boxData",boxData)
             return {
               status: true,
               data: createGroupData,

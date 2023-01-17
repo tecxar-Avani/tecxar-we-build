@@ -49,11 +49,112 @@ const ProfileCard = (props: any) => {
     await  toast.success("You logged out successfully"); 
    cookieCutter.set("authorization", "", { expires: new Date(0)})
   };
-  
+
   return (
-    <>
+    <> {props?.profile?.id == props?.adminFilter?.map((a:any) => a.id)  ?
+       <div
+      className={`${props.className} profile text-center pb-3 position-relative mt-4`}
+    >
+      <div className="d-flex" style={{padding:"28px"}}>
+     <div>
+      <div className={`d-flex justify-content-center align-items-center ms-4${props.profile.boxLeftTitle == "Boxes mapped" ? "ms-5" : ""}`}>
+        <div>
+          <h4 className="title">{props.profile.title}</h4>
+          {props.profile && props.profile.dateOfJoined && (
+            <h5 className="subTitle py-1">{props.profile.dateOfJoined}</h5>
+          )}
+        </div>
+       
+      </div>
+      {/* <Button className="logOut">Log out</Button> */}
+
+      <div className="py-2">
+      
+        <div className="ms-4">
+          <Image
+            alt="profile"
+            src={`/profileImg/${props.profile.profileImg}`}
+            className="img-fluid img-rounded"
+          />
+         
+        </div>
+        <div className="d-flex justify-content-center align-items-center ms-4 mt-1">
+        <div className={`${props.leftBoxClass} mx-2`}>
+          <p className="boxes-heading m-0">
+            {props.profile && props.profile.boxLeftTitle}
+          </p>
+          <p className="boxes-number1 m-0">
+            {props.profile && props.profile.boxValueLeft}
+          </p>
+        </div>
+        <div className={`${props.rightBoxClass} mx-2`}>
+          <p className="boxes-heading m-0">
+            {props.profile && props.profile.boxRightTitle}
+          </p>
+          <p className="boxes-number1 m-0">
+            {props.profile && props.profile.boxValueRight}
+          </p>
+        </div>
+        </div>
+      </div>
+     </div>
+      <div className="button1 justify-content-center mt-5">
+        {props.profile && props.profile.blockIcon && (
+          <figure>
+            <Image
+              src={`/img/${props.profile && props.profile.blockIcon}`}
+              height="41"
+              width="41"
+              className="mx-2 button1"
+              onClick={() => onBlock(props.profile.id)}
+              style={
+                props.profile?.userRole && props.profile.userRole == 1
+                  ? { pointerEvents: "none", opacity: 0.4 }
+                  : {}
+              }
+            />
+            <figcaption> Block </figcaption>
+          </figure>
+        )}
+        {props.profile && props.profile.UnBlockIcon && (
+          <figure>
+            <Image
+              src={`/img/${props.profile && props.profile.UnBlockIcon}`}
+              height="41"
+              width="41"
+              className="mx-2 button1"
+              onClick={() => onUnBlock(props.profile.id)}
+              style={
+                props.profile?.userRole && props.profile.userRole == 1
+                  ? { pointerEvents: "none", opacity: 0.4 }
+                  : {}
+              }
+            />
+            <figcaption> Unblock </figcaption>
+          </figure>
+        )}
+        {props.profile && props.profile.deleteIcon && (
+          <figure>
+            <Image
+              src={`/img/${props.profile && props.profile.deleteIcon}`}
+              height="41"
+              width="41"
+              className="mx-2 button1"
+              onClick={() => onDelete(props.profile.id)}
+              style={
+                props.profile?.userRole && props.profile.userRole == 1
+                  ? { pointerEvents: "none", opacity: 0.4 }
+                  : {}
+              }
+            />
+            <figcaption> Delete </figcaption>
+          </figure>
+        )}
+      </div>
+      </div>
+    </div> :
       <div
-        className={`${props.className} profile text-center border-bottom pb-3 position-relative`}
+        className={`${props.className} profile text-center ${props.profile.boderBottom ? "border-bottom" : ""} pb-3 position-relative`}
       >
         <div className="d-flex justify-content-end align-items-center py-2 px-4">
           <Button
@@ -199,7 +300,7 @@ const ProfileCard = (props: any) => {
             </figure>
           )}
         </div>
-      </div>
+      </div>}
     </>
   );
 };

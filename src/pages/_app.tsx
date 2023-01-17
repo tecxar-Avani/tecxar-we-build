@@ -41,7 +41,7 @@ const WeBuildApp = ({ Component, pageProps, router }: AppProps) => {
   useEffect(() => {
     window.addEventListener("focus", () => setIsFocus(true));
   }, []);
-
+console.log("^^^^^^^^^^^^^^^^^^^",pageProps)
   return (
     <>
       <ToastContainer autoClose={2000} />

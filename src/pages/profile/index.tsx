@@ -28,6 +28,7 @@ import {
   getUsersBuild,
 } from "@/store/reducers/build.reducer";
 import Head from "next/head";
+import _ from "lodash";
 
 const Profile = (props: any) => {
   const dispatch = useAppDispatch();
@@ -54,8 +55,8 @@ const Profile = (props: any) => {
     dispatch(getUserInteractedBuild());
     dispatch(getUsersBuild());
   }, []);
-  console.log("______________",userData.userData)
   const profileData = {
+    id:userData.userData.id,
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
     dateOfJoined: `Date joined: ${moment(
@@ -80,6 +81,7 @@ const Profile = (props: any) => {
       totalCount.flashCardCount.map((a: any) => a.flashCard),
     userRole: userData.userData.role_id,
     logout: "Log out",
+    boderBottom: true,
   };
   const onEdit = (e: any) => {
     const data = {
@@ -153,10 +155,16 @@ const Profile = (props: any) => {
 
   //all profile
   const blocked_user =
-    usersList && usersList?.filter((user: any) => user.is_blocked == true);
+    usersList && usersList.length>0 && usersList?.filter((user: any) => user.is_blocked == true);
   const unBlocked_user =
-    usersList && usersList?.filter((user: any) => user.is_blocked == false);
+    usersList && usersList.length>0 && usersList?.filter((user: any) => user.is_blocked == false);
 
+    // for admin UI
+
+    const adminFilter:any = usersList && usersList.length>0 && usersList.filter((a:any) => {return a.id == userData.userData.id}) 
+    const usersList1 = usersList.filter(val => !adminFilter.includes(val));
+              
+   
   return (
     <>
       <Head>
@@ -245,8 +253,42 @@ const Profile = (props: any) => {
               <span className="focus"></span>
             </div>
             <Row className="m-0">
-              {filterParam == "All"
-                ? usersList.map((user: any, index: number) => {
+             {filterParam == "Blocked" ?[]:
+              adminFilter && adminFilter.map((admin:any ,index: number) => {
+                const profile = {
+                  id: admin.id,
+                  title: admin.user_name,
+                  dateOfJoined: `Date joined: ${moment(
+                    admin.createdAt
+                  ).format("MMM YYYY")}`,
+                  boxLeftTitle: "Boxes",
+                  boxValueLeft: admin.box,
+                  profileImg: "hello.jpg",
+                  bottomTitle: admin.tag_line,
+                  boxRightTitle: "Awareness",
+                  boxValueRight: admin.awareness,
+                  blockIcon: admin.is_blocked == 1 ? "" : "block.svg",
+                  UnBlockIcon: admin.is_blocked == 0 ? "" : "unBlock.svg",
+                  deleteIcon: "delete.svg",
+                };
+  
+                return (
+                  <Col md={3} key={index}>
+                    <ProfileCard className="AllProfile" profile={profile} adminFilter={adminFilter}/>
+                  </Col>
+                );
+              })  
+            }{
+              filterParam == "All"
+           
+                ? usersList1 && usersList1.length>0 && usersList1.map((user: any, index: number) => {
+                  
+                  // var a = _.remove(usersList, function(n) { return user.id === adminFilter[0].id ;})
+                  
+                //   var a =  _.remove(usersList, {
+                //     id: adminFilter[0].id
+                // });
+                // console.log("a",a)
                     const profile = {
                       id: user.id,
                       title: user.user_name,
@@ -266,7 +308,7 @@ const Profile = (props: any) => {
 
                     return (
                       <Col md={3} key={index}>
-                        <ProfileCard className="AllProfile" profile={profile} />
+                        <ProfileCard className="AllProfile" profile={profile}/>
                       </Col>
                     );
                   })
@@ -318,7 +360,7 @@ const Profile = (props: any) => {
                       </Col>
                     );
                   })
-                : usersList.map((user: any, index: number) => {
+                : usersList1.map((user: any, index: number) => {
                     const profile = {
                       id: user.id,
                       title: user.user_name,

@@ -154,7 +154,7 @@ return (
                         )}
                       </div>
                       
-                      <Row className={`m-0 px-4 innerBoxMain ${subArrayFilter.length==0 && groupArrayFilter.length == 0 && !(subArray.length < 3) && !props.activeSelection && 'myCss'}`}>
+                      <Row className={`m-0 px-4 innerBoxMain ${props.activeSelection ? "activeSelection" : ""} ${subArrayFilter.length==0 && groupArrayFilter.length == 0 && !(subArray.length < 3) && !props.activeSelection && 'myCss'}`}>
                         <Droppable
                           droppableId={`${index}`}
                           direction="horizontal"
