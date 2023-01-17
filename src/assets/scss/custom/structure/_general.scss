@@ -902,7 +902,7 @@ hr {
 
 .inspirationButton {
   background-color: #7d1597;
-  transform: translate(19%, 154%);
+  transform: translate(10%, 226%);
   color: #f8f8f8;
   position: sticky;
   z-index: 1;
@@ -910,15 +910,18 @@ hr {
 
 .resistanceButton {
   background-color: #d91919;
-  // transform: translate(105%, -11%);
-  transform: translate(105%, -128%);
+  transform: translate(-16%, -170%);
   color: #f8f8f8;
-  margin-left: -15px;
 }
-
+.min-33vh {
+  min-width: 33vh;
+}
+.max-33vh {
+  max-width: 33vh;
+}
 .acceptanceButton {
   background-color: #1235ae;
-  transform: translate(158%, -343%);
+  transform: translate(175%, -454%);
   color: #f8f8f8;
 }
 
@@ -997,31 +1000,32 @@ hr {
 
 .redpolygon {
   -webkit-clip-path: polygon(5% 66%, 100% 66%, 53% 3%);
-  clip-path: polygon(7% 66%, 100% 65%, 56.8% 4%);
+  clip-path: polygon(0% 56%, 97% 52%, 46% 0%);
   background-color: #d91919;
-  width: 70%;
+  width: 100%;
   height: 113.54px;
-  margin-top: -74px;
-  margin-left: -2px;
+  margin-top: -60px;
+  margin-left: 14px;
 }
 
 .bluePolygon {
   -webkit-clip-path: polygon(48% 1%, 96% 100%, 48% 65%);
-  clip-path: polygon(48% -1%, 94% 100%, 49% 64%);
+  clip-path: polygon(41.5% 1%, 91.5% 101%, 39% 71%);
   background-color: #1235ae;
-  width: 70%;
+  width: 100%;
   height: 200.54px;
-  margin-top: -201px;
-  margin-left: 16px;
+  margin-top: -203px;
+  margin-left: 32px;
 }
 
 .purplePolygon {
-  clip-path: polygon(48% 1%, 0 100%, 48% 65%);
+  -webkit-clip-path: polygon(48% 1%, 0 100%, 48% 65%);
+  clip-path: polygon(48.6% -0.5%, 0.8% 100%, 46% 69%);
   background-color: #7d1597;
-  width: 70%;
+  width: 100%;
   height: 200.54px;
   margin-top: -51px;
-  margin-left: 16px;
+  margin-left: 14px;
 }
 
 .inspirationModalBG {
@@ -1457,4 +1461,33 @@ h6 {
 .triangle {
   min-height: calc(44vh - 50px);
   height: calc(46vh - 50px);
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .max-33vh {
+    max-width: 41vh;
+  }
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .max-33vh {
+    max-width: 41vh;
+  }
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {
+  .max-33vh {
+    max-width: 33vh;
+  }
 }

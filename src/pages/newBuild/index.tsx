@@ -643,7 +643,7 @@ const NewBuild = (props: any) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className="d-flex h-full overflow-hidden gap-2">
-        <div className="w-25">
+        <div className="w-25 min-33vh max-33vh">
           <NewBuildSideCard
             id={router.query.id}
             videoId={router.query.videoId}

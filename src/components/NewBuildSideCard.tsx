@@ -187,12 +187,17 @@ const NewBuildSideCard = (props: any) => {
         </div>
         {/* <hr className="border-dark" /> */}
 
-        <div className="d-flex ml-2 ms-1 threeButton">
+        <div className="d-flex justify-content-between align-items-center px-2 py-1 border-bottom border-dark threeButton">
           <div className="text-center">
-            <Button variant="" ref={typeVideo} onClick={() => setType(!type)}>
-              <figure className="ms-3 me-3">
+            <Button
+              className="p-0"
+              variant=""
+              ref={typeVideo}
+              onClick={() => setType(!type)}
+            >
+              <figure className="m-0">
                 <Image src="../img/typeof.svg " height={40} className="" />
-                <figcaption className="text-center mt-2">
+                <figcaption className="text-center mt-1">
                   Type of <br></br>Video
                 </figcaption>
               </figure>
@@ -236,13 +241,14 @@ const NewBuildSideCard = (props: any) => {
           </div>
           <div>
             <Button
+              className="p-0"
               variant=""
               ref={polarisations}
               onClick={() => setPolarisation(!polarisation)}
             >
-              <figure className="ms-3 me-3">
+              <figure className="m-0">
                 <Image src="../img/polarisation.svg" height={40} className="" />
-                <figcaption className="text-center mt-2">
+                <figcaption className="text-center mt-1">
                   Polarisation <br></br>potental
                 </figcaption>
               </figure>
@@ -311,11 +317,12 @@ const NewBuildSideCard = (props: any) => {
           </div>
           <div>
             <Button
+              className="p-0"
               variant=""
               ref={target2}
               onClick={() => setDifficulty(!difficulty)}
             >
-              <figure className="ms-3 me-3 difficult">
+              <figure className="m-0 difficult">
                 <Image
                   src="../img/difficulty.svg"
                   height={50}
@@ -323,7 +330,7 @@ const NewBuildSideCard = (props: any) => {
                   className=""
                 />
 
-                <figcaption className="text-center mt-2">Difficulty</figcaption>
+                <figcaption className="text-center mt-1">Difficulty</figcaption>
               </figure>
             </Button>
             <Overlay
@@ -389,8 +396,8 @@ const NewBuildSideCard = (props: any) => {
             </Overlay>
           </div>
         </div>
-        <div className="px-2">
-          <hr className="border-dark" />
+        <div className="px-2 py-1">
+          {/* <hr className="border-dark" /> */}
           <div className="d-flex owd bd-highlight justify-content-between align-items-center">
             {/* {props.isLoggedIn === true ? ( */}
             <div
