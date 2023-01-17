@@ -65,7 +65,7 @@ const ProfileCard = (props: any) => {
             {props.profile.logout}
           </Button>
         </div>
-        <div className="d-flex justify-content-center align-items-center">
+        <div className={`d-flex justify-content-center align-items-center ${props.profile.boxLeftTitle == "Boxes mapped" ? "ms-5" : ""}`}>
           <div>
             <h4 className="title">{props.profile.title}</h4>
             {props.profile && props.profile.dateOfJoined && (

@@ -61,7 +61,8 @@ const NewBuild = (props: any) => {
   const { flashCardList } = useAppSelector(flashCardSelector);
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const { buildById, buildListByUrl, boxes ,build} = useAppSelector(buildSelector);
+  const { buildById, buildListByUrl, boxes } = useAppSelector(buildSelector);
+  const build = useAppSelector(buildSelector);
   const { userData, loggedInUser } = useAppSelector(userSelector);
   const { groupList } = useAppSelector(groupSelector);
   const [arr, setArr] = useState([1]);
@@ -86,7 +87,7 @@ const NewBuild = (props: any) => {
   const [groupArray, setGroupArray] = useState<any>([]);
   const [activeUnGroup, setActiveUnGroup] = useState<any>(false);
   const [groupTitle, setGroupTitle] = useState<any>("");
-
+console.log("---------------------------",build)
   const [boxData, setBoxData] = useState([]);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
@@ -645,8 +646,9 @@ console.log("groupList",groupList)
         <title>New Build</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-       {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : 
-       <Fragment> */}
+       {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> :  */}
+       {/* <Spin spinning={build.loading == true} delay={100}/>  */}
+       <Fragment>
       <div className="d-flex m-0 w-100">
         <NewBuildSideCard
           id={router.query.id}
@@ -934,7 +936,7 @@ console.log("groupList",groupList)
             : ""
         } `}
       /> 
-      {/* </Fragment>} */}
+      </Fragment>
     </Fragment>
     
   );

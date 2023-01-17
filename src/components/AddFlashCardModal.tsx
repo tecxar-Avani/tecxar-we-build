@@ -63,12 +63,14 @@ const AddFlashCardModal = (props: any) => {
           autoComplete="off"
         >
           <Form.Item key={1} name="question" label="Front">
+
             <TextArea
               key={1}
               showCount
               maxLength={100}
               rows={3}
               defaultValue={props?.flashCardData?.question}
+              required
             />
           </Form.Item>
           <Form.Item key={2} name={"answer"} label={"Back"}>
@@ -78,6 +80,7 @@ const AddFlashCardModal = (props: any) => {
               maxLength={100}
               rows={3}
               defaultValue={props?.flashCardData?.answer}
+              required
             />
           </Form.Item>
         </Form>

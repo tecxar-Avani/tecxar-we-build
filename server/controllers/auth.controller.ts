@@ -58,6 +58,7 @@ export class AuthController {
           email: userEmail,
           role_id: 2,
           is_blocked: 0,
+          tag_line:"all the city with me"
         };
         const createUser = await this.userService.createUser(data);
         if (createUser && createUser.id) {

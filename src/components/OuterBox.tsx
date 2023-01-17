@@ -88,7 +88,7 @@ const OuterBox = (props: any) => {
                         <Form.Item
                           name={`message${props.id}`}
                           noStyle={false}
-                          className={`position-relative position-relative-example `}
+                          className={`position-relative position-relative-example textfont`}
                         >
                           <TextArea
                             //  value={props?.description}

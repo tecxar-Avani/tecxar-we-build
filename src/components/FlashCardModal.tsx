@@ -155,7 +155,7 @@ const handleCancel = () => {
           })
         }
       >
-        <div className="p-4">{props?.flashCard?.content}</div>
+        <div className="p-4 flashQA">{props?.flashCard?.content}</div>
       </Modal>
       <AddFlashCardModal
         modal2Open={props.addFlashCard}

@@ -61,7 +61,7 @@ const Profile = (props: any) => {
     dateOfJoined: `Date joined: ${moment(
       userData && userData.userData && userData.userData.createdAt
     ).format("MMM YYYY")} `,
-    boxLeftTitle: userData.userData.role_id == 1 ? "boxes mapped" : "Boxes",
+    boxLeftTitle: userData.userData.role_id == 1 ? "Boxes mapped" : "Boxes",
     boxValueLeft:
       totalCount &&
       totalCount.boxbuildCount &&

@@ -1,5 +1,17 @@
 @import "~antd/dist/antd.css";
 
+@font-face {
+  /* font-family: "Nunito"; */
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 400;
+  src: url("/font/Arimo-VariableFont_wght.ttf");
+  // src: url("/fonts/fa-regular-400.eot?#iefix") format("embedded-opentype"), url("/fonts/fa-regular-400.woff2") format("woff2"), url("/fonts/fa-regular-400.woff") format("woff"), url("/fonts/fa-regular-400.ttf") format("truetype"), url("/fonts/fa-regular-400.svg#fontawesome") format("svg");
+  /* font-style: normal;
+  font-weight: 400;
+  font-display: swap; */
+}
+
 body,
 .ant-layout {
   background-color: #ffffff;
@@ -23,7 +35,7 @@ body,
 //   margin-left: 125px;
 // }
 .fixTitle {
-  font-family: "Arimo" !important;
+  font-family: 'Arimo' !important;
   font-style: normal !important;
   font-weight: 700 !important;
   font-size: 30px !important;
@@ -34,12 +46,13 @@ body,
   .innerBoxs {
     border: 0.3px solid rgba(0, 0, 0, 0.25);
     max-width: 360px;
-    max-height: 213px;
-    min-height: 213px;
+    max-height: 196px;
+    min-height: 196px;
 
     TextArea {
       border: 0.5px solid #000000;
     }
+   
   }
 
   .innerBoxsSelected {
@@ -130,7 +143,7 @@ height: 75px;
   align-items: center;
   text-align: center;
   color: #000000;
-  font-family: Arimo;
+  font-family: 'Arimo';
 }
 
 .profile .boxes-number {
@@ -140,7 +153,7 @@ height: 75px;
   line-height: 46px;
   align-items: center;
   color: #000000;
-  font-family: Arimo;
+  font-family: 'Arimo';
 }
 
 .profile .cityWithMe {
@@ -150,7 +163,7 @@ height: 75px;
   line-height: 23px;
   text-align: center;
   color: #000000;
-  font-family: Arimo;
+  font-family: 'Arimo';
 }
 
 .profile .title {
@@ -161,7 +174,7 @@ height: 75px;
   align-items: center;
   text-align: center;
   color: #000000;
-  font-family: Arimo;
+  font-family: 'Arimo';
   margin: 0;
 }
 
@@ -173,12 +186,12 @@ height: 75px;
   align-items: center;
   text-align: center;
   color: #000000;
-  font-family: Arimo;
+  font-family: 'Arimo';
   margin: 0;
 }
 
 .profile .pcontent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -200,7 +213,7 @@ height: 75px;
 }
 
 .content {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -240,7 +253,7 @@ height: 75px;
 // }
 
 .vcontent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -265,6 +278,7 @@ height: 75px;
     position: absolute;
     bottom: 20px;
     right: 9px;
+    color: black;
   }
 
   .ant-modal-body {
@@ -275,7 +289,7 @@ height: 75px;
 }
 
 .flashCardsContent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 13px;
@@ -296,7 +310,7 @@ height: 75px;
   align-items: center;
   text-align: center;
   color: #000000;
-  font-family: Arimo;
+  font-family: 'Arimo';
 }
 
 .AllProfile .boxes-number {
@@ -349,7 +363,7 @@ height: 75px;
 }
 
 .Search-content {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -386,7 +400,7 @@ height: 75px;
 }
 
 .ant-modal {
-  font-family: "Arimo";
+  font-family: 'Arimo';
 }
 
 .ant-modal-header {
@@ -407,37 +421,43 @@ height: 75px;
 }
 
 .ant-modal-close-x {
-  padding: 0px;
-  font-weight: 700;
   display: block;
-  width: 17px;
-  height: 18px;
-  font-size: 13px;
+  width: 15px;
+  height: 15px;
+  font-size: 16px;
   font-style: normal;
   line-height: 13px;
   text-align: center;
-  border-radius: 100%;
-  background-color: black !important;
+  background-color: black;
   color: white;
-  margin-top: 15px;
-  margin-right: 13px;
-  font-weight: 10px;
+  border-radius: 50%;
+  margin: 10px;
 }
-.anticon svg {
-  width: 13px;
-  height: 14px;
-  left: 906px;
-  top: 362px; 
+.anticon {
+  width: 12px !important;
+  height: 11px !important;
   font-family: 'Arimo';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 13px;
-  line-height: 15px;
+  line-height: 1;
   text-align: center;
-  
-  color: #FFFFFF;
-  
+  /* margin-bottom: -55px; */
+  /* padding: 1px; */
+  svg {
+    font-family: 'Arimo';
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    font-weight: 700;
+    line-height: 14.95px;
+    color: white;
+    text-align: center;
+    margin-top: -6px;
+ 
 }
+}
+
 .ant-modal-body .inputbox {
   text-align: left;
 }
@@ -445,7 +465,7 @@ height: 75px;
 .inputbox {
   text-align: left;
   height: 80;
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
@@ -453,7 +473,7 @@ height: 75px;
 }
 
 .userGuide {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
@@ -461,7 +481,7 @@ height: 75px;
 }
 
 .userGuide .Ucontent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
@@ -469,7 +489,7 @@ height: 75px;
 }
 
 .userGuide .videoContent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 25px;
@@ -484,7 +504,7 @@ height: 75px;
 }
 
 .content {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -501,7 +521,7 @@ height: 75px;
 .ant-card-head {
   border-bottom: 0;
   padding: 0;
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -514,7 +534,7 @@ height: 75px;
 }
 
 .resultContent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -522,7 +542,7 @@ height: 75px;
 }
 
 .inValidUrlContent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -533,7 +553,7 @@ height: 75px;
 }
 
 .ant-modal-header {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -592,7 +612,7 @@ height: 75px;
   }
 
   .header {
-    font-family: "Arimo";
+    font-family: 'Arimo';
     font-style: normal;
     font-weight: 700;
     font-size: 8px;
@@ -608,6 +628,7 @@ height: 75px;
     position: absolute;
     bottom: 15px;
     right: 9px;
+    color: black;
   }
 }
 
@@ -627,6 +648,8 @@ height: 75px;
   ::-webkit-scrollbar {
     display: none;
   }
+
+
 }
 
 .challenge-textbox-main {
@@ -713,12 +736,15 @@ height: 75px;
 // }
 .ant-modal-title {
   font-weight: 700px !important;
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
+  font-weight: 400;
+  font-size: 19.5px;
+line-height: 22px;
 }
 
 .userGuide {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
@@ -726,7 +752,7 @@ height: 75px;
 }
 
 .userGuide .Ucontent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 400;
   font-size: 25px;
@@ -749,7 +775,7 @@ height: 75px;
 }
 
 .userGuide .videoContent {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 25px;
@@ -758,7 +784,7 @@ height: 75px;
 }
 
 .userGuide .videoContent2 {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -776,11 +802,13 @@ height: 75px;
 .btn1 {
   background-color: #dcdada;
   color: black;
+  font-family: 'Arimo';
 }
 
 .btn2 {
   background-color: #69acda;
   color: black;
+  font-family: 'Arimo';
 }
 
 .card {
@@ -820,20 +848,32 @@ hr {
 .flash {
   right: 21px;
   bottom: 25px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 30px;
+  color: #000000;
 }
 
 .mkCard {
   right: 21px;
   bottom: 103px;
+  
+
 
   .card {
     border: 1px solid black;
     border-radius: 6px;
     height: 60px;
     width: 40px;
-    font-size: 20px;
-    font-weight: 400;
     padding: 0px !important;
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 21px;
+line-height: 30px;
+color: #000000;
   }
 
   .card-body {
@@ -848,6 +888,7 @@ hr {
     font-size: 20px;
     line-height: 23px;
     color: #000000;
+    font-family: 'Arimo';
   }
 
   .iframs {
@@ -916,6 +957,8 @@ hr {
   padding-left: 0;
   padding-right: 0;
   color: black;
+  font-family: 'Kanit';
+  font-weight: 400;
 }
 
 .inspirationButton {
@@ -924,6 +967,8 @@ hr {
   color: #f8f8f8;
   position: sticky;
   z-index: 1;
+  font-family: 'Arimo';
+  font-weight: 700;
 }
 
 .resistanceButton {
@@ -932,12 +977,16 @@ hr {
   transform: translate(105%, -128%);
   color: #f8f8f8;
   margin-left: -15px;
+  font-family: 'Arimo';
+  font-weight: 700;
 }
 
 .acceptanceButton {
   background-color: #1235ae;
   transform: translate(158%, -343%);
   color: #f8f8f8;
+  font-family: 'Arimo';
+  font-weight: 700;
 }
 
 .inspirationButton:hover {
@@ -1110,8 +1159,13 @@ hr {
   content: none;
 }
 
-.ant-input-textarea {
+.textarea.ant-input{
   margin-left: 2px !important;
+  font-family: 'Arimo';
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+line-height: 17px;
 }
 
 .textBoxInnerNone {
@@ -1178,7 +1232,7 @@ h6 {
 }
 
 .AwareInputChallengeHeader {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 8px;
@@ -1239,7 +1293,7 @@ h6 {
   }
 
   .header {
-    font-family: "Arimo";
+    font-family: 'Arimo';
     font-style: normal;
     font-weight: 700;
     font-size: 8px;
@@ -1302,7 +1356,7 @@ h6 {
 
 .centerHeader {
   text-align: center !important;
-  font: "Arimo" !important;
+  font: 'Arimo' !important;
   font-weight: 400px !important;
   font-size: 20px !important;
   line-height: 23px !important;
@@ -1319,7 +1373,7 @@ h6 {
 }
 
 .content {
-  font-family: "Arimo";
+  font-family: 'Arimo';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -1371,7 +1425,22 @@ h6 {
   font-size: 13px;
   border-radius: 4px;
 }
-
+.textfont {
+  .ant-input {
+  max-width: 100%;
+  height: auto;
+  min-height: 32px;
+  line-height: 1.5715;
+  vertical-align: bottom;
+  transition: all 0.3s, height 0s;
+  font-family: 'Arimo';
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 4px;
+}  }
 .ant-modal-confirm {
   .ant-modal-confirm-btns {
     margin-top: 41px !important;
@@ -1431,6 +1500,7 @@ text-align: center;
   font-weight: 400;
   font-size: 20px;
   line-height: 23px;
+  color: black;
   text-align: center;
 }
 .width-btn{
@@ -1457,7 +1527,7 @@ text-align: center;
 }
 .ant-input:focus {
   outline: none !important;
-  border:none;
+  border : 1px solid black;
   box-shadow: none;
 }
 .submitButton{
@@ -1489,4 +1559,13 @@ text-align: center;
 }
 textarea {
   resize: none;
+}
+
+.flashQA{ 
+font-family: 'Arimo';
+font-style: normal;
+font-weight: 400;
+font-size: 19.5px;
+line-height: 22px;
+color: black;
 }
