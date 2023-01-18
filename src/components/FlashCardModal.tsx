@@ -2,10 +2,13 @@ import { Modal, Button } from "antd";
 import React, { useState,useEffect } from "react";
 import Image from "react-bootstrap/Image";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { createFlashCardResponse, deleteFlashCardById,flashCardSelector } from "../store/reducers/flashCard.reducer";
+import { createFlashCard, createFlashCardResponse, deleteFlashCardById,flashCardSelector } from "../store/reducers/flashCard.reducer";
 import AddFlashCardModal from "./AddFlashCardModal";
 import { useRouter } from "next/router";
 import LogInButton from "./LogInButton";
+import { ExclamationCircleFilled, PlusOutlined } from "@ant-design/icons";
+import { buildSelector } from "@/store/reducers/build.reducer";
+
 
 
 const FlashCardModal = (props: any) => {
@@ -13,11 +16,10 @@ const FlashCardModal = (props: any) => {
   const router = useRouter();
   const buildId = Number(router.query.id);
   const [modal5Open, setModal5Open] = useState(false);
+  const { buildById, buildListByUrl, boxes } = useAppSelector(buildSelector);
 
 
-  useEffect(() => {
-  
-  }, [props]);
+
 const onDelete = (id:any) =>{
      dispatch(deleteFlashCardById(id))
 }
@@ -77,7 +79,7 @@ const handleCancel = () => {
               editQuestion
             );
           } else {
-            props.againCallback(props.defaultQuestionIndex - 1);
+            props.againCallback(props.defaultQuestionIndex - 1,data);
           }
         }
       } 
@@ -91,9 +93,9 @@ const handleCancel = () => {
           dispatch(createFlashCardResponse(flashCardResponseData))
           if (index <= arrayLength) {
             if (userId) {
-              props.questionCallback(userId, index, questionId);
+              props.questionCallback(userId, index, questionId, data);
             } else {
-              props.questionCallback(index, questionId);
+              props.questionCallback(index, questionId, data);
               }}
         // }
         // else{
@@ -129,11 +131,13 @@ const handleCancel = () => {
       }
     }
   };
+  const userIdForFlashCard = buildById.lenght> 0 && buildById?.data?.map((a: any) => a.created_by)
+
   return (
     <>
       <Modal
         open={props.modal}
-        title={props?.flashCard?.title}
+        title={props?.flashCard?.title == "addFlashCardToUser" ? userIdForFlashCard[0] == props.flashCard.userId ? "" : <PlusOutlined onClick={props.addFlashCardToUser} style={props.isAdded ? {display:"none"} : { color: '#08c'}}/> : ""}
         centered
         visible={props.modalVisible}
         onCancel={() => props.setmodalOpen(false)}

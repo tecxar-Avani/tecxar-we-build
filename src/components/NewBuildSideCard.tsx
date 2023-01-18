@@ -81,11 +81,10 @@ const NewBuildSideCard = (props: any) => {
           ></iframe>
         </div>
 
-        <hr className="border-dark" />
 
-        <div className="d-flex">
+        <div className="d-flex justify-content-between align-items-center border-top border-bottom border-dark mx-2 p-2 align-items-center">
           <div
-            className="groupBox px-2"
+            className="groupBox"
             onClick={groupSelect}
             style={
               userId && userId.length > 0 && userId[0] == userData.id
@@ -96,7 +95,7 @@ const NewBuildSideCard = (props: any) => {
             <CustomButton title="Group" className="btn1 px-3 py-2" />
           </div>
           {props.activeSelection && (
-            <div className="groupBox px-2 mx-2">
+            <div className="groupBox">
              
                 <Button
                   type="submit"
@@ -111,7 +110,7 @@ const NewBuildSideCard = (props: any) => {
           {/* <CustomButton title="New row" className="btn2  px-4 py-3 ms-2 " /> */}
 
           <div
-            className="groupBox px-2 mx-2"
+            className="groupBox"
             onClick={props.unGroupSelect}
             style={
               userId && userId.length > 0 && userId[0] == userData.id
@@ -122,15 +121,15 @@ const NewBuildSideCard = (props: any) => {
             <CustomButton title="UnGroup" className="btn1 px-3 py-2" />
           </div>
         </div>
-        <hr className="border-dark" />
+        {/* <hr className="border-dark" /> */}
         <div
           style={
             props.id == "undefined"
               ? { pointerEvents: "none", opacity: 0.4 }
               : {}
           }
-          className="triangle"
-        >
+          className="triangle align-items-center border-bottom border-dark mx-2"
+        ><div className="mt-3 mb-0 triangle1">
           <span
             onClick={() => {
               props.value == "" ? {} : props.setAwarenessModal(true);
@@ -199,10 +198,11 @@ const NewBuildSideCard = (props: any) => {
               onClick={props.Resistance}
             />
           </span>
+          </div>
         </div>
-        <hr className="border-dark" />
 
-        <div className="d-flex ml-2 ms-1 threeButton">
+        <div className="px-2 threeButton align-items-center border-bottom border-dark mx-2">
+          <div className="d-flex mt-4">
           <div className="text-center">
             <Button variant="" ref={typeVideo} onClick={() => setType(!type)}>
               <figure className="ms-3 me-3">
@@ -403,9 +403,9 @@ const NewBuildSideCard = (props: any) => {
               )}
             </Overlay>
           </div>
-        </div>          <hr className="border-dark" />
-
-        <div className="px-2">
+          </div>
+        </div>        
+        <div className="px-2 mt-2">
           <div className="d-flex owd bd-highlight justify-content-between align-items-center">
             {/* {props.isLoggedIn === true ? ( */}
             <div

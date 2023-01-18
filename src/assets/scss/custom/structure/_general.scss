@@ -291,18 +291,22 @@ height: 75px;
   }
   .ant-input:focus {
     outline: none !important;
-    border: none !important;
-    box-shadow: none;
+    border: 0.3px solid black !important;
+    box-shadow: none !important;   
 }
 .ant-input:hover {
-  border-color: none !important;
-  border: 0px !important;
+  box-shadow: none !important;   
+  border: 0.3px solid black !important;
 }
+.ant-input{
+  border: 0.3px solid black !important;
+  box-shadow: none !important;
+  outline: none !important;
+  box-shadow: none !important;   
 }
-// .ant-input:hover {
-//   border-color: none !important;
-//   border: 1px solid black!important;
-// }
+
+}
+
 
 .flashCardsContent {
   font-family: 'Arimo';
@@ -450,6 +454,16 @@ height: 75px;
   background-color: #000000;
   color: white;
   border-radius: 5px;
+  border: none;
+}
+.ant-btn:hover, .ant-btn:focus {
+  color: white;
+  border-color: none;
+  background-color: #000000;
+  border-radius: 5px;
+}
+.ant-btn:hover{
+  border: none;
 }
 
 .ant-modal-close-x {
@@ -662,6 +676,14 @@ height: 75px;
     right: 9px;
     color: black;
   }
+  .ant-input:hover{
+    border-color: none !important;
+    border: none !important;
+  }
+  .ant-input{
+    border: none !important;
+    border-color: none !important;
+  }
 }
 
 .awarenessDotModal {
@@ -686,6 +708,11 @@ height: 75px;
 
 .challenge-textbox-main {
   position: relative;
+
+  textarea.ant-input{
+    border: none !important;
+    border-color: none !important;
+  }
 }
 
 .challenge-textbox-main .input-arrow::after {
@@ -1179,6 +1206,7 @@ color: #000000;
   margin-left: -1px;
 }
 
+
 .tooltipOfImages {
   position: absolute;
   background-color: black;
@@ -1513,6 +1541,15 @@ h6 {
 width: 50%;
  }
 text-align: center;
+
+  .submitButton:hover{
+    color: white;
+    background-color: #54a754;
+    border: none;
+  }
+.btn{
+  border: none;
+}
   
 }
 .group{
@@ -1559,9 +1596,10 @@ text-align: center;
 }
 .ant-input:focus {
   outline: none !important;
-  border : 1px solid black;
+  // border : 1px solid black;
   box-shadow: none;
 }
+
 .submitButton{
  
     padding: 26%;
@@ -1582,7 +1620,10 @@ text-align: center;
   overflow: auto;
 }
 .triangle{
-  margin-bottom: -50px
+  margin-bottom: -31px
+}
+.triangle1{
+  margin-bottom: -18px !important;
 }
 .newBuildBoxes{
   margin-left:22%;
@@ -1599,4 +1640,9 @@ font-size: 19.5px;
 line-height: 22px;
 color: black;
 }
-
+.btn {
+  border: none;
+}
+.btn:hover{
+  border: none;
+}

@@ -87,7 +87,10 @@ const NewBuild = (props: any) => {
   const [groupArray, setGroupArray] = useState<any>([]);
   const [activeUnGroup, setActiveUnGroup] = useState<any>(false);
   const [groupTitle, setGroupTitle] = useState<any>("");
+  const [isAdded, setIsAdded] = useState<boolean>();
   const [boxData, setBoxData] = useState([]);
+  const [dataOfFlashCard, setDataOfFlashCard] = useState([]);
+   
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -107,7 +110,7 @@ const NewBuild = (props: any) => {
       answer: data.answer,
       build_id: buildId,
     };
-    
+   
     dispatch(createFlashCard(flashCardData));
   };
 
@@ -184,7 +187,11 @@ const NewBuild = (props: any) => {
   const flashCardArr = flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardList?.rows?.flashBuild?.users;
 
-  const questionData = (userId: any, index?: number, questionId?: number) => {
+  const questionData = (userId: any, index?: number, questionId?: any, data?:any) => {
+   if(questionId !== "Again"){
+    setIsAdded(false)
+   }
+    // setIsAdded(false)
     const filterArray = flashCardArr?.filter((F: any) => F.user_id == userId);
     const findLastValue = filterArray?.slice(-1)[0];
     const lastQuestionId = findLastValue?.id;
@@ -637,16 +644,17 @@ const NewBuild = (props: any) => {
   };
 
   // for adding flashcard into user flashcards
-
-  const addFlashCardToUser = (question:string,answer:string) => {
-    const data = {
-      question : question,
-      answer : answer,
+  const addFlashCardToUser = (data:any) => {
+   
+    const addData = {
+      question : data.question,
+      answer : data.answer,
       build_id : buildId,
     }
-     dispatch(createFlashCard(data));
+  //  dispatch(createFlashCard(addData));
+    setIsAdded(true)
   };
-
+ 
   return (
     <Fragment>
       <Head>
@@ -688,7 +696,7 @@ const NewBuild = (props: any) => {
             <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
               <NewBuildBoxes
                 setModal1Open={setAddFlashcard}
-                item={mergedArray?.length > 0 ? [] : dataArray}
+                item={mergedArray?.length >= 2  ? [] : dataArray}
                 // mergedArray={mergedArray}
                 //  item={activeUnGroup ? dataArray : []}
                 mergedArray={mergedArray}
@@ -834,15 +842,16 @@ const NewBuild = (props: any) => {
                   questionId: questionId,
                   index: index,
                   arrayLength: arrayLength,
-                  title: <PlusOutlined onClick={() => addFlashCardToUser(ans.question,ans.answer)} />,
+                  title:"addFlashCardToUser",
                 };
                 setModal3Open(newData);
+                setDataOfFlashCard(ans)
               });
           }}
           questionCallback={(
             userId: number,
             index: number,
-            questionId: number
+            questionId: number,
           ) => {
             questionData(userId, index, questionId);
           }}
@@ -852,8 +861,10 @@ const NewBuild = (props: any) => {
             questionId: number,
             index: number
           ) => {
-            questionData(userId, index);
+            questionData(userId, index, data);
           }}
+          addFlashCardToUser={() => {addFlashCardToUser(dataOfFlashCard);}}
+          isAdded={isAdded}
         />
         <AwarenessModal
           awarenessModal={awarenessModal}

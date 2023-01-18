@@ -283,12 +283,6 @@ const Profile = (props: any) => {
            
                 ? usersList1 && usersList1.length>0 && usersList1.map((user: any, index: number) => {
                   
-                  // var a = _.remove(usersList, function(n) { return user.id === adminFilter[0].id ;})
-                  
-                //   var a =  _.remove(usersList, {
-                //     id: adminFilter[0].id
-                // });
-                // console.log("a",a)
                     const profile = {
                       id: user.id,
                       title: user.user_name,

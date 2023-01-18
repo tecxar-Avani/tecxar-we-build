@@ -274,7 +274,7 @@ export class FlashController {
 
           const data = {
             videoId: videoIdToSearch,
-            thumbnails: item.snippet.thumbnails.default,
+            thumbnails: item.snippet.thumbnails.medium,
             description: item.snippet.description,
             title: item.snippet.title,
             publishedAt: item.snippet.publishedAt,
