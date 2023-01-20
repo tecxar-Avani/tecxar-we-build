@@ -58,9 +58,9 @@ const ProfileCard = (props: any) => {
      <div>
       <div className={`d-flex justify-content-center align-items-center ms-4${props.profile.boxLeftTitle == "Boxes mapped" ? "ms-5" : ""}`}>
         <div>
-          <h4 className="title">{props.profile.title}</h4>
+          <h4 className="title1">{props.profile.title}</h4>
           {props.profile && props.profile.dateOfJoined && (
-            <h5 className="subTitle py-1">{props.profile.dateOfJoined}</h5>
+            <h5 className="subTitle">{props.profile.dateOfJoined}</h5>
           )}
         </div>
        

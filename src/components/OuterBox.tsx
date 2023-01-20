@@ -37,7 +37,7 @@ const OuterBox = (props: any) => {
   });
   useEffect(() => {
     if (props.isRefresh) {
-      props.setFormDataOnUndo(BoxData)
+      // props.setFormDataOnUndo(BoxData)
       form.resetFields();
       props.setIsRefresh(false);
     }

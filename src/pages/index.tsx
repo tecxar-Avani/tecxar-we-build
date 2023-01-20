@@ -4,21 +4,15 @@ import { Layout } from "antd";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useAppSelector ,useAppDispatch} from "../hooks";
-import { getAuthCookie, getUserByEmail, userSelector,windowStatus } from "@/store/reducers/user.reducer";
-import { Toast } from "react-toastify/dist/components";
 // import Link from "antd/lib/typography/Link";
 const { Content } = Layout;
 
 const Home: NextPage = (props) => {
   const router = useRouter();
-  // const { windowStatus} = useAppSelector(userSelector);
-  const dispatch = useAppDispatch();
 
  
   useEffect(() => {
     if (router.asPath == "/?isLoggedIn") {
-     dispatch(windowStatus())
       window.close();
     }
   }, []);
@@ -59,6 +53,7 @@ const Home: NextPage = (props) => {
           </h1>
         </div>
       </div>
+     
     </>
   );
 };

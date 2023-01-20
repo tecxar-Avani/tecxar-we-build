@@ -3,9 +3,9 @@ import { Image } from "react-bootstrap";
 import { Layout } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { buildSelector } from "@/store/reducers/build.reducer";
-import { userSelector } from "@/store/reducers/user.reducer";
+import { userSelector, windowStatus } from "@/store/reducers/user.reducer";
 
 import LogInButton from "./LogInButton";
 
@@ -15,6 +15,7 @@ const SideBar = (toggle: any) => {
   const { buildList, userBuilds, buildListByUrl } =
     useAppSelector(buildSelector);
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [sideBarBG, setSideBarBG] = useState("profileBG");
   const [modal5Open, setModal5Open] = useState(false);
   const [buildListData, setBuildListData] = useState(buildList?.box);
@@ -31,6 +32,12 @@ const SideBar = (toggle: any) => {
   useEffect(() => {
     setBuildListData(buildList?.box);
   }, [buildList]);
+  
+  useEffect(() => {
+      // if (router.asPath == "/?isLoggedIn") {
+       dispatch(windowStatus())
+      // }
+  }, []);
 
   useEffect(() => {
     setBuildListData([]);

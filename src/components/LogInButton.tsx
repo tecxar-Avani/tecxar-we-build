@@ -18,10 +18,10 @@ const LogInButton = (props: any) => {
       setTimeout(() => {
         dispatch(getAuthCookie());
         dispatch(getUserByEmail());
-      }, 3000);
+      }, 5000);
     };
   
-     
+     console.log("************",windowStatus)
     
   return (
     <>
@@ -51,6 +51,7 @@ const LogInButton = (props: any) => {
           <br />
         </div>
       </Modal>
+     
     </>
   );
 };

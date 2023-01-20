@@ -76,7 +76,7 @@ export const totalbuilds = createAsyncThunk(`build/totalbuilds`, async () => {
 export const windowStatus = createAsyncThunk(
   `windowStatus/update`,
   async (): Promise<any> => {
-    const  data  = true
+    const  data  = 'true'
     return data;
   }
 );
@@ -109,7 +109,7 @@ const initialState: State = {
     rows: [],
   },
   toastLog: "",
-  windowStatus:false
+  windowStatus:'false'
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>

@@ -96,7 +96,7 @@ const NewBuildBoxes = (props: any) => {
                             activeSelection={props.activeSelection}
                             groupingSelection={props.groupingSelection}
                             groupList={props.groupList}
-                            setFormDataOnUndo={(boxData:any) => {console.log("+++++++++++++++++",boxData)}}
+                            // setFormDataOnUndo={(boxData:any) => {console.log("+++++++++++++++++",boxData)}}
                           />
                         ))}
                         {provided.placeholder}
