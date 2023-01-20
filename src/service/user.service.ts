@@ -1,5 +1,4 @@
 import API from "../plugins/api";
-import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 
 class UserService {
   userAuthentication() {

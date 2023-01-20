@@ -14,16 +14,12 @@ const OuterBox = (props: any) => {
   const { userData } = useAppSelector(userSelector);
   const [form] = Form.useForm();
   let BoxData: any;
-  useEffect(() => {
-    if (props.isRefresh) {
-      form.resetFields();
-      props.setIsRefresh(false);
-    }
-  }, [props.isRefresh]);
+ 
   const handleChange = (event: any) => {
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
     BoxData = { sorting_order: id, description: value };
+    
     if (value.length === 150 && !props.arr.includes(propsId) && !props.boxId) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
@@ -39,7 +35,13 @@ const OuterBox = (props: any) => {
     // position: "fixed",
     ...draggableStyle,
   });
-
+  useEffect(() => {
+    if (props.isRefresh) {
+      props.setFormDataOnUndo(BoxData)
+      form.resetFields();
+      props.setIsRefresh(false);
+    }
+  }, [props.isRefresh]);
   const group_Build_id = props?.groupList?.map((a:any) => a.id)
   
   return (

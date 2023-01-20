@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -15,7 +14,6 @@ import {
 } from "@/interfaces/boxreviews.interface";
 import Boxes from "@/models/boxes.model";
 import User from "./user.model";
-import VideoBuilds from "./videoBuilds.model ";
 export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
 
 @Table({
@@ -26,7 +24,8 @@ export type Box_ReviewsGroupAttributes = Optional<IBoxReviews, "id">;
 })
 export default class BoxReviews
   extends Model<IBoxReviews, Box_ReviewsGroupAttributes>
-  implements IBoxReviews {
+  implements IBoxReviews
+{
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 

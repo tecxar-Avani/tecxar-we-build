@@ -85,9 +85,6 @@ body,
     color: black;
     background-color: #d4d4d4;
   }
-}
-
-.searchCard {
   .ant-input:placeholder-shown {
     text-overflow: ellipsis;
     color: black;
@@ -105,6 +102,15 @@ body,
     text-overflow: ellipsis;
     color: black;
     background-color: #d4d4d4;
+  }
+  .ant-input{
+    border: none !important;
+  }
+  .ant-input:hover {
+    border: none !important;
+  }
+  .ant-input:focus {
+    border: none !important;
   }
 }
 
@@ -133,6 +139,9 @@ height: 75px;
 
 .profile {
   position: relative;
+  .profileBottom{
+    margin-bottom: -29px;
+  }
 }
 
 .profile .boxes-heading {
@@ -210,7 +219,11 @@ height: 75px;
   overflow: hidden;
   padding-right: 1rem;
   // margin-left: 12px;
-}
+  .card-body{
+    .card-img {
+    border-radius: 0px !important; 
+  }
+}}
 
 .content {
   font-family: 'Arimo';
@@ -238,6 +251,9 @@ height: 75px;
   .profile-main {
     overflow: hidden;
     overflow-y: auto;
+  }
+  .col-3 {
+    padding-left: 0px !important;
   }
 }
 
@@ -268,7 +284,7 @@ height: 75px;
 .flashCards {
   position: absolute;
   bottom: 18px;
-  right: 45px;
+  right: 0px;
 }
 
 .flashCardsModal {
@@ -286,20 +302,20 @@ height: 75px;
     margin: 9px;
     padding-bottom: 0px !important;
   }
-  .ant-form-vertical .ant-form-item .ant-form-item-control{
-    border: 0.3px solid black;
-  }
+  // .ant-form-vertical .ant-form-item .ant-form-item-control{
+  //   border: 0.3px solid rgba(0, 0, 0, 0.7);
+  // }
   .ant-input:focus {
     outline: none !important;
-    border: 0.3px solid black !important;
+    border: 0.3px solid rgba(0, 0, 0, 0.7) !important;
     box-shadow: none !important;   
 }
 .ant-input:hover {
   box-shadow: none !important;   
-  border: 0.3px solid black !important;
+  border: 0.3px solid rgba(0, 0, 0, 0.7) !important;
 }
 .ant-input{
-  border: 0.3px solid black !important;
+  border: 0.3px solid rgba(0, 0, 0, 0.7) !important;
   box-shadow: none !important;
   outline: none !important;
   box-shadow: none !important;   
@@ -314,8 +330,9 @@ height: 75px;
   font-weight: 700;
   font-size: 13px;
   line-height: 15px;
-  margin-right: 137px;
+  margin-right: 99px;
   text-align: right;
+  margin-bottom: -7px;
 }
 
 .AllProfile {
@@ -389,6 +406,7 @@ height: 75px;
   font-size: 11px;
   line-height: 12.65px;
   text-align: center;
+  margin-left: -17px;
 }
 
 .AllProfile .button1 {
@@ -506,6 +524,7 @@ height: 75px;
 }
 .ant-modal-body .inputbox {
   text-align: left;
+  border-radius: 2px;
 }
 
 .inputbox {
@@ -702,8 +721,15 @@ height: 75px;
   ::-webkit-scrollbar {
     display: none;
   }
-
-
+.ant-form-item{
+  margin-bottom: 0px !important;
+}
+.ant-input:hover{
+  border-color: black;
+}
+.ant-input{
+  border: 0.5px solid black;
+}
 }
 
 .challenge-textbox-main {
@@ -753,11 +779,12 @@ height: 75px;
   background-position-y: 100%;
 }
 
-// .dragHover:hover {
-//   box-shadow: 0 0 5px black;
-//   transform: scale(1.0);
-// }
-
+.dragHover{
+  .ant-input:focus{
+    box-shadow: 0 0 5px black !important;
+    transform: scale(1) !important;
+  }
+}
 // .arrow-red {
 //   width:100px;
 //   height:30px;
@@ -778,9 +805,9 @@ height: 75px;
 }
 .myCss .myArrowBottom {
   position: absolute;
-  bottom: -31px;
+  bottom: -65px;
   width: 62%;
-  height: 64px;
+  height: 101px;
   left: 20%;
 }
 // .myCss .css-ov1ktg::after {
@@ -952,6 +979,7 @@ color: #000000;
 
   .iframs {
     display: none;
+    border-radius: 10px !important;
   }
 }
 
@@ -1123,7 +1151,7 @@ color: #000000;
 }
 
 .redpolygon {
-  clip-path: polygon(5% 66%, 100% 66%, 53% 3%);
+  clip-path: polygon(5% 68%, 100% 67%, 53% 3%);
   background-color: #d91919;
   width: 264.04px;
   height: 113.54px;
@@ -1141,7 +1169,7 @@ color: #000000;
 }
 
 .purplePolygon {
-  clip-path: polygon(48% 1%, 0 100%, 48% 65%);
+  clip-path: polygon(48% 1%, 0 100%, 49% 65%);
   background-color: #7d1597;
   width: 259.04px;
   height: 200.54px;
@@ -1399,6 +1427,10 @@ h6 {
   border-radius: 50%;
   border: 10px solid black;
 }
+.img-roundedAdmin{
+  border-radius: 50%;
+  // border: 10px solid black;
+}
 
 .ant-select-selection-placeholder {
   color: #000000;
@@ -1536,11 +1568,11 @@ h6 {
   border-radius: 19px;
 }
 
-.groupBox {
- .ant-form-item{
-width: 50%;
- }
-text-align: center;
+// .groupBox {
+//  .ant-form-item{
+// width: 50%;
+//  }
+// text-align: center;
 
   .submitButton:hover{
     color: white;
@@ -1550,19 +1582,32 @@ text-align: center;
 .btn{
   border: none;
 }
-  
-}
-.group{
+  .buttons:hover{
+    color: white;
+    background-color: #DCDADA;
+    border: none;
+  }
+
+// }
+  .group{
   .ant-form-item{
     width: 100%;
+    height: 100%;
+  }
+  .ant-input{
+    border: 0.3px solid rgba(0, 0, 0, 0.25);
+  }
+  .ant-input:hover{
+    border: 0.3px solid rgba(0, 0, 0, 0.25);
   }
   .ant-btn {
     background-color: #579ebb;
     color: white;
-    border-radius: 5px;
+    border-radius: 5px;   
   }
   
 }
+
 .groupHeader{
   font-family: 'Arimo';
   font-style: normal;
@@ -1571,6 +1616,10 @@ text-align: center;
   line-height: 23px;
   color: black;
   text-align: center;
+  word-wrap: break-word;
+  min-height: 30px;
+  max-width: 1161px;
+  margin-bottom: -1px !important;
 }
 .width-btn{
   width: 78px !important;
@@ -1582,8 +1631,9 @@ text-align: center;
 .textarea {
   resize: none;
 }
-.hideTitle{
-  opacity: -0.4 ;
+.hideTitle {
+  margin-top: -1px;
+  margin-bottom: 2px;
 }
 .dotSize{
   
@@ -1602,11 +1652,33 @@ text-align: center;
 
 .submitButton{
  
-    padding: 26%;
+    padding: 31%;
     /* margin: 7%; */
     padding-left: 50%;
     padding-right: 50%;
     background-color: #54a754;
+    color: black;
+}
+.buttons{
+  padding: 3%;
+  /* margin: 7%; */
+  padding-left: 2%;
+  padding-right: 2%;
+  background-color: #DCDADA;
+  .btn{
+    background-color: #DCDADA;
+    color: black;
+  }
+  border-radius: 3px;
+}
+.buttonSubmit {
+  width: 20%;
+  margin-right: 50px !important;
+}
+.btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+  color: #000000;
+  background-color: #DCDADA;
+  border-color: #DCDADA;;
 }
 
 .dis .ant-checkbox-inner{
@@ -1614,11 +1686,14 @@ text-align: center;
 }
 .newBuildSideCard{
   position: fixed;
+  // .row{
+  //   padding-left: 0px !important;
+  // }
 }
-.newBuildBoxes{
-  overflow-y: scroll;
-  overflow: auto;
-}
+// .newBuildBoxes{
+//   overflow-y: scroll;
+//   overflow: auto;
+// }
 .triangle{
   margin-bottom: -31px
 }

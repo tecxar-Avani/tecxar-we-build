@@ -4,7 +4,7 @@ import {
   flashCardSelector,
   getFlashCardByBuildId,
   createFlashCard,
-} from "../../store/reducers/flashCard.reducer";
+} from "@/store/reducers/flashCard.reducer";
 import { Card, Image } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
 import NewBuildBoxes from "@/components/NewBuildBoxes";
@@ -17,30 +17,25 @@ import {
   addBuild,
   buildSelector,
   getBuildById,
-  getBuildByUrl,
   UpdateUsersBuild,
-} from "../../store/reducers/build.reducer";
+} from "@/store/reducers/build.reducer";
 import {
   addAwareness,
   addReviewResponse,
   awarenessSelector,
   getAwarenessByBoxId,
   updateBoxReviewResponseByAwarenessId,
-} from "../../store/reducers/awareness.reducer";
-import { Button, Form, Modal, Result, Spin } from "antd";
+} from "@/store/reducers/awareness.reducer";
+import { Button, Form, Modal } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
-import {
-  userSelector,
-  getUserByEmail,
-} from "../../store/reducers/user.reducer";
+import { userSelector, getUserByEmail } from "@/store/reducers/user.reducer";
 import Head from "next/head";
 import moment from "moment";
 import { GetServerSideProps } from "next";
 import {
   DragDropContext,
-  Droppable,
   DropResult,
   resetServerContext,
 } from "react-beautiful-dnd";
@@ -51,8 +46,7 @@ import {
   groupSelector,
   UpdateGroup,
 } from "@/store/reducers/group.reducer";
-import { IGroup } from "../../../@types/common";
-import { ExclamationCircleFilled, PlusOutlined } from "@ant-design/icons";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 import _ from "lodash";
 
 const NewBuild = (props: any) => {
@@ -61,8 +55,7 @@ const NewBuild = (props: any) => {
   const { flashCardList } = useAppSelector(flashCardSelector);
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const { buildById, buildListByUrl, boxes } = useAppSelector(buildSelector);
-  const build = useAppSelector(buildSelector);
+  const { buildById, buildListByUrl } = useAppSelector(buildSelector);
   const { userData, loggedInUser } = useAppSelector(userSelector);
   const { groupList } = useAppSelector(groupSelector);
   const [arr, setArr] = useState([1]);
@@ -79,18 +72,16 @@ const NewBuild = (props: any) => {
   const [challengeModal, setChallengeModal] = useState(false);
   const [challengeData, setChallengeData] = useState([]);
   const [challengeTitle, setChallengeTitle] = useState();
-  const [awarenessBoxId, setAwarenessBoxId] = useState<number>(1);
   const [boxId, setBoxId] = useState();
   const [boxAwarenessID, setBoxAwarenessID] = useState();
   const [isRefresh, setIsRefresh] = useState(false);
   const [activeSelection, setActiveSelection] = useState(false);
   const [groupArray, setGroupArray] = useState<any>([]);
-  const [activeUnGroup, setActiveUnGroup] = useState<any>(false);
   const [groupTitle, setGroupTitle] = useState<any>("");
   const [isAdded, setIsAdded] = useState<boolean>();
   const [boxData, setBoxData] = useState([]);
   const [dataOfFlashCard, setDataOfFlashCard] = useState([]);
-   
+
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -110,7 +101,7 @@ const NewBuild = (props: any) => {
       answer: data.answer,
       build_id: buildId,
     };
-   
+
     dispatch(createFlashCard(flashCardData));
   };
 
@@ -187,10 +178,10 @@ const NewBuild = (props: any) => {
   const flashCardArr = flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardList?.rows?.flashBuild?.users;
 
-  const questionData = (userId: any, index?: number, questionId?: any, data?:any) => {
-   if(questionId !== "Again"){
-    setIsAdded(false)
-   }
+  const questionData = (userId: any, index?: number, questionId?: any) => {
+    if (questionId !== "Again") {
+      setIsAdded(false);
+    }
     // setIsAdded(false)
     const filterArray = flashCardArr?.filter((F: any) => F.user_id == userId);
     const findLastValue = filterArray?.slice(-1)[0];
@@ -215,6 +206,12 @@ const NewBuild = (props: any) => {
           arrayLength: filterArray.length,
           onOk: modal4Open,
         });
+        // const flashCardResponseData = {
+        //   response_type : data,
+        //   flash_card_id : questionId,
+        //   build_id:buildId,
+        // }
+        // dispatch(createFlashCardResponse(flashCardResponseData))
         setRevealAns(true);
       }
     }
@@ -271,7 +268,6 @@ const NewBuild = (props: any) => {
   }, [draggedArray]);
   const handleChange = (e: any) => {
     setAwarenessIndex(e.description);
-    setAwarenessBoxId(e.id);
     setBoxId(e.boxId);
   };
 
@@ -559,8 +555,6 @@ const NewBuild = (props: any) => {
 
   const onDragEnd = (Result: DropResult) => {
     const { source, destination } = Result;
-    const val = dataArray.map((a) => a.id);
-
     if (!destination) return;
     if (destination.index === source.index) return;
 
@@ -580,7 +574,7 @@ const NewBuild = (props: any) => {
 
   // for grouping
 
-  const groupSelect = (data: any) => {
+  const groupSelect = () => {
     setActiveSelection(true);
     // groupList &&
     // groupList.rows &&
@@ -594,7 +588,7 @@ const NewBuild = (props: any) => {
     const groupId = e.target.value;
     setGroupArray([...groupArray, groupId]);
   };
-  const submitGroup = (e: any) => {
+  const submitGroup = () => {
     setActiveSelection(false);
     const groupData = {
       title: groupTitle?.target?.value,
@@ -644,17 +638,16 @@ const NewBuild = (props: any) => {
   };
 
   // for adding flashcard into user flashcards
-  const addFlashCardToUser = (data:any) => {
-   
+  const addFlashCardToUser = (data: any) => {
     const addData = {
-      question : data.question,
-      answer : data.answer,
-      build_id : buildId,
-    }
-  //  dispatch(createFlashCard(addData));
-    setIsAdded(true)
+      question: data.question,
+      answer: data.answer,
+      build_id: buildId,
+    };
+    dispatch(createFlashCard(addData));
+    setIsAdded(true);
   };
- 
+
   return (
     <Fragment>
       <Head>
@@ -664,144 +657,149 @@ const NewBuild = (props: any) => {
       {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> :  */}
       {/* <Spin spinning={build.loading == true} delay={100}/>  */}
       <Fragment>
-        <div className="d-flex m-0 w-100">
-          <NewBuildSideCard
-            id={router.query.id}
-            videoId={router.query.videoId}
-            value={awarenessIndex}
-            Resistance={Resistance}
-            Acceptance={Acceptance}
-            Inspiration={Inspiration}
-            setAwarenessModal={setAwarenessModal}
-            isLoggedIn={props.isLoggedIn}
-            onSave={(
-              videoType: any,
-              polarisationLevel: any,
-              difficultyLevel: any,
-              url: string
-            ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
-            buildId={buildId}
-            isRefresh={isRefresh}
-            setIsRefresh={setIsRefresh}
-            groupSelect={groupSelect}
-            activeSelection={activeSelection}
-            submitGroup={submitGroup}
-            groupList={groupList.rows.groupBox}
-            unGroupSelect={unGroupSelect}
-          />
+        <div className="row d-flex m-0 w-100">
+          <div className="col-3">
+            <NewBuildSideCard
+              id={router.query.id}
+              videoId={router.query.videoId}
+              value={awarenessIndex}
+              Resistance={Resistance}
+              Acceptance={Acceptance}
+              Inspiration={Inspiration}
+              setAwarenessModal={setAwarenessModal}
+              isLoggedIn={props.isLoggedIn}
+              onSave={(
+                videoType: any,
+                polarisationLevel: any,
+                difficultyLevel: any,
+                url: string
+              ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
+              buildId={buildId}
+              isRefresh={isRefresh}
+              setIsRefresh={setIsRefresh}
+              groupSelect={groupSelect}
+              activeSelection={activeSelection}
+              submitGroup={submitGroup}
+              groupList={groupList.rows.groupBox}
+              unGroupSelect={unGroupSelect}
+              mergedArray={mergedArray}
+            />
+          </div>
           {/* <Droppable droppableId="boxAll" >
             {
               (provided) => (<> */}
-          <div className="w-100 px-4 pb-3 pt-4 mt-4 newBuildBoxes">
-            <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
-              <NewBuildBoxes
-                setModal1Open={setAddFlashcard}
-                item={mergedArray?.length >= 2  ? [] : dataArray}
-                // mergedArray={mergedArray}
-                //  item={activeUnGroup ? dataArray : []}
-                mergedArray={mergedArray}
-                arr={arr}
-                setArr={(value: any) => {
-                  setArr(value);
-                  if (value.length > 20) {
-                    setDataArray([
-                      ...dataArray,
-                      {
-                        id: value.length,
-                        message: "",
-                      },
-                    ]);
-                  }
-                }}
-                onFocus={(data: any) => handleChange(data)}
-                awarenessList={awarenessList}
-                Acceptance={Acceptance}
-                Resistance={Resistance}
-                Inspiration={Inspiration}
-                boxData={boxData}
-                setBoxData={setBoxData}
-                buildById={buildById}
-                modalDot={(id: any) => showModal(id)}
-                isRefresh={isRefresh}
-                setIsRefresh={(data: any) => {
-                  setIsRefresh(data);
-                  if (buildById?.data) {
-                    const data =
-                      buildById.data &&
-                      buildById.data.map((box: any) => {
-                        return {
-                          id: box.sorting_order,
-                          message: box.description,
-                          boxId: box.id,
-                        };
-                      });
-                    setDataArray(data);
-                    setArr(data.map((d: any) => d.id));
-                  } else {
-                    setBoxData([]);
-                    setArr([1]);
-                    setDataArray(
-                      init.map((i, index) => {
-                        return {
-                          id: Number(index + 1),
+          <div className="col-9">
+            <div className="w-100 px-4 pb-3 pt-4 mt-4">
+              <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+                <NewBuildBoxes
+                  setModal1Open={setAddFlashcard}
+                  item={mergedArray?.length >= 2 ? [] : dataArray}
+                  // mergedArray={mergedArray}
+                  //  item={activeUnGroup ? dataArray : []}
+                  mergedArray={mergedArray}
+                  arr={arr}
+                  setArr={(value: any) => {
+                    setArr(value);
+                    if (value.length > 20) {
+                      setDataArray([
+                        ...dataArray,
+                        {
+                          id: value.length,
                           message: "",
-                        };
-                      })
-                    );
-                  }
-                }}
-                completedTodos={completedTodos}
-                setCompletedTodos={setCompletedTodos}
-                activeSelection={activeSelection}
-                groupingSelection={groupingSelection}
-                submitGroup={submitGroup}
-                groupTitle={setGroupTitle}
-                groupList={groupList.rows.groupBox}
-                groupedData={results && results.length > 0 && results}
-                notGroupedArray={notGroupedArray}
-              />
-            </DragDropContext>
-            {/* {provided.placeholder} */}
+                        },
+                      ]);
+                    }
+                  }}
+                  onFocus={(data: any) => handleChange(data)}
+                  awarenessList={awarenessList}
+                  Acceptance={Acceptance}
+                  Resistance={Resistance}
+                  Inspiration={Inspiration}
+                  boxData={boxData}
+                  setBoxData={setBoxData}
+                  buildById={buildById}
+                  modalDot={(id: any) => showModal(id)}
+                  isRefresh={isRefresh}
+                  setIsRefresh={(data: any) => {
+                    setIsRefresh(data);
+                    if (buildById?.data) {
+                      const data =
+                        buildById.data &&
+                        buildById.data.map((box: any) => {
+                          return {
+                            id: box.sorting_order,
+                            message: box.description,
+                            boxId: box.id,
+                          };
+                        });
+                      setDataArray(data);
+                      setArr(data.map((d: any) => d.id));
+                    } else {
+                      setBoxData([]);
+                      setArr([1]);
+                      setDataArray(
+                        init.map((i, index) => {
+                          return {
+                            id: Number(index + 1),
+                            message: "",
+                          };
+                        })
+                      );
+                    }
+                  }}
+                  completedTodos={completedTodos}
+                  setCompletedTodos={setCompletedTodos}
+                  activeSelection={activeSelection}
+                  groupingSelection={groupingSelection}
+                  submitGroup={submitGroup}
+                  groupTitle={setGroupTitle}
+                  groupList={groupList.rows.groupBox}
+                  groupedData={results && results.length > 0 && results}
+                  notGroupedArray={notGroupedArray}
+                />
+              </DragDropContext>
+              {/* {provided.placeholder} */}
+            </div>
           </div>
-          {/* </>)}
+        </div>
+        {/* </>)}
               </Droppable> */}
 
-          <div className="position-absolute mkCard">
-            {userArr &&
-              userArr?.length > 0 &&
-              userArr?.map((data: any) => {
-                return (
-                  <Card
-                    className="mt-3"
-                    onClick={() => {
-                      questionData(data.user_id);
-                    }}
-                  >
-                    <Card.Body className="d-flex justify-content-center align-items-center">
-                      {data.user_name.split(" ").map((a: any) => a.charAt(0))}
-                    </Card.Body>
-                  </Card>
-                );
-              })}
-          </div>
-          <div
-            className="position-absolute flash"
-            style={
-              buildIdForFlash == "undefined"
-                ? { pointerEvents: "none", opacity: 0.4 }
-                : {}
-            }
-          >
-            <Image
-              alt="flashCards"
-              src="../../../img/flashcardnewbuild.svg"
-              width="60px"
-              height="60px"
-              onClick={() => {
-                setAddFlashcard(true);
-              }}
-            />
-          </div>
+        <div className="position-absolute mkCard">
+          {userArr &&
+            userArr?.length > 0 &&
+            userArr?.map((data: any) => {
+              return (
+                <Card
+                  className="mt-3"
+                  onClick={() => {
+                    questionData(data.user_id);
+                  }}
+                >
+                  <Card.Body className="d-flex justify-content-center align-items-center">
+                    {data.user_name.split(" ").map((a: any) => a.charAt(0))}
+                  </Card.Body>
+                </Card>
+              );
+            })}
+        </div>
+        <div
+          className="position-absolute flash"
+          style={
+            buildIdForFlash == "undefined"
+              ? { pointerEvents: "none", opacity: 0.4 }
+              : {}
+          }
+        >
+          <Image
+            alt="flashCards"
+            src="../../../img/flashcardnewbuild.svg"
+            width="60px"
+            height="60px"
+            onClick={() => {
+              setAddFlashcard(true);
+            }}
+          />
         </div>
 
         <AddFlashCardModal
@@ -842,16 +840,17 @@ const NewBuild = (props: any) => {
                   questionId: questionId,
                   index: index,
                   arrayLength: arrayLength,
-                  title:"addFlashCardToUser",
+                  title: "addFlashCardToUser",
                 };
                 setModal3Open(newData);
-                setDataOfFlashCard(ans)
+                setDataOfFlashCard(ans);
               });
           }}
           questionCallback={(
             userId: number,
             index: number,
             questionId: number,
+            data: any
           ) => {
             questionData(userId, index, questionId);
           }}
@@ -863,7 +862,9 @@ const NewBuild = (props: any) => {
           ) => {
             questionData(userId, index, data);
           }}
-          addFlashCardToUser={() => {addFlashCardToUser(dataOfFlashCard);}}
+          addFlashCardToUser={() => {
+            addFlashCardToUser(dataOfFlashCard);
+          }}
           isAdded={isAdded}
         />
         <AwarenessModal
@@ -959,7 +960,7 @@ const NewBuild = (props: any) => {
 };
 
 export default NewBuild;
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
   return { props: { data: [] } };
 };

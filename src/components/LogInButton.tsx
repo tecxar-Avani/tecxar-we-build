@@ -1,4 +1,5 @@
 import { Input, Modal } from "antd";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import GoogleButton from "react-google-button";
 const cookieCutter = require("cookie-cutter");
@@ -10,16 +11,18 @@ import {
 } from "../store/reducers/user.reducer";
 
 const LogInButton = (props: any) => {
-  const { loggedInUser ,toastLog} = useAppSelector(userSelector);
+  const { loggedInUser ,toastLog , windowStatus} = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
   const getCookie = () => {
-    setTimeout(() => {
-      dispatch(getAuthCookie());
-      dispatch(getUserByEmail());
-    }, 7000);
-  };
-
+      setTimeout(() => {
+        dispatch(getAuthCookie());
+        dispatch(getUserByEmail());
+      }, 3000);
+    };
+  
+      console.log("windowStatus",windowStatus)
+    
   return (
     <>
       <Modal

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,

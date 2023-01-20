@@ -29,6 +29,7 @@ import {
 } from "@/store/reducers/build.reducer";
 import Head from "next/head";
 import _ from "lodash";
+import { useRouter } from "next/router";
 
 const Profile = (props: any) => {
   const dispatch = useAppDispatch();
@@ -45,6 +46,7 @@ const Profile = (props: any) => {
   const { userBuildList, userBuilds } = useAppSelector(buildSelector);
   const [filterParam, setFilterParam] = useState<any>(["All"]);
   const flashCardArr: any = flashCardUserList ? flashCardUserList : [];
+  const router = useRouter();
 
   const [form] = Form.useForm();
   useEffect(() => {
@@ -56,7 +58,7 @@ const Profile = (props: any) => {
     dispatch(getUsersBuild());
   }, []);
   const profileData = {
-    id:userData.userData.id,
+    id: userData.userData.id,
     title: userData.userData.user_name,
     editIcon: "editIcon.svg",
     dateOfJoined: `Date joined: ${moment(
@@ -114,39 +116,39 @@ const Profile = (props: any) => {
           index == 0 ? flashCardArr[0].question : flashCardArr[index]?.question,
         footer: ["Reveal Answer"],
         questionId: index == 0 ? flashCardArr[0].id : flashCardArr[index]?.id,
-        index: index == 0 ? 0 : index ,
+        index: index == 0 ? 0 : index,
         arrayLength: flashCardArr.length,
         onOk: modal4Open,
-         editQuestion: editQuestion,
+        editQuestion: editQuestion,
       });
 
       setRevealAns(true);
     } else {
-    if (defaultQuestionIndex == flashCardArr.length) {
-      setModal3Open({
-        content: "Congratulations! You have finished your deck",
-        footer: [],
-        onOk: modal4Open,
-        qaData: flashCardArr,
-      });
-      setRevealAns(true);
-      setDefaultQuestionIndex(0);
-    } else {
-      const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
-      setDefaultQuestionIndex(defaultQuestionIndex + 1);
-      setModal3Open({
-        content: flashCardArr[defaultQuestionIndex]?.question,
-        footer: ["Reveal Answer"],
-        questionId: flashCardArr[defaultQuestionIndex]?.id,
-        index: defaultQuestionIndex,
-        arrayLength: flashCardArr.length,
-        onOk: modal4Open,
-        editQuestion: editQuestion,
-        qaData: flashCardArr,
-      });
-      setRevealAns(true);
+      if (defaultQuestionIndex == flashCardArr.length) {
+        setModal3Open({
+          content: "Congratulations! You have finished your deck",
+          footer: [],
+          onOk: modal4Open,
+          qaData: flashCardArr,
+        });
+        setRevealAns(true);
+        setDefaultQuestionIndex(0);
+      } else {
+        const editQuestion = flashCardArr[defaultQuestionIndex]?.id;
+        setDefaultQuestionIndex(defaultQuestionIndex + 1);
+        setModal3Open({
+          content: flashCardArr[defaultQuestionIndex]?.question,
+          footer: ["Reveal Answer"],
+          questionId: flashCardArr[defaultQuestionIndex]?.id,
+          index: defaultQuestionIndex,
+          arrayLength: flashCardArr.length,
+          onOk: modal4Open,
+          editQuestion: editQuestion,
+          qaData: flashCardArr,
+        });
+        setRevealAns(true);
+      }
     }
-     }
   };
 
   const handleSubmit = (data: any) => {
@@ -155,23 +157,31 @@ const Profile = (props: any) => {
 
   //all profile
   const blocked_user =
-    usersList && usersList.length>0 && usersList?.filter((user: any) => user.is_blocked == true);
+    usersList &&
+    usersList.length > 0 &&
+    usersList?.filter((user: any) => user.is_blocked == true);
   const unBlocked_user =
-    usersList && usersList.length>0 && usersList?.filter((user: any) => user.is_blocked == false);
+    usersList &&
+    usersList.length > 0 &&
+    usersList?.filter((user: any) => user.is_blocked == false);
 
-    // for admin UI
+  // for admin UI
 
-    const adminFilter:any = usersList && usersList.length>0 && usersList.filter((a:any) => {return a.id == userData.userData.id}) 
-    const usersList1 = usersList.filter(val => !adminFilter.includes(val));
-              
-   
+  const adminFilter: any =
+    usersList &&
+    usersList.length > 0 &&
+    usersList.filter((a: any) => {
+      return a.id == userData.userData.id;
+    });
+  const usersList1 = usersList.filter((val) => !adminFilter.includes(val));
+
   return (
     <>
       <Head>
         <title>Profile</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="profile-main">
+      <div className="profile-main me-4">
         <ProfileCard
           className="pt-2"
           profile={profileData}
@@ -189,11 +199,13 @@ const Profile = (props: any) => {
               {userBuilds &&
                 userBuilds?.box?.map((videoData: any, index: number) => (
                   <Col md={4} key={index} className="videoProfile ">
-                    <Link href={`/newBuild?id=${videoData.id}&&videoId=${videoData.video_id}`}>
-                <a>
-                  <VideoCard VideoCardData={videoData} />
-                </a>
-              </Link>
+                    <Link
+                      href={`/newBuild?id=${videoData.id}&&videoId=${videoData.video_id}`}
+                    >
+                      <a>
+                        <VideoCard VideoCardData={videoData} />
+                      </a>
+                    </Link>
                   </Col>
                 ))}
             </div>
@@ -215,11 +227,13 @@ const Profile = (props: any) => {
                       <VideoCard VideoCardData={videoData} />
                     </a>
                   </Link> */}
-                     <Link href={`/newBuild?id=${videoData.id}&&videoId=${videoData.video_id}`}>
-                <a>
-                  <VideoCard VideoCardData={videoData} />
-                </a>
-              </Link>
+                  <Link
+                    href={`/newBuild?id=${videoData.id}&&videoId=${videoData.video_id}`}
+                  >
+                    <a>
+                      <VideoCard VideoCardData={videoData} />
+                    </a>
+                  </Link>
                 </Col>
               ))}
           </Row>
@@ -232,57 +246,62 @@ const Profile = (props: any) => {
                 className="title-list-of-profile py-2 mt-4 mb-3"
               />
               <div className="w-50 align-self-center d-flex justify-content-end">
-              <select
-                onChange={(e) => {
-                  setFilterParam(e.target.value);
-                }}
-                className="filterInProfile"
-                aria-label="Filter Countries By Region"
-              >
-                <option value="All" className="filterInProfile">
-                  All Users
-                </option>
-                <option value="Blocked" className="filterInProfile">
-                  Blocked Users
-                </option>
-                <option value="unBlocked" className="filterInProfile">
-                  Unblock Users
-                </option>
-              </select>
+                <select
+                  onChange={(e) => {
+                    setFilterParam(e.target.value);
+                  }}
+                  className="filterInProfile"
+                  aria-label="Filter Countries By Region"
+                >
+                  <option value="All" className="filterInProfile">
+                    All Users
+                  </option>
+                  <option value="Blocked" className="filterInProfile">
+                    Blocked Users
+                  </option>
+                  <option value="unBlocked" className="filterInProfile">
+                    Unblock Users
+                  </option>
+                </select>
               </div>
               <span className="focus"></span>
             </div>
             <Row className="m-0">
-             {filterParam == "Blocked" ?[]:
-              adminFilter && adminFilter.map((admin:any ,index: number) => {
-                const profile = {
-                  id: admin.id,
-                  title: admin.user_name,
-                  dateOfJoined: `Date joined: ${moment(
-                    admin.createdAt
-                  ).format("MMM YYYY")}`,
-                  boxLeftTitle: "Boxes",
-                  boxValueLeft: admin.box,
-                  profileImg: "hello.jpg",
-                  bottomTitle: admin.tag_line,
-                  boxRightTitle: "Awareness",
-                  boxValueRight: admin.awareness,
-                  blockIcon: admin.is_blocked == 1 ? "" : "block.svg",
-                  UnBlockIcon: admin.is_blocked == 0 ? "" : "unBlock.svg",
-                  deleteIcon: "delete.svg",
-                };
-  
-                return (
-                  <Col md={3} key={index}>
-                    <ProfileCard className="AllProfile" profile={profile} adminFilter={adminFilter}/>
-                  </Col>
-                );
-              })  
-            }{
-              filterParam == "All"
-           
-                ? usersList1 && usersList1.length>0 && usersList1.map((user: any, index: number) => {
-                  
+              {filterParam == "Blocked"
+                ? []
+                : adminFilter &&
+                  adminFilter.map((admin: any, index: number) => {
+                    const profile = {
+                      id: admin.id,
+                      title: admin.user_name,
+                      dateOfJoined: `Date joined: ${moment(
+                        admin.createdAt
+                      ).format("MMM YYYY")}`,
+                      boxLeftTitle: "Boxes",
+                      boxValueLeft: admin.box,
+                      profileImg: "hello.jpg",
+                      bottomTitle: admin.tag_line,
+                      boxRightTitle: "Awareness",
+                      boxValueRight: admin.awareness,
+                      blockIcon: admin.is_blocked == 1 ? "" : "block.svg",
+                      UnBlockIcon: admin.is_blocked == 0 ? "" : "unBlock.svg",
+                      deleteIcon: "delete.svg",
+                    };
+
+                    return (
+                      <Col md={3} key={index}>
+                        <ProfileCard
+                          className="AllProfile"
+                          profile={profile}
+                          adminFilter={adminFilter}
+                        />
+                      </Col>
+                    );
+                  })}
+              {filterParam == "All"
+                ? usersList1 &&
+                  usersList1.length > 0 &&
+                  usersList1.map((user: any, index: number) => {
                     const profile = {
                       id: user.id,
                       title: user.user_name,
@@ -302,7 +321,7 @@ const Profile = (props: any) => {
 
                     return (
                       <Col md={3} key={index}>
-                        <ProfileCard className="AllProfile" profile={profile}/>
+                        <ProfileCard className="AllProfile" profile={profile} />
                       </Col>
                     );
                   })
@@ -389,7 +408,10 @@ const Profile = (props: any) => {
         isLoggedIn={props.isLoggedIn}
         modal={revealAns}
         flashCard={modal3Open}
-        setmodalOpen={(data:boolean)=>{setRevealAns(data); setDefaultQuestionIndex(0)}}
+        setmodalOpen={(data: boolean) => {
+          setRevealAns(data);
+          setDefaultQuestionIndex(0);
+        }}
         modalVisible={revealAns}
         responseCallback={(
           questionId: number,
@@ -398,9 +420,10 @@ const Profile = (props: any) => {
           title: any,
           editQuestion?: number
         ) => {
-          const questionFilter = flashCardArr && flashCardArr.length>0 && flashCardArr.filter(
-            (F: any) => F.id == questionId
-          );
+          const questionFilter =
+            flashCardArr &&
+            flashCardArr.length > 0 &&
+            flashCardArr.filter((F: any) => F.id == questionId);
           questionFilter.length > 0 &&
             questionFilter.map((ans: any) => {
               const newData = {
@@ -450,7 +473,7 @@ const Profile = (props: any) => {
         }}
         //  setDefaultQuestionIndex = {setDefaultQuestionIndex}
       />
-      
+
       <Modal
         title="Edit Your Name"
         open={editName}

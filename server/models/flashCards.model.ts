@@ -21,7 +21,8 @@ export type Flash_CardsGroupAttributes = Optional<IFlashCards, "id">;
 })
 export default class FlashCards
   extends Model<IFlashCards, Flash_CardsGroupAttributes>
-  implements IFlashCards {
+  implements IFlashCards
+{
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
@@ -29,7 +30,12 @@ export default class FlashCards
   @ForeignKey(() => VideoBuild)
   @Column(DataType.INTEGER)
   public build_id: number;
-  @BelongsTo(() => VideoBuild)
+
+  @BelongsTo(() => VideoBuild, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    hooks: true,
+  })
   public build: VideoBuild;
 
   @Column(DataType.TEXT)

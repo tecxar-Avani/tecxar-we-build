@@ -27,10 +27,10 @@ export const getUserAuth = createAsyncThunk(
 
 export const getAuthCookie = createAsyncThunk(
   `/cookie`,
-  async (): Promise<ICurrentUser|any> => {
+  async (): Promise<ICurrentUser | any> => {
     const data = await cookieCutter.get("authorization");
-    const msg = "You logged in successfully"
-    return {data,msg};
+    const msg = "You logged in successfully";
+    return { data, msg };
   }
 );
 
@@ -73,6 +73,13 @@ export const totalbuilds = createAsyncThunk(`build/totalbuilds`, async () => {
   return { status, data };
 });
 
+export const windowStatus = createAsyncThunk(
+  `windowStatus/update`,
+  async (): Promise<any> => {
+    const  data  = true
+    return data;
+  }
+);
 interface State {
   id: number;
   loading: boolean;
@@ -82,7 +89,8 @@ interface State {
   usersList: ICreateUser[];
   editUser: IUserResponseRowsCountResponse | any;
   totalCount: IUserResponseRowsCountResponse | any;
-  toastLog : any;
+  toastLog: any;
+  windowStatus:any
 }
 
 const initialState: State = {
@@ -100,7 +108,8 @@ const initialState: State = {
     status: true,
     rows: [],
   },
-  toastLog:""
+  toastLog: "",
+  windowStatus:false
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -118,6 +127,7 @@ const userSlice = createSlice({
     loggedInUser: (state: State, action: PayloadAction<any>) => {
       return { ...state, user: action.payload };
     },
+  
   },
   extraReducers: (builder) => {
     builder
@@ -136,21 +146,19 @@ const userSlice = createSlice({
           };
         }
       })
-      .addCase(getAuthCookie.fulfilled,(state, action) => {        
+      .addCase(getAuthCookie.fulfilled, (state, action) => {
         if (action.payload?.data) {
           if (
-              Router.asPath == "/" ||
-              Router.asPath == "/search?selfLearning=true" ||
-              Router.asPath == "/search?selfLeaning=false" ||
-              Router.asPath == "/profile" ||
-              Router.asPath == "/UserGuide"
-            ){
-              toast.success('You logged in successfully');
-
-            }
-            else{
-            toast.success('You  logged in successfully Please save your data ');
-            }
+            Router.asPath == "/" ||
+            Router.asPath == "/search?selfLearning=true" ||
+            Router.asPath == "/search?selfLeaning=false" ||
+            Router.asPath == "/profile" ||
+            Router.asPath == "/UserGuide"
+          ) {
+            toast.success("You logged in successfully");
+          } else {
+            toast.success("You  logged in successfully Please save your data ");
+          }
           // setTimeout(() => {
           //   Router.reload();
           // }, 3000)
@@ -164,11 +172,11 @@ const userSlice = createSlice({
           //    Router.reload();
           //   //  Router.asPath == "/profile" ? toast.success("You are logged in successfully") :
           // }
-         
+
           return {
             ...state,
             loading: false,
-             toastLog:action.payload.msg,
+            toastLog: action.payload.msg,
             loggedInUser: action.payload.data,
           };
         } else {
@@ -176,7 +184,7 @@ const userSlice = createSlice({
             ...state,
             loading: false,
             loggedInUser: initialState.loggedInUser,
-            toastLog:initialState.toastLog
+            toastLog: initialState.toastLog,
           };
         }
       })
@@ -227,7 +235,6 @@ const userSlice = createSlice({
       })
       .addCase(updateUserById.fulfilled, (state, action) => {
         if (action.payload.status) {
-          Router.reload();
           toast.success(action.payload.data.message);
           return {
             ...state,
@@ -242,6 +249,20 @@ const userSlice = createSlice({
           };
         }
       })
+      .addCase(windowStatus.fulfilled, (state, action) => {
+        if (action.payload) {
+          return {
+            ...state,
+            windowStatus: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+          };
+        }
+      })
+
 
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;

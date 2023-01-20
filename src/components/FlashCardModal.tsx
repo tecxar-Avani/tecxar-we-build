@@ -1,31 +1,31 @@
 import { Modal, Button } from "antd";
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import Image from "react-bootstrap/Image";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { createFlashCard, createFlashCardResponse, deleteFlashCardById,flashCardSelector } from "../store/reducers/flashCard.reducer";
+import {
+  createFlashCardResponse,
+  deleteFlashCardById,
+} from "../store/reducers/flashCard.reducer";
 import AddFlashCardModal from "./AddFlashCardModal";
 import { useRouter } from "next/router";
 import LogInButton from "./LogInButton";
-import { ExclamationCircleFilled, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { buildSelector } from "@/store/reducers/build.reducer";
-
-
+import { userSelector } from "@/store/reducers/user.reducer";
 
 const FlashCardModal = (props: any) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const buildId = Number(router.query.id);
   const [modal5Open, setModal5Open] = useState(false);
-  const { buildById, buildListByUrl, boxes } = useAppSelector(buildSelector);
+  const { userData } = useAppSelector(userSelector);
 
-
-
-const onDelete = (id:any) =>{
-     dispatch(deleteFlashCardById(id))
-}
-const handleCancel = () => {
-  setModal5Open(false);
-};
+  const onDelete = (id: any) => {
+    dispatch(deleteFlashCardById(id));
+  };
+  const handleCancel = () => {
+    setModal5Open(false);
+  };
   const headerIcon = ["deleteFlash.svg", "edit.svg"];
   const title =
     headerIcon &&
@@ -42,23 +42,22 @@ const handleCancel = () => {
               const flashCardData = {
                 question: props.flashCardArr[indexValue]?.question,
                 answer: props.flashCardArr[indexValue]?.answer,
-                id:props.flashCardArr[indexValue]?.id,
+                id: props.flashCardArr[indexValue]?.id,
               };
-            
+
               props.setEditFlashCardData(flashCardData);
               props.setAddFlashcard(true);
-            }
-            else if(btn == "deleteFlash.svg"){
-              const id = props.flashCardArr[index].id
-             
-               onDelete(id)
-               props.setmodalOpen(false)
+            } else if (btn == "deleteFlash.svg") {
+              const id = props.flashCardArr[index].id;
+
+              onDelete(id);
+              props.setmodalOpen(false);
             }
           }}
         />
       );
     });
-   
+
   const userId = props.flashCard.userId;
   const questionId = props.flashCard?.questionId;
   const index = props.flashCard.index;
@@ -66,7 +65,7 @@ const handleCancel = () => {
   const editQuestion = props.flashCard.editQuestion;
   const handleFlash = (data: any) => {
     if (data == "Good" || data == "Hard" || data == "Again" || data == "Easy") {
-      if(data == "Again"){
+      if (data == "Again") {
         {
           if (userId) {
             props.againCallback(
@@ -79,33 +78,32 @@ const handleCancel = () => {
               editQuestion
             );
           } else {
-            props.againCallback(props.defaultQuestionIndex - 1,data);
+            props.againCallback(props.defaultQuestionIndex - 1, data);
           }
         }
-      } 
-      else{
+      } else {
         const flashCardResponseData = {
-          response_type : data,
-          flash_card_id : questionId,
-          build_id:buildId
-        }
+          response_type: data,
+          flash_card_id: questionId,
+          build_id: buildId,
+        };
+        console.log("$$$$$$$$$$$$$$$$$$$$$$", props.flashCard);
         // if(props.isLoggedIn){
-          dispatch(createFlashCardResponse(flashCardResponseData))
-          if (index <= arrayLength) {
-            if (userId) {
-              props.questionCallback(userId, index, questionId, data);
-            } else {
-              props.questionCallback(index, questionId, data);
-              }}
+        dispatch(createFlashCardResponse(flashCardResponseData));
+        if (index <= arrayLength) {
+          if (userId) {
+            props.questionCallback(userId, index, questionId, data);
+          } else {
+            props.questionCallback(index, questionId, data);
+          }
+        }
         // }
         // else{
         //   setModal5Open(true);
         // }
-      
-        
       }
       // add dispatch API here instead of console
-   
+
       // } else {
       //   props.questionCallback(index, questionId);
       // }
@@ -131,13 +129,25 @@ const handleCancel = () => {
       }
     }
   };
-  const userIdForFlashCard = buildById.lenght> 0 && buildById?.data?.map((a: any) => a.created_by)
 
   return (
     <>
       <Modal
         open={props.modal}
-        title={props?.flashCard?.title == "addFlashCardToUser" ? userIdForFlashCard[0] == props.flashCard.userId ? "" : <PlusOutlined onClick={props.addFlashCardToUser} style={props.isAdded ? {display:"none"} : { color: '#08c'}}/> : ""}
+        title={
+          props?.flashCard?.title == "addFlashCardToUser" ? (
+            userData.id == props.flashCard.userId || !props.isLoggedIn ? (
+              ""
+            ) : (
+              <PlusOutlined
+                onClick={props.addFlashCardToUser}
+                style={props.isAdded ? { display: "none" } : { color: "#08c" }}
+              />
+            )
+          ) : (
+            props?.flashCard?.title
+          )
+        }
         centered
         visible={props.modalVisible}
         onCancel={() => props.setmodalOpen(false)}
@@ -171,7 +181,7 @@ const handleCancel = () => {
         defaultQuestionIndex={props.defaultQuestionIndex}
         isLoggedIn={props.isLoggedIn}
       />
-         <LogInButton
+      <LogInButton
         title=""
         open={modal5Open}
         className="btnrv"

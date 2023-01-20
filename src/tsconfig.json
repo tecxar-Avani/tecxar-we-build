@@ -21,7 +21,7 @@
       "@plugins/*": ["./src/plugins/*"],
       "@services/*": ["./src/services/*"],
       "@/store/*": ["store/*"],
-      "@/hooks/*": ["hooks/*"]
+      "@/hooks/*": ["./src/hooks/*"]
     },
     "typeRoots": ["../@types"]
   },

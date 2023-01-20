@@ -26,8 +26,10 @@ export const createFlashCard = createAsyncThunk(
     const { status, data } = await flashCardService.addFlashCard(
       createFlashCardData
     );
+    if (createFlashCardData.build_id) {
+      dispatch(getFlashCardByBuildId(createFlashCardData.build_id));
+    }
 
-    dispatch(getFlashCardByBuildId(createFlashCardData.build_id));
     return { status, data };
   }
 );
@@ -35,14 +37,13 @@ export const createFlashCard = createAsyncThunk(
 export const createFlashCardResponse = createAsyncThunk(
   `flashcard/flashcardresponse`,
   async (createFlashCardResponseData: IFlashCardsResponse, { dispatch }) => {
-
     const { status, data } = await flashCardService.addFlashcardresponse(
-      
       createFlashCardResponseData
     );
-    
-    dispatch(getFlashCardByBuildId(createFlashCardResponseData.build_id))
-    dispatch(getFlashCardByUser())
+    if (createFlashCardResponseData.build_id) {
+      dispatch(getFlashCardByBuildId(createFlashCardResponseData.build_id));
+    }
+    dispatch(getFlashCardByUser());
     return { status, data };
   }
 );
@@ -50,9 +51,7 @@ export const createFlashCardResponse = createAsyncThunk(
 export const getFlashCardByBuildId = createAsyncThunk(
   `flashcard/flashCardByBuild`,
   async (buildId: any) => {
-    const { status, data } = await flashCardService.getFlashCardByBuildId(
-      buildId
-    );
+    const { data } = await flashCardService.getFlashCardByBuildId(buildId);
     return { status: data.status, rows: data };
   }
 );
@@ -60,15 +59,13 @@ export const getFlashCardByBuildId = createAsyncThunk(
 export const getFlashCardByUser = createAsyncThunk(
   `get/flashcard`,
   async (): Promise<IFlashCardRowsCountResponse> => {
-    const { status, data } = await flashCardService.getFlashCardByUser();
+    const { data } = await flashCardService.getFlashCardByUser();
     return { status: data.status, rows: data.data };
-  
-
   }
 );
 export const updateFlashCardId = createAsyncThunk(
   `flashcard/`,
-  async (updateFlashCard: IUpdateFlashCards, { dispatch }) => {
+  async (updateFlashCard: IUpdateFlashCards) => {
     const id = Number(updateFlashCard.id);
     const editData = {
       id: Number(updateFlashCard.id),
@@ -86,14 +83,15 @@ export const updateFlashCardId = createAsyncThunk(
 export const deleteFlashCardById = createAsyncThunk(
   `flashcard/deleteFlashCard/`,
   async (Id: number, { dispatch }) => {
-  const { status, data } = await flashCardService.deleteFlashCardById(Id);
-  dispatch(getFlashCardByUser())
-  dispatch(totalbuilds())
-  return { status,data };
-});
+    const { status, data } = await flashCardService.deleteFlashCardById(Id);
+    dispatch(getFlashCardByUser());
+    dispatch(totalbuilds());
+    return { status, data };
+  }
+);
 // export const deleteFlashCardId = createAsyncThunk(`flashcard/deleteFlashCard/`, async (Id: number, { dispatch }) => {
 //   const { status, data } = await flashCardService.deleteFlashCardById(Id);
- 
+
 //   return { status, data };
 // });
 
@@ -105,7 +103,7 @@ interface State {
   flashCardList: IFlashCardRowsCountResponse;
   flashCardUserList: IFlashCardRowsCountResponse;
   editFlashCard: IUpdateFlashCards;
-  flashCardResponse:IFlashCardsResponse;
+  flashCardResponse: IFlashCardsResponse;
 }
 
 const initialState: State = {
@@ -113,7 +111,7 @@ const initialState: State = {
     question: "",
     answer: "",
   },
-  flashCardResponse:{
+  flashCardResponse: {
     response_type: "good",
     flash_card_id: 0,
   },
@@ -183,7 +181,6 @@ const flashCardSlice = createSlice({
         }
       })
       .addCase(getFlashCardByUser.fulfilled, (state, action) => {
-       
         if (action.payload.status) {
           return {
             ...state,
@@ -234,7 +231,11 @@ const flashCardSlice = createSlice({
         if (action.payload.status) {
           return { ...state, loading: false };
         } else {
-          return { ...state, loading: false, specificFlashcard: initialState.flashCard };
+          return {
+            ...state,
+            loading: false,
+            specificFlashcard: initialState.flashCard,
+          };
         }
       })
       .addMatcher(isPendingAction, (state) => {

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import { Column, Model, DataType, Table } from "sequelize-typescript";
 import { IGroups } from "@/interfaces/groups.interface";

@@ -1,12 +1,11 @@
 import { updateUserById, userSelector } from "@/store/reducers/user.reducer";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import React, { useEffect } from "react";
+import React from "react";
 import { Image } from "react-bootstrap";
 import { Button } from "antd";
 const cookieCutter = require("cookie-cutter");
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { delay } from "@reduxjs/toolkit/dist/utils";
 
 interface profileProps {
   className: string;
@@ -74,7 +73,7 @@ const ProfileCard = (props: any) => {
           <Image
             alt="profile"
             src={`/profileImg/${props.profile.profileImg}`}
-            className="img-fluid img-rounded"
+            className="img-fluid img-roundedAdmin"
           />
          
         </div>
@@ -154,7 +153,7 @@ const ProfileCard = (props: any) => {
       </div>
     </div> :
       <div
-        className={`${props.className} profile text-center ${props.profile.boderBottom ? "border-bottom" : ""} pb-3 position-relative`}
+        className={`${props.className} profile text-center ${props.profile.boderBottom ? "border-bottom border-dark" : ""} pb-3 ms-2 position-relative`}
       >
         <div className="d-flex justify-content-end align-items-center py-2 px-4">
           <Button
@@ -166,8 +165,8 @@ const ProfileCard = (props: any) => {
             {props.profile.logout}
           </Button>
         </div>
-        <div className={`d-flex justify-content-center align-items-center ${props.profile.boxLeftTitle == "Boxes mapped" ? "ms-5" : ""}`}>
-          <div>
+        <div className={`d-flex justify-content-center align-items-center ${props.profile.boxLeftTitle == "Boxes mapped" ? "ms-5" : ""} `}>
+          <div className="me-2">
             <h4 className="title">{props.profile.title}</h4>
             {props.profile && props.profile.dateOfJoined && (
               <h5 className="subTitle py-1">{props.profile.dateOfJoined}</h5>
@@ -184,7 +183,7 @@ const ProfileCard = (props: any) => {
           )}
         </div>
         {/* <Button className="logOut">Log out</Button> */}
-        <div className="d-flex justify-content-center align-items-center py-2">
+        <div className={`d-flex justify-content-center align-items-center py-2 ${props.profile.deleteIcon ? "" : "profileBottom"}`}>
           <div className={`${props.leftBoxClass}`}>
             <p className="boxes-heading m-0">
               {props.profile && props.profile.boxLeftTitle}
@@ -200,7 +199,7 @@ const ProfileCard = (props: any) => {
               className="img-fluid img-rounded"
             />
             {props.profile.bottomTitle ? (
-              <p className="cityWithMe mb-0 mt-2">
+              <p className="cityWithMe mt-2">
                 “{props.profile && props.profile.bottomTitle}”
               </p>
             ) : (

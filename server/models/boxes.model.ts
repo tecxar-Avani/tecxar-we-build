@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -30,7 +29,11 @@ export default class Boxes
   @ForeignKey(() => VideoBuild)
   @Column(DataType.INTEGER)
   public build_id: number;
-  @BelongsTo(() => VideoBuild)
+  @BelongsTo(() => VideoBuild, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    hooks: true,
+  })
   public build: VideoBuild;
 
   @Column(DataType.TEXT)

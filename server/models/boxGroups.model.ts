@@ -21,7 +21,8 @@ export type Boxes_GroupAttributes = Optional<IBoxesGroups, "id">;
 })
 export default class Boxes_Groups
   extends Model<IBoxesGroups, Boxes_GroupAttributes>
-  implements IBoxesGroups {
+  implements IBoxesGroups
+{
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   public id: number;
 
@@ -29,14 +30,22 @@ export default class Boxes_Groups
   @ForeignKey(() => Box)
   @Column(DataType.INTEGER)
   public box_id: number;
-  @BelongsTo(() => Box)
+  @BelongsTo(() => Box, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    hooks: true,
+  })
   public box_ids: Box;
 
   @AllowNull(false)
   @ForeignKey(() => Group)
   @Column(DataType.INTEGER)
   public group_id: number;
-  @BelongsTo(() => Group)
+  @BelongsTo(() => Group, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    hooks: true,
+  })
   public group: Group;
 
   @Column(DataType.DATE)
