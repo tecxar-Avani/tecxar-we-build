@@ -365,7 +365,7 @@ export class FlashController {
       const userBuild = await this.buildService.updateBuild(id, data);
       const userBuildId = await this.buildService.getBuildById(id)
       if (data?.boxes) { 
-        if(data.boxes.draggedArray?.length > 0 && userBuildId.length> 0 && userBuildId[0].created_by === data.updated_by){    
+        if(data.boxes.draggedArray?.length > 0 && userBuildId && userBuildId.length> 0 && userBuildId[0].created_by === data.updated_by){    
         data.boxes.draggedArray.map(async (box: any) => {
               const updateData = {
                 sorting_order:  box.id && Number(box.id)

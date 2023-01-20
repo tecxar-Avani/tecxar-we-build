@@ -87,7 +87,6 @@ const FlashCardModal = (props: any) => {
           flash_card_id: questionId,
           build_id: buildId,
         };
-        console.log("$$$$$$$$$$$$$$$$$$$$$$", props.flashCard);
         // if(props.isLoggedIn){
         dispatch(createFlashCardResponse(flashCardResponseData));
         if (index <= arrayLength) {

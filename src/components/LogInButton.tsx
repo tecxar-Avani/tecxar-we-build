@@ -21,7 +21,7 @@ const LogInButton = (props: any) => {
       }, 3000);
     };
   
-      console.log("windowStatus",windowStatus)
+     
     
   return (
     <>

@@ -156,11 +156,11 @@ const Profile = (props: any) => {
   };
 
   //all profile
-  const blocked_user =
+  const blocked_user:any =
     usersList &&
     usersList.length > 0 &&
     usersList?.filter((user: any) => user.is_blocked == true);
-  const unBlocked_user =
+  const unBlocked_user:any =
     usersList &&
     usersList.length > 0 &&
     usersList?.filter((user: any) => user.is_blocked == false);

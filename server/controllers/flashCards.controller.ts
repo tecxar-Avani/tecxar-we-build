@@ -65,7 +65,6 @@ export class FlashController {
     @Req() req: RequestWithUser
   ) {
     try {
-      console.log("******************",flashcardResponseData)
       flashcardResponseData.created_by = req.user.id;
       const existingRes =
         await this.flashCardService.getFlashCardResponseByCard(
