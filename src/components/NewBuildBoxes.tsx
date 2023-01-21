@@ -92,11 +92,13 @@ const NewBuildBoxes = (props: any) => {
                             boxId={itemData.boxId}
                             isRefresh={props.isRefresh}
                             setIsRefresh={props.setIsRefresh}
+                            isRedo={props.setIsRedo}
+                            setIsRedo={props.setIsRedo}
                             completedTodos={props.completedTodos}
                             activeSelection={props.activeSelection}
                             groupingSelection={props.groupingSelection}
                             groupList={props.groupList}
-                            // setFormDataOnUndo={(boxData:any) => {console.log("+++++++++++++++++",boxData)}}
+                             setFormDataOnUndo={(boxData:any) => {props.setFormDataOnUndo(boxData)}}
                           />
                         ))}
                         {provided.placeholder}
@@ -112,12 +114,12 @@ const NewBuildBoxes = (props: any) => {
           })
         : groupArray &&
           groupArray.length > 0 &&
-          groupArray.map((data: any) => {
+          groupArray.map((data: any,index:any) => {
             const dataArrow = data?.length>0 && data?.map((a:any)=>{
-              return a.id
-              
+              return a.id 
             })
-         
+        
+
 
             return (
               data &&
@@ -127,14 +129,18 @@ const NewBuildBoxes = (props: any) => {
                   const subArray:any = data
                     .sort((a: any, b: any) => a.id - b.id)
                     .slice(index * 3, index * 3 + 3);
-              
+                    // console.log("-----------------------------",props.notGroupedArray == groupArray[groupArray.length -1])
+                    // console.log("-----------------------------",props.notGroupedArray)
+                    const lastIndex = groupArray.indexOf(groupArray[groupArray.length-1])
+                    console.log("-----------------------------",lastIndex)
+
 const subArrayFilter = subArray?.length > 0 && ((props.notGroupedArray?.length > 0 && subArray.filter((a:any)=>a.id ==props.notGroupedArray[props?.notGroupedArray?.length-1].id)))
 const groupArrayFilter = subArray?.length > 0 && ((props.groupedData.length>0 && subArray.filter((a:any) =>a.id == props.groupedData?.map((a:any) => {return a[a.length - 1].id}))))
 return (
                     <div className={`boxesMain`}>
                       <div className={`border border-color-25 ${index == 0 && subArray[0].title ? "groupHeader" : "h-30"} ${props.activeSelection ? "hideTitle" : "" }`}>
                         {index == 0 && subArray[0].title ? subArray[0].title  : 
-                        props.activeSelection ? (
+                        props.activeSelection && index == 0 ? (
                           <Fragment>
                             <Form
                               name="basic"
@@ -160,7 +166,7 @@ return (
                         )}
                       </div>
                      
-                      <Row className={`m-0 px-4 innerBoxMain ${props.activeSelection && !subArray[0].title ? "activeSelection" : ""} ${subArrayFilter.length==0 && groupArrayFilter.length == 0 && !(subArray.length < 3) && !props.activeSelection && 'myCss'}`}>
+                      <Row className={`m-0 px-4 innerBoxMain ${props.activeSelection && !subArray[0].title ? "activeSelection" : ""} ${subArrayFilter.length==0 && groupArrayFilter.length == 0 && !(subArray.length < 3) && 'myCss'}`}>
                         <Droppable
                           droppableId={`${index}`}
                           direction="horizontal"
@@ -198,10 +204,14 @@ return (
                                     boxId={itemData.boxId}
                                     isRefresh={props.isRefresh}
                                     setIsRefresh={props.setIsRefresh}
+                                    isRedo={props.setIsRedo}
+                                    setIsRedo={props.setIsRedo}
                                     completedTodos={props.completedTodos}
                                     activeSelection={props.activeSelection}
                                     groupingSelection={props.groupingSelection}
                                     groupList={props.groupList}
+                                    setFormDataOnUndo={(boxData:any) => {props.setFormDataOnUndo(boxData)}}
+
                                   />
                                 );
                               })}

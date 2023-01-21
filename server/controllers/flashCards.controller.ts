@@ -42,13 +42,25 @@ export class FlashController {
     try {
       //should make build id and created by id dynamic
       cardData.created_by = req.user.id;
-      const createCardData: IFlashCards | null =
-        await this.flashCardService.createFlashCard(cardData);
-      return {
-        status: true,
-        data: createCardData,
-        message: "Flash Card created successfully.",
-      };
+      
+       const duplicateFlashCard : IFlashCards | any = await this.flashCardService.getDuplicateFlashCard(cardData.question,cardData.build_id,cardData.created_by)
+       if(duplicateFlashCard.length > 0){
+        return { status: true,
+          data: [],
+          message: "You can't add this flashcard", 
+        };
+       }
+       else{
+        const createCardData: IFlashCards | null =
+          await this.flashCardService.createFlashCard(cardData);
+          return {
+            status: true,
+            data: createCardData,
+            message: "Flash Card created successfully.",
+          };  
+       }
+       
+    
     } catch (error) {
       if (error instanceof Error) {
         return { error: { code: 500, message: error.message } };

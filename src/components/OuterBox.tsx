@@ -2,6 +2,7 @@ import TextArea from "antd/lib/input/TextArea";
 import React, { Fragment, useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { Checkbox, Form } from "antd";
+import Image from "next/image";
 import { useAppSelector } from "../hooks";
 import { buildSelector } from "@/store/reducers/build.reducer";
 import { userSelector } from "@/store/reducers/user.reducer";
@@ -13,7 +14,7 @@ const OuterBox = (props: any) => {
   const { buildById } = useAppSelector(buildSelector);
   const { userData } = useAppSelector(userSelector);
   const [form] = Form.useForm();
-  let BoxData: any;
+  var BoxData: any;
  
   const handleChange = (event: any) => {
     const { value, id } = event.target;
@@ -37,11 +38,16 @@ const OuterBox = (props: any) => {
   });
   useEffect(() => {
     if (props.isRefresh) {
-      // props.setFormDataOnUndo(BoxData)
+       props.setFormDataOnUndo(BoxData)
       form.resetFields();
       props.setIsRefresh(false);
     }
   }, [props.isRefresh]);
+  console.log("%%%%%%BoxData%%%%%%%%",BoxData)
+  useEffect(()=>{
+    props.isRedo && console.log("&")
+    props.setIsRedo(false)
+  },[props.isRedo])
   const group_Build_id = props?.groupList?.map((a:any) => a.id)
   
   return (
@@ -167,6 +173,9 @@ const OuterBox = (props: any) => {
             </div>
           )}
         </Draggable>
+        <div className="arrowRight">
+                    <Image layout="fill" width={"100"} src={"/public/redArrow.svg"} />
+                  </div>
       </Col>
     </Fragment>
   );

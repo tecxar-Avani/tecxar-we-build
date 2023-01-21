@@ -75,12 +75,14 @@ const NewBuild = (props: any) => {
   const [boxId, setBoxId] = useState();
   const [boxAwarenessID, setBoxAwarenessID] = useState();
   const [isRefresh, setIsRefresh] = useState(false);
+  const [isRedo, setIsRedo] = useState(false);
   const [activeSelection, setActiveSelection] = useState(false);
   const [groupArray, setGroupArray] = useState<any>([]);
   const [groupTitle, setGroupTitle] = useState<any>("");
   const [isAdded, setIsAdded] = useState<boolean>();
   const [boxData, setBoxData] = useState([]);
   const [dataOfFlashCard, setDataOfFlashCard] = useState([]);
+  const [formDataOnUndo , setFormDataOnUndo] = useState([]);
 
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
@@ -182,6 +184,7 @@ const NewBuild = (props: any) => {
     if (questionId !== "Again") {
       setIsAdded(false);
     }
+
     // setIsAdded(false)
     const filterArray = flashCardArr?.filter((F: any) => F.user_id == userId);
     const findLastValue = filterArray?.slice(-1)[0];
@@ -647,7 +650,6 @@ const NewBuild = (props: any) => {
     dispatch(createFlashCard(addData));
     setIsAdded(true);
   };
-
   return (
     <Fragment>
       <Head>
@@ -658,7 +660,7 @@ const NewBuild = (props: any) => {
       {/* <Spin spinning={build.loading == true} delay={100}/>  */}
       <Fragment>
         <div className="row d-flex m-0 w-100">
-          <div className="col-3">
+          <div className="col-sm-4 col-md-5 col-lg-4 col-xl-3">
             <NewBuildSideCard
               id={router.query.id}
               videoId={router.query.videoId}
@@ -677,6 +679,8 @@ const NewBuild = (props: any) => {
               buildId={buildId}
               isRefresh={isRefresh}
               setIsRefresh={setIsRefresh}
+              isRedo = {isRedo}
+              setIsRedo = {setIsRedo}
               groupSelect={groupSelect}
               activeSelection={activeSelection}
               submitGroup={submitGroup}
@@ -688,8 +692,8 @@ const NewBuild = (props: any) => {
           {/* <Droppable droppableId="boxAll" >
             {
               (provided) => (<> */}
-          <div className="col-9">
-            <div className="w-100 px-4 pb-3 pt-4 mt-4">
+          <div className="col-sm-8 col-md-7 col-lg-8 col-xl-9 newBuildBoxsMain">
+            <div className="w-100 px-4 pb-3 pt-4 mt-4 newBuildBoxs">
               <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
                 <NewBuildBoxes
                   setModal1Open={setAddFlashcard}
@@ -719,6 +723,8 @@ const NewBuild = (props: any) => {
                   setBoxData={setBoxData}
                   buildById={buildById}
                   modalDot={(id: any) => showModal(id)}
+                  isRedo={isRedo}
+                  setIsRedo={(data:any) => setIsRedo(data)}
                   isRefresh={isRefresh}
                   setIsRefresh={(data: any) => {
                     setIsRefresh(data);
@@ -747,6 +753,7 @@ const NewBuild = (props: any) => {
                       );
                     }
                   }}
+                  setFormDataOnUndo={(boxDataUndo:any) => setFormDataOnUndo(boxDataUndo)}
                   completedTodos={completedTodos}
                   setCompletedTodos={setCompletedTodos}
                   activeSelection={activeSelection}

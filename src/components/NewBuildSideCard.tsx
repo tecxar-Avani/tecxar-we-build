@@ -79,7 +79,7 @@ const NewBuildSideCard = (props: any) => {
           ></iframe>
         </div>
 
-        <div className="d-flex align-items-center border-top border-bottom border-dark mx-2 p-2 me-3 justify-content-center">
+        <div className="d-flex align-items-center border-top border-bottom border-dark p-2 justify-content-center">
           <div
             className="mx-1 buttons"
             onClick={groupSelect}
@@ -124,7 +124,7 @@ const NewBuildSideCard = (props: any) => {
               ? { pointerEvents: "none", opacity: 0.4 }
               : {}
           }
-          className="triangle align-items-center border-bottom border-dark mx-2 me-3"
+          className="triangle align-items-center border-bottom border-dark"
         >
           <div className="mt-3 mb-0 triangle1 ms-3">
             <span
@@ -200,11 +200,11 @@ const NewBuildSideCard = (props: any) => {
           </div>
         </div>
 
-        <div className="px-2 threeButton align-items-center border-bottom border-dark mx-2 me-3">
-          <div className="d-flex mt-4">
+        <div className="px-2 threeButton align-items-center border-bottom border-dark ">
+          <div className="d-flex mt-4 justify-content-between">
             <div className="text-center">
               <Button variant="" ref={typeVideo} onClick={() => setType(!type)}>
-                <figure className="ms-3 me-3">
+                <figure className="m-0">
                   <Image src="../img/typeof.svg " height={40} className="" />
                   <figcaption className="text-center mt-2">
                     Type of <br></br>Video
@@ -254,7 +254,7 @@ const NewBuildSideCard = (props: any) => {
                 ref={polarisations}
                 onClick={() => setPolarisation(!polarisation)}
               >
-                <figure className="ms-3 me-3">
+                <figure className="m-0">
                   <Image
                     src="../img/polarisation.svg"
                     height={40}
@@ -333,7 +333,7 @@ const NewBuildSideCard = (props: any) => {
                 ref={target2}
                 onClick={() => setDifficulty(!difficulty)}
               >
-                <figure className="ms-3 me-3 difficult">
+                <figure className="m-0 difficult">
                   <Image
                     src="../img/difficulty.svg"
                     height={50}
@@ -467,7 +467,7 @@ const NewBuildSideCard = (props: any) => {
                     setDifficultyLevel("low"),
                       setPolarisationLevel("low"),
                       setVideoType("theory"),
-                      props?.setIsRefresh(true);
+                      props?.setIsRedo(true);
                   }}
                 />
               </div>

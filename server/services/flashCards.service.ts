@@ -334,6 +334,17 @@ class FlashCardService {
     }
   }
 
+  public async getDuplicateFlashCard(question:any,buildId:any,userId:any): Promise<IFlashCards[] | any > {
+    const query = `SELECT fc.question, fc.build_id, fc.created_by
+    FROM flash_cards As fc
+    WHERE fc.question like "%${question}%" and
+    fc.created_by = ${userId} and fc.build_id = ${buildId}`
+    const duplicate : IFlashCards[] = await DB.sequelize.query(query, {
+      type: QueryTypes.SELECT,
+    });
+    return duplicate;
+  }
+
   public async deleteFlashCardById(id: number): Promise<IFlashCards | null> {
     const flashCardByDelete: any | null = await this.flashCard.destroy({
       where: { id: id },
