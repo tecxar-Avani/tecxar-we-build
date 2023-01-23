@@ -467,7 +467,7 @@ const NewBuildSideCard = (props: any) => {
                     setDifficultyLevel("low"),
                       setPolarisationLevel("low"),
                       setVideoType("theory"),
-                      props?.setIsRedo(true);
+                      props?.setIsRefresh(true);
                   }}
                 />
               </div>

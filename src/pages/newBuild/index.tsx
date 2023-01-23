@@ -83,7 +83,6 @@ const NewBuild = (props: any) => {
   const [boxData, setBoxData] = useState([]);
   const [dataOfFlashCard, setDataOfFlashCard] = useState([]);
   const [formDataOnUndo , setFormDataOnUndo] = useState([]);
-
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -650,6 +649,9 @@ const NewBuild = (props: any) => {
     dispatch(createFlashCard(addData));
     setIsAdded(true);
   };
+
+ const redoDataF = (data:any) =>{
+ }
   return (
     <Fragment>
       <Head>
@@ -725,6 +727,7 @@ const NewBuild = (props: any) => {
                   modalDot={(id: any) => showModal(id)}
                   isRedo={isRedo}
                   setIsRedo={(data:any) => setIsRedo(data)}
+                  redoData={(redoData:any) => redoDataF(redoData) }
                   isRefresh={isRefresh}
                   setIsRefresh={(data: any) => {
                     setIsRefresh(data);

@@ -98,7 +98,8 @@ const NewBuildBoxes = (props: any) => {
                             activeSelection={props.activeSelection}
                             groupingSelection={props.groupingSelection}
                             groupList={props.groupList}
-                             setFormDataOnUndo={(boxData:any) => {props.setFormDataOnUndo(boxData)}}
+                            setFormDataOnUndo={(redoData:any) => console.log("***************",redoData)}
+
                           />
                         ))}
                         {provided.placeholder}
@@ -132,7 +133,6 @@ const NewBuildBoxes = (props: any) => {
                     // console.log("-----------------------------",props.notGroupedArray == groupArray[groupArray.length -1])
                     // console.log("-----------------------------",props.notGroupedArray)
                     const lastIndex = groupArray.indexOf(groupArray[groupArray.length-1])
-                    console.log("-----------------------------",lastIndex)
 
 const subArrayFilter = subArray?.length > 0 && ((props.notGroupedArray?.length > 0 && subArray.filter((a:any)=>a.id ==props.notGroupedArray[props?.notGroupedArray?.length-1].id)))
 const groupArrayFilter = subArray?.length > 0 && ((props.groupedData.length>0 && subArray.filter((a:any) =>a.id == props.groupedData?.map((a:any) => {return a[a.length - 1].id}))))
@@ -210,8 +210,7 @@ return (
                                     activeSelection={props.activeSelection}
                                     groupingSelection={props.groupingSelection}
                                     groupList={props.groupList}
-                                    setFormDataOnUndo={(boxData:any) => {props.setFormDataOnUndo(boxData)}}
-
+                                    setFormDataOnUndo={(redoData:any) => console.log("***************",redoData)}
                                   />
                                 );
                               })}

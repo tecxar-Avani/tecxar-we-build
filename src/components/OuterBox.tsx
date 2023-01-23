@@ -12,15 +12,18 @@ import DisabledContext from "antd/lib/config-provider/DisabledContext";
 
 const OuterBox = (props: any) => {
   const { buildById } = useAppSelector(buildSelector);
-  const { userData } = useAppSelector(userSelector);
+  const { userData } = useAppSelector(userSelector) ;
+  const [boxDataForRedo , setBoxDataForRedo] = useState();
   const [form] = Form.useForm();
+  var redoArray = []
   var BoxData: any;
  
   const handleChange = (event: any) => {
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
     BoxData = { sorting_order: id, description: value };
-    
+    setBoxDataForRedo(BoxData)
+
     if (value.length === 150 && !props.arr.includes(propsId) && !props.boxId) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
@@ -38,18 +41,20 @@ const OuterBox = (props: any) => {
   });
   useEffect(() => {
     if (props.isRefresh) {
-       props.setFormDataOnUndo(BoxData)
+       
       form.resetFields();
       props.setIsRefresh(false);
     }
   }, [props.isRefresh]);
-  console.log("%%%%%%BoxData%%%%%%%%",BoxData)
+  // redoArray.push(boxDataForRedo)
   useEffect(()=>{
-    props.isRedo && console.log("&")
-    props.setIsRedo(false)
+    if(props.isRedo){
+      props.setFormDataOnUndo(boxDataForRedo)
+    } 
+    // props.setIsRedo(false)
   },[props.isRedo])
   const group_Build_id = props?.groupList?.map((a:any) => a.id)
-  
+ 
   return (
     <Fragment>
       <Col sm={4} className={`p-0 position-relative ${props.description ? "side-Arrow" : ""}`}>
@@ -106,7 +111,8 @@ const OuterBox = (props: any) => {
                             defaultValue={
                               props.description ? props.description : ""
                             }
-                            onChange={handleChange}
+                            //onInput for add new boxes properly
+                            onInput={handleChange}
                             id={props.id}
                             className="textFontSize"
                             onFocus={() => {
