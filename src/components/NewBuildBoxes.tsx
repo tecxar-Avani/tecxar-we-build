@@ -13,29 +13,30 @@ const TaskList = styled.div`
 `;
 
 const NewBuildBoxes = (props: any) => {
-  
-  const { userData, loggedInUser } = useAppSelector(userSelector);
-  const group_Build_id = props?.groupList?.map((a:any) => a.title)
+  const { userData } = useAppSelector(userSelector);
   const groupArray =
     props.mergedArray &&
     props.mergedArray.length > 0 &&
     props.mergedArray?.map((merge: any) => merge);
 
-
   return (
     <Fragment>
-     
       {props.item && props.item.length > 0
         ? [...Array(Math.ceil(props.item.length / 3))].map((_rows, index) => {
             const subArray = props.item
               .sort((a: any, b: any) => a.id - b.id)
               .slice(index * 3, index * 3 + 3);
-          const subArrayFilter = subArray?.length > 0 && ((props.item?.length > 0 && subArray.filter((a:any)=>a.id ==props.item[props?.item?.length-1].id)))
-          const blankArray = props?.item?.map((a:any) => a?.boxId)
+            const subArrayFilter =
+              subArray?.length > 0 &&
+              props.item?.length > 0 &&
+              subArray.filter(
+                (a: any) => a.id == props.item[props?.item?.length - 1].id
+              );
+            const blankArray = props?.item?.map((a: any) => a?.boxId);
             return (
               <div className={`boxesMain`}>
                 <div className="h-30 border border-color-25">
-                  {props.activeSelection ? (
+                  {props.activeSelection && index == 0 ? (
                     <Fragment>
                       <Form
                         name="basic"
@@ -52,17 +53,34 @@ const NewBuildBoxes = (props: any) => {
                           ]}
                           className="w-full"
                         >
-                          <Input placeholder="type here..." onChange={props.groupTitle}/>
+                          <Input
+                            placeholder="type here..."
+                            onChange={props.groupTitle}
+                          />
                         </Form.Item>
-                       
                       </Form>
                     </Fragment>
                   ) : (
                     ""
                   )}
                 </div>
-                <div className={`m-0 row px-4 innerBoxMain ${subArray.length > 2 && !props.activeSelection && subArrayFilter.length == 0 && blankArray[0] != undefined  && 'myCss'} ${props.activeSelection ? "activeSelection" : ""}`}>
-                  <Droppable droppableId={`${props?.buildById?.data?.length > 0 && props?.buildById?.data[0]?.created_by == userData?.id && index}`} direction="horizontal">
+                <div
+                  className={`m-0 row px-4 innerBoxMain ${
+                    subArray.length > 2 &&
+                    !props.activeSelection &&
+                    subArrayFilter.length == 0 &&
+                    blankArray[0] != undefined &&
+                    "myCss"
+                  } ${props.activeSelection ? "activeSelection" : ""}`}
+                >
+                  <Droppable
+                    droppableId={`${
+                      props?.buildById?.data?.length > 0 &&
+                      props?.buildById?.data[0]?.created_by == userData?.id &&
+                      index
+                    }`}
+                    direction="horizontal"
+                  >
                     {(provided) => (
                       <TaskList
                         ref={provided.innerRef}
@@ -98,8 +116,14 @@ const NewBuildBoxes = (props: any) => {
                             activeSelection={props.activeSelection}
                             groupingSelection={props.groupingSelection}
                             groupList={props.groupList}
-                            setFormDataOnUndo={(redoData:any) => console.log("***************",redoData)}
-
+                            setFormDataOnUndo={(redoData: any) =>
+                              props.setFormDataOnUndo(redoData)
+                            }
+                            redoData={props.redoData}
+                            setRedoData={props.setRedoData}
+                            dataArrayForRedo={props.dataArrayForRedo}
+                            mergedArrayForRedo={props.mergedArrayForRedo}
+                            isEditSelect={props.isEditSelect}
                           />
                         ))}
                         {provided.placeholder}
@@ -107,7 +131,11 @@ const NewBuildBoxes = (props: any) => {
                     )}
                   </Droppable>
                   <div className="myArrowBottom">
-                    <Image layout="fill" width={"100"} src={"/public/red-main.svg"} />
+                    <Image
+                      layout="fill"
+                      width={"100"}
+                      src={"/public/red-main.svg"}
+                    />
                   </div>
                 </div>
               </div>
@@ -115,32 +143,49 @@ const NewBuildBoxes = (props: any) => {
           })
         : groupArray &&
           groupArray.length > 0 &&
-          groupArray.map((data: any,index:any) => {
-            const dataArrow = data?.length>0 && data?.map((a:any)=>{
-              return a.id 
-            })
-        
-
-
+          groupArray.map((data: any, index: any) => {
             return (
               data &&
               data.length > 0 &&
               [...Array(Math.ceil(data && data.length / 3))].map(
                 (_rows, index) => {
-                  const subArray:any = data
+                  const subArray: any = data
                     .sort((a: any, b: any) => a.id - b.id)
                     .slice(index * 3, index * 3 + 3);
-                    // console.log("-----------------------------",props.notGroupedArray == groupArray[groupArray.length -1])
-                    // console.log("-----------------------------",props.notGroupedArray)
-                    const lastIndex = groupArray.indexOf(groupArray[groupArray.length-1])
 
-const subArrayFilter = subArray?.length > 0 && ((props.notGroupedArray?.length > 0 && subArray.filter((a:any)=>a.id ==props.notGroupedArray[props?.notGroupedArray?.length-1].id)))
-const groupArrayFilter = subArray?.length > 0 && ((props.groupedData.length>0 && subArray.filter((a:any) =>a.id == props.groupedData?.map((a:any) => {return a[a.length - 1].id}))))
-return (
+                  const subArrayFilter =
+                    subArray?.length > 0 &&
+                    props.notGroupedArray?.length > 0 &&
+                    subArray.filter(
+                      (a: any) =>
+                        a.id ==
+                        props.notGroupedArray[
+                          props?.notGroupedArray?.length - 1
+                        ].id
+                    );
+                  const groupedDataArray = props.groupedData?.map((b: any) => {
+                    return b[b.length - 1].id;
+                  });
+                  const groupArrayFilter =
+                    subArray?.length > 0 &&
+                    props.groupedData.length > 0 &&
+                    subArray.filter((a: any) => {
+                      const data = groupedDataArray.includes(a.id);
+                      return data;
+                    });
+
+                  return (
                     <div className={`boxesMain`}>
-                      <div className={`border border-color-25 ${index == 0 && subArray[0].title ? "groupHeader" : "h-30"} ${props.activeSelection ? "hideTitle" : "" }`}>
-                        {index == 0 && subArray[0].title ? subArray[0].title  : 
-                        props.activeSelection && index == 0 ? (
+                      <div
+                        className={`border border-color-25 ${
+                          index == 0 && subArray[0].title
+                            ? "groupHeader"
+                            : "h-30"
+                        } ${props.activeSelection ? "hideTitle" : ""}`}
+                      >
+                        {index == 0 && subArray[0].title ? (
+                          subArray[0].title
+                        ) : props.activeSelection && index == 0 ? (
                           <Fragment>
                             <Form
                               name="basic"
@@ -156,17 +201,30 @@ return (
                                   },
                                 ]}
                               >
-                                <Input placeholder="type here..." onChange={props.groupTitle}/>
+                                <Input
+                                  placeholder="type here..."
+                                  onChange={props.groupTitle}
+                                />
                               </Form.Item>
-                             
                             </Form>
                           </Fragment>
                         ) : (
                           ""
                         )}
                       </div>
-                     
-                      <Row className={`m-0 px-4 innerBoxMain ${props.activeSelection && !subArray[0].title ? "activeSelection" : ""} ${subArrayFilter.length==0 && groupArrayFilter.length == 0 && !(subArray.length < 3) && 'myCss'}`}>
+
+                      <Row
+                        className={`m-0 px-4 innerBoxMain ${
+                          props.activeSelection && !subArray[0].title
+                            ? "activeSelection"
+                            : ""
+                        } ${
+                          subArrayFilter.length == 0 &&
+                          groupArrayFilter.length == 0 &&
+                          !(subArray.length < 3) && 
+                          "myCss"
+                        }`}
+                      >
                         <Droppable
                           droppableId={`${index}`}
                           direction="horizontal"
@@ -210,7 +268,16 @@ return (
                                     activeSelection={props.activeSelection}
                                     groupingSelection={props.groupingSelection}
                                     groupList={props.groupList}
-                                    setFormDataOnUndo={(redoData:any) => console.log("***************",redoData)}
+                                    setFormDataOnUndo={(redoData: any) =>
+                                      props.setFormDataOnUndo(redoData)
+                                    }
+                                    redoData={props.redoData}
+                                    setRedoData={props.setRedoData}
+                                    dataArrayForRedo={props.dataArrayForRedo}
+                                    mergedArrayForRedo={
+                                      props.mergedArrayForRedo
+                                    }
+                                    isEditSelect={props.isEditSelect}
                                   />
                                 );
                               })}
@@ -220,8 +287,12 @@ return (
                           )}
                         </Droppable>
                         <div className="myArrowBottom">
-                    <Image layout="fill" width={"100"} src={"/public/red-main.svg"} />
-                  </div>
+                          <Image
+                            layout="fill"
+                            width={"100"}
+                            src={"/public/red-main.svg"}
+                          />
+                        </div>
                       </Row>
                     </div>
                   );

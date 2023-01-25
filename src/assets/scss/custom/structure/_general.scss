@@ -1693,6 +1693,9 @@ h6 {
   width: 47.5vh;
   overflow: auto;
   height: 100vh;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
 }
 @media only screen and (min-width: 768px) and (max-width: 992px){

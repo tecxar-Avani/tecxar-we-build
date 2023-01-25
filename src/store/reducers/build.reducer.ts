@@ -124,8 +124,13 @@ interface State {
   buildById: IBuildRowsCountResponse | any;
   userBuilds: IBuildRowsCountResponse | any;
   boxes: IBoxes;
-}
+  getBuildByUrlGroup:any;
 
+}
+const getBuildByUrlGroupState = {
+  status: false,
+  rows: [1],
+}
 const initialState: State = {
   build: {
     video_url: "",
@@ -163,6 +168,10 @@ const initialState: State = {
   boxes: {
     id: 0,
     description: "",
+  },
+  getBuildByUrlGroup:{
+    status: true,
+    rows: [],
   },
 };
 
@@ -243,12 +252,14 @@ const buildSlice = createSlice({
             ...state,
             loading: false,
             buildListByUrl: action.payload.rows,
+            getBuildByUrlGroup:getBuildByUrlGroupState,
             boxes: action.payload.boxes,
           };
         } else {
           return {
             ...state,
             loading: false,
+            getBuildByUrlGroup:initialState.getBuildByUrlGroup,
             buildListByUrl: initialState.buildListByUrl,
           };
         }
@@ -260,12 +271,15 @@ const buildSlice = createSlice({
             loading: false,
             buildById: action.payload.rows,
             boxes: action.payload.boxes,
+            getBuildByUrlGroup:initialState.getBuildByUrlGroup
           };
         } else {
           return {
             ...state,
             loading: false,
             buildById: initialState.buildById,
+            getBuildByUrlGroup:initialState.getBuildByUrlGroup
+
           };
         }
       })

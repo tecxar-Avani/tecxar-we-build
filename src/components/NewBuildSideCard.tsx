@@ -93,7 +93,7 @@ const NewBuildSideCard = (props: any) => {
           </div>
           <div
             className="mx-1 buttons"
-            onClick={props.unGroupSelect}
+            onClick={props.editGroupSelect}
             style={
               userId &&
               userId.length > 0 &&
@@ -103,7 +103,7 @@ const NewBuildSideCard = (props: any) => {
                 : { pointerEvents: "none", opacity: 0.4 }
             }
           >
-            <Button className="">UnGroup</Button>
+            <Button className="">EditGroup</Button>
           </div>
           {props.activeSelection && (
             <div className="mx-1 buttonSubmit">
@@ -186,17 +186,20 @@ const NewBuildSideCard = (props: any) => {
               <div className="redpolygon" onClick={props.Resistance} />
             </span>
 
-            <span
+            <div
               onClick={() => {
                 props.value == "" ? {} : props.setAwarenessModal(true);
               }}
             >
-              <CustomButton
-                title="Resistance"
-                className="resistanceButton"
-                onClick={props.Resistance}
-              />
-            </span>
+              {" "}
+              <span onClick={props.Resistance}>
+                <CustomButton
+                  title="Resistance"
+                  className="resistanceButton"
+                  onClick={props.Resistance}
+                />
+              </span>
+            </div>
           </div>
         </div>
 
@@ -451,10 +454,10 @@ const NewBuildSideCard = (props: any) => {
                   src="/img/backward.svg"
                   className="me-1"
                   onClick={() => {
-                    setDifficultyLevel("low"),
-                      setPolarisationLevel("low"),
-                      setVideoType("theory"),
-                      props?.setIsRefresh(true);
+                    setDifficultyLevel("low");
+                    setPolarisationLevel("low");
+                    setVideoType("theory");
+                    props?.setIsRefresh(true);
                   }}
                 />
               </div>
@@ -467,8 +470,10 @@ const NewBuildSideCard = (props: any) => {
                     setDifficultyLevel("low"),
                       setPolarisationLevel("low"),
                       setVideoType("theory"),
-                      props?.setIsRefresh(true);
+                      // props?.setIsRefresh(true);
+                      props?.setIsRedo(true);
                   }}
+                  // style={props?.isRefresh == true ? {} : { pointerEvents: "none", opacity: 0.4 }}
                 />
               </div>
             </div>

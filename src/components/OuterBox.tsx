@@ -9,20 +9,34 @@ import { userSelector } from "@/store/reducers/user.reducer";
 import { Draggable } from "react-beautiful-dnd";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
 import DisabledContext from "antd/lib/config-provider/DisabledContext";
+import _ from "lodash";
+import lodash from "lodash";
+import { DiffieHellman } from "crypto";
 
 const OuterBox = (props: any) => {
   const { buildById } = useAppSelector(buildSelector);
-  const { userData } = useAppSelector(userSelector) ;
-  const [boxDataForRedo , setBoxDataForRedo] = useState();
+  const { userData } = useAppSelector(userSelector);
+  const [boxDataForRedo, setBoxDataForRedo] = useState<any>();
+  const [redoValue, setRedoValue] = useState<any>([]);
+
   const [form] = Form.useForm();
-  var redoArray = []
+  var redoArray = [];
   var BoxData: any;
- 
+
   const handleChange = (event: any) => {
     const { value, id } = event.target;
     const propsId = Number(props.id + 1);
     BoxData = { sorting_order: id, description: value };
-    setBoxDataForRedo(BoxData)
+    if (BoxData.description) {
+      setBoxDataForRedo(BoxData);
+      const val = boxDataForRedo != undefined && boxDataForRedo;
+      if (val) {
+        setRedoValue([...redoValue, val]);
+        const a = lodash.concat(arrValue, val);
+
+        props.setRedoData([...props.redoData, val]);
+      }
+    }
 
     if (value.length === 150 && !props.arr.includes(propsId) && !props.boxId) {
       props.setBoxData(BoxData);
@@ -39,25 +53,72 @@ const OuterBox = (props: any) => {
     // position: "fixed",
     ...draggableStyle,
   });
+
+  let arrValue: Array<any> = [];
+
   useEffect(() => {
     if (props.isRefresh) {
+      const mergedArray = props.mergedArrayForRedo.map((a: any) =>
+        a.map((b: any) => {
+          return { id: b.id, message: b.message, boxId: a.boxId};
+        })
+      );
+      const redoDataArray: any = _.groupBy(props.redoData, "sorting_order");
+      const objArr = _.values(redoDataArray);
+      const redoLastValue = objArr.map((a: any) => _.last(a));
+      const arr1 = props.dataArrayForRedo.map((a: any) => {
+        return { id: a.id, message: a.message,boxId: a.boxId };
+      });
+      const arr2 = redoLastValue.map((a: any) => {
+        return { id: parseInt(a.sorting_order), message: a.description };
+      });
+      if (props.mergedArrayForRedo) {
+        const arr3 = mergedArray.map((a:any) => {
+          const uniqueArrayMerge = a.map((item:any) => {
+            const findItem = arr2.find((a2Item) => a2Item.id === item.id);
+            if (findItem) {
+              item.message = findItem.message;
+            }
+            return item;
+          });
+
+          return uniqueArrayMerge;
+        });
+        console.log("11111111111111111111111111111",arr3) 
+        // const uniqueArrayMerge = _.uniqBy(arr3, 'id');
+        props.setIsRefresh(false, arr3);
+        form.resetFields();
+      } else {
+        const dataArray = _.unionWith(arr2, arr1, _.isEqual);
+        const uniqueArray = _.uniqBy(dataArray, "id");
+        props.setIsRefresh(false, uniqueArray);
+       }
+        form.resetFields();
        
-      form.resetFields();
-      props.setIsRefresh(false);
     }
   }, [props.isRefresh]);
   // redoArray.push(boxDataForRedo)
-  useEffect(()=>{
-    if(props.isRedo){
-      props.setFormDataOnUndo(boxDataForRedo)
+  useEffect(() => {
+    if (props.isRedo) {
+      props.setFormDataOnUndo(boxDataForRedo);
     } 
-    // props.setIsRedo(false)
-  },[props.isRedo])
-  const group_Build_id = props?.groupList?.map((a:any) => a.id)
- 
+    props.setIsRedo(false);
+  }, [props.isRedo]);
+  const group_Build_id = props?.groupList?.map((a: any) => a.id);
+  const groupById : any = _.groupBy(props.groupList, "group_id")
+  const objArrrr = _.values(groupById)
+   const groupedData =   objArrrr.length>0 && objArrrr?.map((a:any) => a.map((b:any) => {return {"sorting_order":b.id,"group_id":b.group_id,"boxId":b.boxId,"build_id":b.build_id}})
+   )
+  // const dataOfGroup = groupedData.length > 0 && groupedData.map((b:any) => {return {"sorting_order":b.id,"group_id":b.group_id,"boxId":b.boxId,"build_id":b.build_id}})
+
   return (
     <Fragment>
-      <Col sm={4} className={`p-0 position-relative ${props.description ? "side-Arrow" : ""}`}>
+      <Col
+        sm={4}
+        className={`p-0 position-relative ${
+          props.description ? "side-Arrow" : ""
+        }`}
+      >
         <Draggable
           key={props.id}
           draggableId={props.id.toString()}
@@ -77,13 +138,13 @@ const OuterBox = (props: any) => {
                 provided.draggableProps.style
               )}
             >
-              
               <Checkbox
                 className={`${
                   props.activeSelection ? "groupSelection" : "groupSelectionNot"
-                } ${group_Build_id?.includes(props.id)  && "dis"}`}
+                } ${group_Build_id?.includes(props.id) && props.activeSelection && !props.isEditSelect && "dis"}`}
                 value={props.boxId}
-                onChange={props.groupingSelection}
+                onClick={props.groupingSelection}
+                defaultChecked={!props.isEditSelect ? group_Build_id?.includes(props.id) : null}
                 //  {filteredArray ? indeterminate : []}
               >
                 <Form form={form} name="formTwo" className="textBoxInner">
@@ -179,9 +240,11 @@ const OuterBox = (props: any) => {
             </div>
           )}
         </Draggable>
-        <div className="arrowRight">
-                    <Image layout="fill" width={"100"} src={"/public/redArrow.svg"} />
-                  </div>
+        {props.description && (
+          <div className="arrowRight">
+            <Image layout="fill" width={"100"} src={"/public/redArrow.svg"} />
+          </div>
+        )}
       </Col>
     </Fragment>
   );

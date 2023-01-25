@@ -87,6 +87,7 @@ const initialState: State = {
   loading: false,
   error: undefined,
   id: 0,
+
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>

@@ -15,6 +15,7 @@ import AwarenessTypeModal from "@/components/AwarenessTypeModal";
 import AddFlashCardModal from "@/components/AddFlashCardModal";
 import {
   addBuild,
+  build,
   buildSelector,
   getBuildById,
   UpdateUsersBuild,
@@ -26,7 +27,7 @@ import {
   getAwarenessByBoxId,
   updateBoxReviewResponseByAwarenessId,
 } from "@/store/reducers/awareness.reducer";
-import { Button, Form, Modal } from "antd";
+import { Button, Form, Modal, Spin } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import ChallengeModal from "@/components/ChallengeModal";
 import { toast } from "react-toastify";
@@ -55,7 +56,10 @@ const NewBuild = (props: any) => {
   const { flashCardList } = useAppSelector(flashCardSelector);
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const { buildById, buildListByUrl } = useAppSelector(buildSelector);
+  const { buildById, buildListByUrl, getBuildByUrlGroup } =
+    useAppSelector(buildSelector);
+  const builds = useAppSelector(buildSelector);
+
   const { userData, loggedInUser } = useAppSelector(userSelector);
   const { groupList } = useAppSelector(groupSelector);
   const [arr, setArr] = useState([1]);
@@ -82,7 +86,13 @@ const NewBuild = (props: any) => {
   const [isAdded, setIsAdded] = useState<boolean>();
   const [boxData, setBoxData] = useState([]);
   const [dataOfFlashCard, setDataOfFlashCard] = useState([]);
-  const [formDataOnUndo , setFormDataOnUndo] = useState([]);
+  const [formDataOnUndo, setFormDataOnUndo] = useState([]);
+  const [redoData, setRedoData] = useState<any>([]);
+  const [uniqueArray, setUniqueArray] = useState([]);
+  const [isEditSelect, setIsEditSelect] = useState(false);
+
+  // const [mergedArrayData,setMergedArrayData]= useState<any>([]);
+
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -160,7 +170,6 @@ const NewBuild = (props: any) => {
       setArr(data.map((d: any) => d.id));
     }
   }, [buildById]);
-
   useEffect(() => {
     if (buildListByUrl.data) {
       setArr([1]);
@@ -587,10 +596,12 @@ const NewBuild = (props: any) => {
   };
 
   const groupingSelection = (e: any) => {
+    console.log("```````````````````````````````````",e.target.defaultValue)
     const groupId = e.target.value;
     setGroupArray([...groupArray, groupId]);
   };
-  const submitGroup = () => {
+  console.log("#####################",groupArray)
+  const submitGroup = (e:any) => {
     setActiveSelection(false);
     const groupData = {
       title: groupTitle?.target?.value,
@@ -609,16 +620,30 @@ const NewBuild = (props: any) => {
       setGroupArray([]);
     }
   };
-  const arr2 = groupList.rows.groupBox ? groupList.rows.groupBox : [];
+  let arr2: any;
+  arr2 =
+    groupList.rows.groupBox && getBuildByUrlGroup.rows.length == 0
+      ? groupList.rows.groupBox
+      : [];
+
+  useEffect(() => {
+    arr2 =
+      groupList.rows.groupBox && buildById?.rows?.length > 0
+        ? groupList.rows.groupBox
+        : [];
+  }, [getBuildByUrlGroup]);
   const notGroupedArray = dataArray.filter((object1) => {
     return !arr2?.some((object2: { id: number }) => {
       return object1.id === object2.id;
     });
   });
-
   var groupIdArr = arr2?.length > 0 ? _.groupBy(arr2, "group_id") : [];
   var results = groupIdArr && _.toArray(groupIdArr);
-  const mergedArray = [...results, notGroupedArray];
+  const mergedArrayData = [...results, notGroupedArray];
+  // useEffect(() => {
+  //   setMergedArrayData(mergedArray)
+  // }, [ groupList.rows.groupBox]);
+  // console.log("%%%%%%%%%%%%%%%%%",mergedArray)
 
   const deleteGroup = () => {
     dispatch(deleteGroupById(buildId));
@@ -634,8 +659,8 @@ const NewBuild = (props: any) => {
       onCancel() {},
     });
   };
-  const unGroupSelect = () => {
-    showConfirm();
+  const editGroupSelect = () => {
+    setIsEditSelect(true)
     // setActiveUnGroup(true);
   };
 
@@ -650,8 +675,19 @@ const NewBuild = (props: any) => {
     setIsAdded(true);
   };
 
- const redoDataF = (data:any) =>{
- }
+  // for redo data
+
+  const redoUniqueData = (data: any) => {
+    if (data == true) {
+      // if(uniqueArray.length > 1){
+      //   setMergedArrayData(uniqueArray)
+      // }else{
+      //   setDataArray(uniqueArray);
+      // }
+      
+    }
+  };
+
   return (
     <Fragment>
       <Head>
@@ -659,7 +695,12 @@ const NewBuild = (props: any) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> :  */}
-      {/* <Spin spinning={build.loading == true} delay={100}/>  */}
+      {/* <Spin spinning={build.loading == true}/>  */}
+      {/* { buildListByUrl.data.length == 0 ? (
+      <div className="w-100 d-flex justify-content-center mt-5 ">
+        <Spin delay={100} />
+      </div>
+    ) : */}
       <Fragment>
         <div className="row d-flex m-0 w-100">
           <div className="col-sm-4 col-md-5 col-lg-4 col-xl-3">
@@ -681,14 +722,17 @@ const NewBuild = (props: any) => {
               buildId={buildId}
               isRefresh={isRefresh}
               setIsRefresh={setIsRefresh}
-              isRedo = {isRedo}
-              setIsRedo = {setIsRedo}
+              isRedo={isRedo}
+              setIsRedo={(data: any) => redoUniqueData(data)}
               groupSelect={groupSelect}
               activeSelection={activeSelection}
               submitGroup={submitGroup}
-              groupList={groupList.rows.groupBox}
-              unGroupSelect={unGroupSelect}
-              mergedArray={mergedArray}
+              groupList={
+                buildListByUrl.data.length > 0 ? [] : groupList.rows.groupBox
+              }
+              editGroupSelect={editGroupSelect}
+              mergedArray={mergedArrayData}
+             
             />
           </div>
           {/* <Droppable droppableId="boxAll" >
@@ -699,10 +743,12 @@ const NewBuild = (props: any) => {
               <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
                 <NewBuildBoxes
                   setModal1Open={setAddFlashcard}
-                  item={mergedArray?.length >= 2 ? [] : dataArray}
+                  item={mergedArrayData?.length >= 2 ? [] : dataArray}
                   // mergedArray={mergedArray}
                   //  item={activeUnGroup ? dataArray : []}
-                  mergedArray={mergedArray}
+                  mergedArray={mergedArrayData}
+                  dataArrayForRedo={mergedArrayData?.length >= 2 ? [] : dataArray}
+                  mergedArrayForRedo={mergedArrayData}
                   arr={arr}
                   setArr={(value: any) => {
                     setArr(value);
@@ -726,13 +772,14 @@ const NewBuild = (props: any) => {
                   buildById={buildById}
                   modalDot={(id: any) => showModal(id)}
                   isRedo={isRedo}
-                  setIsRedo={(data:any) => setIsRedo(data)}
-                  redoData={(redoData:any) => redoDataF(redoData) }
+                  setIsRedo={setIsRedo}
                   isRefresh={isRefresh}
-                  setIsRefresh={(data: any) => {
+                  setIsRefresh={(data: any, data1: any) => {
+                    console.log("$$$$$$$$$$$$$$$$$",data1)
+                    setUniqueArray(data1);
                     setIsRefresh(data);
                     if (buildById?.data) {
-                      const data =
+                      const buildData =
                         buildById.data &&
                         buildById.data.map((box: any) => {
                           return {
@@ -741,8 +788,8 @@ const NewBuild = (props: any) => {
                             boxId: box.id,
                           };
                         });
-                      setDataArray(data);
-                      setArr(data.map((d: any) => d.id));
+                      setDataArray(buildData);
+                      setArr(buildData.map((d: any) => d.id));
                     } else {
                       setBoxData([]);
                       setArr([1]);
@@ -756,18 +803,28 @@ const NewBuild = (props: any) => {
                       );
                     }
                   }}
-                  setFormDataOnUndo={(boxDataUndo:any) => setFormDataOnUndo(boxDataUndo)}
+                  setFormDataOnUndo={(boxDataUndo: any) =>
+                    setFormDataOnUndo(boxDataUndo)
+                  }
                   completedTodos={completedTodos}
                   setCompletedTodos={setCompletedTodos}
                   activeSelection={activeSelection}
                   groupingSelection={groupingSelection}
                   submitGroup={submitGroup}
                   groupTitle={setGroupTitle}
-                  groupList={groupList.rows.groupBox}
+                  groupList={
+                    buildListByUrl.data.length > 0
+                      ? []
+                      : groupList.rows.groupBox
+                  }
                   groupedData={results && results.length > 0 && results}
                   notGroupedArray={notGroupedArray}
+                  redoData={redoData}
+                  setRedoData={setRedoData}
+                  isEditSelect={isEditSelect}
                 />
               </DragDropContext>
+
               {/* {provided.placeholder} */}
             </div>
           </div>
@@ -965,6 +1022,7 @@ const NewBuild = (props: any) => {
           } `}
         />
       </Fragment>
+      {/* } */}
     </Fragment>
   );
 };
