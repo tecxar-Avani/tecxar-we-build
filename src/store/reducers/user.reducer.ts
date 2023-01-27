@@ -155,9 +155,9 @@ const userSlice = createSlice({
             Router.asPath == "/profile" ||
             Router.asPath == "/UserGuide"
           ) {
-            toast.success("You logged in successfully");
+            toast.success("");
           } else {
-            toast.success("You  logged in successfully Please save your data ");
+            toast.success("You  logged in successfully Please save your data");
           }
           // setTimeout(() => {
           //   Router.reload();
@@ -235,7 +235,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUserById.fulfilled, (state, action) => {
         if (action.payload.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,

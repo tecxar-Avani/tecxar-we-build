@@ -24,6 +24,10 @@ export class flashcardsDto implements IFlashCards {
   @IsOptional()
   @IsDate()
   updated_at?: Date;
+
+  @IsOptional()
+  @IsNumber()
+  previous_user?:number
 }
 
 export class updateflashcardsDto implements IUpdateFlashCards {

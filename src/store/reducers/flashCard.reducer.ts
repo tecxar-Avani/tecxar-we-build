@@ -48,6 +48,18 @@ export const createFlashCardResponse = createAsyncThunk(
   }
 );
 
+export const addUserFlashCardDeck = createAsyncThunk(
+  `flashcard/deck`,
+ async (addFlashCardDeckData:IFlashCard[], { dispatch })  => {
+  const { status, data } = await flashCardService.addFlashCardDeck(
+    addFlashCardDeckData
+  );
+  dispatch(getFlashCardDeck(addFlashCardDeckData[0]?.build_id))
+  dispatch(getFlashCardByBuildId(addFlashCardDeckData[0]?.build_id))
+  return { status, data };
+ }
+)
+
 export const getFlashCardByBuildId = createAsyncThunk(
   `flashcard/flashCardByBuild`,
   async (buildId: any) => {
@@ -55,6 +67,14 @@ export const getFlashCardByBuildId = createAsyncThunk(
     return { status: data.status, rows: data };
   }
 );
+
+export const getFlashCardDeck = createAsyncThunk(
+  `flashcard/flashcardDeck`,
+  async (buildId:any) => {
+    const {data} = await flashCardService.getFlashCardDeck(buildId);
+    return { status: data.status, rows: data };
+  }
+)
 
 export const getFlashCardByUser = createAsyncThunk(
   `get/flashcard`,
@@ -65,7 +85,7 @@ export const getFlashCardByUser = createAsyncThunk(
 );
 export const updateFlashCardId = createAsyncThunk(
   `flashcard/`,
-  async (updateFlashCard: IUpdateFlashCards) => {
+  async (updateFlashCard: IUpdateFlashCards,{ dispatch }) => {
     const id = Number(updateFlashCard.id);
     const editData = {
       id: Number(updateFlashCard.id),
@@ -76,7 +96,7 @@ export const updateFlashCardId = createAsyncThunk(
       id,
       editData
     );
-
+dispatch(getFlashCardByUser())
     return { status, data };
   }
 );
@@ -104,6 +124,7 @@ interface State {
   flashCardUserList: IFlashCardRowsCountResponse;
   editFlashCard: IUpdateFlashCards;
   flashCardResponse: IFlashCardsResponse;
+  flashCardDeck:IFlashCardRowsCountResponse;
 }
 
 const initialState: State = {
@@ -124,6 +145,10 @@ const initialState: State = {
   loading: false,
   error: undefined,
   id: 0,
+  flashCardDeck:{
+    status: true,
+    rows: [],
+  }
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -148,7 +173,7 @@ const flashCardSlice = createSlice({
     builder
       .addCase(createFlashCard.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,
@@ -165,7 +190,7 @@ const flashCardSlice = createSlice({
       })
       .addCase(createFlashCardResponse.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,
@@ -177,6 +202,23 @@ const flashCardSlice = createSlice({
             ...state,
             loading: false,
             flashCardResponse: initialState.flashCardResponse,
+          };
+        }
+      })
+      .addCase(addUserFlashCardDeck.fulfilled, (state, action) => {
+        if (action.payload.data.status) {
+          toast.success("");
+          return {
+            ...state,
+            loading: false,
+            flashCardData: action.payload.data,
+          };
+        } else {
+          toast.error(action.payload.data.error.message);
+          return {
+            ...state,
+            loading: false,
+            flashCardData: initialState.flashCard,
           };
         }
       })
@@ -210,9 +252,24 @@ const flashCardSlice = createSlice({
           };
         }
       })
+      .addCase(getFlashCardDeck.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          return {
+            ...state,
+            loading: false,
+            flashCardDeck: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            flashCardDeck: action.payload,
+          };
+        }
+      })
       .addCase(updateFlashCardId.fulfilled, (state, action) => {
         if (action.payload.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,
@@ -227,7 +284,7 @@ const flashCardSlice = createSlice({
         }
       })
       .addCase(deleteFlashCardById.fulfilled, (state, action) => {
-        toast.success(action.payload.data.message);
+        toast.success("");
         if (action.payload.status) {
           return { ...state, loading: false };
         } else {

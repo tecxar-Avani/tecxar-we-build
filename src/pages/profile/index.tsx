@@ -198,7 +198,7 @@ const Profile = (props: any) => {
             <div className="d-flex overflow-auto">
               {userBuilds &&
                 userBuilds?.box?.map((videoData: any, index: number) => (
-                  <Col md={4} key={index} className="videoProfile ">
+                  <Col md={4} key={index} className="videoProfile me-3">
                     <Link
                       href={`/newBuild?id=${videoData.id}&&videoId=${videoData.video_id}`}
                     >

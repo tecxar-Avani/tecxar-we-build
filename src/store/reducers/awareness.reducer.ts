@@ -142,7 +142,7 @@ const awarenessSlice = createSlice({
     builder
       .addCase(addAwareness.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,
@@ -178,7 +178,7 @@ const awarenessSlice = createSlice({
 
       .addCase(addReviewResponse.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,
@@ -215,7 +215,7 @@ const awarenessSlice = createSlice({
       })
       .addCase(updateBoxReviewResponseByAwarenessId.fulfilled, (state, action) => {
         if (action.payload.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,

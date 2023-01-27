@@ -3,7 +3,6 @@ class FlashCardService {
   addFlashCard(flashcard: any) {
     return API.post(`/flashcard/create`, flashcard);
   }
-
   getFlashCardByUser() {
     return API.get(`/flashcard/`);
   }
@@ -12,8 +11,16 @@ class FlashCardService {
     return API.get(`/flashcard/flashcardByBuild/${id}`);  
   }
 
+  getFlashCardDeck(id:number){
+    return API.get(`/flashcard/flashCardDeck/${id}`);
+  }
+
   addFlashcardresponse(flashCradResponseData:any){
     return API.post(`/flashcard/flashcardresponse`,flashCradResponseData)
+  }
+
+  addFlashCardDeck(flashCardDeck:any){
+    return API.post(`/flashcard/deck`, flashCardDeck);
   }
 
   updateFlashCardById(id: number, data: any) {

@@ -112,7 +112,7 @@ const groupSlice = createSlice({
     builder
       .addCase(createGroup.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,
@@ -144,7 +144,7 @@ const groupSlice = createSlice({
       })
       .addCase(UpdateGroup.fulfilled, (state, action) => {
         if (action.payload.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           return {
             ...state,
             loading: false,
@@ -159,7 +159,7 @@ const groupSlice = createSlice({
         }
       })
       .addCase(deleteGroupById.fulfilled, (state, action) => {
-        toast.success(action.payload.data.message);
+        toast.success("");
         if (action.payload.status) {
           return { ...state, loading: false };
         } else {

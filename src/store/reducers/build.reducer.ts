@@ -303,7 +303,7 @@ const buildSlice = createSlice({
       })
       .addCase(addBuild.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success(action.payload.data.message);
+          toast.success("");
           Router.push("/search?selfLearning=true");
           return {
             ...state,
@@ -322,7 +322,7 @@ const buildSlice = createSlice({
 
           }
           else{
-            toast.success(action.payload.data.message);
+            toast.success("");
             Router.push("/search?selfLearning=true");
           }
         
@@ -342,7 +342,7 @@ const buildSlice = createSlice({
         }
       })
       .addCase(deleteBuildId.fulfilled, (state, action) => {
-        toast.success(action.payload.data.message);
+        toast.success("");
         if (action.payload.status) {
           Router.push("/");
           return { ...state, loading: false };

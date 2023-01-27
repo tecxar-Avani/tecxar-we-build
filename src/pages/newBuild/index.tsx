@@ -4,6 +4,8 @@ import {
   flashCardSelector,
   getFlashCardByBuildId,
   createFlashCard,
+  addUserFlashCardDeck,
+  getFlashCardDeck,
 } from "@/store/reducers/flashCard.reducer";
 import { Card, Image } from "react-bootstrap";
 import NewBuildSideCard from "@/components/NewBuildSideCard";
@@ -47,19 +49,18 @@ import {
   groupSelector,
   UpdateGroup,
 } from "@/store/reducers/group.reducer";
-import { ExclamationCircleFilled } from "@ant-design/icons";
+import { ExclamationCircleFilled ,PlusOutlined} from "@ant-design/icons";
 import _ from "lodash";
+import LogInButton from "@/components/LogInButton";
 
 const NewBuild = (props: any) => {
   const [form] = Form.useForm();
   const router = useRouter();
-  const { flashCardList } = useAppSelector(flashCardSelector);
+  const { flashCardList,flashCardDeck } = useAppSelector(flashCardSelector);
   const { awarenessList } = useAppSelector(awarenessSelector);
   const [open, setOpen] = useState(false);
-  const { buildById, buildListByUrl, getBuildByUrlGroup } =
-    useAppSelector(buildSelector);
+  const { buildById, buildListByUrl, getBuildByUrlGroup } = useAppSelector(buildSelector);
   const builds = useAppSelector(buildSelector);
-
   const { userData, loggedInUser } = useAppSelector(userSelector);
   const { groupList } = useAppSelector(groupSelector);
   const [arr, setArr] = useState([1]);
@@ -86,13 +87,13 @@ const NewBuild = (props: any) => {
   const [isAdded, setIsAdded] = useState<boolean>();
   const [boxData, setBoxData] = useState([]);
   const [dataOfFlashCard, setDataOfFlashCard] = useState([]);
+  const [modal5Open, setModal5Open] = useState(false);
   const [formDataOnUndo, setFormDataOnUndo] = useState([]);
   const [redoData, setRedoData] = useState<any>([]);
   const [uniqueArray, setUniqueArray] = useState([]);
   const [isEditSelect, setIsEditSelect] = useState(false);
-
-  // const [mergedArrayData,setMergedArrayData]= useState<any>([]);
-
+   const [mergeArrayData,setMergedArrayData]= useState<any>([]);
+   const [groupId,setGroupId] = useState("");
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -141,6 +142,7 @@ const NewBuild = (props: any) => {
       dispatch(getBuildById(buildId));
       dispatch(getUserByEmail());
       dispatch(getGroupBoxesByBuild(buildId));
+      dispatch(getFlashCardDeck(buildId));
     }
   }, [buildId]);
 
@@ -187,7 +189,6 @@ const NewBuild = (props: any) => {
   const dispatch = useAppDispatch();
   const flashCardArr = flashCardList?.rows?.flashBuild?.build;
   const userArr = flashCardList?.rows?.flashBuild?.users;
-
   const questionData = (userId: any, index?: number, questionId?: any) => {
     if (questionId !== "Again") {
       setIsAdded(false);
@@ -258,7 +259,7 @@ const NewBuild = (props: any) => {
     } else if (boxData.length > 19) {
       dispatch(addBuild(saveData));
     } else {
-      toast.error("You need to fill minimum 20 boxes");
+      toast.warning("You need to fill minimum 20 boxes");
     }
     // buildCreatedBy &&
     // buildCreatedBy.length > 0 &&
@@ -303,8 +304,11 @@ const NewBuild = (props: any) => {
 
   const handleCancel = () => {
     setOpen(false);
+    
   };
-
+  const handleCancelFlashDeck = () => {
+    setModal5Open(false);
+  };
   const challengeClose = () => {
     setChallengeModal(false);
   };
@@ -381,7 +385,7 @@ const NewBuild = (props: any) => {
                           ></TextArea>
                         </div>
                       </Form.Item>
-                      <Button
+                      {/* <Button
                         key="submit"
                         type="primary"
                         className={` ${
@@ -407,8 +411,8 @@ const NewBuild = (props: any) => {
                           : data.review_type == "resistance"
                           ? "Resolve"
                           : ""}
-                      </Button>
-                      {data.challenge ? (
+                      </Button> */}
+                      {/* {data.challenge ? (
                         <>
                           <div className="AwareInputChallengeHeader">
                             {data.challenge_user}'s {data.response_review}
@@ -467,7 +471,7 @@ const NewBuild = (props: any) => {
                         </>
                       ) : (
                         []
-                      )}
+                      )} */}
                     </Form>
                   )}
               </>
@@ -596,30 +600,44 @@ const NewBuild = (props: any) => {
   };
 
   const groupingSelection = (e: any) => {
-    console.log("```````````````````````````````````",e.target.defaultValue)
+   
     const groupId = e.target.value;
     setGroupArray([...groupArray, groupId]);
   };
-  console.log("#####################",groupArray)
-  const submitGroup = (e:any) => {
+ 
+  const submitGroup = () => {
     setActiveSelection(false);
+    
     const groupData = {
       title: groupTitle?.target?.value,
       boxes: groupArray,
       buildId: buildId,
     };
+    console.log("$$$$$$$$$$$$$$$$$$",groupId)
+const isTitleAlready = groupList?.rows?.groupBox?.map((A:any) => A.title)
+const Title = isTitleAlready.includes(groupData.title)
+console.log("%%%%Title%%%%Title%%%%%%%",Title)
 
-    if (!groupData.boxes || groupData?.boxes?.length == 0) {
-      toast.warning("please select the boxes");
-    } else if (!groupData.title) {
-      toast.warning("please add the group title");
-    } else {
-      activeSelection && groupList?.rows?.groupBox?.length !== 0
-        ? dispatch(UpdateGroup(groupData))
-        : dispatch(createGroup(groupData));
-      setGroupArray([]);
-    }
+if(!Title && !groupData.boxes || groupData?.boxes?.length == 0 ){
+  const groupData = {
+    title: groupTitle?.target?.value,
+    buildId: buildId,
   };
+  // updateGroupTitle(groupData)
+}
+ else if (!groupData.boxes || groupData?.boxes?.length == 0) {
+    toast.warning("please select the boxes");
+  }
+  else if (!groupData.title) {
+    toast.warning("please add the group title");
+  } else {
+    activeSelection && groupList?.rows?.groupBox?.length !== 0
+      ? dispatch(UpdateGroup(groupData))
+      : dispatch(createGroup(groupData));
+    setGroupArray([]);
+  }
+};
+  
   let arr2: any;
   arr2 =
     groupList.rows.groupBox && getBuildByUrlGroup.rows.length == 0
@@ -632,39 +650,63 @@ const NewBuild = (props: any) => {
         ? groupList.rows.groupBox
         : [];
   }, [getBuildByUrlGroup]);
+
   const notGroupedArray = dataArray.filter((object1) => {
     return !arr2?.some((object2: { id: number }) => {
       return object1.id === object2.id;
     });
   });
+
+  // for color palate
+
+  const colorPallet = ['#E84D26','#A8CEFF','#99F155','#BC8FFF','#EF2A6B','#FFC65C',
+  '#FAED00','#5EC200','#75FFF6','#C2007E','#FF734D','#E62E00','#57E22C','#F52EDB','#FEEB43'] 
+
   var groupIdArr = arr2?.length > 0 ? _.groupBy(arr2, "group_id") : [];
-  var results = groupIdArr && _.toArray(groupIdArr);
+  var results = groupIdArr && _.toArray(groupIdArr).map((ele:any,index:number)=> ele.map((col:any) => { return  ({ ...col, color: colorPallet[index % 15] })}));
+
+
+  // var resultsColor = results?.length>0 && results.map((ele:any,index:number)=> ele.map((col:any) => { return  ({ ...col, color: colorPallet[index % 15] })}))
+
   const mergedArrayData = [...results, notGroupedArray];
+
+  
   // useEffect(() => {
   //   setMergedArrayData(mergedArray)
   // }, [ groupList.rows.groupBox]);
   // console.log("%%%%%%%%%%%%%%%%%",mergedArray)
 
+   
+
+
   const deleteGroup = () => {
     dispatch(deleteGroupById(buildId));
   };
 
-  const showConfirm = () => {
-    Modal.confirm({
-      title: "Are you sure you want to delete all Group?",
-      icon: <ExclamationCircleFilled />,
-      onOk() {
-        deleteGroup();
-      },
-      onCancel() {},
-    });
-  };
+  // const showConfirm = () => {
+  //   Modal.confirm({
+  //     title: "Are you sure you want to delete all Group?",
+  //     icon: <ExclamationCircleFilled />,
+  //     onOk() {
+  //       deleteGroup();
+  //     },
+  //     onCancel() {},
+  //   });
+  // };
   const editGroupSelect = () => {
     setIsEditSelect(true)
     // setActiveUnGroup(true);
   };
 
   // for adding flashcard into user flashcards
+
+  const addFlashDeck = (data:any) =>{
+    const filterData = flashCardList?.rows.flashBuild.build.filter((a:any) => a.user_id == data)
+    const deckData = filterData.map((b:any) => {return {"question":b.question,"answer": b.answer , "previous_user":data , "build_id": buildId , "created_by": userData.id}})   
+    dispatch(addUserFlashCardDeck(deckData))
+  }
+
+  const isDeck = flashCardDeck && flashCardDeck.rows.flashDeck && flashCardDeck.rows.flashDeck.map((a:any) => a?.previous_user)
   const addFlashCardToUser = (data: any) => {
     const addData = {
       question: data.question,
@@ -676,14 +718,14 @@ const NewBuild = (props: any) => {
   };
 
   // for redo data
-
+  
   const redoUniqueData = (data: any) => {
     if (data == true) {
-      // if(uniqueArray.length > 1){
-      //   setMergedArrayData(uniqueArray)
-      // }else{
-      //   setDataArray(uniqueArray);
-      // }
+      if(uniqueArray.length > 1){
+        setMergedArrayData(uniqueArray)
+      }else{
+        setDataArray(uniqueArray);
+      }
       
     }
   };
@@ -726,10 +768,11 @@ const NewBuild = (props: any) => {
               setIsRedo={(data: any) => redoUniqueData(data)}
               groupSelect={groupSelect}
               activeSelection={activeSelection}
-              submitGroup={submitGroup}
+              submitGroup={(groupId:any) => {submitGroup; console.log("^^^^^^^^^^^",groupId)}}
               groupList={
                 buildListByUrl.data.length > 0 ? [] : groupList.rows.groupBox
               }
+              isEditSelect={isEditSelect}
               editGroupSelect={editGroupSelect}
               mergedArray={mergedArrayData}
              
@@ -775,7 +818,6 @@ const NewBuild = (props: any) => {
                   setIsRedo={setIsRedo}
                   isRefresh={isRefresh}
                   setIsRefresh={(data: any, data1: any) => {
-                    console.log("$$$$$$$$$$$$$$$$$",data1)
                     setUniqueArray(data1);
                     setIsRefresh(data);
                     if (buildById?.data) {
@@ -837,16 +879,23 @@ const NewBuild = (props: any) => {
             userArr?.length > 0 &&
             userArr?.map((data: any) => {
               return (
+                <Fragment>
                 <Card
-                  className="mt-3"
+                  className="mt-3 card1"
                   onClick={() => {
                     questionData(data.user_id);
                   }}
                 >
                   <Card.Body className="d-flex justify-content-center align-items-center">
                     {data.user_name.split(" ").map((a: any) => a.charAt(0))}
-                  </Card.Body>
-                </Card>
+                  </Card.Body> </Card>
+                  {data.user_id == userData.id ? "" : 
+                  <Card className={`position-absolute card2 ${ isDeck && isDeck.length> 0 && isDeck?.includes(data.user_id) ? "backGroundAdd" : "backGroundPlus"} `} 
+                  onClick={() => props.isLoggedIn || loggedInUser?.length > 0 ? addFlashDeck(data.user_id) : setModal5Open(true)}><Card.Body className="d-flex justify-content-center align-items-center">
+                    <PlusOutlined />
+                    </Card.Body>
+                  </Card>}
+                  </Fragment>
               );
             })}
         </div>
@@ -907,7 +956,7 @@ const NewBuild = (props: any) => {
                   questionId: questionId,
                   index: index,
                   arrayLength: arrayLength,
-                  title: "addFlashCardToUser",
+                  title: "",
                 };
                 setModal3Open(newData);
                 setDataOfFlashCard(ans);
@@ -1021,8 +1070,20 @@ const NewBuild = (props: any) => {
               : ""
           } `}
         />
+            <LogInButton
+        title=""
+        open={modal5Open}
+        className="btnrv"
+        handleCancel={handleCancelFlashDeck}
+        isLoggedIn={props.isLoggedIn}
+        // setAuth={(data: any) => {
+        //   setAuth(data);
+        //   setModal5Open(false);
+        // }}
+      />
       </Fragment>
       {/* } */}
+  
     </Fragment>
   );
 };

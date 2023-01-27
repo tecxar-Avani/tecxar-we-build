@@ -25,6 +25,7 @@ export interface IFlashCards {
   updated_by?: number;
   updatedAt?: Date;
   user_id?: number
+  previous_user?:number
 }
 
 export interface IUpdateFlashCards {

@@ -54,6 +54,8 @@ export interface IFlashCard {
     users: IBuildUser[];
   };
 }
+
+
 export interface IFlashCardsResponse {
   id?: number;
   response_type?: ResponseEnumType;

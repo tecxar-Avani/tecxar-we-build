@@ -27,6 +27,20 @@ class FlashCardService {
     return createCardData;
   }
 
+  public async createFlashCardDeck(
+    cardData:IFlashCards[]
+  ): Promise<IFlashCards[]> {
+   
+    if (isEmpty(cardData)) {
+      throw new HttpException(400, "Enter the card data");
+    }   
+
+    const createCardData: IFlashCards[] = await this.flashCard.bulkCreate(
+      cardData,
+    );
+    return createCardData;
+  }
+
   public async createFlashCardResponse(
     cardNewData: IFlashCardsResponse
   ): Promise<IFlashCardsResponse | null> {
@@ -44,6 +58,7 @@ class FlashCardService {
     if (isEmpty(cardData)) {
       throw new HttpException(400, "Enter the flash card data");
     }
+    
     const createCardData: IFlashCards[] = await this.flashCard.bulkCreate(
       cardData
     );
@@ -343,6 +358,15 @@ class FlashCardService {
       type: QueryTypes.SELECT,
     });
     return duplicate;
+  }
+
+  public async getFlashCardDeck(buildId:number):Promise<IFlashCards[] | any>{
+    const query = `SELECT * FROM webuild.flash_cards 
+    where build_id = ${buildId} and previous_user != created_by;`
+    const flashCardDeck : IFlashCards[] = await DB.sequelize.query(query,{
+      type:  QueryTypes.SELECT,
+    })
+    return flashCardDeck;
   }
 
   public async deleteFlashCardById(id: number): Promise<IFlashCards | null> {

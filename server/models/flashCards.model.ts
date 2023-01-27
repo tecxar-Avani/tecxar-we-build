@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Optional } from "sequelize";
 import {
   Column,
@@ -47,8 +48,15 @@ export default class FlashCards
   @ForeignKey(() => User)
   @Column(DataType.INTEGER)
   public created_by: number;
+
   @BelongsTo(() => User)
   public created_by_user: User;
+
+  @ForeignKey(() => User)
+  @Column(DataType.INTEGER)
+  public previous_user?: number;
+  @BelongsTo(() => User)
+  public previous_user_id?: User;
 
   @Column(DataType.DATE)
   public readonly createdAt!: Date;

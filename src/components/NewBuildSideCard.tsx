@@ -105,7 +105,7 @@ const NewBuildSideCard = (props: any) => {
           >
             <Button className="">EditGroup</Button>
           </div>
-          {props.activeSelection && (
+          {(props.activeSelection  || props.isEditSelect) && (
             <div className="mx-1 buttonSubmit">
               <Button
                 type="submit"
@@ -115,7 +115,7 @@ const NewBuildSideCard = (props: any) => {
                 Submit
               </Button>
             </div>
-          )}
+          ) }
         </div>
 
         <div

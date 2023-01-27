@@ -955,9 +955,9 @@ hr {
 
 .mkCard {
   right: 21px;
-  bottom: 103px;
+  bottom: 115px;
 
-  .card {
+  .card1 {
     border: 1px solid black;
     border-radius: 6px;
     height: 60px;
@@ -974,7 +974,41 @@ hr {
   .card-body {
     padding: 6px;
   }
+  
+  .card2 {
+    border: 1px solid black;
+    border-radius: 4px;
+    height: 18.27px !important;
+    width: 41px;
+    padding: 0px !important;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 30px;
+    color: #000000;
+    margin-top: 1px;
 }
+    .backGroundPlus{
+      background-color: #44A82B;
+    }
+    .backGroundAdd{
+      background-color: #898989;
+      pointer-events: none !important;
+    }
+    .card-body {
+      padding: 10px;
+      .anticon svg{
+        height: 17.22px !important;
+        width: 18.75px !important;
+        margin-top: -11px !important;
+      }
+
+    }
+    
+  }
+
+
 
 .videoCard01 {
   .title {
@@ -1620,8 +1654,17 @@ h6 {
   text-align: center;
   word-wrap: break-word;
   min-height: 30px;
-  max-width: 1161px;
+  max-width: 100%;
   margin-bottom: -1px !important;
+}
+
+  .headerGroup {
+    width: 93.7%;
+    margin-left: 3.2%;
+}
+.noneGroup{
+  width: 100%;
+  // margin-left: 3%;
 }
 .width-btn {
   width: 78px !important;
@@ -1635,7 +1678,7 @@ h6 {
 }
 .hideTitle {
   margin-top: -1px;
-  margin-bottom: 0px;
+  margin-bottom: -1px;
 }
 .dotSize {
   font-size: 15px;
@@ -1754,4 +1797,61 @@ textarea {
 }
 .btn:hover {
   border: none;
+}
+.Toastify__progress-bar{
+  opacity: -0.3 !important;
+}
+
+.Toastify__toast-container--top-right{
+  top: 7px !important;
+}
+.Toastify__toast-container{
+background: transparent !important;
+width: 26% !important;
+}
+
+.Toastify__close-button--light{
+  color: none !important;
+display: none !important;
+}
+.Toastify__toast{
+  box-shadow: none !important;
+  overflow: unset !important;
+}
+.Toastify__toast-theme--light{
+background: none !important;
+color: none !important;
+}
+.Toastify__toast-body {
+  display: block !important;
+}
+.Toastify__toast--warning {
+  .Toastify__toast-body > div:last-child{
+    margin-top: -35px !important;
+    color: #000000;
+    font-weight: 700;
+    font-size: 18px;
+    margin-left: -15px;
+  }  
+  .Toastify__toast-icon{
+    width: 66px !important;
+    background-color: white !important;
+    margin-left: 55% !important;
+  }
+}
+.Toastify__toast--success {
+  .Toastify__toast-body > div:last-child{
+    margin-top: -42px !important;
+    color: #000000;
+    font-weight: 700;
+    font-size: 15px;
+    margin-left: -147px;
+    word-wrap: break-word;
+  }  
+  .Toastify__toast-icon{
+    width: 66px !important;
+    background-color: white !important;
+    border-radius: 50% !important;
+    margin-left: 55% !important;
+  }
 }

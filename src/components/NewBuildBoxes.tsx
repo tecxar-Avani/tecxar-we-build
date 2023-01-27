@@ -19,6 +19,8 @@ const NewBuildBoxes = (props: any) => {
     props.mergedArray.length > 0 &&
     props.mergedArray?.map((merge: any) => merge);
 
+
+
   return (
     <Fragment>
       {props.item && props.item.length > 0
@@ -123,7 +125,7 @@ const NewBuildBoxes = (props: any) => {
                             setRedoData={props.setRedoData}
                             dataArrayForRedo={props.dataArrayForRedo}
                             mergedArrayForRedo={props.mergedArrayForRedo}
-                            isEditSelect={props.isEditSelect}
+                            // isEditSelect={props.isEditSelect}
                           />
                         ))}
                         {provided.placeholder}
@@ -144,6 +146,7 @@ const NewBuildBoxes = (props: any) => {
         : groupArray &&
           groupArray.length > 0 &&
           groupArray.map((data: any, index: any) => {
+          
             return (
               data &&
               data.length > 0 &&
@@ -166,6 +169,7 @@ const NewBuildBoxes = (props: any) => {
                   const groupedDataArray = props.groupedData?.map((b: any) => {
                     return b[b.length - 1].id;
                   });
+                 
                   const groupArrayFilter =
                     subArray?.length > 0 &&
                     props.groupedData.length > 0 &&
@@ -173,19 +177,19 @@ const NewBuildBoxes = (props: any) => {
                       const data = groupedDataArray.includes(a.id);
                       return data;
                     });
-
                   return (
                     <div className={`boxesMain`}>
                       <div
                         className={`border border-color-25 ${
                           index == 0 && subArray[0].title
                             ? "groupHeader"
-                            : "h-30"
+                            : subArray[0].title ? "h-30 headerGroup" : "noneGroup h-30"
                         } ${props.activeSelection ? "hideTitle" : ""}`}
+                        style={index != 0 ? {background:`${data[0].color}`} : {}}
                       >
-                        {index == 0 && subArray[0].title ? (
+                        {index == 0 && subArray[0].title && !props.isEditSelect ? (
                           subArray[0].title
-                        ) : props.activeSelection && index == 0 ? (
+                        ) : (props.activeSelection && index == 0) || (props.isEditSelect && index == 0) ? (
                           <Fragment>
                             <Form
                               name="basic"
@@ -204,6 +208,7 @@ const NewBuildBoxes = (props: any) => {
                                 <Input
                                   placeholder="type here..."
                                   onChange={props.groupTitle}
+                                  defaultValue={props.isEditSelect && subArray[0].title ? subArray[0].title : ''}
                                 />
                               </Form.Item>
                             </Form>
@@ -224,15 +229,18 @@ const NewBuildBoxes = (props: any) => {
                           !(subArray.length < 3) && 
                           "myCss"
                         }`}
+                        
                       >
                         <Droppable
                           droppableId={`${index}`}
                           direction="horizontal"
+                         
                         >
                           {(provided) => (
                             <TaskList
                               ref={provided.innerRef}
                               {...provided.droppableProps}
+                              style={{background:`${data[0].color}`}}
                             >
                               {subArray.map((itemData: any, index: string) => {
                                 return (
@@ -277,7 +285,7 @@ const NewBuildBoxes = (props: any) => {
                                     mergedArrayForRedo={
                                       props.mergedArrayForRedo
                                     }
-                                    isEditSelect={props.isEditSelect}
+                                    // isEditSelect={props.isEditSelect}
                                   />
                                 );
                               })}

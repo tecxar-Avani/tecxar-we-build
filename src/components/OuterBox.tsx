@@ -69,11 +69,14 @@ const OuterBox = (props: any) => {
       const arr1 = props.dataArrayForRedo.map((a: any) => {
         return { id: a.id, message: a.message,boxId: a.boxId };
       });
+      
       const arr2 = redoLastValue.map((a: any) => {
         return { id: parseInt(a.sorting_order), message: a.description };
       });
       if (props.mergedArrayForRedo) {
+        
         const arr3 = mergedArray.map((a:any) => {
+         
           const uniqueArrayMerge = a.map((item:any) => {
             const findItem = arr2.find((a2Item) => a2Item.id === item.id);
             if (findItem) {
@@ -84,7 +87,7 @@ const OuterBox = (props: any) => {
 
           return uniqueArrayMerge;
         });
-        console.log("11111111111111111111111111111",arr3) 
+        
         // const uniqueArrayMerge = _.uniqBy(arr3, 'id');
         props.setIsRefresh(false, arr3);
         form.resetFields();

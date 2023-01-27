@@ -45,7 +45,7 @@ const ProfileCard = (props: any) => {
 
   const logout =  async() => {
     await router.push("/")
-    await  toast.success("You logged out successfully"); 
+    await  toast.success(""); 
    cookieCutter.set("authorization", "", { expires: new Date(0)})
   };
 

@@ -68,6 +68,34 @@ export class FlashController {
     }
   }
 
+  @Post("/deck")
+  // @UseBefore(authMiddleware)
+  @HttpCode(201)
+@OpenAPI({summary: "Add Flashcards To you deck"})
+async addFlashCardDeck(
+  @Body() cardData: IFlashCards[] | any,
+    @Req() req: RequestWithUser
+){
+  try {
+    //should make build id and created by id dynamic
+    // cardData.created_by = req.user.id;
+ 
+      const createCardData: IFlashCards[] | null =
+        await this.flashCardService.createFlashCardDeck(cardData);
+        return {
+          status: true,
+          data: createCardData,
+          message: "Flash Cards added to your deck successfully.",
+        };    
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: { code: 500, message: error.message } };
+    }
+  }
+}
+
+
+
   @Post("/flashcardresponse")
   @HttpCode(201)
   @UseBefore(authMiddleware)
@@ -161,6 +189,22 @@ export class FlashController {
       };
     }
   }
+
+ @Get("/flashCardDeck/:id")
+ @OpenAPI({summary:"get flashcard deck"})
+ async getFlashCardDeck(@Param("id") id:number){
+  try{
+    const flashDeck = await this.flashCardService.getFlashCardDeck(id);
+    return { status: true, flashDeck };
+  }catch(error){
+    return {
+      error: {
+        code: 500,
+        message: (error as Error).message,
+      },
+    };
+  }
+ }
 
   @Get("/:id")
   @OpenAPI({ summary: "Get all build of users" })

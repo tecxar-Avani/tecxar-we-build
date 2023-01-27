@@ -134,18 +134,18 @@ const FlashCardModal = (props: any) => {
       <Modal
         open={props.modal}
         title={
-          props?.flashCard?.title == "addFlashCardToUser" ? (
-            userData.id == props.flashCard.userId || !props.isLoggedIn ? (
-              ""
-            ) : (
-              <PlusOutlined
-                onClick={props.addFlashCardToUser}
-                style={props.isAdded ? { display: "none" } : { color: "#08c" }}
-              />
-            )
-          ) : (
+          // props?.flashCard?.title == "addFlashCardToUser" ? (
+          //   userData.id == props.flashCard.userId || !props.isLoggedIn ? (
+          //     ""
+          //   ) : (
+          //     <PlusOutlined
+          //       onClick={props.addFlashCardToUser}
+          //       style={props.isAdded ? { display: "none" } : { color: "#08c" }}
+          //     />
+          //   )
+          // ) : (
             props?.flashCard?.title
-          )
+          // )
         }
         centered
         visible={props.modalVisible}
