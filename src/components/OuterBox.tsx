@@ -38,7 +38,7 @@ const OuterBox = (props: any) => {
       }
     }
 
-    if (value.length === 150 && !props.arr.includes(propsId) && !props.boxId) {
+    if (value.length === 1 && !props.arr.includes(propsId) && !props.boxId) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
     } else if (props.boxId && value.length === 150) {
@@ -60,21 +60,21 @@ const OuterBox = (props: any) => {
     if (props.isRefresh) {
       const mergedArray = props.mergedArrayForRedo.map((a: any) =>
         a.map((b: any) => {
-          return { id: b.id, message: b.message, boxId: a.boxId};
+          return { id: b.id, message: b.message, boxId: a.boxId };
         })
       );
       const redoDataArray: any = _.groupBy(props.redoData, "sorting_order");
       const objArr = _.values(redoDataArray);
       const redoLastValue = objArr.map((a: any) => _.last(a));
       const arr1 = props.dataArrayForRedo.map((a: any) => {
-        return { id: a.id, message: a.message,boxId: a.boxId };
+        return { id: a.id, message: a.message, boxId: a.boxId };
       });
       const arr2 = redoLastValue.map((a: any) => {
         return { id: parseInt(a.sorting_order), message: a.description };
       });
       if (props.mergedArrayForRedo) {
-        const arr3 = mergedArray.map((a:any) => {
-          const uniqueArrayMerge = a.map((item:any) => {
+        const arr3 = mergedArray.map((a: any) => {
+          const uniqueArrayMerge = a.map((item: any) => {
             const findItem = arr2.find((a2Item) => a2Item.id === item.id);
             if (findItem) {
               item.message = findItem.message;
@@ -84,7 +84,7 @@ const OuterBox = (props: any) => {
 
           return uniqueArrayMerge;
         });
-        console.log("11111111111111111111111111111",arr3) 
+        console.log("11111111111111111111111111111", arr3);
         // const uniqueArrayMerge = _.uniqBy(arr3, 'id');
         props.setIsRefresh(false, arr3);
         form.resetFields();
@@ -92,25 +92,33 @@ const OuterBox = (props: any) => {
         const dataArray = _.unionWith(arr2, arr1, _.isEqual);
         const uniqueArray = _.uniqBy(dataArray, "id");
         props.setIsRefresh(false, uniqueArray);
-       }
-        form.resetFields();
-       
+      }
+      form.resetFields();
     }
   }, [props.isRefresh]);
   // redoArray.push(boxDataForRedo)
   useEffect(() => {
     if (props.isRedo) {
       props.setFormDataOnUndo(boxDataForRedo);
-    } 
+    }
     props.setIsRedo(false);
   }, [props.isRedo]);
   const group_Build_id = props?.groupList?.map((a: any) => a.id);
-  const groupById : any = _.groupBy(props.groupList, "group_id")
-  const objArrrr = _.values(groupById)
-   const groupedData =   objArrrr.length>0 && objArrrr?.map((a:any) => a.map((b:any) => {return {"sorting_order":b.id,"group_id":b.group_id,"boxId":b.boxId,"build_id":b.build_id}})
-   )
+  const groupById: any = _.groupBy(props.groupList, "group_id");
+  const objArrrr = _.values(groupById);
+  const groupedData =
+    objArrrr.length > 0 &&
+    objArrrr?.map((a: any) =>
+      a.map((b: any) => {
+        return {
+          sorting_order: b.id,
+          group_id: b.group_id,
+          boxId: b.boxId,
+          build_id: b.build_id,
+        };
+      })
+    );
   // const dataOfGroup = groupedData.length > 0 && groupedData.map((b:any) => {return {"sorting_order":b.id,"group_id":b.group_id,"boxId":b.boxId,"build_id":b.build_id}})
-
   return (
     <Fragment>
       <Col
@@ -140,11 +148,22 @@ const OuterBox = (props: any) => {
             >
               <Checkbox
                 className={`${
-                  props.activeSelection ? "groupSelection" : "groupSelectionNot"
-                } ${group_Build_id?.includes(props.id) && props.activeSelection && !props.isEditSelect && "dis"}`}
+                  props.activeSelection || props.isEditSelect
+                    ? "groupSelection"
+                    : "groupSelectionNot"
+                } ${
+                  group_Build_id?.includes(props.id) &&
+                  props.activeSelection &&
+                  !props.isEditSelect &&
+                  "dis"
+                }`}
                 value={props.boxId}
                 onClick={props.groupingSelection}
-                defaultChecked={!props.isEditSelect ? group_Build_id?.includes(props.id) : null}
+                defaultChecked={
+                  !props.isEditSelect
+                    ? group_Build_id?.includes(props.id)
+                    : null
+                }
                 //  {filteredArray ? indeterminate : []}
               >
                 <Form form={form} name="formTwo" className="textBoxInner">

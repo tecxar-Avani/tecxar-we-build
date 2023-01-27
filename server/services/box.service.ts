@@ -7,6 +7,7 @@ import { QueryTypes } from "sequelize";
 
 class BoxService {
   private box = DB.box;
+  private groupBox = DB.boxGroups;
 
   public async createBox(boxData: IBoxes | any): Promise<IBoxes[] | null> {
     if (isEmpty(boxData)) {
@@ -70,7 +71,6 @@ class BoxService {
     });
     return boxes;
   }
-  
 
   public async getTotalBoxes(userId: any): Promise<IBoxes[] | any> {
     const query = `SELECT COUNT(*) AS boxes FROM video_builds AS vb
@@ -83,10 +83,32 @@ class BoxService {
   }
 
   public async updateBox(id: number, data: any): Promise<IBoxes[] | null> {
-   
     const boxUpdate: any | null = await this.box.update(
       { ...data },
-      { where: { id: id} }
+      { where: { id: id } }
+    );
+    if (!boxUpdate) {
+      return null;
+    } else {
+      return boxUpdate;
+    }
+  }
+
+  public async updateGroupBox(id: number, data: any): Promise<IBoxes[] | null> {
+    const boxUpdate: any | null = await this.groupBox.update(
+      { ...data },
+      { where: { box_id: id } }
+    );
+    if (!boxUpdate) {
+      return null;
+    } else {
+      return boxUpdate;
+    }
+  }
+
+  public async deleteGroupBox(id: number): Promise<IBoxes[] | null> {
+    const boxUpdate: any | null = await this.groupBox.destroy(
+      { where: { box_id: id } }
     );
     if (!boxUpdate) {
       return null;

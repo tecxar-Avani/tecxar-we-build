@@ -360,31 +360,76 @@ export class FlashController {
     @Param("id") id: number,
     @Body() data: updateVideoBuildDto
   ) {
-    try { 
+    try {
       data.updated_by = req.user.id;
       const userBuild = await this.buildService.updateBuild(id, data);
-      const userBuildId = await this.buildService.getBuildById(id)
-      if (data?.boxes) { 
-        if(data.boxes.draggedArray?.length > 0 && userBuildId && userBuildId.length> 0 && userBuildId[0].created_by === data.updated_by){    
-        data.boxes.draggedArray.map(async (box: any) => {
-              const updateData = {
-                sorting_order:  box.id && Number(box.id)
+      const userBuildId = await this.buildService.getBuildById(id);
+      console.log("%%%%%%%%%%%%%%%%%%",data.boxes)
+      if (data?.boxes) {
+        if (
+          data.boxes.draggedArray?.length > 0 &&
+          userBuildId &&
+          userBuildId.length > 0 &&
+          userBuildId[0].created_by === data.updated_by
+        ) {
+          data.boxes.draggedArray.map(async (box: any) => {
+            const updateData = {
+              sorting_order: box.id && Number(box.id),
+            };
+            await this.boxService.updateBox(box.boxId, updateData);
+            const updateDestinationGroup =
+              data.boxes.destinationGroup?.length > 0 &&
+              data.boxes.destinationGroup.filter(
+                (g: any) => g.boxId == box.boxId
+              );
+            const updateSourceGroup =
+              data.boxes.sourceGroup?.length > 0 &&
+              data.boxes.sourceGroup.filter((g: any) => g.boxId == box.boxId);
+            if (
+              updateDestinationGroup?.length > 0 &&
+              data.boxes.sourceGroup?.length > 0 &&
+              data.boxes.sourceGroup[0].group_id
+            ) {
+              const updateGroupId = {
+                group_id: data.boxes.sourceGroup[0].group_id,
               };
-              await this.boxService.updateBox(box.boxId, updateData);
-        });
+              await this.boxService.updateGroupBox(box.boxId, updateGroupId);
+            }
+            if (
+              updateSourceGroup?.length > 0 &&
+              data.boxes.destinationGroup?.length > 0 &&
+              data.boxes.destinationGroup[0].group_id
+            ) {
+              const updateGroupId = {
+                group_id: data.boxes.destinationGroup[0].group_id,
+              };
+              await this.boxService.updateGroupBox(box.boxId, updateGroupId);
+            }
+         
+
+            // if (
+            //   (updateSourceGroup?.length > 0 &&
+            //     data.boxes.destinationGroup.length == 0) ||
+            //   (updateDestinationGroup?.length > 0 &&
+            //     data.boxes.sourceGroup.length == 0)
+            // ) {
+            //   await this.boxService.deleteGroupBox(box.boxId);
+            // }
+
+          });
         }
-        if(data.boxes.boxData?.length > 0){
+        if (data.boxes.boxData?.length > 0) {
           data.boxes.boxData.map(async (box: updateBoxesDto) => {
             const boxId = box.sorting_order && Number(box.sorting_order);
             const existingBox = await this.boxService.getBoxesById(id, boxId);
-           
+
             if (existingBox && existingBox.length > 0) {
               existingBox.map(async (d: any) => {
                 const updateData = {
                   description: box.description,
-                  sorting_order: box.sorting_order
+                  sorting_order: box.sorting_order,
                 };
-               
+
                 await this.boxService.updateBox(d.id, updateData);
               });
             } else {
@@ -397,9 +442,14 @@ export class FlashController {
             }
           });
         }
-       
       }
-      return {  data: userBuild, message: data.boxes.draggedArray?.length > 0 ? "Box Dragged successfully" : "Build Updated successfully"};
+      return {
+        data: userBuild,
+        message:
+          data.boxes.draggedArray?.length > 0
+            ? "Box Dragged successfully"
+            : "Build Updated successfully",
+      };
     } catch (error) {
       return {
         error: {
