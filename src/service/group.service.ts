@@ -10,6 +10,10 @@ class GroupService {
   updateGroupById(id: number, data: any) {
     return API.put(`/group/update/${id}`, data);
   }
+
+  updateGroupTitleById(id:number,data:any){
+    return API.put(`/group/updateTitle/${id}`, data);
+  }
   deleteGroupById(id: any) {
     return API.delete(`/group/deleteGroups/${id}`);
   }

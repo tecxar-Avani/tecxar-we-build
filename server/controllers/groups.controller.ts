@@ -120,6 +120,29 @@ export class GroupController {
     }
   }
 
+  @Put("/updateTitle/:id")
+  @UseBefore(authMiddleware)
+  @OpenAPI({ summary: "Update group data of users" })
+  async updateGroupTitle(
+    @Param("id") id: number,
+    @Body() data: updateBoxesgroupDto | any,
+  ) {
+    try {
+      const group_id = data.group_id
+      const userBuild = await this.groupService.updateGroupTitle(group_id, data);
+      return { userBuild, message: "Group Title updated successfully" };
+    } catch (error) {
+      return {
+        error: {
+          code: 500,
+          message: (error as Error).message,
+        },
+      };
+    }
+  }
+
+
+
   @Delete("/deleteGroups/:id")
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: "Delete group id of build" })

@@ -8,7 +8,7 @@ import {
 } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
-    IGroup, IUpdateGroup,
+    IGroup, IUpdateGroup, IUpdateGroupTitle,
 } from "../../../@types/common";
 import groupService from "../../service/group.service";
 import { IGroupRowsCountResponse } from "../../../@types/responses";
@@ -55,6 +55,25 @@ export const UpdateGroup = createAsyncThunk(
     return { status, data };
   }
 );
+
+export const UpdateGroupTitle = createAsyncThunk(
+  `group/updateTitle`,
+  async (updateGroup: IUpdateGroupTitle, { dispatch }) => {
+     const id = Number(updateGroup.buildId);
+    const editData = {
+      group_id:updateGroup.group_id,
+      title: updateGroup.title,
+   
+    };
+    const { status, data } = await groupService.updateGroupTitleById(
+      id,
+      editData
+    );
+    dispatch(getGroupBoxesByBuild(updateGroup.buildId))
+    return { status, data };
+  }
+);
+
 
 
 export const deleteGroupById = createAsyncThunk(
@@ -143,6 +162,22 @@ const groupSlice = createSlice({
         }
       })
       .addCase(UpdateGroup.fulfilled, (state, action) => {
+        if (action.payload.status) {
+          toast.success("");
+          return {
+            ...state,
+            loading: false,
+            editGroup: action.payload,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            editGroup: action.payload.data.editGroup,
+          };
+        }
+      })
+      .addCase(UpdateGroupTitle.fulfilled, (state, action) => {
         if (action.payload.status) {
           toast.success("");
           return {

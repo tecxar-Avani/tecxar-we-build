@@ -163,6 +163,12 @@ export interface IUpdateGroup{
   boxes?:[];
   buildId?:number;
 }
+
+export interface IUpdateGroupTitle{
+  title?:string;
+  buildId?:number;
+  group_id?:number;
+}
 export interface IGroupBoxes{
   title?:string;
   group_id?:number;

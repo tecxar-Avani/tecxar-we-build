@@ -109,6 +109,21 @@ if(getGroupId){
     }
   
   }
+  public async updateGroupTitle(
+    id: number,
+    data: any
+  ): Promise<IGroups | null> {
+    const GroupTitleByUpdate: any | null = await this.group.update(
+      { ...data },
+      { where: { id: id } }
+    );
+
+    if (!GroupTitleByUpdate) {
+      return null;
+    } else {
+      return GroupTitleByUpdate;
+    }
+  }
 
   public async deleteGroupsByBuildId(id: number): Promise<IGroups[] | null> {
     const groupDelete: any | null = await this.group.destroy({

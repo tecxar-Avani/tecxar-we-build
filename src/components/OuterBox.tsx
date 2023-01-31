@@ -49,7 +49,7 @@ const OuterBox = (props: any) => {
   const userId = buildById?.data?.map((a: any) => a.created_by);
   const boxIdForArrow = Number(props.id) % 3 == 0;
   const getItemStyle = (isDragging: any, draggableStyle: any) => ({
-    background: isDragging ? "#D9DDDC" : "",
+    // background: isDragging ? "#D9DDDC" : "",
     // position: "fixed",
     ...draggableStyle,
   });
@@ -122,25 +122,39 @@ const OuterBox = (props: any) => {
           props.description ? "side-Arrow" : ""
         }`}
       >
-        <Draggable
+        {/* <Draggable
           key={props.id}
           draggableId={props.id.toString()}
           index={props.index}
         >
-          {(provided, snapshot) => (
+          {(provided, snapshot) => ( */}
             <div
               className={`${
                 props.activeSelection ? "innerBoxsSelected" : "innerBoxs"
               } p-3`}
               // style={{ height: "200px" }}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              ref={provided.innerRef}
-              style={getItemStyle(
-                snapshot.isDragging,
-                provided.draggableProps.style
-              )}
+              // {...provided.draggableProps}
+              // {...provided.dragHandleProps}
+              // ref={provided.innerRef}
+              // style={getItemStyle(
+              //   snapshot.isDragging,
+              //   provided.draggableProps.style
+              // )}
             >
+                  <Draggable
+          key={props.id}
+          draggableId={props.id.toString()}
+          index={props.index}
+          
+        >
+          {(provided, snapshot) => (
+            <div {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            style={getItemStyle(
+              snapshot.isDragging,
+              provided.draggableProps.style
+            )}>
               <Checkbox
                 className={`${
                   props.activeSelection ? "groupSelection" : "groupSelectionNot"
@@ -149,6 +163,7 @@ const OuterBox = (props: any) => {
                 onClick={props.groupingSelection}
                 defaultChecked={!props.isEditSelect ? group_Build_id?.includes(props.id) : null}
                 //  {filteredArray ? indeterminate : []}
+                
               >
                 <Form form={form} name="formTwo" className="textBoxInner">
                   {props.visible && (
@@ -185,6 +200,7 @@ const OuterBox = (props: any) => {
                                 boxId: props.boxId,
                                 description: props.description,
                               };
+                              
                               props.onFocus(data);
                             }}
                             readOnly={
@@ -240,9 +256,12 @@ const OuterBox = (props: any) => {
                   )}
                 </Form>
               </Checkbox>
+              </div>
+               )}
+               </Draggable>
             </div>
-          )}
-        </Draggable>
+        {/* //   )}
+        // </Draggable> */}
         {props.description && (
           <div className="arrowRight">
             <Image layout="fill" width={"100"} src={"/public/redArrow.svg"} />

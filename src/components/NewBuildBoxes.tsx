@@ -23,8 +23,10 @@ const NewBuildBoxes = (props: any) => {
 
   return (
     <Fragment>
+  
       {props.item && props.item.length > 0
         ? [...Array(Math.ceil(props.item.length / 3))].map((_rows, index) => {
+          
             const subArray = props.item
               .sort((a: any, b: any) => a.id - b.id)
               .slice(index * 3, index * 3 + 3);
@@ -209,6 +211,7 @@ const NewBuildBoxes = (props: any) => {
                                   placeholder="type here..."
                                   onChange={props.groupTitle}
                                   defaultValue={props.isEditSelect && subArray[0].title ? subArray[0].title : ''}
+                                  onClick={() => {props.editGroupId(subArray[0].group_id)}}
                                 />
                               </Form.Item>
                             </Form>

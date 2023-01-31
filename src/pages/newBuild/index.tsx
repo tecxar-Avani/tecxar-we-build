@@ -48,6 +48,7 @@ import {
   getGroupBoxesByBuild,
   groupSelector,
   UpdateGroup,
+  UpdateGroupTitle,
 } from "@/store/reducers/group.reducer";
 import { ExclamationCircleFilled ,PlusOutlined} from "@ant-design/icons";
 import _ from "lodash";
@@ -93,7 +94,7 @@ const NewBuild = (props: any) => {
   const [uniqueArray, setUniqueArray] = useState([]);
   const [isEditSelect, setIsEditSelect] = useState(false);
    const [mergeArrayData,setMergedArrayData]= useState<any>([]);
-   const [groupId,setGroupId] = useState("");
+   const [editGroupId,setEditGroupId] = useState<number>();
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -607,23 +608,24 @@ const NewBuild = (props: any) => {
  
   const submitGroup = () => {
     setActiveSelection(false);
-    
+   
     const groupData = {
       title: groupTitle?.target?.value,
       boxes: groupArray,
       buildId: buildId,
     };
-    console.log("$$$$$$$$$$$$$$$$$$",groupId)
-const isTitleAlready = groupList?.rows?.groupBox?.map((A:any) => A.title)
-const Title = isTitleAlready.includes(groupData.title)
-console.log("%%%%Title%%%%Title%%%%%%%",Title)
-
-if(!Title && !groupData.boxes || groupData?.boxes?.length == 0 ){
+   
+// const isTitleAlready = groupList?.rows?.groupBox?.map((A:any) => A.title)
+// const Title = isTitleAlready.includes(groupData.title)
+console.log("^^^^^^^^^^^^^^^^^^^",editGroupId)
+if(editGroupId && editGroupId !== undefined){
   const groupData = {
     title: groupTitle?.target?.value,
     buildId: buildId,
+    group_id:editGroupId,
   };
-  // updateGroupTitle(groupData)
+     dispatch(UpdateGroupTitle(groupData));
+     setIsEditSelect(false)
 }
  else if (!groupData.boxes || groupData?.boxes?.length == 0) {
     toast.warning("please select the boxes");
@@ -768,7 +770,7 @@ if(!Title && !groupData.boxes || groupData?.boxes?.length == 0 ){
               setIsRedo={(data: any) => redoUniqueData(data)}
               groupSelect={groupSelect}
               activeSelection={activeSelection}
-              submitGroup={(groupId:any) => {submitGroup; console.log("^^^^^^^^^^^",groupId)}}
+              submitGroup={submitGroup}
               groupList={
                 buildListByUrl.data.length > 0 ? [] : groupList.rows.groupBox
               }
@@ -852,7 +854,7 @@ if(!Title && !groupData.boxes || groupData?.boxes?.length == 0 ){
                   setCompletedTodos={setCompletedTodos}
                   activeSelection={activeSelection}
                   groupingSelection={groupingSelection}
-                  submitGroup={submitGroup}
+                  // submitGroup={submitGroup}
                   groupTitle={setGroupTitle}
                   groupList={
                     buildListByUrl.data.length > 0
@@ -864,6 +866,7 @@ if(!Title && !groupData.boxes || groupData?.boxes?.length == 0 ){
                   redoData={redoData}
                   setRedoData={setRedoData}
                   isEditSelect={isEditSelect}
+                  editGroupId={setEditGroupId}
                 />
               </DragDropContext>
 
