@@ -18,6 +18,8 @@ import {
 import { IBoxes, IVideoBuild } from "../../../@types/common";
 import Search from "antd/lib/input/Search";
 import { getAwarenessByBoxId } from "./awareness.reducer";
+import { getGroupBoxesByBuild } from "./group.reducer";
+
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
 type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
 type RejectedAction = ReturnType<GenericAsyncThunk["rejected"]>;
@@ -99,7 +101,7 @@ export const UpdateUsersBuild = createAsyncThunk(
     };
     const { status, data } = await BuildService.UpdateBuildById(id, editData);
     dispatch(getUsersBuild);
-dispatch(getAwarenessByBoxId(updateBuildData.id))
+    dispatch(getAwarenessByBoxId(updateBuildData.id));
     return { status, data };
   }
 );
@@ -124,13 +126,12 @@ interface State {
   buildById: IBuildRowsCountResponse | any;
   userBuilds: IBuildRowsCountResponse | any;
   boxes: IBoxes;
-  getBuildByUrlGroup:any;
-
+  getBuildByUrlGroup: any;
 }
 const getBuildByUrlGroupState = {
   status: false,
   rows: [1],
-}
+};
 const initialState: State = {
   build: {
     video_url: "",
@@ -169,7 +170,7 @@ const initialState: State = {
     id: 0,
     description: "",
   },
-  getBuildByUrlGroup:{
+  getBuildByUrlGroup: {
     status: true,
     rows: [],
   },
@@ -252,14 +253,14 @@ const buildSlice = createSlice({
             ...state,
             loading: false,
             buildListByUrl: action.payload.rows,
-            getBuildByUrlGroup:getBuildByUrlGroupState,
+            getBuildByUrlGroup: getBuildByUrlGroupState,
             boxes: action.payload.boxes,
           };
         } else {
           return {
             ...state,
             loading: false,
-            getBuildByUrlGroup:initialState.getBuildByUrlGroup,
+            getBuildByUrlGroup: initialState.getBuildByUrlGroup,
             buildListByUrl: initialState.buildListByUrl,
           };
         }
@@ -271,15 +272,14 @@ const buildSlice = createSlice({
             loading: false,
             buildById: action.payload.rows,
             boxes: action.payload.boxes,
-            getBuildByUrlGroup:initialState.getBuildByUrlGroup
+            getBuildByUrlGroup: initialState.getBuildByUrlGroup,
           };
         } else {
           return {
             ...state,
             loading: false,
             buildById: initialState.buildById,
-            getBuildByUrlGroup:initialState.getBuildByUrlGroup
-
+            getBuildByUrlGroup: initialState.getBuildByUrlGroup,
           };
         }
       })
@@ -317,15 +317,11 @@ const buildSlice = createSlice({
       })
       .addCase(UpdateUsersBuild.fulfilled, (state, action) => {
         if (action.payload.status) {
-         
-          if(action.payload.data.message == "Box Dragged successfully"){
-
-          }
-          else{
+          if (action.payload.data.message == "Box Dragged successfully") {
+          } else {
             toast.success(action.payload.data.message);
             Router.push("/search?selfLearning=true");
           }
-        
 
           return {
             ...state,

@@ -603,16 +603,32 @@ const NewBuild = (props: any) => {
 
     setDataArray(dragg);
     setDraggedArray(dragg);
-    const sId = dataArray.filter((arr: any) => arr.id == source.index);
-    const dId = dataArray.filter((arr: any) => arr.id == destination.index);
-    setSourceId([...sId, { group_id: sourceGroups?.length>0 ?sourceGroups[0].group_id : null  }]);
-    setDestinationId([
-      ...dId,
-      {
-        group_id:
-          destinationGroups?.length > 0 ? destinationGroups[0].group_id : null,
-      },
-    ]);
+    const sId: any = dataArray.filter((arr: any) => arr.id == source.index);
+    const sourceData =
+      sId?.length > 0 &&
+      sId.map((arr: any) => {
+        arr.group_id =
+          destinationGroups?.length > 0 ? destinationGroups[0].group_id : null;
+        arr.previous_group =
+          sourceGroups?.length > 0 ? sourceGroups[0].group_id : null;
+        return arr;
+      });
+
+    const destId: any = dataArray.filter(
+      (arr: any) => arr.id == destination.index
+    );
+    const destinationData =
+      destId?.length > 0 &&
+      destId.map((arr: any) => {
+        arr.group_id =
+          sourceGroups?.length > 0 ? sourceGroups[0].group_id : null;
+        arr.previous_group =
+          destinationGroups?.length > 0 ? destinationGroups[0].group_id : null;
+
+        return arr;
+      });
+    setSourceId(sourceData);
+    setDestinationId(destinationData);
     setDestinationGroup(destinationGroups);
     setSourceGroup(sourceGroups);
   };
