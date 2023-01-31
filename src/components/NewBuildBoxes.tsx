@@ -147,8 +147,7 @@ const NewBuildBoxes = (props: any) => {
           })
         : groupArray &&
           groupArray.length > 0 &&
-          groupArray.map((data: any, index: any) => {
-          
+          groupArray.map((data: any, index1: any) => {
             return (
               data &&
               data.length > 0 &&
@@ -229,13 +228,13 @@ const NewBuildBoxes = (props: any) => {
                         } ${
                           subArrayFilter.length == 0 &&
                           groupArrayFilter.length == 0 &&
-                          !(subArray.length < 3) && 
+                          !(subArray.length < 3) &&
                           "myCss"
                         }`}
                         
                       >
                         <Droppable
-                          droppableId={`${index}`}
+                          droppableId={`${index1}`}
                           direction="horizontal"
                          
                         >

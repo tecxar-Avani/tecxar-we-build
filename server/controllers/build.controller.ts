@@ -26,6 +26,7 @@ import BoxService from "@/services/box.service";
 import BoxReviewService from "@/services/boxReview.service";
 import { IUpdateBoxes } from "@/interfaces/boxes.interface";
 import { updateBoxesDto } from "@/dtos/boxes.dto";
+import GroupService from "@/services/groups.service";
 
 @Controller("/build")
 export class FlashController {
@@ -33,6 +34,7 @@ export class FlashController {
   private flashCardService = new FlashCardService();
   private boxService = new BoxService();
   private reviewService = new BoxReviewService();
+  private groupService = new GroupService();
 
   @Post("/create")
   @UseBefore(authMiddleware)
@@ -360,31 +362,86 @@ export class FlashController {
     @Param("id") id: number,
     @Body() data: updateVideoBuildDto
   ) {
-    try { 
+    try {
       data.updated_by = req.user.id;
       const userBuild = await this.buildService.updateBuild(id, data);
-      const userBuildId = await this.buildService.getBuildById(id)
-      if (data?.boxes) { 
-        if(data.boxes.draggedArray?.length > 0 && userBuildId && userBuildId.length> 0 && userBuildId[0].created_by === data.updated_by){    
-        data.boxes.draggedArray.map(async (box: any) => {
-              const updateData = {
-                sorting_order:  box.id && Number(box.id)
-              };
-              await this.boxService.updateBox(box.boxId, updateData);
-        });
+      const userBuildId = await this.buildService.getBuildById(id);
+      if (data?.boxes) {
+        if (
+          data.boxes.draggedArray?.length > 0 &&
+          userBuildId &&
+          userBuildId.length > 0 &&
+          userBuildId[0].created_by === data.updated_by
+        ) {
+          data.boxes.draggedArray.map(async (box: any) => {
+            const updateData = {
+              sorting_order: box.id && Number(box.id),
+            };
+            await this.boxService.updateBox(box.boxId, updateData);
+            const updateSourceGroup =
+              data.boxes.sourceId?.length > 0 &&
+              data.boxes.sourceId.filter((g: any) => g.boxId == box.boxId);
+            const updateDestinationGroup =
+              data.boxes.destinationId?.length > 0 &&
+              data.boxes.destinationId.filter((g: any) => g.boxId == box.boxId);
+
+            if (updateDestinationGroup?.length > 0) {
+              if (updateDestinationGroup[0].group_id == null) {
+                await this.boxService.deleteGroupBox(box.boxId);
+              } else if (updateDestinationGroup[0].group_id != null) {
+                if (updateDestinationGroup[0].previous_group != null) {
+                  const updateGroupId = {
+                    group_id: updateDestinationGroup[0].group_id,
+                  };
+                  await this.boxService.updateGroupBox(
+                    box.boxId,
+                    updateGroupId
+                  );
+                } else {
+                  const groupData = {
+                    group_id: updateDestinationGroup[0].group_id,
+                    box_id: box.boxId,
+                  };
+                  await this.groupService.createGroupBoxes(groupData);
+                }
+              }
+            }
+
+            if (updateSourceGroup?.length > 0) {
+              if (updateSourceGroup[0].group_id == null) {
+                await this.boxService.deleteGroupBox(box.boxId);
+              } else if (updateSourceGroup[0].group_id != null) {
+                if (updateSourceGroup[0].previous_group != null) {
+                  const updateGroupId = {
+                    group_id: updateSourceGroup[0].group_id,
+                  };
+                  await this.boxService.updateGroupBox(
+                    box.boxId,
+                    updateGroupId
+                  );
+                } else {
+                  const groupData = [{
+                    group_id: updateSourceGroup[0].group_id,
+                    box_id: box.boxId,
+                  }];
+                  await this.groupService.createGroupBoxes(groupData);
+                }
+              }
+            }
+          });
         }
-        if(data.boxes.boxData?.length > 0){
+        if (data.boxes.boxData?.length > 0) {
           data.boxes.boxData.map(async (box: updateBoxesDto) => {
             const boxId = box.sorting_order && Number(box.sorting_order);
             const existingBox = await this.boxService.getBoxesById(id, boxId);
-           
+
             if (existingBox && existingBox.length > 0) {
               existingBox.map(async (d: any) => {
                 const updateData = {
                   description: box.description,
-                  sorting_order: box.sorting_order
+                  sorting_order: box.sorting_order,
                 };
-               
+
                 await this.boxService.updateBox(d.id, updateData);
               });
             } else {
@@ -397,9 +454,14 @@ export class FlashController {
             }
           });
         }
-       
       }
-      return {  data: userBuild, message: data.boxes.draggedArray?.length > 0 ? "Box Dragged successfully" : "Build Updated successfully"};
+      return {
+        data: userBuild,
+        message:
+          data.boxes.draggedArray?.length > 0
+            ? "Box Dragged successfully"
+            : "Build Updated successfully",
+      };
     } catch (error) {
       return {
         error: {

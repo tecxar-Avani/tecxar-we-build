@@ -92,6 +92,11 @@ const NewBuild = (props: any) => {
   const [formDataOnUndo, setFormDataOnUndo] = useState([]);
   const [redoData, setRedoData] = useState<any>([]);
   const [uniqueArray, setUniqueArray] = useState([]);
+  const [sourceGroup, setSourceGroup] = useState<any>([]);
+  const [destinationGroup, setDestinationGroup] = useState<any>([]);
+  const [sourceId, setSourceId] = useState<any>([]);
+  const [destinationId, setDestinationId] = useState<any>([]);
+
   const [isEditSelect, setIsEditSelect] = useState(false);
    const [mergeArrayData,setMergedArrayData]= useState<any>([]);
    const [editGroupId,setEditGroupId] = useState<number>();
@@ -273,7 +278,14 @@ const NewBuild = (props: any) => {
   useEffect(() => {
     if (draggedArray && draggedArray.length > 0) {
       const editData = {
-        boxes: { draggedArray: draggedArray, boxData: boxData },
+        boxes: {
+          draggedArray: draggedArray,
+          boxData: boxData,
+          destinationGroup: destinationGroup,
+          sourceGroup: sourceGroup,
+          sourceId: sourceId,
+          destinationId: destinationId,
+        },
         id: buildId,
       };
       dispatch(UpdateUsersBuild(editData));
@@ -574,18 +586,56 @@ const NewBuild = (props: any) => {
     if (!destination) return;
     if (destination.index === source.index) return;
 
-    dragg = dataArray.map((el) =>
-      el.id == source.index
+    const sourceGroups =
+      groupList.rows.groupBox?.length > 0 &&
+      groupList.rows.groupBox.filter((group: any) => group.id == source.index);
+    const destinationGroups =
+      groupList.rows.groupBox?.length > 0 &&
+      groupList.rows.groupBox.filter(
+        (group: any) => group.id == destination.index
+      );
+
+    dragg = dataArray.map((el) => {
+      return el.id == source.index
         ? { ...el, id: destination.index }
         : el.id == destination.index
         ? { ...el, id: source.index }
-        : el
-    );
+        : el;
+    });
 
     // setDataArray(dataArray.map(el => el.id == source.index ?  {...el, id: destination.index}:  el.id == destination.index ?{...el, id: source.index}: el)
     // )
+
     setDataArray(dragg);
     setDraggedArray(dragg);
+    const sId: any = dataArray.filter((arr: any) => arr.id == source.index);
+    const sourceData =
+      sId?.length > 0 &&
+      sId.map((arr: any) => {
+        arr.group_id =
+          destinationGroups?.length > 0 ? destinationGroups[0].group_id : null;
+        arr.previous_group =
+          sourceGroups?.length > 0 ? sourceGroups[0].group_id : null;
+        return arr;
+      });
+
+    const destId: any = dataArray.filter(
+      (arr: any) => arr.id == destination.index
+    );
+    const destinationData =
+      destId?.length > 0 &&
+      destId.map((arr: any) => {
+        arr.group_id =
+          sourceGroups?.length > 0 ? sourceGroups[0].group_id : null;
+        arr.previous_group =
+          destinationGroups?.length > 0 ? destinationGroups[0].group_id : null;
+
+        return arr;
+      });
+    setSourceId(sourceData);
+    setDestinationId(destinationData);
+    setDestinationGroup(destinationGroups);
+    setSourceGroup(sourceGroups);
   };
 
   // for grouping
@@ -601,12 +651,11 @@ const NewBuild = (props: any) => {
   };
 
   const groupingSelection = (e: any) => {
-   
+    console.log("```````````````````````````````````", e.target.defaultValue);
     const groupId = e.target.value;
     setGroupArray([...groupArray, groupId]);
   };
- 
-  const submitGroup = () => {
+  const submitGroup = (e: any) => {
     setActiveSelection(false);
    
     const groupData = {
@@ -676,7 +725,6 @@ if(editGroupId && editGroupId !== undefined){
   // useEffect(() => {
   //   setMergedArrayData(mergedArray)
   // }, [ groupList.rows.groupBox]);
-  // console.log("%%%%%%%%%%%%%%%%%",mergedArray)
 
    
 
@@ -696,7 +744,7 @@ if(editGroupId && editGroupId !== undefined){
   //   });
   // };
   const editGroupSelect = () => {
-    setIsEditSelect(true)
+    setIsEditSelect(true);
     // setActiveUnGroup(true);
   };
 
@@ -777,7 +825,6 @@ if(editGroupId && editGroupId !== undefined){
               isEditSelect={isEditSelect}
               editGroupSelect={editGroupSelect}
               mergedArray={mergedArrayData}
-             
             />
           </div>
           {/* <Droppable droppableId="boxAll" >
@@ -792,7 +839,9 @@ if(editGroupId && editGroupId !== undefined){
                   // mergedArray={mergedArray}
                   //  item={activeUnGroup ? dataArray : []}
                   mergedArray={mergedArrayData}
-                  dataArrayForRedo={mergedArrayData?.length >= 2 ? [] : dataArray}
+                  dataArrayForRedo={
+                    mergedArrayData?.length >= 2 ? [] : dataArray
+                  }
                   mergedArrayForRedo={mergedArrayData}
                   arr={arr}
                   setArr={(value: any) => {
