@@ -256,7 +256,7 @@ const NewBuild = (props: any) => {
       id: buildId,
     };
     const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
-    {console.log("************************",boxData)}
+   
     if (
       buildCreatedBy &&
       buildCreatedBy.length > 0 &&
@@ -795,7 +795,7 @@ if(editGroupId && editGroupId !== undefined){
     ) : */}
       <Fragment>
         <div className="row d-flex m-0 w-100">
-          <div className="col-sm-4 col-md-5 col-lg-4 col-xl-3">
+          <div className="col-sm-4 col-md-5 col-lg-4 col-xl-3 sbn">
             <NewBuildSideCard
               id={router.query.id}
               videoId={router.query.videoId}
