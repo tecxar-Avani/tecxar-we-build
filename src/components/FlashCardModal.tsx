@@ -44,7 +44,7 @@ const FlashCardModal = (props: any) => {
                 answer: props.flashCardArr[indexValue]?.answer,
                 id: props.flashCardArr[indexValue]?.id,
               };
-
+             
               props.setEditFlashCardData(flashCardData);
               props.setAddFlashcard(true);
             } else if (btn == "deleteFlash.svg") {
@@ -147,6 +147,7 @@ const FlashCardModal = (props: any) => {
             props?.flashCard?.title
           // )
         }
+        destroyOnClose={true}
         centered
         visible={props.modalVisible}
         onCancel={() => props.setmodalOpen(false)}
@@ -179,6 +180,7 @@ const FlashCardModal = (props: any) => {
         handleSubmit={props.handleSubmit}
         defaultQuestionIndex={props.defaultQuestionIndex}
         isLoggedIn={props.isLoggedIn}
+        setModalOpen={props.setModalOpen}
       />
       <LogInButton
         title=""

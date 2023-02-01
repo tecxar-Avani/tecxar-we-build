@@ -1697,8 +1697,24 @@ h6 {
     margin-left: 3.2%;
     margin-top: -1px;
     margin-bottom: -2px;
-}
-}
+}}
+@media only screen and (width: 1024px){
+  .headerGroup {
+    width: 88.1%;
+    margin-left: 5.9%;
+    margin-top: -1px;
+    margin-bottom: -2px;
+}}
+@media only screen and (width: 1440px){
+
+.headerGroup {
+  width: 92.8%;
+  margin-left: 3.6%;
+  margin-top: -1px;
+  margin-bottom: -2px;
+}}
+
+
 .noneGroup{
   width: 100%;
   // margin-left: 3%;

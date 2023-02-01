@@ -456,8 +456,8 @@ const Profile = (props: any) => {
               const newData = {
                 answer: ans.answer,
                 question: ans.question,
+                id:ans.id,
               };
-
               setEditFlashCardData(newData);
             });
         }}

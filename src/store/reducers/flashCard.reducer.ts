@@ -96,7 +96,7 @@ export const updateFlashCardId = createAsyncThunk(
       id,
       editData
     );
-dispatch(getFlashCardByUser())
+    dispatch(getFlashCardByUser())
     return { status, data };
   }
 );

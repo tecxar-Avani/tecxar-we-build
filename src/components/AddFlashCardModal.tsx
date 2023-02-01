@@ -49,12 +49,16 @@ const AddFlashCardModal = (props: any) => {
             if (props.isLoggedIn || loggedInUser?.length > 0) {
               props.handleSubmit({
                 ...data,
-                id:
-                  props.defaultQuestionIndex &&
-                  props.flashCardArr &&
-                  props.flashCardArr[props.defaultQuestionIndex]?.id,
+                id:props?.flashCardData?.id,
+                  // props.defaultQuestionIndex &&
+                  // props.flashCardArr &&
+                  // props.flashCardArr[props.defaultQuestionIndex]?.id,
               });
-              props.defaultQuestionIndex ?  props.setModal2Open(false) :form.resetFields();
+              props.defaultQuestionIndex ? (
+                form.resetFields(),
+                props.setModal2Open(false)
+              ): form.resetFields();
+              props.defaultQuestionIndex ? props.setModalOpen(false) : '';
             } else {
               setModal5Open(true);
             }
