@@ -84,19 +84,18 @@ body,
     color: black;
     background-color: #d4d4d4;
   }
-  .ant-input:placeholder-shown {
+  .ant-input {
     text-overflow: ellipsis;
     color: black;
     background-color: #d4d4d4;
   }
-
   .ant-input::placeholder {
     text-overflow: ellipsis;
     color: black;
     background-color: #d4d4d4;
   }
 
-  .ant-input:focus,
+  .ant-input:focus, .ant-input:hover, .ant-input:placeholder-shown,
   .ant-input-focused ::placeholder {
     text-overflow: ellipsis;
     color: black;
@@ -111,6 +110,7 @@ body,
   .ant-input:focus {
     border: none !important;
   }
+
 }
 
 .sidebar-app .ant-layout-sider {

@@ -105,7 +105,7 @@ const NewBuildSideCard = (props: any) => {
           >
             <Button className="">EditGroup</Button>
           </div>
-          {(props.activeSelection  || props.isEditSelect) && (
+          {(props.activeSelection || props.isEditSelect) && (
             <div className="mx-1 buttonSubmit">
               <Button
                 type="submit"
@@ -115,7 +115,7 @@ const NewBuildSideCard = (props: any) => {
                 Submit
               </Button>
             </div>
-          ) }
+          )}
         </div>
 
         <div
@@ -141,19 +141,17 @@ const NewBuildSideCard = (props: any) => {
             </span>
             <div>
               <span
-                onClick={() => {
-                  props.value == "" ? {} : props.setAwarenessModal(true);
-                }}
+                onClick={props.Inspiration}
                 className="mb-0 mt-0"
               >
-                <div className="purplePolygon" onClick={props.Inspiration} />
+                <div
+                  className="purplePolygon cursor-pointer"
+                  onClick={() => {props.value == "" ? {} : props.setAwarenessModal(true)}}
+                />
                 {/* <Image src="../img/polygon22.png" onClick={props.Inspiration} /> */}
               </span>
-
               <span
-                onClick={() => {
-                  props.value == "" ? {} : props.setAwarenessModal(true);
-                }}
+                onClick={props.Acceptance}
                 className="mb-0 mt-0"
               >
                 {/* <Image
@@ -161,7 +159,10 @@ const NewBuildSideCard = (props: any) => {
                 onClick={props.Acceptance}
                 className="blue"
               /> */}
-                <div className="bluePolygon" onClick={props.Acceptance} />
+                <div
+                  className="bluePolygon cursor-pointer"
+                  onClick={() => {props.value == "" ? {} : props.setAwarenessModal(true);}}
+                />
               </span>
 
               <div
@@ -179,11 +180,14 @@ const NewBuildSideCard = (props: any) => {
             </div>
 
             <span
-              onClick={() => {
-                props.value == "" ? {} : props.setAwarenessModal(true);
-              }}
+              onClick={
+                props.Resistance
+              }
             >
-              <div className="redpolygon" onClick={props.Resistance} />
+              <div
+                className="redpolygon cursor-pointer"
+                onClick={() => {props.value == "" ? {} : props.setAwarenessModal(true);}}
+              />
             </span>
 
             <div
@@ -191,7 +195,6 @@ const NewBuildSideCard = (props: any) => {
                 props.value == "" ? {} : props.setAwarenessModal(true);
               }}
             >
-              {" "}
               <span onClick={props.Resistance}>
                 <CustomButton
                   title="Resistance"
@@ -473,7 +476,7 @@ const NewBuildSideCard = (props: any) => {
                       // props?.setIsRefresh(true);
                       props?.setIsRedo(true);
                   }}
-                   style={{ pointerEvents: "none", opacity: 0.4 }}
+                  style={{ pointerEvents: "none", opacity: 0.4 }}
                 />
               </div>
             </div>
