@@ -390,7 +390,7 @@ const NewBuild = (props: any) => {
                       <Form.Item name="comment" className="input-arrow">
                         <div className={`awarenessModal mb-2 header`}>
                           <TextArea
-                            showCount
+                            // showCount
                             maxLength={500}
                             rows={5}
                             className="mb-0 AwareInputFirst"
