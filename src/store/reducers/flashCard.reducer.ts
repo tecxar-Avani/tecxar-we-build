@@ -89,8 +89,8 @@ export const updateFlashCardId = createAsyncThunk(
     const id = Number(updateFlashCard.id);
     const editData = {
       id: Number(updateFlashCard.id),
-      question: updateFlashCard.answer,
-      answer: updateFlashCard.question,
+      question: updateFlashCard.question,
+      answer: updateFlashCard.answer,
     };
     const { status, data } = await flashCardService.updateFlashCardById(
       id,

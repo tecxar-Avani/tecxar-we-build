@@ -152,6 +152,7 @@ const Profile = (props: any) => {
   };
 
   const handleSubmit = (data: any) => {
+   
     dispatch(updateFlashCardId(data));
   };
 
@@ -454,8 +455,8 @@ const Profile = (props: any) => {
           questionFilter.length > 0 &&
             questionFilter.map((ans: any) => {
               const newData = {
-                answer: ans.answer,
                 question: ans.question,
+                answer: ans.answer,
                 id:ans.id,
               };
               setEditFlashCardData(newData);
