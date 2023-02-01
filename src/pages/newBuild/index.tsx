@@ -256,6 +256,7 @@ const NewBuild = (props: any) => {
       id: buildId,
     };
     const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
+    {console.log("************************",boxData)}
     if (
       buildCreatedBy &&
       buildCreatedBy.length > 0 &&
@@ -651,7 +652,6 @@ const NewBuild = (props: any) => {
   };
 
   const groupingSelection = (e: any) => {
-    console.log("```````````````````````````````````", e.target.defaultValue);
     const groupId = e.target.value;
     setGroupArray([...groupArray, groupId]);
   };
@@ -666,7 +666,6 @@ const NewBuild = (props: any) => {
    
 // const isTitleAlready = groupList?.rows?.groupBox?.map((A:any) => A.title)
 // const Title = isTitleAlready.includes(groupData.title)
-console.log("^^^^^^^^^^^^^^^^^^^",editGroupId)
 if(editGroupId && editGroupId !== undefined){
   const groupData = {
     title: groupTitle?.target?.value,
@@ -675,6 +674,7 @@ if(editGroupId && editGroupId !== undefined){
   };
      dispatch(UpdateGroupTitle(groupData));
      setIsEditSelect(false)
+     setEditGroupId(undefined)
 }
  else if (!groupData.boxes || groupData?.boxes?.length == 0) {
     toast.warning("please select the boxes");

@@ -102,6 +102,7 @@ export const UpdateUsersBuild = createAsyncThunk(
     const { status, data } = await BuildService.UpdateBuildById(id, editData);
     dispatch(getUsersBuild);
     dispatch(getAwarenessByBoxId(updateBuildData.id));
+    dispatch(getGroupBoxesByBuild(updateBuildData.id))
     return { status, data };
   }
 );

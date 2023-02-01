@@ -332,12 +332,24 @@ body,
   text-align: right;
   margin-bottom: -7px;
 }
-
+@media only screen and (min-width: 768px) and (max-width: 992px){
+ 
+ .col-md-3 {
+  flex: 0 0 auto !important;
+  width: 50% !important;
+}}
+@media only screen and (min-width: 993px) and (max-width: 1215px){
+ 
+  .col-md-3 {
+   flex: 0 0 auto !important;
+   width: 33% !important;
+ }
+}
 .AllProfile {
   position: absolute;
-}
 
-.AllProfile .boxes-heading {
+
+.boxes-heading {
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
@@ -348,7 +360,7 @@ body,
   font-family: "Arimo";
 }
 
-.AllProfile .boxes-number {
+.boxes-number {
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
@@ -357,7 +369,7 @@ body,
   color: #000000;
   text-align: center;
 }
-.AllProfile .boxes-number1 {
+.boxes-number1 {
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
@@ -367,7 +379,7 @@ body,
   text-align: center;
 }
 
-.AllProfile .cityWithMe {
+.cityWithMe {
   font-style: italic;
   font-weight: 400;
   font-size: 12px;
@@ -378,7 +390,7 @@ body,
   font-family: "Arimo";
 }
 
-.AllProfile .title {
+.title {
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -388,7 +400,7 @@ body,
   color: #000000;
   padding: 0;
 }
-.AllProfile .title1 {
+.title1 {
   font-style: normal;
   font-weight: 700;
   font-size: 17px;
@@ -398,7 +410,7 @@ body,
   color: #000000;
   padding: 0;
 }
-.AllProfile .subTitle {
+.subTitle {
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
@@ -409,7 +421,7 @@ body,
   padding: 0;
 }
 
-.AllProfile .button {
+.button {
   font-weight: 700;
   font-size: 11px;
   line-height: 12.65px;
@@ -417,12 +429,13 @@ body,
   margin-left: -17px;
 }
 
-.AllProfile .button1 {
+.button1 {
   font-weight: 700;
   font-size: 11px;
   line-height: 12.65px;
   text-align: center;
   border-radius: 10px;
+}
 }
 .Search-content {
   font-family: "Arimo";
@@ -820,6 +833,7 @@ body,
   width: 62%;
   height: 101px;
   left: 20%;
+  z-index: 1;
 }
 // .myCss .css-ov1ktg::after {
 //   content: "";
@@ -1657,10 +1671,33 @@ h6 {
   max-width: 100%;
   margin-bottom: -1px !important;
 }
-
+.editGroupHeader {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: black;
+  text-align: center;
+  word-wrap: break-word;
+  min-height: 33px;
+  max-height: 0px;
+  max-width: 100%;
+  margin-bottom: -1px !important;
+}
+.headerGroup {
+  width: 93.6%;
+  margin-left: 3.2%;
+  margin-top: -1px;
+  margin-bottom: -2px;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px){
   .headerGroup {
-    width: 93.7%;
+    width: 93.6%;
     margin-left: 3.2%;
+    margin-top: -1px;
+    margin-bottom: -2px;
+}
 }
 .noneGroup{
   width: 100%;
@@ -1670,7 +1707,11 @@ h6 {
   width: 78px !important;
 }
 .activeSelection {
-  margin-top: 2px !important;
+  margin-top: 1px !important;
+  margin-bottom: -1px !important;
+}
+.activeSelection1{
+  margin-top: 3px !important;
   margin-bottom: -1px !important;
 }
 .textarea {
@@ -1679,6 +1720,10 @@ h6 {
 .hideTitle {
   margin-top: -1px;
   margin-bottom: -1px;
+}
+.hideTitle1{
+  margin-top: -1px;
+  margin-bottom: 3px;
 }
 .dotSize {
   font-size: 15px;

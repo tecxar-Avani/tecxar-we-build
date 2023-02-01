@@ -473,7 +473,7 @@ const NewBuildSideCard = (props: any) => {
                       // props?.setIsRefresh(true);
                       props?.setIsRedo(true);
                   }}
-                  // style={props?.isRefresh == true ? {} : { pointerEvents: "none", opacity: 0.4 }}
+                   style={{ pointerEvents: "none", opacity: 0.4 }}
                 />
               </div>
             </div>

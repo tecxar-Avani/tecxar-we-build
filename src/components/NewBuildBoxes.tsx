@@ -19,14 +19,10 @@ const NewBuildBoxes = (props: any) => {
     props.mergedArray.length > 0 &&
     props.mergedArray?.map((merge: any) => merge);
 
-
-
   return (
     <Fragment>
-  
       {props.item && props.item.length > 0
         ? [...Array(Math.ceil(props.item.length / 3))].map((_rows, index) => {
-          
             const subArray = props.item
               .sort((a: any, b: any) => a.id - b.id)
               .slice(index * 3, index * 3 + 3);
@@ -108,8 +104,20 @@ const NewBuildBoxes = (props: any) => {
                               props.setArr([...props.arr, value])
                             }
                             setBoxData={(data: any) => {
-                              props.setBoxData([...props.boxData, data]);
+                              const filteredIndex = props.boxData.findIndex(
+                                (box: any) =>
+                                  box.sorting_order === data.sorting_order
+                              );
+                              if (filteredIndex > -1) {
+                                props.boxData[filteredIndex] = data;
+                                props.setBoxData([...props.boxData]);
+                              } else {
+                                props.setBoxData([...props.boxData, data]);
+                              }
                             }}
+                            //   arrayCallBack={(id:any) =>
+                            //  {props.setArr([...props.arr,id])}
+                            //   }
                             description={itemData.message}
                             boxId={itemData.boxId}
                             isRefresh={props.isRefresh}
@@ -170,7 +178,7 @@ const NewBuildBoxes = (props: any) => {
                   const groupedDataArray = props.groupedData?.map((b: any) => {
                     return b[b.length - 1].id;
                   });
-                 
+
                   const groupArrayFilter =
                     subArray?.length > 0 &&
                     props.groupedData.length > 0 &&
@@ -182,15 +190,33 @@ const NewBuildBoxes = (props: any) => {
                     <div className={`boxesMain`}>
                       <div
                         className={`border border-color-25 ${
-                          index == 0 && subArray[0].title
+                          index == 0 && subArray[0].title && !props.isEditSelect
                             ? "groupHeader"
-                            : subArray[0].title ? "h-30 headerGroup" : "noneGroup h-30"
-                        } ${props.activeSelection ? "hideTitle" : ""}`}
-                        style={index != 0 ? {background:`${data[0].color}`} : {}}
+                            : subArray[0].title && !props.isEditSelect
+                            ? "h-30 headerGroup"
+                            : props.isEditSelect && index == 0
+                            ? "editGroupHeader"
+                            : props.isEditSelect && index !== 0
+                            ? "headerGroup h-30"
+                            : "noneGroup h-30"
+                        } ${
+                          props.isEditSelect ||
+                          (props.activeSelection && index !== 0)
+                            ? "hideTitle"
+                            : props.activeSelection && index == 0
+                            ? "hideTitle1"
+                            : ""
+                        }`}
+                        style={
+                          index != 0 ? { background: `${data[0].color}` } : {}
+                        }
                       >
-                        {index == 0 && subArray[0].title && !props.isEditSelect ? (
+                        {index == 0 &&
+                        subArray[0].title &&
+                        !props.isEditSelect ? (
                           subArray[0].title
-                        ) : (props.activeSelection && index == 0) || (props.isEditSelect && index == 0) ? (
+                        ) : (props.activeSelection && index == 0) ||
+                          (props.isEditSelect && index == 0) ? (
                           <Fragment>
                             <Form
                               name="basic"
@@ -209,8 +235,14 @@ const NewBuildBoxes = (props: any) => {
                                 <Input
                                   placeholder="type here..."
                                   onChange={props.groupTitle}
-                                  defaultValue={props.isEditSelect && subArray[0].title ? subArray[0].title : ''}
-                                  onClick={() => {props.editGroupId(subArray[0].group_id)}}
+                                  defaultValue={
+                                    props.isEditSelect && subArray[0].title
+                                      ? subArray[0].title
+                                      : ""
+                                  }
+                                  onClick={() => {
+                                    props.editGroupId(subArray[0].group_id);
+                                  }}
                                 />
                               </Form.Item>
                             </Form>
@@ -222,7 +254,9 @@ const NewBuildBoxes = (props: any) => {
 
                       <Row
                         className={`m-0 px-4 innerBoxMain ${
-                          props.activeSelection && !subArray[0].title
+                          props.activeSelection &&
+                          !subArray[0].title &&
+                          index !== 0
                             ? "activeSelection"
                             : ""
                         } ${
@@ -231,18 +265,16 @@ const NewBuildBoxes = (props: any) => {
                           !(subArray.length < 3) &&
                           "myCss"
                         }`}
-                        
                       >
                         <Droppable
                           droppableId={`${index1}`}
                           direction="horizontal"
-                         
                         >
                           {(provided) => (
                             <TaskList
                               ref={provided.innerRef}
                               {...provided.droppableProps}
-                              style={{background:`${data[0].color}`}}
+                              style={{ background: `${data[0].color}` }}
                             >
                               {subArray.map((itemData: any, index: string) => {
                                 return (
@@ -263,6 +295,11 @@ const NewBuildBoxes = (props: any) => {
                                       props.setArr([...props.arr, value])
                                     }
                                     setBoxData={(data: any) => {
+                                      // console.log("data", data);
+                                      // const box = props.boxData.find((box) => {
+                                      //   console.log(box);
+                                      // });
+                                      // console.log("box", box);
                                       props.setBoxData([
                                         ...props.boxData,
                                         data,

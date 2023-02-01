@@ -38,8 +38,8 @@ const OuterBox = (props: any) => {
       }
     }
 
-    if (value.length === 1 && !props.arr.includes(propsId) && !props.boxId) {
-      props.setBoxData(BoxData);
+    props.setBoxData(BoxData);
+    if (value.length > 0 && !props.arr.includes(propsId) && !props.boxId) {
       props.responseCallback(propsId, value, id);
     } else if (props.boxId && value.length === 150) {
       props.setBoxData(BoxData);
@@ -69,7 +69,7 @@ const OuterBox = (props: any) => {
       const arr1 = props.dataArrayForRedo.map((a: any) => {
         return { id: a.id, message: a.message, boxId: a.boxId };
       });
-      
+
       const arr2 = redoLastValue.map((a: any) => {
         return { id: parseInt(a.sorting_order), message: a.description };
       });
@@ -85,7 +85,7 @@ const OuterBox = (props: any) => {
 
           return uniqueArrayMerge;
         });
-        
+
         // const uniqueArrayMerge = _.uniqBy(arr3, 'id');
         props.setIsRefresh(false, arr3);
         form.resetFields();
@@ -134,149 +134,150 @@ const OuterBox = (props: any) => {
           index={props.index}
         >
           {(provided, snapshot) => ( */}
-            <div
-              className={`${
-                props.activeSelection ? "innerBoxsSelected" : "innerBoxs"
-              } p-3`}
-              // style={{ height: "200px" }}
-              // {...provided.draggableProps}
-              // {...provided.dragHandleProps}
-              // ref={provided.innerRef}
-              // style={getItemStyle(
-              //   snapshot.isDragging,
-              //   provided.draggableProps.style
-              // )}
-            >
-                  <Draggable
-          key={props.id}
-          draggableId={props.id.toString()}
-          index={props.index}
-          
+        <div
+          className={`${
+            props.activeSelection ? "innerBoxsSelected" : "innerBoxs"
+          } p-3`}
+          // style={{ height: "200px" }}
+          // {...provided.draggableProps}
+          // {...provided.dragHandleProps}
+          // ref={provided.innerRef}
+          // style={getItemStyle(
+          //   snapshot.isDragging,
+          //   provided.draggableProps.style
+          // )}
         >
-          {(provided, snapshot) => (
-            <div {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-            style={getItemStyle(
-              snapshot.isDragging,
-              provided.draggableProps.style
-            )}>
-              <Checkbox
-                className={`${
-                  props.activeSelection || props.isEditSelect
-                    ? "groupSelection"
-                    : "groupSelectionNot"
-                } ${
-                  group_Build_id?.includes(props.id) &&
-                  props.activeSelection &&
-                  !props.isEditSelect &&
-                  "dis"
-                }`}
-                value={props.boxId}
-                onClick={props.groupingSelection}
-                defaultChecked={
-                  !props.isEditSelect
-                    ? group_Build_id?.includes(props.id)
-                    : null
-                }
-                //  {filteredArray ? indeterminate : []}
-                
+          <Draggable
+            key={props.id}
+            draggableId={props.id.toString()}
+            index={props.index}
+          >
+            {(provided, snapshot) => (
+              <div
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                ref={provided.innerRef}
+                style={getItemStyle(
+                  snapshot.isDragging,
+                  provided.draggableProps.style
+                )}
               >
-                <Form form={form} name="formTwo" className="textBoxInner">
-                  {props.visible && (
-                    <Fragment>
-                      <div
-                        className={`position-relative position-relative-example dragHover ${
-                          boxIdForArrow
-                            ? ""
-                            : props.arr.length == props.id
-                            ? "arrow-red"
-                            : ""
-                        }`}
-                      >
-                        <Form.Item
-                          name={`message${props.id}`}
-                          noStyle={false}
-                          className={`position-relative position-relative-example textfont`}
+                <Checkbox
+                  className={`${
+                    props.activeSelection || props.isEditSelect
+                      ? "groupSelection"
+                      : "groupSelectionNot"
+                  } ${
+                    group_Build_id?.includes(props.id) &&
+                    props.activeSelection &&
+                    !props.isEditSelect &&
+                    "dis"
+                  }`}
+                  value={props.boxId}
+                  onClick={props.groupingSelection}
+                  defaultChecked={
+                    !props.isEditSelect
+                      ? group_Build_id?.includes(props.id)
+                      : null
+                  }
+                  //  {filteredArray ? indeterminate : []}
+                >
+                  <Form form={form} name="formTwo" className="textBoxInner">
+                    {props.visible && (
+                      <Fragment>
+                        <div
+                          className={`position-relative position-relative-example dragHover ${
+                            boxIdForArrow
+                              ? ""
+                              : props.arr.length == props.id
+                              ? "arrow-red"
+                              : ""
+                          }`}
                         >
-                          <TextArea
-                            //  value={props?.description}
-                            key={props.description ? props.description : ""}
-                            maxLength={150}
-                            autoSize={{ minRows: 7, maxRows: 7 }}
-                            defaultValue={
-                              props.description ? props.description : ""
-                            }
-                            //onInput for add new boxes properly
-                            onInput={handleChange}
-                            id={props.id}
-                            className="textFontSize"
-                            onFocus={() => {
-                              const data = {
-                                id: props.id,
-                                boxId: props.boxId,
-                                description: props.description,
-                              };
-                              
-                              props.onFocus(data);
-                            }}
-                            readOnly={
-                              props.description &&
-                              userId &&
-                              userId.length > 0 &&
-                              userId[0] != userData.id
-                                ? true
-                                : false
-                            }
-                          />
-                        </Form.Item>
+                          <Form.Item
+                            name={`message${props.id}`}
+                            noStyle={false}
+                            className={`position-relative position-relative-example textfont`}
+                          >
+                            <TextArea
+                              //  value={props?.description}
+                              key={props.description ? props.description : ""}
+                              maxLength={150}
+                              autoSize={{ minRows: 7, maxRows: 7 }}
+                              defaultValue={
+                                props.description ? props.description : ""
+                              }
+                              //onInput for add new boxes properly
+                              // onChange={handleChange}
+                              onInput={handleChange}
+                              id={props.id}
+                              className="textFontSize"
+                              onFocus={() => {
+                                const data = {
+                                  id: props.id,
+                                  boxId: props.boxId,
+                                  description: props.description,
+                                };
 
-                        {props.awarenessList &&
-                          props.awarenessList.length > 0 &&
-                          props.awarenessList.map((data: any) => {
-                            return data.review_type == "inspiration" &&
-                              data.sorting_order == props.id ? (
-                              <span onClick={() => props.modalDot(props.id)}>
-                                <span
-                                  className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
-                                  onClick={props.Inspiration}
-                                >
-                                  I
+                                props.onFocus(data);
+                              }}
+                              readOnly={
+                                props.description &&
+                                userId &&
+                                userId.length > 0 &&
+                                userId[0] != userData.id
+                                  ? true
+                                  : false
+                              }
+                            />
+                          </Form.Item>
+
+                          {props.awarenessList &&
+                            props.awarenessList.length > 0 &&
+                            props.awarenessList.map((data: any) => {
+                              return data.review_type == "inspiration" &&
+                                data.sorting_order == props.id ? (
+                                <span onClick={() => props.modalDot(props.id)}>
+                                  <span
+                                    className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-0 translate-middle inspirationDotBg"
+                                    onClick={props.Inspiration}
+                                  >
+                                    I
+                                  </span>
                                 </span>
-                              </span>
-                            ) : data.review_type == "acceptance" &&
-                              data.sorting_order == props.id ? (
-                              <span onClick={() => props.modalDot(props.id)}>
-                                <span
-                                  className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
-                                  onClick={props.Acceptance}
-                                >
-                                  A
+                              ) : data.review_type == "acceptance" &&
+                                data.sorting_order == props.id ? (
+                                <span onClick={() => props.modalDot(props.id)}>
+                                  <span
+                                    className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-0 start-100 translate-middle acceptDotBg"
+                                    onClick={props.Acceptance}
+                                  >
+                                    A
+                                  </span>
                                 </span>
-                              </span>
-                            ) : data.review_type == "resistance" &&
-                              data.sorting_order == props.id ? (
-                              <span onClick={() => props.modalDot(props.id)}>
-                                <span
-                                  className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
-                                  onClick={props.Resistance}
-                                >
-                                  R
+                              ) : data.review_type == "resistance" &&
+                                data.sorting_order == props.id ? (
+                                <span onClick={() => props.modalDot(props.id)}>
+                                  <span
+                                    className="dotSize position-absolute cursor-pointer px-2 py-1 rounded-pill text-white top-100 start-100 translate-middle resistanceDotBg"
+                                    onClick={props.Resistance}
+                                  >
+                                    R
+                                  </span>
                                 </span>
-                              </span>
-                            ) : (
-                              []
-                            );
-                          })}
-                      </div>
-                    </Fragment>
-                  )}
-                </Form>
-              </Checkbox>
+                              ) : (
+                                []
+                              );
+                            })}
+                        </div>
+                      </Fragment>
+                    )}
+                  </Form>
+                </Checkbox>
               </div>
-               )}
-               </Draggable>
-            </div>
+            )}
+          </Draggable>
+        </div>
         {/* //   )}
         // </Draggable> */}
         {props.description && (
