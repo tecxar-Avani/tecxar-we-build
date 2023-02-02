@@ -85,6 +85,7 @@ const Profile = (props: any) => {
     logout: "Log out",
     boderBottom: true,
   };
+ 
   const onEdit = (e: any) => {
     const data = {
       id: userData.userData.id,
@@ -175,6 +176,8 @@ const Profile = (props: any) => {
       return a.id == userData.userData.id;
     });
   const usersList1 = usersList.filter((val) => !adminFilter.includes(val));
+const withOutAdminUnblockUser = unBlocked_user && unBlocked_user.length>0 && unBlocked_user.filter((val:any) => !adminFilter.includes(val));
+
 
   return (
     <>
@@ -351,7 +354,7 @@ const Profile = (props: any) => {
                     );
                   })
                 : filterParam == "unBlocked"
-                ? unBlocked_user.map((user: any, index: number) => {
+                ? withOutAdminUnblockUser && withOutAdminUnblockUser.length>0 && withOutAdminUnblockUser.map((user: any, index: number) => {
                     const profile = {
                       id: user.id,
                       title: user.user_name,

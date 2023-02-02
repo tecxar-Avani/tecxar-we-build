@@ -1,8 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { ICreateUser, IUpdateUser } from "@/interfaces/users.interface";
+import Boxes from "@/models/boxes.model";
+import VideoBuilds from "@/models/videoBuilds.model ";
 import DB from "@databases";
 import { HttpException } from "@exceptions/HttpException";
 import { isEmpty } from "@utils/util";
+import { Op } from "sequelize";
 import { QueryTypes } from "sequelize";
 
 class UserService {
@@ -20,6 +23,10 @@ class UserService {
     }
     const user: ICreateUser | null = await this.users.findOne({
       where: { email: email },
+      // include: [{
+      //   model: VideoBuilds,
+      //   where: { id : { [Op.eq]:  }  }
+      // }]
       raw: true,
     });
     if (user) {
