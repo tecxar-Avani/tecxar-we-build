@@ -35,13 +35,25 @@ class UserService {
   }
 
   public async getUsers(): Promise<ICreateUser[] | null> {
-    const query = `select Count(br.id) AS awareness,Count(b.id) AS box,u.id,u.user_name,u.tag_line,u.email,u.is_blocked,u.role_id from users u
-    left join video_builds vb on u.id = vb.created_by
-    left join boxes b on vb.id=b.build_id
-    left join box_reviews br on b.id = br.box_id
-    where u.is_blocked = 0 OR u.is_blocked = 1
-    group by u.id 
-    order by u.role_id asc`;
+    const query = `SELECT 
+    COUNT(b.id) AS box,
+    (Select COUNT(*) from box_reviews WHERE created_by = u.id) AS awareness,
+    u.id,
+    u.user_name,
+    u.tag_line,
+    u.email,
+    u.is_blocked,
+    u.role_id
+FROM
+    users u
+        LEFT JOIN
+    video_builds vb ON u.id = vb.created_by
+        LEFT JOIN
+    boxes b ON vb.id = b.build_id 
+WHERE
+    u.is_blocked = 0 OR u.is_blocked = 1
+GROUP BY u.id
+ORDER BY u.role_id ASC`;
     const users: ICreateUser[] = await DB.sequelize.query(query, {
       type: QueryTypes.SELECT,
     });  
