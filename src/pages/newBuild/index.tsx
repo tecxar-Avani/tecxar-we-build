@@ -96,7 +96,7 @@ const NewBuild = (props: any) => {
   const [destinationGroup, setDestinationGroup] = useState<any>([]);
   const [sourceId, setSourceId] = useState<any>([]);
   const [destinationId, setDestinationId] = useState<any>([]);
-
+  const [isSave , setIsSave] = useState(false);
   const [isEditSelect, setIsEditSelect] = useState(false);
    const [mergeArrayData,setMergedArrayData]= useState<any>([]);
    const [editGroupId,setEditGroupId] = useState<number>();
@@ -238,7 +238,7 @@ const NewBuild = (props: any) => {
     videoType: any,
     polarisationLevel: any,
     difficultyLevel: any,
-    url: string
+    url: string,
   ) => {
     const saveData = {
       type_of_video: videoType,
@@ -247,6 +247,7 @@ const NewBuild = (props: any) => {
       boxes: boxData,
       video_url: url,
     };
+
     const editData = {
       type_of_video: videoType,
       potential_polarization: polarisationLevel,
@@ -263,8 +264,10 @@ const NewBuild = (props: any) => {
       buildCreatedBy[0] == userData.id
     ) {
       dispatch(UpdateUsersBuild(editData));
+      setIsSave(true)
     } else if (boxData.length > 19) {
       dispatch(addBuild(saveData));
+      setIsSave(true)
     } else {
       toast.warning("You need to fill minimum 20 boxes");
     }
@@ -687,6 +690,7 @@ if(editGroupId && editGroupId !== undefined){
       : dispatch(createGroup(groupData));
     setGroupArray([]);
   }
+  setGroupTitle("")
 };
   
   let arr2: any;
@@ -809,8 +813,10 @@ if(editGroupId && editGroupId !== undefined){
                 videoType: any,
                 polarisationLevel: any,
                 difficultyLevel: any,
-                url: string
+                url: string,
               ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
+              isSave={isSave}
+              setIsSave={setIsSave}
               buildId={buildId}
               isRefresh={isRefresh}
               setIsRefresh={setIsRefresh}
@@ -830,8 +836,17 @@ if(editGroupId && editGroupId !== undefined){
           {/* <Droppable droppableId="boxAll" >
             {
               (provided) => (<> */}
+               {/* {build.loading ? <div className="w-100 d-flex justify-content-center mt-5 "><Spin delay={100}/></div> : 
+       <Spin spinning={build.loading == true}/>   */}
+       
+     {/* { builds?.loading ? (
+      <div className="w-100 d-flex justify-content-center mt-5 ">
+        <Spin delay={100} />
+      </div>
+    ) :  */}
           <div className="col-sm-8 col-md-7 col-lg-8 col-xl-9 newBuildBoxsMain">
             <div className="w-100 px-4 pb-3 pt-4 mt-4 newBuildBoxs">
+            {/* <button onClick={() => {router.back()}}>Back</button> */}
               <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
                 <NewBuildBoxes
                   setModal1Open={setAddFlashcard}

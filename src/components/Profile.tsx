@@ -196,7 +196,7 @@ const ProfileCard = (props: any) => {
             <Image
               alt="profile"
               src={`/profileImg/${props.profile.profileImg}`}
-              className="img-fluid img-rounded"
+              className={`img-fluid ${props.profile.blockIcon ? " img-rounded1" : "img-rounded"}`}
             />
             {props.profile.bottomTitle ? (
               <p className="cityWithMe mt-2">

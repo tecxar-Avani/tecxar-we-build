@@ -173,6 +173,9 @@ const OuterBox = (props: any) => {
                     !props.isEditSelect &&
                     "dis"
                   }`}
+                  disabled={ group_Build_id?.includes(props.id) &&
+                    props.activeSelection &&
+                    !props.isEditSelect && true}
                   value={props.boxId}
                   onClick={props.groupingSelection}
                   defaultChecked={

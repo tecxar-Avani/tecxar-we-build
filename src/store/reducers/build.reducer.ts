@@ -56,11 +56,12 @@ export const getBuildByUrl: any = createAsyncThunk(
   async (searchData: {
     url?: string;
     search?: string;
-  }): Promise<IBuildRowsCountResponse> => {
+  },{ dispatch }): Promise<IBuildRowsCountResponse> => {
     const { data } = await BuildService.getBuildByUrl(
       searchData.url,
       searchData.search
     );
+    dispatch(getGroupBoxesByBuild(undefined))
     return { status: data.status, rows: data };
   }
 );
@@ -256,6 +257,7 @@ const buildSlice = createSlice({
             buildListByUrl: action.payload.rows,
             getBuildByUrlGroup: getBuildByUrlGroupState,
             boxes: action.payload.boxes,
+            buildById:initialState.buildById,
           };
         } else {
           return {
@@ -263,6 +265,7 @@ const buildSlice = createSlice({
             loading: false,
             getBuildByUrlGroup: initialState.getBuildByUrlGroup,
             buildListByUrl: initialState.buildListByUrl,
+            buildById:initialState.buildById,
           };
         }
       })

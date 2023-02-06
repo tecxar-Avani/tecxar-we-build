@@ -66,6 +66,8 @@ const NewBuildSideCard = (props: any) => {
     props.groupSelect();
     props.setIsSelectedGroupData;
   };
+  
+
   return (
     <Fragment>
       <div className="newBuildSideCard">
@@ -422,15 +424,18 @@ const NewBuildSideCard = (props: any) => {
             <div
               id={`${hoverEffect && "blink"}`}
               className={`save bd-highlight cursor-pointer`}
+             
               onClick={() => {
-                props.isLoggedIn === true || loggedInUser?.length > 0
-                  ? props.onSave(
+                props.isLoggedIn === true || loggedInUser?.length > 0 
+                  ? props.isSave === false
+                  && props.onSave(
                       videoType,
                       polarisationLevel,
                       difficultyLevel,
-                      url
-                    )
+                      url,
+                    )   
                   : setModal5Open(true);
+                 
               }}
               style={
                 props.id == undefined ||

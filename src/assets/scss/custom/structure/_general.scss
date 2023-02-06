@@ -1488,6 +1488,10 @@ h6 {
   border-radius: 50%;
   border: 10px solid black;
 }
+.img-rounded1 {
+  border-radius: 50%;
+  border: 6px solid black;
+}
 .img-roundedAdmin {
   border-radius: 50%;
   // border: 10px solid black;
@@ -1695,15 +1699,15 @@ h6 {
   margin-bottom: -1px !important;
 }
 .headerGroup {
-  width: 93.6%;
-  margin-left: 3.2%;
-  margin-top: -1px;
-  margin-bottom: -2px;
+    width: 92.4%;
+    margin-left: 3.8%;
+    margin-top: -1px;
+    margin-bottom: -2px;
 }
 @media only screen and (min-width: 768px) and (max-width: 992px){
   .headerGroup {
-    width: 93.6%;
-    margin-left: 3.2%;
+    width: 93.0%;
+    margin-left: 3.5%;
     margin-top: -1px;
     margin-bottom: -2px;
 }}
@@ -1801,6 +1805,7 @@ h6 {
 
 .dis .ant-checkbox-inner {
   display: none;
+  pointer-events: none !important;
 }
 .newBuildSideCard {
   position: fixed;
