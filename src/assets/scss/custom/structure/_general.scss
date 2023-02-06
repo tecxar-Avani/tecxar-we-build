@@ -1890,7 +1890,8 @@ textarea {
   border: none;
 }
 .Toastify__progress-bar{
-  opacity: -0.3 !important
+  opacity: -0.3 !important;
+  display:none !important;
 }
 
 .Toastify__toast-container--top-right{
@@ -1944,5 +1945,22 @@ color: none !important;
     background-color: white !important;
     border-radius: 50% !important;
     margin-left: 55% !important;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 992px){
+
+  .Toastify__toast--warning {
+    .Toastify__toast-body > div:last-child{
+      margin-top: -35px !important;
+      color: #000000;
+      font-weight: 700;
+      font-size: 18px;
+      margin-left: -59px;
+    }  
+    .Toastify__toast-icon{
+      width: 44px !important;
+      background-color: white !important;
+      margin-left: 10px !important;
+    }
   }
 }
