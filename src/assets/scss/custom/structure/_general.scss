@@ -30,7 +30,19 @@ body,
   border: 0.3px solid rgba(0, 0, 0, 0.25);
   // color: rgba(0, 0, 0, 0.25);
 }
-
+.we-build{
+  left:66px;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px){
+ 
+  .we-build {
+    left:75px;
+ }}
+ @media only screen and (min-width: 992px) and (max-width: 1024px){
+ 
+  .we-build {
+    left:66px;
+ }}
 // .ant-layout.site-layout {
 //   margin-left: 125px;
 // }

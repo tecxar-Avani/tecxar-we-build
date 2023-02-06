@@ -47,7 +47,7 @@ const Home: NextPage = (props) => {
           </Content>
         </Link>
 
-        <div className="position-absolute left-66 top-0">
+        <div className="position-absolute we-build top-0">
           <h1>
             We<span className="text-white">Build</span>
           </h1>
