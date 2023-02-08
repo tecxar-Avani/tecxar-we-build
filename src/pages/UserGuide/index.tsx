@@ -1,9 +1,23 @@
 import React from "react";
 import { Image } from "react-bootstrap";
 import Head from "next/head";
+import VideoCard from "@/components/VideoCard";
 
 const UserGuide = () => {
-  
+  const videoData = {
+    description: "#mindfulness #emotionalintelligence #learning",
+duration: "0:3:2",
+newVideoId: "MwHGUAFDjHM",
+publishedAt: "2023-01-31T16:22:03Z",
+thumbnails: {
+  height: 180,
+url: "https://i.ytimg.com/vi/MwHGUAFDjHM/medium.jpg",
+width: 320,
+},
+// title: "LEARN BETTER ON YOUTUBE with WeBuildMinds! BREAK DOWN VIDEOS|ANKI FLASHCARDS|EMOTIONAL INTELLIGENCE",
+url: "https://www.youtube.com/embed/MwHGUAFDjHM",
+videoId: "MwHGUAFDjHM",
+  }
   return (
     <>
         <Head>
@@ -18,7 +32,15 @@ const UserGuide = () => {
       </p>
       <div className="row justify-content-center px-3 mx-4 mb-4">
         <div className="col-4 uVideo">
-          <Image src="../img/U-1.png" />
+        <iframe  
+        width="100%"
+        height="400" 
+        src={videoData.url}
+        name="youtube embed" 
+        title="YouTube video player"
+         allowFullScreen frameBorder={0}></iframe><div className="position-absolute bottom-0 end-0 px-2 mb-2 me-2 py-1 bg-black rounded">
+         {/* <span className="text-white">{videoData?.duration}</span> */}
+       </div>
         </div>
         <div className="videoContent col-4">
           <div>
@@ -37,7 +59,8 @@ const UserGuide = () => {
       </div>
       <div className="row justify-content-center px-3 mx-4 Ucontent-2 mt-0">
         <div className="col-4  uVideo">
-          <Image src="../img/U-2.png" />
+          <Image src="../img/U-2.png"  width="100%"
+        height="400"/>
         </div>
         <div className="videoContent col-4">
           <div>

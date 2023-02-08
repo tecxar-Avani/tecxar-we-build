@@ -1891,7 +1891,6 @@ textarea {
 }
 .Toastify__progress-bar{
   opacity: -0.3 !important;
-  display:none !important;
 }
 
 .Toastify__toast-container--top-right{
@@ -1937,7 +1936,7 @@ color: none !important;
     color: #000000;
     font-weight: 700;
     font-size: 15px;
-    margin-left: -147px;
+    margin-left: -183px;
     word-wrap: break-word;
   }  
   .Toastify__toast-icon{
@@ -1947,6 +1946,25 @@ color: none !important;
     margin-left: 55% !important;
   }
 }
+@media only screen and (min-width: 768px) and (max-width: 992px){
+  .Toastify__toast--success{
+
+  .Toastify__toast-body > div:last-child{
+    margin-top: -57px !important;
+    color: #000000;
+    font-weight: 700;
+    font-size: 15px;
+    margin-left: -30px;
+    word-wrap: break-word;
+  }  
+  .Toastify__toast-icon{
+    width: 66px !important;
+    background-color: white !important;
+    border-radius: 50% !important;
+    margin-left: -60% !important;
+  }
+}}
+
 @media only screen and (min-width: 768px) and (max-width: 992px){
 
   .Toastify__toast--warning {
