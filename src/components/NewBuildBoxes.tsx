@@ -18,7 +18,6 @@ const NewBuildBoxes = (props: any) => {
     props.mergedArray &&
     props.mergedArray.length > 0 &&
     props.mergedArray?.map((merge: any) => merge);
-
   return (
     <Fragment>
       {props.item && props.item.length > 0
@@ -115,9 +114,6 @@ const NewBuildBoxes = (props: any) => {
                                 props.setBoxData([...props.boxData, data]);
                               }
                             }}
-                            //   arrayCallBack={(id:any) =>
-                            //  {props.setArr([...props.arr,id])}
-                            //   }
                             description={itemData.message}
                             boxId={itemData.boxId}
                             isRefresh={props.isRefresh}
@@ -267,7 +263,8 @@ const NewBuildBoxes = (props: any) => {
                         }`}
                       >
                         <Droppable
-                          droppableId={`${index1}`}
+                          droppableId={`${props?.buildById?.data?.length > 0 &&
+                            props?.buildById?.data[0]?.created_by == userData?.id && index1}`}
                           direction="horizontal"
                         >
                           {(provided) => (

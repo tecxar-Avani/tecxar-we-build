@@ -101,6 +101,7 @@ const Profile = (props: any) => {
 
   const handleCancel = () => {
     setEditName(false);
+    form.resetFields()
   };
 
   const questionData = (index?: any, data?: any, questionId?: number) => {
@@ -477,7 +478,6 @@ const withOutAdminUnblockUser = unBlocked_user && unBlocked_user.length>0 && unB
         }}
         //  setDefaultQuestionIndex = {setDefaultQuestionIndex}
       />
-
       <Modal
         title="Edit Your Name"
         open={editName}
