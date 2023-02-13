@@ -27,6 +27,7 @@ const AddFlashCardModal = (props: any) => {
         onCancel={() => {
           props.setEditFlashCardData && props.setEditFlashCardData();
           props.setModal2Open(false);
+          form.resetFields()
         }}
         className="flashCardsModal"
         destroyOnClose={true}

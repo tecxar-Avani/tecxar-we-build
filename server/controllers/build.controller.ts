@@ -165,10 +165,9 @@ export class FlashController {
           results: userBuild,
           allBuilds: [],
         };
-      } else {
+      } else { 
         if (url && url != undefined && url != "undefined") {
           const { searchedData, error } = await this.youtubeApiCall(url);
-
           if (searchedData && searchedData.length > 0) {
             return {
               status: true,
@@ -177,8 +176,17 @@ export class FlashController {
               allBuilds: [],
             };
           }
+          else {
+            const allBuilds = await this.buildService.getAllBuilds();   
+            return {
+              status: true,
+              data: [],
+              box: [],
+              allBuilds: allBuilds,
+            };
+          }
         } else {
-          const allBuilds = await this.buildService.getAllBuilds();
+          const allBuilds = await this.buildService.getAllBuilds();   
           return {
             status: true,
             data: [],
@@ -187,7 +195,7 @@ export class FlashController {
           };
         }
       }
-    } catch (error) {
+    } catch (error) {   
       return {
         error: {
           code: 500,

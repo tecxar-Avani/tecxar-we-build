@@ -269,7 +269,7 @@ const NewBuildSideCard = (props: any) => {
                     className=""
                   />
                   <figcaption className="text-center mt-2">
-                    Polarisation <br></br>potental
+                  Polarisation<br></br> potential
                   </figcaption>
                 </figure>
               </Button>

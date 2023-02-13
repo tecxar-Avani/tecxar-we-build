@@ -655,9 +655,14 @@ const NewBuild = (props: any) => {
   };
 
   const groupingSelection = (e: any) => {
-    const groupId = e.target.value;
-    setGroupArray([...groupArray, groupId]);
-  };
+    const groupId = e.target.value; 
+ if(groupId && e.target.checked){
+  setGroupArray([...groupArray, groupId]);  
+  }
+  else{
+    groupArray && groupArray.length > 0 && groupArray?.pop(groupId)
+  }
+  ;}
   const submitGroup = (e: any) => {
     setActiveSelection(false);
    
@@ -666,10 +671,10 @@ const NewBuild = (props: any) => {
       boxes: groupArray,
       buildId: buildId,
     };
-   
+  
 // const isTitleAlready = groupList?.rows?.groupBox?.map((A:any) => A.title)
 // const Title = isTitleAlready.includes(groupData.title)
-if(editGroupId && editGroupId !== undefined){
+if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
   const groupData = {
     title: groupTitle?.target?.value,
     buildId: buildId,
@@ -678,11 +683,13 @@ if(editGroupId && editGroupId !== undefined){
      dispatch(UpdateGroupTitle(groupData));
      setIsEditSelect(false)
      setEditGroupId(undefined)
+}else if (editGroupId && !groupTitle?.target?.value && isEditSelect) {
+  toast.warning("please add the group title");
 }
  else if (!groupData.boxes || groupData?.boxes?.length == 0) {
     toast.warning("please select the boxes");
   }
-  else if (!groupData.title) {
+  else if (!groupData.title || editGroupId) {
     toast.warning("please add the group title");
   } else {
     activeSelection && groupList?.rows?.groupBox?.length !== 0
