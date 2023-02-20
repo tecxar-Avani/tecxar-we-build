@@ -97,6 +97,7 @@ export const UpdateUsersBuild = createAsyncThunk(
       video_url: updateBuildData.video_url,
       type_of_video: updateBuildData.type_of_video,
       potential_polarization: updateBuildData.potential_polarization,
+      video_description:updateBuildData.video_description,
       difficulty_level: updateBuildData.difficulty_level,
       boxes: updateBuildData.boxes,
     };

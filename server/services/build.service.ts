@@ -11,6 +11,7 @@ class BuildService {
   public async createBuild(
     buildData: IVideoBuild
   ): Promise<IVideoBuild | null> {
+   
     if (isEmpty(buildData)) {
       throw new HttpException(400, "Enter the build data");
     }
@@ -49,7 +50,8 @@ class BuildService {
     vb.published_at,
     vb.thumbnails,
     vb.embed_url,
-    vb.video_id
+    vb.video_id,
+    vb.video_description
     FROM video_builds AS vb
     LEFT JOIN boxes box on vb.id = box.build_id
     where vb.id = ${id}

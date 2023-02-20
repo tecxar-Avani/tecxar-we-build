@@ -18,6 +18,7 @@ export interface IVideoBuild {
   potential_polarization?: any;
   difficulty_level?: any;
   description?: any;
+  video_description?:string;
   duration?: string;
   new_video_id?: string;
   published_at?: string;
@@ -40,4 +41,5 @@ export interface IUpdateVideoBuild {
   difficulty_level?: any;
   updated_by?: number;
   updatedAt?: Date;
+  video_description?:string;
 }

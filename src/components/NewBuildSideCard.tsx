@@ -13,6 +13,7 @@ import {
 import LogInButton from "./LogInButton";
 import { Modal, Tooltip } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import TextArea from "antd/lib/input/TextArea";
 
 const NewBuildSideCard = (props: any) => {
   const [polarisation, setPolarisation] = useState(false);
@@ -28,6 +29,8 @@ const NewBuildSideCard = (props: any) => {
   const [hoverEffect, setHoverEffect] = useState<boolean>(false);
   const [polarisationLevel, setPolarisationLevel] = useState<any>("low");
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
+  const [videoDesc, setVideoDesc] = useState("");
+
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
   const { confirm } = Modal;
@@ -61,12 +64,12 @@ const NewBuildSideCard = (props: any) => {
     });
   };
   const userId = buildById?.data?.map((a: any) => a.created_by);
-
   const groupSelect = () => {
     props.groupSelect();
     props.setIsSelectedGroupData;
   };
-  
+  const videoDescription = (e:any) =>{
+    setVideoDesc(e.target.value)  }
 
   return (
     <Fragment>
@@ -80,7 +83,16 @@ const NewBuildSideCard = (props: any) => {
             allow="autoplay; encrypted-media"
           ></iframe>
         </div>
-
+        {
+        <div className="mb-2">
+<TextArea placeholder="What is video about?" onChange={videoDescription} 
+readOnly={ userId && userId.length > 0 && userId[0] !== userData.id && true } 
+defaultValue={buildById && buildById.data && buildById.data.length>0 && buildById.data[0].video_description}
+key={buildById && buildById.data && buildById.data.length>0 && buildById.data[0].video_description}
+autoSize={{ minRows: 4, maxRows: 4 }}
+required
+></TextArea>
+</div>}
         <div className="d-flex align-items-center border-top border-bottom border-dark p-2 justify-content-center">
           <div
             className="mx-1 buttons"
@@ -433,6 +445,7 @@ const NewBuildSideCard = (props: any) => {
                       polarisationLevel,
                       difficultyLevel,
                       url,
+                      videoDesc,
                     )   
                   : setModal5Open(true);
                  

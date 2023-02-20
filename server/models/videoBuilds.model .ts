@@ -46,6 +46,9 @@ export default class VideoBuilds
   public description: any;
 
   @Column(DataType.STRING)
+  public video_description : string;
+
+  @Column(DataType.STRING)
   public duration: string;
 
   @Column(DataType.STRING)

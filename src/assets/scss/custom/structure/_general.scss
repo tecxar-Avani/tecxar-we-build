@@ -1823,6 +1823,27 @@ h6 {
   width: 47.5vh;
   overflow: auto;
   height: 100vh;
+  .ant-input{
+    margin-bottom: 1% !important;
+    border: 1px solid black !important;
+    font-size: 16.5px !important;
+    textarea.ant-input{
+      border: 1px solid black !important;
+    }
+   
+  .ant-input:focus, .ant-input:hover, .ant-input:placeholder-shown, .ant-input-focused ::placeholder {
+    text-overflow: ellipsis;
+    color: black;
+    background-color: #d4d4d4;
+  }
+  .ant-input:hover {
+    border-color: #000000 !important;
+    border-right-width: 1px;
+}
+  .ant-input:focus {
+    border: none !important;
+  }
+  }
  
 
 }

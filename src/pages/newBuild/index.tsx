@@ -109,6 +109,7 @@ const NewBuild = (props: any) => {
       };
     })
   );
+   
   const [draggedArray, setDraggedArray] = useState([]);
   let dragg: any;
   const [completedTodos, setCompletedTodos] = useState([]);
@@ -239,13 +240,16 @@ const NewBuild = (props: any) => {
     polarisationLevel: any,
     difficultyLevel: any,
     url: string,
+    videoDesc:string,
   ) => {
+   
     const saveData = {
       type_of_video: videoType,
       potential_polarization: polarisationLevel,
       difficulty_level: difficultyLevel,
       boxes: boxData,
       video_url: url,
+      video_description:videoDesc,
     };
 
     const editData = {
@@ -255,6 +259,7 @@ const NewBuild = (props: any) => {
       boxes: { boxData: boxData },
       video_url: url,
       id: buildId,
+      video_description:videoDesc
     };
     const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
    
@@ -263,11 +268,22 @@ const NewBuild = (props: any) => {
       buildCreatedBy.length > 0 &&
       buildCreatedBy[0] == userData.id
     ) {
-      dispatch(UpdateUsersBuild(editData));
-      setIsSave(true)
+      if(!saveData.video_description){
+        toast.warning("Please type the what is video about");
+      }
+      else{
+        dispatch(UpdateUsersBuild(editData));
+        setIsSave(true)
+      }
     } else if (boxData.length > 19) {
-      dispatch(addBuild(saveData));
-      setIsSave(true)
+      if(!saveData.video_description){
+        toast.warning("Please type the what is video about");
+      }
+      else{
+        dispatch(addBuild(saveData));
+        setIsSave(true)
+      }
+    
     } else {
       toast.warning("You need to fill minimum 20 boxes");
     }
@@ -821,7 +837,8 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
                 polarisationLevel: any,
                 difficultyLevel: any,
                 url: string,
-              ) => onSave(videoType, polarisationLevel, difficultyLevel, url)}
+                videoDesc:string,
+              ) => onSave(videoType, polarisationLevel, difficultyLevel, url , videoDesc)}
               isSave={isSave}
               setIsSave={setIsSave}
               buildId={buildId}

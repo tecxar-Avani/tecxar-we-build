@@ -36,6 +36,10 @@ export class videoBuildDto implements IVideoBuild {
 
   @IsOptional()
   @IsString()
+  video_description:string;
+
+  @IsOptional()
+  @IsString()
   duration: string;
 
   @IsOptional()
@@ -98,6 +102,11 @@ export class updateVideoBuildDto implements IUpdateVideoBuild {
   @IsOptional()
   @IsString()
   difficulty_level?: any;
+
+  
+  @IsOptional()
+  @IsString()
+  video_description:string;
 
   @IsOptional()
   boxes?: any;

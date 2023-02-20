@@ -14,6 +14,7 @@ export interface IVideoBuild {
   provider?: string;
   type_of_video?: any;
   potential_polarization?: any;
+  video_description?:string;
   difficulty_level?: any;
   description?: any;
   duration?:string;
