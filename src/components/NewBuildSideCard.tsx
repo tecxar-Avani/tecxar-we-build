@@ -11,7 +11,7 @@ import {
   getBuildById,
 } from "@/store/reducers/build.reducer";
 import LogInButton from "./LogInButton";
-import { Modal, Tooltip } from "antd";
+import { Form, Modal, Tooltip } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 
@@ -29,11 +29,15 @@ const NewBuildSideCard = (props: any) => {
   const [hoverEffect, setHoverEffect] = useState<boolean>(false);
   const [polarisationLevel, setPolarisationLevel] = useState<any>("low");
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
-  const [videoDesc, setVideoDesc] = useState("");
+  const [videoDesc, setVideoDesc] = useState(buildById &&
+    buildById.data &&
+    buildById.data.length > 0 &&
+    buildById.data[0].video_description);
 
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
   const { confirm } = Modal;
+  const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch(getBuildById(props.id));
@@ -68,9 +72,10 @@ const NewBuildSideCard = (props: any) => {
     props.groupSelect();
     props.setIsSelectedGroupData;
   };
-  const videoDescription = (e:any) =>{
-    setVideoDesc(e.target.value)  }
-
+  const videoDescription = (e: any) => 
+  {
+      setVideoDesc(e.target.value);
+  };
   return (
     <Fragment>
       <div className="newBuildSideCard">
@@ -84,15 +89,32 @@ const NewBuildSideCard = (props: any) => {
           ></iframe>
         </div>
         {
-        <div className="mb-2">
-<TextArea placeholder="What is video about?" onChange={videoDescription} 
-readOnly={ userId && userId.length > 0 && userId[0] !== userData.id && true } 
-defaultValue={buildById && buildById.data && buildById.data.length>0 && buildById.data[0].video_description}
-key={buildById && buildById.data && buildById.data.length>0 && buildById.data[0].video_description}
-autoSize={{ minRows: 4, maxRows: 4 }}
-required
-></TextArea>
-</div>}
+          <div className="mb-2">
+           
+            <TextArea
+              placeholder="What is video about?"
+              onChange={videoDescription}
+              readOnly={
+                userId && userId.length > 0 && userId[0] !== userData.id && true
+              }
+              defaultValue={
+                buildById &&
+                buildById.data &&
+                buildById.data.length > 0 &&
+                buildById.data[0].video_description
+              }
+              key={
+                buildById &&
+                buildById.data &&
+                buildById.data.length > 0 &&
+                buildById.data[0].video_description
+              }
+              autoSize={{ minRows: 4, maxRows: 4 }}
+              required
+            ></TextArea>
+            
+          </div>
+        }
         <div className="d-flex align-items-center border-top border-bottom border-dark p-2 justify-content-center">
           <div
             className="mx-1 buttons"
@@ -154,20 +176,16 @@ required
               </span>
             </span>
             <div>
-              <span
-                onClick={props.Inspiration}
-                className="mb-0 mt-0"
-              >
+              <span onClick={props.Inspiration} className="mb-0 mt-0">
                 <div
                   className="purplePolygon cursor-pointer"
-                  onClick={() => {props.value == "" ? {} : props.setAwarenessModal(true)}}
+                  onClick={() => {
+                    props.value == "" ? {} : props.setAwarenessModal(true);
+                  }}
                 />
                 {/* <Image src="../img/polygon22.png" onClick={props.Inspiration} /> */}
               </span>
-              <span
-                onClick={props.Acceptance}
-                className="mb-0 mt-0"
-              >
+              <span onClick={props.Acceptance} className="mb-0 mt-0">
                 {/* <Image
                 src="../img/polygon24.png"
                 onClick={props.Acceptance}
@@ -175,7 +193,9 @@ required
               /> */}
                 <div
                   className="bluePolygon cursor-pointer"
-                  onClick={() => {props.value == "" ? {} : props.setAwarenessModal(true);}}
+                  onClick={() => {
+                    props.value == "" ? {} : props.setAwarenessModal(true);
+                  }}
                 />
               </span>
 
@@ -193,14 +213,12 @@ required
               </div>
             </div>
 
-            <span
-              onClick={
-                props.Resistance
-              }
-            >
+            <span onClick={props.Resistance}>
               <div
                 className="redpolygon cursor-pointer"
-                onClick={() => {props.value == "" ? {} : props.setAwarenessModal(true);}}
+                onClick={() => {
+                  props.value == "" ? {} : props.setAwarenessModal(true);
+                }}
               />
             </span>
 
@@ -281,7 +299,7 @@ required
                     className=""
                   />
                   <figcaption className="text-center mt-2">
-                  Polarisation<br></br> potential
+                    Polarisation<br></br> potential
                   </figcaption>
                 </figure>
               </Button>
@@ -436,19 +454,17 @@ required
             <div
               id={`${hoverEffect && "blink"}`}
               className={`save bd-highlight cursor-pointer`}
-             
               onClick={() => {
-                props.isLoggedIn === true || loggedInUser?.length > 0 
-                  ? props.isSave === false
-                  && props.onSave(
+                props.isLoggedIn === true || loggedInUser?.length > 0
+                  ? props.isSave === false &&
+                    props.onSave(
                       videoType,
                       polarisationLevel,
                       difficultyLevel,
                       url,
-                      videoDesc,
-                    )   
+                      videoDesc  
+                    )
                   : setModal5Open(true);
-                 
               }}
               style={
                 props.id == undefined ||

@@ -262,13 +262,12 @@ const NewBuild = (props: any) => {
       video_description:videoDesc
     };
     const buildCreatedBy = buildById?.data?.map((a: any) => a.created_by);
-   
     if (
       buildCreatedBy &&
       buildCreatedBy.length > 0 &&
       buildCreatedBy[0] == userData.id
     ) {
-      if(!saveData.video_description){
+      if(!editData.video_description){
         toast.warning("Please type the what is video about");
       }
       else{
