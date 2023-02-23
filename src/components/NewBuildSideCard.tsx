@@ -29,19 +29,22 @@ const NewBuildSideCard = (props: any) => {
   const [hoverEffect, setHoverEffect] = useState<boolean>(false);
   const [polarisationLevel, setPolarisationLevel] = useState<any>("low");
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
-  const [videoDesc, setVideoDesc] = useState(buildById &&
-    buildById.data &&
-    buildById.data.length > 0 &&
-    buildById.data[0].video_description);
 
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
   const { confirm } = Modal;
   const [form] = Form.useForm();
+  const [videoDesc, setVideoDesc] = useState("");
 
   useEffect(() => {
     dispatch(getBuildById(props.id));
   }, []);
+  useEffect(() => {
+    setVideoDesc(buildById &&
+      buildById.data &&
+      buildById.data.length > 0 &&
+      buildById.data[0].video_description)
+  }, [buildById]);
 
   useEffect(() => {
     setTimeout(() => {
