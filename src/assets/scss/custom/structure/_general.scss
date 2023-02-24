@@ -93,7 +93,7 @@ body,
 .searchCard {
   .ant-input:placeholder-shown {
     text-overflow: ellipsis;
-    color: black;
+    color: #7e7d7d;
     background-color: #d4d4d4;
   }
   .ant-input {
@@ -801,6 +801,15 @@ body,
     top: 40%;
     right: -28px;
   }}
+  @media only screen and (min-width: 1920px) and (max-width: 2024px){
+
+    .arrowRight {
+      position: absolute;
+      width: 56px;
+      height: 17px;
+      top: 40%;
+      right: -28px;
+    }}
 .side-Arrow {
   position: relative;
 }
@@ -1853,6 +1862,10 @@ h6 {
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 992px){
+  .col-md-5 {
+    flex: 0 0 auto;
+    width: 33.666667%;
+}
   .newBuildSideCard {
     position: fixed;
     width: 38.7vh;
@@ -1878,10 +1891,35 @@ h6 {
     width: 47.5vh;
   }
 }
-// .newBuildBoxes{
-//   overflow-y: scroll;
-//   overflow: auto;
-// }
+@media only screen and (min-width: 1920px) and (max-width: 2024px){
+  .col-xl-9 {
+    flex: 0 0 auto;
+    width: 62%;
+    margin-left: 31%;
+}
+.newBuildSideCard {
+  position: fixed;
+  width: 47.5vh;
+}
+  .mainPage .newBuildBoxsMain .newBuildBoxs {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    
+    .boxesMain .innerBoxMain {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+
+      .side-Arrow .innerBoxs {
+        padding-left: 15px !important;
+      padding-right: 15px !important;
+      }
+    }
+  }
+}
+.newBuildBoxes{
+  overflow-y: scroll;
+  overflow: auto;
+}
 .triangle {
   margin-bottom: -31px;
 }
@@ -1960,7 +1998,7 @@ color: none !important;
     word-wrap: break-word;
   }  
   .Toastify__toast-icon{
-    width: 66px !important;
+    width: 53px !important;
     background-color: white !important;
     border-radius: 50% !important;
     margin-left: 55% !important;
@@ -1978,7 +2016,7 @@ color: none !important;
     word-wrap: break-word;
   }  
   .Toastify__toast-icon{
-    width: 66px !important;
+    width: 53px !important;
     background-color: white !important;
     border-radius: 50% !important;
     margin-left: -60% !important;
@@ -1996,7 +2034,7 @@ color: none !important;
       margin-left: -59px;
     }  
     .Toastify__toast-icon{
-      width: 44px !important;
+      width: 66px !important;
       background-color: white !important;
       margin-left: 10px !important;
     }

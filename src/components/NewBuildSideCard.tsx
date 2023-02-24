@@ -244,7 +244,7 @@ const NewBuildSideCard = (props: any) => {
         <div className="px-2 threeButton align-items-center border-bottom border-dark ">
           <div className="d-flex mt-4 justify-content-between">
             <div className="text-center">
-              <Button variant="" ref={typeVideo} onClick={() => setType(!type)}>
+              <Button variant="" ref={typeVideo} onClick={() => {setType(!type); setPolarisation(false); setDifficulty(false)} }>
                 <figure className="m-0">
                   <Image src="../img/typeof.svg " height={40} className="" />
                   <figcaption className="text-center mt-2">
@@ -252,7 +252,8 @@ const NewBuildSideCard = (props: any) => {
                   </figcaption>
                 </figure>
               </Button>
-              <Overlay target={typeVideo.current} show={type} placement="right">
+              <Overlay target={userId && userId.length > 0 && userId[0] == userData.id && typeVideo.current} 
+              show={userId && userId.length > 0 && userId[0] == userData.id && type} placement="right">
                 {({ placement, arrowProps, show: _show, popper, ...props }) => (
                   <div
                     {...props}
@@ -293,7 +294,7 @@ const NewBuildSideCard = (props: any) => {
               <Button
                 variant=""
                 ref={polarisations}
-                onClick={() => setPolarisation(!polarisation)}
+                onClick={() => {setPolarisation(!polarisation); setType(false); setDifficulty(false)}}
               >
                 <figure className="m-0">
                   <Image
@@ -307,8 +308,8 @@ const NewBuildSideCard = (props: any) => {
                 </figure>
               </Button>
               <Overlay
-                target={polarisations.current}
-                show={polarisation}
+                target={userId && userId.length > 0 && userId[0] == userData.id && polarisations.current }
+                show={userId && userId.length > 0 && userId[0] == userData.id && polarisation}
                 placement="right"
               >
                 {({ placement, arrowProps, show: _show, popper, ...props }) => (
@@ -372,7 +373,7 @@ const NewBuildSideCard = (props: any) => {
               <Button
                 variant=""
                 ref={target2}
-                onClick={() => setDifficulty(!difficulty)}
+                onClick={() => {setDifficulty(!difficulty); setType(false); setPolarisation(false)}}
               >
                 <figure className="m-0 difficult">
                   <Image
@@ -388,8 +389,8 @@ const NewBuildSideCard = (props: any) => {
                 </figure>
               </Button>
               <Overlay
-                target={target2.current}
-                show={difficulty}
+                target={userId && userId.length > 0 && userId[0] == userData.id && target2.current}
+                show={userId && userId.length > 0 && userId[0] == userData.id && difficulty}
                 placement="left"
               >
                 {({ placement, arrowProps, show: _show, popper, ...props }) => (

@@ -216,8 +216,8 @@ const NewBuild = (props: any) => {
       } else {
         setModal3Open({
           content: index
-            ? filterArray[index].question
-            : filterArray[0].question,
+            ? filterArray[index]?.question
+            : filterArray[0]?.question,
           footer: ["Reveal Answer"],
           userId: index ? filterArray[index].user_id : filterArray[0].user_id,
           questionId: index ? filterArray[index].id : filterArray[0].id,
