@@ -151,7 +151,7 @@ const NewBuild = (props: any) => {
       dispatch(getGroupBoxesByBuild(buildId));
       dispatch(getFlashCardDeck(buildId));
     }
-  }, [buildId]);
+  }, [buildId,router.asPath]);
 
   useEffect(() => {
     dispatch(getAwarenessByBoxId(buildId));

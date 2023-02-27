@@ -93,7 +93,7 @@ body,
 .searchCard {
   .ant-input:placeholder-shown {
     text-overflow: ellipsis;
-    color: #7e7d7d;
+    color: #000000;
     background-color: #d4d4d4;
   }
   .ant-input {
@@ -103,7 +103,7 @@ body,
   }
   .ant-input::placeholder {
     text-overflow: ellipsis;
-    color: black;
+    color: #7e7d7d;
     background-color: #d4d4d4;
   }
 
