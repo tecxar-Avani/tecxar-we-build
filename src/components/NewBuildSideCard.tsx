@@ -500,6 +500,11 @@ const NewBuildSideCard = (props: any) => {
                     setVideoType("theory");
                     props?.setIsRefresh(true);
                   }}
+                  style={
+                    userId && userId.length > 0 && userId[0] == userData.id
+                      ? {}
+                      : { pointerEvents: "none", opacity: 0.4 }
+                  }
                 />
               </div>
 

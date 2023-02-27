@@ -18,6 +18,8 @@ const OuterBox = (props: any) => {
   const { userData } = useAppSelector(userSelector);
   const [boxDataForRedo, setBoxDataForRedo] = useState<any>();
   const [redoValue, setRedoValue] = useState<any>([]);
+  const [checked,setChecked] = useState(false);
+
 
   const [form] = Form.useForm();
   var redoArray = [];
@@ -120,6 +122,9 @@ const OuterBox = (props: any) => {
       })
     );
   // const dataOfGroup = groupedData.length > 0 && groupedData.map((b:any) => {return {"sorting_order":b.id,"group_id":b.group_id,"boxId":b.boxId,"build_id":b.build_id}})
+ const checkedBox = (e: { target: { checked: any; }; }) => {
+  setChecked(e.target.checked)
+}
   return (
     <Fragment>
       <Col
@@ -127,6 +132,8 @@ const OuterBox = (props: any) => {
         className={`p-0 position-relative ${
           props.description ? "side-Arrow" : ""
         }`}
+        style={checked ? {background:"#e7edf3"} : {}}
+
       >
         {/* <Draggable
           key={props.id}
@@ -178,6 +185,7 @@ const OuterBox = (props: any) => {
                     !props.isEditSelect && true}
                   value={props.boxId}
                   onClick={props.groupingSelection}
+                  onChange={checkedBox}
                   defaultChecked={
                     !props.isEditSelect
                       ? group_Build_id?.includes(props.id)
