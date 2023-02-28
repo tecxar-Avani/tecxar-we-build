@@ -31,7 +31,7 @@ const NewBuildBoxes = (props: any) => {
               subArray.filter(
                 (a: any) => a.id == props.item[props?.item?.length - 1].id
               );
-            const blankArray = props?.item?.map((a: any) => a?.boxId);
+            const blankArray = props?.item?.map((a: any) => a?.message);
             return (
               <div className={`boxesMain`}>
                 <div className="h-30 border border-color-25">
@@ -68,9 +68,9 @@ const NewBuildBoxes = (props: any) => {
                     subArray.length > 2 &&
                     !props.activeSelection &&
                     subArrayFilter.length == 0 &&
-                    blankArray[0] != undefined &&
+                    blankArray[0] != "" &&
                     "myCss"
-                  } ${props.activeSelection ? "activeSelection" : ""}`}
+                  } ${props.activeSelection ? "activeSelection" : ""} ${props.isRedo && props.buildId && "myCss"}`}
                 >
                   <Droppable
                     droppableId={`${
@@ -84,7 +84,8 @@ const NewBuildBoxes = (props: any) => {
                       <TaskList
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                      >
+                      > 
+
                         {subArray.map((itemData: any, index: string) => (
                           <OuterBox
                             index={itemData.id}
@@ -130,15 +131,18 @@ const NewBuildBoxes = (props: any) => {
                             redoData={props.redoData}
                             setRedoData={props.setRedoData}
                             dataArrayForRedo={props.dataArrayForRedo}
-                            mergedArrayForRedo={props.mergedArrayForRedo}
+                            // mergedArrayForRedo={props.mergedArrayForRedo}
                             // isEditSelect={props.isEditSelect}
                             unCheck={props.unCheck}
+                            buildId={props.buildId}
+                            setUndefinedData={props.setUndefinedData}
                           />
                         ))}
                         {provided.placeholder}
                       </TaskList>
                     )}
                   </Droppable>
+                  {props.buildId ? 
                   <div className="myArrowBottom">
                     <Image
                       layout="fill"
@@ -146,6 +150,8 @@ const NewBuildBoxes = (props: any) => {
                       src={"/public/red-main.svg"}
                     />
                   </div>
+                  : <div></div>
+      }
                 </div>
               </div>
             );
@@ -319,11 +325,13 @@ const NewBuildBoxes = (props: any) => {
                                     redoData={props.redoData}
                                     setRedoData={props.setRedoData}
                                     dataArrayForRedo={props.dataArrayForRedo}
-                                    mergedArrayForRedo={
-                                      props.mergedArrayForRedo
-                                    }
+                                    // mergedArrayForRedo={
+                                    //   props.mergedArrayForRedo
+                                    // }
                                     // isEditSelect={props.isEditSelect}
                                     unCheck={props.unCheck}
+                                    buildId={props.buildId}
+
                                   />
                                 );
                               })}

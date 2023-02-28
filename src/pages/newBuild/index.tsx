@@ -101,6 +101,7 @@ const NewBuild = (props: any) => {
    const [mergeArrayData,setMergedArrayData]= useState<any>([]);
    const [editGroupId,setEditGroupId] = useState<number>();
    const [unCheck,setUnCheck] = useState(false);
+   const [undefinedData , setUndefinedData] = useState<any>([]);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -110,7 +111,6 @@ const NewBuild = (props: any) => {
       };
     })
   );
-   
   const [draggedArray, setDraggedArray] = useState([]);
   let dragg: any;
   const [completedTodos, setCompletedTodos] = useState([]);
@@ -796,17 +796,23 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
   };
 
   // for redo data
-  
   const redoUniqueData = (data: any) => {
     if (data == true) {
-      if(uniqueArray.length > 1){
-        setMergedArrayData(uniqueArray)
-      }else{
-        setDataArray(uniqueArray);
-      }
+      //   setMergedArrayData(uniqueArray)
+      // }else{
+        if(Number.isNaN(buildId) ){
+          setDataArray(undefinedData)
+        }
+        else{
+          if(uniqueArray.length > 1 || undefinedData.length > 0){
+          setDataArray(uniqueArray);
+          }
+        }
+      // }
       
     }
   };
+
 
   return (
     <Fragment>
@@ -855,7 +861,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
               }
               isEditSelect={isEditSelect}
               editGroupSelect={editGroupSelect}
-              mergedArray={mergedArrayData}
+              // mergedArray={mergedArrayData}
             />
           </div>
           {/* <Droppable droppableId="boxAll" >
@@ -880,7 +886,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
                   //  item={activeUnGroup ? dataArray : []}
                   mergedArray={mergedArrayData}
                   dataArrayForRedo={
-                    mergedArrayData?.length >= 2 ? [] : dataArray
+                    dataArray?.length > 0 && dataArray
                   }
                   mergedArrayForRedo={mergedArrayData}
                   arr={arr}
@@ -957,6 +963,13 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
                   isEditSelect={isEditSelect}
                   editGroupId={setEditGroupId}
                   unCheck={unCheck}
+                  buildId={buildId}
+                  setUndefinedData={(d:any,data:any) => {
+                    console.log("-------------",data)
+                    setUndefinedData(data)
+                    setIsRedo(d);
+                    setIsRefresh(d)
+                  }}
                 />
               </DragDropContext>
 

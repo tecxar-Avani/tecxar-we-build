@@ -18,8 +18,7 @@ const OuterBox = (props: any) => {
   const { userData } = useAppSelector(userSelector);
   const [boxDataForRedo, setBoxDataForRedo] = useState<any>();
   const [redoValue, setRedoValue] = useState<any>([]);
-  const [checked,setChecked] = useState(false);
-
+  const [checked, setChecked] = useState(false);
 
   const [form] = Form.useForm();
   var redoArray = [];
@@ -60,11 +59,11 @@ const OuterBox = (props: any) => {
 
   useEffect(() => {
     if (props.isRefresh) {
-      const mergedArray = props.mergedArrayForRedo.map((a: any) =>
-        a.map((b: any) => {
-          return { id: b.id, message: b.message, boxId: a.boxId };
-        })
-      );
+      // const mergedArray = props.mergedArrayForRedo.map((a: any) =>
+      //   a.map((b: any) => {
+      //     return { id: b.id, message: b.message, boxId: a.boxId };
+      //   })
+      // );
       const redoDataArray: any = _.groupBy(props.redoData, "sorting_order");
       const objArr = _.values(redoDataArray);
       const redoLastValue = objArr.map((a: any) => _.last(a));
@@ -75,26 +74,32 @@ const OuterBox = (props: any) => {
       const arr2 = redoLastValue.map((a: any) => {
         return { id: parseInt(a.sorting_order), message: a.description };
       });
-      if (props.mergedArrayForRedo) {
-        const arr3 = mergedArray.map((a: any) => {
-          const uniqueArrayMerge = a.map((item: any) => {
-            const findItem = arr2.find((a2Item) => a2Item.id === item.id);
-            if (findItem) {
-              item.message = findItem.message;
-            }
-            return item;
-          });
+      const dataArrayUn = _.unionWith(arr2, arr1, _.isEqual);
+      const uniqueArrayUn = _.uniqBy(dataArrayUn, "id");
+      if (props?.mergedArrayForRedo) {
+        // const arr3 = mergedArray.map((a: any) => {
+        //   const uniqueArrayMerge = a.map((item: any) => {
+        //     const findItem = arr2.find((a2Item) => a2Item.id === item.id);
+        //     if (findItem) {
+        //       item.message = findItem.message;
+        //     }
+        //     return item;
+        //   });
 
-          return uniqueArrayMerge;
-        });
-
+        //   return uniqueArrayMerge;
+        // });
         // const uniqueArrayMerge = _.uniqBy(arr3, 'id');
-        props.setIsRefresh(false, arr3);
+        // props.setIsRefresh(false, arr3);
         form.resetFields();
       } else {
-        const dataArray = _.unionWith(arr2, arr1, _.isEqual);
-        const uniqueArray = _.uniqBy(dataArray, "id");
-        props.setIsRefresh(false, uniqueArray);
+        if(Number.isNaN(props.buildId)){
+          props.setUndefinedData(false, uniqueArrayUn);
+        }else{
+          const dataArray = _.unionWith(arr2, arr1, _.isEqual);
+          const uniqueArray = _.uniqBy(dataArray, "id");
+          props.setIsRefresh(false, uniqueArray);
+        }
+      
       }
       form.resetFields();
     }
@@ -122,13 +127,12 @@ const OuterBox = (props: any) => {
       })
     );
   // const dataOfGroup = groupedData.length > 0 && groupedData.map((b:any) => {return {"sorting_order":b.id,"group_id":b.group_id,"boxId":b.boxId,"build_id":b.build_id}})
- const checkedBox = (e: { target: { checked: any; }; }) => {
-  setChecked(e.target.checked)
-}
-useEffect(() => {
-  props.unCheck && setChecked(false)
-
-}, [props.unCheck]);
+  const checkedBox = (e: { target: { checked: any } }) => {
+    setChecked(e.target.checked);
+  };
+  useEffect(() => {
+    props.unCheck && setChecked(false);
+  }, [props.unCheck]);
   return (
     <Fragment>
       <Col
@@ -136,8 +140,7 @@ useEffect(() => {
         className={`p-0 position-relative ${
           props.description ? "side-Arrow" : ""
         }`}
-        style={checked ? {background:"#e7edf3"} : {}}
-
+        style={checked ? { background: "#e7edf3" } : {}}
       >
         {/* <Draggable
           key={props.id}
@@ -160,7 +163,7 @@ useEffect(() => {
         >
           <Draggable
             key={props.id}
-            draggableId={props.id.toString()}
+            draggableId={props?.id?.toString()}
             index={props.index}
           >
             {(provided, snapshot) => (
@@ -184,9 +187,12 @@ useEffect(() => {
                     !props.isEditSelect &&
                     "dis"
                   }`}
-                  disabled={ group_Build_id?.includes(props.id) &&
+                  disabled={
+                    group_Build_id?.includes(props.id) &&
                     props.activeSelection &&
-                    !props.isEditSelect && true}
+                    !props.isEditSelect &&
+                    true
+                  }
                   value={props.boxId}
                   onClick={props.groupingSelection}
                   onChange={checkedBox}

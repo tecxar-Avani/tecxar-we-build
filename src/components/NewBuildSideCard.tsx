@@ -501,7 +501,7 @@ const NewBuildSideCard = (props: any) => {
                     props?.setIsRefresh(true);
                   }}
                   style={
-                    userId && userId.length > 0 && userId[0] == userData.id
+                    userId && userId.length > 0 && userId[0] == userData.id || Number.isNaN(props.buildId)
                       ? {}
                       : { pointerEvents: "none", opacity: 0.4 }
                   }
@@ -519,7 +519,11 @@ const NewBuildSideCard = (props: any) => {
                       // props?.setIsRefresh(true);
                       props?.setIsRedo(true);
                   }}
-                  style={{ pointerEvents: "none", opacity: 0.4 }}
+                   style={
+                    userId && userId.length > 0 && userId[0] == userData.id || Number.isNaN(props.buildId)
+                      ? {}
+                      : { pointerEvents: "none", opacity: 0.4 }
+                  }
                 />
               </div>
             </div>
