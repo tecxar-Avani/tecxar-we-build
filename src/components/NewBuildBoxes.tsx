@@ -132,6 +132,7 @@ const NewBuildBoxes = (props: any) => {
                             dataArrayForRedo={props.dataArrayForRedo}
                             mergedArrayForRedo={props.mergedArrayForRedo}
                             // isEditSelect={props.isEditSelect}
+                            unCheck={props.unCheck}
                           />
                         ))}
                         {provided.placeholder}
@@ -322,6 +323,7 @@ const NewBuildBoxes = (props: any) => {
                                       props.mergedArrayForRedo
                                     }
                                     // isEditSelect={props.isEditSelect}
+                                    unCheck={props.unCheck}
                                   />
                                 );
                               })}

@@ -100,6 +100,7 @@ const NewBuild = (props: any) => {
   const [isEditSelect, setIsEditSelect] = useState(false);
    const [mergeArrayData,setMergedArrayData]= useState<any>([]);
    const [editGroupId,setEditGroupId] = useState<number>();
+   const [unCheck,setUnCheck] = useState(false);
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -713,6 +714,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
     setGroupArray([]);
   }
   setGroupTitle("")
+  setUnCheck(true)
 };
   
   let arr2: any;
@@ -954,6 +956,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
                   setRedoData={setRedoData}
                   isEditSelect={isEditSelect}
                   editGroupId={setEditGroupId}
+                  unCheck={unCheck}
                 />
               </DragDropContext>
 

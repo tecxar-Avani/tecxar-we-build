@@ -125,6 +125,10 @@ const OuterBox = (props: any) => {
  const checkedBox = (e: { target: { checked: any; }; }) => {
   setChecked(e.target.checked)
 }
+useEffect(() => {
+  props.unCheck && setChecked(false)
+
+}, [props.unCheck]);
   return (
     <Fragment>
       <Col
