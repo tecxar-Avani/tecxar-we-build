@@ -128,6 +128,7 @@ const OuterBox = (props: any) => {
     );
   // const dataOfGroup = groupedData.length > 0 && groupedData.map((b:any) => {return {"sorting_order":b.id,"group_id":b.group_id,"boxId":b.boxId,"build_id":b.build_id}})
   const checkedBox = (e: { target: { checked: any } }) => {
+    props.activeSelection &&
     setChecked(e.target.checked);
   };
   useEffect(() => {
@@ -140,7 +141,6 @@ const OuterBox = (props: any) => {
         className={`p-0 position-relative ${
           props.description ? "side-Arrow" : ""
         }`}
-        style={checked ? { background: "#e7edf3" } : {}}
       >
         {/* <Draggable
           key={props.id}
@@ -250,6 +250,7 @@ const OuterBox = (props: any) => {
                                   ? true
                                   : false
                               }
+                              style={checked ? { background: "#e7edf3" } : {}}
                             />
                           </Form.Item>
 

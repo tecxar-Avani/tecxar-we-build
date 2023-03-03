@@ -861,7 +861,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
               }
               isEditSelect={isEditSelect}
               editGroupSelect={editGroupSelect}
-              // mergedArray={mergedArrayData}
+              mergedArray={mergedArrayData}
             />
           </div>
           {/* <Droppable droppableId="boxAll" >
@@ -965,7 +965,6 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
                   unCheck={unCheck}
                   buildId={buildId}
                   setUndefinedData={(d:any,data:any) => {
-                    console.log("-------------",data)
                     setUndefinedData(data)
                     setIsRedo(d);
                     setIsRefresh(d)
