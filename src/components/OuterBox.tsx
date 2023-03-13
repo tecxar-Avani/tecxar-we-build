@@ -25,8 +25,8 @@ const OuterBox = (props: any) => {
   var BoxData: any;
 
   const handleChange = (event: any) => {
-    props.setTextEnter(true)
     const { value, id } = event.target;
+    value.length > 0 && props.setTextEnter(true)
     const propsId = Number(props.id + 1);
     BoxData = { sorting_order: id, description: value };
     if (BoxData.description) {
