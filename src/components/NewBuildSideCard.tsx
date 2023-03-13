@@ -29,6 +29,7 @@ const NewBuildSideCard = (props: any) => {
   const [hoverEffect, setHoverEffect] = useState<boolean>(false);
   const [polarisationLevel, setPolarisationLevel] = useState<any>("low");
   const [difficultyLevel, setDifficultyLevel] = useState<any>("low");
+  const [undoClick, setUndoClick] = useState(false);
 
   const url = `https://www.youtube.com/watch?v=${props.videoId}`;
   const [modal5Open, setModal5Open] = useState(false);
@@ -499,15 +500,15 @@ const NewBuildSideCard = (props: any) => {
                     setPolarisationLevel("low");
                     setVideoType("theory");
                     props?.setIsRefresh(true);
+                    setUndoClick(true)
                   }}
                   style={
-                    userId && userId.length > 0 && userId[0] == userData.id || Number.isNaN(props.buildId)
+                     props.textEnter
                       ? {}
                       : { pointerEvents: "none", opacity: 0.4 }
                   }
                 />
               </div>
-
               <div className=" forward bd-highlight cursor-pointer">
                 <Image
                   src="/img/forward.svg"
@@ -520,7 +521,7 @@ const NewBuildSideCard = (props: any) => {
                       props?.setIsRedo(true);
                   }}
                    style={
-                    userId && userId.length > 0 && userId[0] == userData.id || Number.isNaN(props.buildId)
+                   undoClick 
                       ? {}
                       : { pointerEvents: "none", opacity: 0.4 }
                   }

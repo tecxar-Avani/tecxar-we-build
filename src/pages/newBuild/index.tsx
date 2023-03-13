@@ -102,6 +102,7 @@ const NewBuild = (props: any) => {
    const [editGroupId,setEditGroupId] = useState<number>();
    const [unCheck,setUnCheck] = useState(false);
    const [undefinedData , setUndefinedData] = useState<any>([]);
+   const [textEnter,setTextEnter] = useState(false)
   const init = [...Array(20)];
   const [dataArray, setDataArray] = useState(
     init.map((i, index) => {
@@ -862,6 +863,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
               isEditSelect={isEditSelect}
               editGroupSelect={editGroupSelect}
               mergedArray={mergedArrayData}
+              textEnter={textEnter}
             />
           </div>
           {/* <Droppable droppableId="boxAll" >
@@ -956,6 +958,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
                       ? []
                       : groupList.rows.groupBox
                   }
+                  setTextEnter={(a) => {setTextEnter(a)}}
                   groupedData={results && results.length > 0 && results}
                   notGroupedArray={notGroupedArray}
                   redoData={redoData}

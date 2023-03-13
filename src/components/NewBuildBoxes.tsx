@@ -136,6 +136,7 @@ const NewBuildBoxes = (props: any) => {
                             unCheck={props.unCheck}
                             buildId={props.buildId}
                             setUndefinedData={props.setUndefinedData}
+                            setTextEnter={props.setTextEnter}
                           />
                         ))}
                         {provided.placeholder}
@@ -331,7 +332,7 @@ const NewBuildBoxes = (props: any) => {
                                     // isEditSelect={props.isEditSelect}
                                     unCheck={props.unCheck}
                                     buildId={props.buildId}
-
+                                    setTextEnter={props.setTextEnter}
                                   />
                                 );
                               })}
