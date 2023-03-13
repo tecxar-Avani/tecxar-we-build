@@ -958,7 +958,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
                       ? []
                       : groupList.rows.groupBox
                   }
-                  setTextEnter={(a) => {setTextEnter(a)}}
+                  setTextEnter={(a:any) => {setTextEnter(a)}}
                   groupedData={results && results.length > 0 && results}
                   notGroupedArray={notGroupedArray}
                   redoData={redoData}

@@ -140,7 +140,7 @@ const OuterBox = (props: any) => {
       <Col
         sm={4}
         className={`p-0 position-relative ${
-          props.description ? "side-Arrow" : ""
+          props.id && props.boxId ? "side-Arrow" : ""
         }`}
       >
         {/* <Draggable
@@ -303,7 +303,7 @@ const OuterBox = (props: any) => {
         </div>
         {/* //   )}
         // </Draggable> */}
-        {props.description && (
+        {props.boxId && (
           <div className="arrowRight">
             <Image layout="fill" width={"100"} src={"/public/redArrow.svg"} />
           </div>
