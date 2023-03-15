@@ -80,6 +80,10 @@ const NewBuildSideCard = (props: any) => {
   {
       setVideoDesc(e.target.value);
   };
+
+  const backGroundChange = (e:any) =>{
+console.log("------------------",e)
+  }
   return (
     <Fragment>
       <div className="newBuildSideCard">
@@ -253,36 +257,38 @@ const NewBuildSideCard = (props: any) => {
                   </figcaption>
                 </figure>
               </Button>
-              <Overlay target={userId && userId.length > 0 && userId[0] == userData.id && typeVideo.current} 
-              show={userId && userId.length > 0 && userId[0] == userData.id && type} placement="right">
+              <Overlay
+               target={((props.id == "undefined") || (userId && userId.length > 0 && userId[0] == userData.id)) && typeVideo.current} 
+              show={((props.id == "undefined") || (userId && userId.length > 0 && userId[0] == userData.id)) && type} placement="right">
                 {({ placement, arrowProps, show: _show, popper, ...props }) => (
                   <div
                     {...props}
                     style={{
-                      ...props.style,
+                      ...props.style, 
                     }}
-                    className="tooltipOfImages"
+                    className={`tooltipOfImages`}
                   >
                     <button
-                      className="high-btn2"
+                      className={`high-btn2 ${videoType && videoType == "Practical" && "bg-info text-dark"}`}
                       name="Practical"
                       onClick={(e: any) => {
                         setVideoType(e.target.name);
                         setType(false);
                         setHoverEffect(true);
-                      }}
+                      }
+                    }
                     >
                       Practical
                     </button>
                     <br></br>
                     <button
-                      className="high-btn2"
+                      className={`high-btn2 ${videoType && videoType == "Theoretical" && "bg-info text-dark"}`}
                       name="Theoretical"
                       onClick={(e: any) => {
                         setVideoType(e.target.name);
                         setType(false);
                         setHoverEffect(true);
-                      }}
+                      }}                     
                     >
                       Theoretical
                     </button>
@@ -309,8 +315,8 @@ const NewBuildSideCard = (props: any) => {
                 </figure>
               </Button>
               <Overlay
-                target={userId && userId.length > 0 && userId[0] == userData.id && polarisations.current }
-                show={userId && userId.length > 0 && userId[0] == userData.id && polarisation}
+                target={((props.id == "undefined") || (userId && userId.length > 0 && userId[0] == userData.id)) && polarisations.current}
+                show={((props.id == "undefined") || (userId && userId.length > 0 && userId[0] == userData.id)) && polarisation}
                 placement="right"
               >
                 {({ placement, arrowProps, show: _show, popper, ...props }) => (
@@ -322,7 +328,7 @@ const NewBuildSideCard = (props: any) => {
                     className="tooltipOfImages"
                   >
                     <button
-                      className="high-btn"
+                      className={`high-btn ${polarisationLevel && polarisationLevel == "Low" && "bg-info text-dark"}`}
                       name="Low"
                       onClick={(e: any) => {
                         setPolarisationLevel(e.target.name);
@@ -333,7 +339,7 @@ const NewBuildSideCard = (props: any) => {
                       Low
                     </button>
                     <button
-                      className="high-btn"
+                      className={`high-btn ${polarisationLevel && polarisationLevel == "Medium" && "bg-info text-dark"}`}
                       name="Medium"
                       onClick={(e: any) => {
                         setPolarisationLevel(e.target.name);
@@ -345,7 +351,7 @@ const NewBuildSideCard = (props: any) => {
                     </button>
                     <br></br>
                     <button
-                      className="high-btn"
+                      className={`high-btn ${polarisationLevel && polarisationLevel == "High" && "bg-info text-dark"}`}
                       name="High"
                       onClick={(e: any) => {
                         setPolarisationLevel(e.target.name);
@@ -356,7 +362,7 @@ const NewBuildSideCard = (props: any) => {
                       High
                     </button>
                     <button
-                      className="high-btn3 mt-0"
+                      className={`high-btn3 mt-0 ${polarisationLevel && polarisationLevel == "VeryHigh" && "bg-info text-dark"}`}
                       name="VeryHigh"
                       onClick={(e: any) => {
                         setPolarisationLevel(e.target.name);
@@ -390,8 +396,8 @@ const NewBuildSideCard = (props: any) => {
                 </figure>
               </Button>
               <Overlay
-                target={userId && userId.length > 0 && userId[0] == userData.id && target2.current}
-                show={userId && userId.length > 0 && userId[0] == userData.id && difficulty}
+                target={((props.id == "undefined") || (userId && userId.length > 0 && userId[0] == userData.id)) && target2.current}
+                show={((props.id == "undefined") || (userId && userId.length > 0 && userId[0] == userData.id)) && difficulty}
                 placement="left"
               >
                 {({ placement, arrowProps, show: _show, popper, ...props }) => (
@@ -403,7 +409,7 @@ const NewBuildSideCard = (props: any) => {
                     className="tooltipOfImages"
                   >
                     <button
-                      className="high-btn"
+                      className={`high-btn ${difficultyLevel && difficultyLevel == "Low" && "bg-info text-dark"}`}
                       name="Low"
                       onClick={(e: any) => {
                         setDifficultyLevel(e.target.name);
@@ -414,7 +420,7 @@ const NewBuildSideCard = (props: any) => {
                       Low
                     </button>
                     <button
-                      className="high-btn"
+                      className={`high-btn ${difficultyLevel && difficultyLevel == "Medium" && "bg-info text-dark"}`}
                       name="Medium"
                       onClick={(e: any) => {
                         setDifficultyLevel(e.target.name);
@@ -426,7 +432,7 @@ const NewBuildSideCard = (props: any) => {
                     </button>
                     <br></br>
                     <button
-                      className="high-btn"
+                      className={`high-btn ${difficultyLevel && difficultyLevel == "High" && "bg-info text-dark"}`}
                       name="High"
                       onClick={(e: any) => {
                         setDifficultyLevel(e.target.name);
@@ -437,7 +443,7 @@ const NewBuildSideCard = (props: any) => {
                       High
                     </button>
                     <button
-                      className="high-btn3"
+                      className={`high-btn3 ${difficultyLevel && difficultyLevel == "VeryHigh" && "bg-info text-dark"}`}
                       name="VeryHigh"
                       onClick={(e: any) => {
                         setDifficultyLevel(e.target.name);

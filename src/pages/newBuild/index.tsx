@@ -681,6 +681,7 @@ const NewBuild = (props: any) => {
   }
   ;}
   const submitGroup = (e: any) => {
+    setIsEditSelect(false);
     setActiveSelection(false);
    
     const groupData = {

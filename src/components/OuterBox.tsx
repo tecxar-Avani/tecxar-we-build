@@ -23,12 +23,13 @@ const OuterBox = (props: any) => {
   const [form] = Form.useForm();
   var redoArray = [];
   var BoxData: any;
-
   const handleChange = (event: any) => {
     const { value, id } = event.target;
     value.length > 0 && props.setTextEnter(true)
     const propsId = Number(props.id + 1);
     BoxData = { sorting_order: id, description: value };
+let wsRegex = /^\s+|\s+$/g; 
+let result = value.replace(wsRegex, "");
     if (BoxData.description) {
       setBoxDataForRedo(BoxData);
       const val = boxDataForRedo != undefined && boxDataForRedo;
@@ -41,9 +42,9 @@ const OuterBox = (props: any) => {
     }
 
     props.setBoxData(BoxData);
-    if (value.length > 0 && !props.arr.includes(propsId) && !props.boxId) {
+    if (result.length > 0 && !props.arr.includes(propsId) && !props.boxId) {
       props.responseCallback(propsId, value, id);
-    } else if (props.boxId && value.length === 150) {
+    } else if (props.boxId && result.length === 150) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
     }
@@ -220,6 +221,8 @@ const OuterBox = (props: any) => {
                             name={`message${props.id}`}
                             noStyle={false}
                             className={`position-relative position-relative-example textfont`}
+                            // rules={[{pattern: new RegExp(/^/S+$/i),message: "No Space Allowed"}]}
+                            required
                           >
                             <TextArea
                               //  value={props?.description}

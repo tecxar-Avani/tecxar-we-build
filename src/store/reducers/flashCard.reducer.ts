@@ -173,7 +173,7 @@ const flashCardSlice = createSlice({
     builder
       .addCase(createFlashCard.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success("");
+          // toast.success("");
           return {
             ...state,
             loading: false,
@@ -190,7 +190,7 @@ const flashCardSlice = createSlice({
       })
       .addCase(createFlashCardResponse.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success("");
+          // toast.success("");
           return {
             ...state,
             loading: false,
@@ -207,7 +207,7 @@ const flashCardSlice = createSlice({
       })
       .addCase(addUserFlashCardDeck.fulfilled, (state, action) => {
         if (action.payload.data.status) {
-          toast.success("");
+          // toast.success("");
           return {
             ...state,
             loading: false,
@@ -269,7 +269,7 @@ const flashCardSlice = createSlice({
       })
       .addCase(updateFlashCardId.fulfilled, (state, action) => {
         if (action.payload.status) {
-          toast.success("");
+          // toast.success("");
           return {
             ...state,
             loading: false,
@@ -284,7 +284,7 @@ const flashCardSlice = createSlice({
         }
       })
       .addCase(deleteFlashCardById.fulfilled, (state, action) => {
-        toast.success("");
+        // toast.success("");
         if (action.payload.status) {
           return { ...state, loading: false };
         } else {
