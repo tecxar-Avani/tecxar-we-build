@@ -80,12 +80,12 @@ pipeline {
             ssh -i $JENKINS_HOME/.ssh/id_rsa root@139.84.165.89 <<EOF
             pm2 stop we-build
             rm -rf ${DEPLOY_DIR}/
-            unzip ~/uploads/inservice_website_build_$BUILD_ID -d ${DEPLOY_DIR}
+            unzip ~/uploads/webuild_app_build_$BUILD_ID -d ${DEPLOY_DIR}
             cd ${DEPLOY_DIR}
             yarn --production 
             pm2 restart we-build
             pm2 save
-            rm -rf ~/uploads/inservice_website_build_$BUILD_ID.zip
+            rm -rf ~/uploads/webuild_app_build_$BUILD_ID.zip
             exit
             EOF
             '''
