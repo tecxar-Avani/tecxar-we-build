@@ -1,0 +1,2042 @@
+@import "~antd/dist/antd.css";
+
+@font-face {
+  /* font-family: "Nunito"; */
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/font/Arimo-VariableFont_wght.ttf");
+  // src: url("/fonts/fa-regular-400.eot?#iefix") format("embedded-opentype"), url("/fonts/fa-regular-400.woff2") format("woff2"), url("/fonts/fa-regular-400.woff") format("woff"), url("/fonts/fa-regular-400.ttf") format("truetype"), url("/fonts/fa-regular-400.svg#fontawesome") format("svg");
+  /* font-style: normal;
+  font-weight: 400;
+  font-display: swap; */
+}
+
+body,
+.ant-layout {
+  background-color: #ffffff;
+  color: black !important;
+}
+
+.h-full {
+  height: calc(100vh);
+}
+
+.h-30 {
+  height: 30px;
+}
+
+.border-color-25 {
+  border: 0.3px solid rgba(0, 0, 0, 0.25);
+  // color: rgba(0, 0, 0, 0.25);
+}
+.we-build {
+  left: 66px;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .we-build {
+    left: 75px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1024px) {
+  .we-build {
+    left: 66px;
+  }
+}
+// .ant-layout.site-layout {
+//   margin-left: 125px;
+// }
+.fixTitle {
+  font-family: "Arimo" !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 30px !important;
+  line-height: 34px !important;
+}
+
+.boxesMain {
+  .innerBoxs {
+    border: 0.3px solid rgba(0, 0, 0, 0.25);
+    max-width: 360px;
+    max-height: 196px;
+    min-height: 196px;
+
+    TextArea {
+      border: 0.5px solid #000000;
+    }
+  }
+
+  .innerBoxsSelected {
+    border: 0.3px solid rgba(0, 0, 0, 0.25);
+    max-width: 360px;
+    max-height: 205px;
+    min-height: 205px;
+  }
+}
+
+.boxesMain .innerBoxMain .col-sm-4:nth-child(2) .innerBoxs {
+  border-left: 0px;
+}
+
+.boxesMain .innerBoxMain .col-sm-4:nth-child(3) .innerBoxs {
+  border-left: 0px;
+}
+
+// .boxesMain:nth-child(3) .innerBoxs {
+//   border-left: 0px;
+// }
+
+.searchCard ::placeholder {
+  text-align: center;
+}
+
+.searchCard {
+  .ant-input:placeholder-shown {
+    text-overflow: ellipsis;
+    color: #000000;
+    background-color: #d4d4d4;
+  }
+  .ant-input {
+    text-overflow: ellipsis;
+    color: black;
+    background-color: #d4d4d4;
+  }
+  .ant-input::placeholder {
+    text-overflow: ellipsis;
+    color: #7e7d7d;
+    background-color: #d4d4d4;
+  }
+
+  .ant-input:focus,
+  .ant-input:hover,
+  .ant-input:placeholder-shown,
+  .ant-input-focused ::placeholder {
+    text-overflow: ellipsis;
+    color: black;
+    background-color: #d4d4d4;
+  }
+  .ant-input {
+    border: none !important;
+  }
+  .ant-input:hover {
+    border: none !important;
+  }
+  .ant-input:focus {
+    border: none !important;
+  }
+}
+
+.sidebar-app .ant-layout-sider {
+  position: fixed;
+}
+
+.mySidebar {
+  max-width: 120px !important;
+  min-width: 120px !important;
+  width: 120px !important;
+}
+.sideImg {
+  width: 75px;
+  height: 75px;
+}
+.mySidebar .ant-layout-sider-children {
+  justify-content: center;
+  display: flex;
+  height: 55vh;
+}
+
+.left-66 {
+  left: 66px;
+}
+
+.profile {
+  position: relative;
+  .profileBottom {
+    margin-bottom: -29px;
+  }
+}
+
+.profile .boxes-heading {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  font-family: "Arimo";
+}
+
+.profile .boxes-number {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  align-items: center;
+  color: #000000;
+  font-family: "Arimo";
+}
+
+.profile .cityWithMe {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  color: #000000;
+  font-family: "Arimo";
+}
+
+.profile .title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 34px;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  font-family: "Arimo";
+  margin: 0;
+}
+
+.profile .subTitle {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14px;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  font-family: "Arimo";
+  margin: 0;
+}
+
+.profile .pcontent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+}
+
+.videoCard {
+  // display: inline-flex;
+  // max-width: 1500px;
+  width: 100%;
+  // overflow-x: scroll;
+  margin-left: 13px;
+}
+
+.videoProfile {
+  overflow: hidden;
+  // padding-right: 1rem;
+  // margin-left: 12px;
+  .card-body {
+    .card-img {
+      border-radius: 0px !important;
+    }
+  }
+}
+
+.content {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+  background-color: #d9d9d9;
+  width: 396px;
+  color: black;
+  text-align: center;
+}
+
+.videoProfile1 {
+  padding-right: 1rem;
+  margin-left: 531px;
+  margin-top: 20px;
+}
+
+.mainPage {
+  overflow-y: scroll;
+  // overflow: hidden !important;
+  width: 100%;
+
+  .profile-main {
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  .col-3 {
+    padding-left: 0px !important;
+  }
+}
+
+// .title {
+//   h1 {
+//     font-style: normal;
+//     font-weight: 700;
+//     font-size: 30px;
+//     line-height: 34px;
+//     color: #000000;
+//     margin: 0;
+//   }
+// }
+
+.vcontent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+}
+
+.ant-modal-body {
+  text-align: center;
+  margin: 9px;
+}
+
+.flashCards {
+  position: absolute;
+  bottom: 18px;
+  right: 0px;
+}
+
+.flashCardsModal {
+  cursor: pointer;
+
+  .ant-input-textarea-show-count::after {
+    position: absolute;
+    bottom: 20px;
+    right: 9px;
+    color: black;
+  }
+
+  .ant-modal-body {
+    text-align: center;
+    margin: 9px;
+    padding-bottom: 0px !important;
+  }
+  // .ant-form-vertical .ant-form-item .ant-form-item-control{
+  //   border: 0.3px solid rgba(0, 0, 0, 0.7);
+  // }
+  .ant-input:focus {
+    outline: none !important;
+    border: 0.3px solid rgba(0, 0, 0, 0.7) !important;
+    box-shadow: none !important;
+  }
+  .ant-input:hover {
+    box-shadow: none !important;
+    border: 0.3px solid rgba(0, 0, 0, 0.7) !important;
+  }
+  .ant-input {
+    border: 0.3px solid rgba(0, 0, 0, 0.7) !important;
+    box-shadow: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.flashCardsContent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 15px;
+  margin-right: 99px;
+  text-align: right;
+  margin-bottom: -7px;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .col-md-3 {
+    flex: 0 0 auto !important;
+    width: 50% !important;
+  }
+}
+@media only screen and (min-width: 993px) and (max-width: 1215px) {
+  .col-md-3 {
+    flex: 0 0 auto !important;
+    width: 33% !important;
+  }
+}
+.AllProfile {
+  position: absolute;
+
+  .boxes-heading {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 23px;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    font-family: "Arimo";
+  }
+
+  .boxes-number {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 46px;
+    align-items: center;
+    color: #000000;
+    text-align: center;
+  }
+  .boxes-number1 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 25px;
+    align-items: center;
+    color: #000000;
+    text-align: center;
+  }
+
+  .cityWithMe {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    color: #000000;
+    align-items: center;
+    font-family: "Arimo";
+  }
+
+  .title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    padding: 0;
+  }
+  .title1 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 17px;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    padding: 0;
+  }
+  .subTitle {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    padding: 0;
+  }
+
+  .button {
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 12.65px;
+    text-align: center;
+    margin-left: -17px;
+  }
+
+  .button1 {
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 12.65px;
+    text-align: center;
+    border-radius: 10px;
+  }
+}
+.Search-content {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+}
+
+.Search {
+  margin-left: 38px;
+}
+
+.dashboardSearch {
+  width: 300px;
+  border-radius: 25px;
+}
+
+.ant-input-search {
+  width: 300px;
+  border-radius: 25px;
+  border: 1px solid;
+}
+
+.new-build-hr {
+  max-width: 344.02px;
+}
+
+.icon {
+  font-size: 42px;
+}
+
+.border-btm {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  width: 24%;
+}
+
+.ant-modal {
+  font-family: "Arimo";
+}
+
+.ant-modal-header {
+  border-bottom: 0;
+  padding: 9px 12px;
+}
+
+.ant-modal-footer {
+  text-align: center;
+  border-top: none;
+  margin-top: -16px;
+}
+
+.ant-btn {
+  background-color: #000000;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+.ant-btn:hover,
+.ant-btn:focus {
+  color: white;
+  border-color: none;
+  background-color: #000000;
+  border-radius: 5px;
+}
+.ant-btn:hover {
+  border: none;
+}
+
+.ant-modal-close-x {
+  display: block;
+  width: 15px;
+  height: 15px;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 13px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  margin: 10px;
+
+  .anticon {
+    width: 12px !important;
+    height: 11px !important;
+    font-family: "Arimo";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 1;
+    text-align: center;
+    /* margin-bottom: -55px; */
+    /* padding: 1px; */
+    svg {
+      font-family: "Arimo";
+      display: inline-block;
+      height: 8px;
+      width: 8px;
+      font-weight: 700;
+      line-height: 14.95px;
+      color: white;
+      text-align: center;
+      margin-top: -6px;
+    }
+  }
+}
+.ant-modal-body .inputbox {
+  text-align: left;
+  border-radius: 2px;
+}
+
+.inputbox {
+  text-align: left;
+  height: 80;
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 17px;
+}
+
+.userGuide {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+}
+
+.userGuide .Ucontent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 29px;
+}
+
+.userGuide .videoContent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 29px;
+}
+
+.novideo {
+  text-align: center;
+
+  width: 396px;
+  height: 306px;
+}
+
+.content {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+  background-color: #d9d9d9;
+  width: 396px;
+  padding-top: 10px;
+}
+
+.ant-card-head-title {
+  text-align: center;
+}
+
+.ant-card-head {
+  border-bottom: 0;
+  padding: 0;
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+  margin-bottom: -30px;
+}
+
+.ant-card {
+  border-radius: 0;
+}
+
+.resultContent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+}
+
+.inValidUrlContent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+
+  align-items: center;
+  text-align: center;
+}
+
+.ant-modal-header {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.aware .ant-modal-centered {
+  margin-left: 430px;
+  text-align: none !important;
+}
+
+.ant-modal {
+  width: 440px !important;
+  height: 473px !important;
+  border-radius: 7px;
+  // margin-left: 754px;
+}
+
+.ant-modal-content {
+  border-radius: 7px !important;
+
+  .ant-modal-header {
+    border-radius: 7px !important;
+  }
+}
+
+.awarenessModal {
+  .ant-modal {
+    margin-left: 754px !important;
+  }
+
+  .ant-modal-content {
+    color: #000000;
+    border-radius: 7px;
+
+    .ant-modal-header {
+      border-radius: 7px;
+    }
+  }
+
+  .ant-modal-body {
+    text-align: center;
+    margin: -10px;
+  }
+
+  textarea.ant-input {
+    border-radius: 2px;
+  }
+
+  .ant-btn {
+    width: auto;
+    height: 28px;
+    background-color: #000000;
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .header {
+    font-family: "Arimo";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 8px;
+    line-height: 9px;
+    text-align: left;
+  }
+
+  .ant-modal-footer {
+    margin-top: 50px;
+  }
+
+  .ant-input-textarea-show-count::after {
+    position: absolute;
+    bottom: 15px;
+    right: 9px;
+    color: black;
+  }
+  .ant-input:hover {
+    border-color: none !important;
+    border: none !important;
+  }
+  .ant-input {
+    border: none !important;
+    border-color: none !important;
+  }
+}
+
+.awarenessDotModal {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.awarenessModal {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.textBoxInner {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .ant-form-item {
+    margin-bottom: 0px !important;
+  }
+  .ant-input:hover {
+    border-color: black;
+  }
+  .ant-input {
+    border: 0.5px solid black;
+  }
+}
+
+.challenge-textbox-main {
+  position: relative;
+
+  textarea.ant-input {
+    border: none !important;
+    border-color: none !important;
+  }
+}
+
+// .challenge-textbox-main .input-arrow::after {
+//   content: "";
+//   height: 73px;
+//   position: absolute;
+//   top: 52.5%;
+//   width: 19px;
+//   color: #000000;
+//   left: 20px;
+//   background-image: url("/public/line-arrow.svg");
+//   background-position-y: 100%;
+// }
+.arrowRight {
+  position: absolute;
+  width: 55px;
+  height: 33px;
+  top: 40%;
+  right: -28px;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .arrowRight {
+    position: absolute;
+    width: 56px;
+    height: 17px;
+    top: 40%;
+    right: -28px;
+  }
+}
+@media only screen and (min-width: 1920px) and (max-width: 2024px) {
+  .arrowRight {
+    position: absolute;
+    width: 56px;
+    height: 17px;
+    top: 40%;
+    right: -28px;
+  }
+}
+.side-Arrow {
+  position: relative;
+}
+.side-Arrow::after .arrowRight {
+  content: "";
+  height: 27px;
+  position: absolute;
+  top: 36.5%;
+  right: -24px;
+  width: 51px;
+  // height: 0px;
+  // color: #000000;
+  // background-image: url("/public/redArrow.svg");
+  background-position-y: 100%;
+}
+
+.side-Arrow:last-child {
+  // display: none;
+  .arrowRight {
+    display: none;
+  }
+}
+
+.dragHover {
+  .ant-input:focus {
+    box-shadow: 0 0 5px black !important;
+    transform: scale(1) !important;
+  }
+}
+// .arrow-red {
+//   width:100px;
+//   height:30px;
+//   display: flex;
+// }
+// .arrow-red::after {
+//   content: "";
+//   background: currentColor;
+//   width:15px;
+//   clip-path: polygon(0 10px,calc(100% - 15px) 10px,calc(100% - 15px) 0,100% 50%,calc(100% - 15px) 100%,calc(100% - 15px) calc(100% - 10px),0 calc(100% - 10px));
+//   animation: a1 1.5s infinite linear;
+// }
+// @keyframes a1 {
+//   90%,100%{flex-grow: 1}
+// }
+.myCss {
+  position: relative;
+}
+.myCss .myArrowBottom {
+  position: absolute;
+  bottom: -65px;
+  width: 62%;
+  height: 101px;
+  left: 20%;
+  z-index: 0;
+}
+// .myCss .css-ov1ktg::after {
+//   content: "";
+//   height: 125px;
+//   position: absolute;
+//   top: 157.5px;
+//   width: 754px;
+//   right: 150px;
+//   // background-image: url("/public/red-main.svg");
+//   background-position-y: 100%;
+// }
+.ant-modal-title {
+  font-weight: 700px !important;
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.5px;
+  line-height: 22px;
+}
+
+.userGuide {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+}
+
+.userGuide .Ucontent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 29px;
+  margin-bottom: 65px;
+  margin-left: 39px;
+  left: 914px;
+  margin-top: 17px;
+}
+
+.userGuide .uVideo {
+  width: 591px;
+  height: 331px;
+
+  margin-bottom: 31px;
+}
+
+.userGuide .Ucontent-2 {
+  margin-top: 61px;
+}
+
+.userGuide .videoContent {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 29px;
+}
+
+.userGuide .videoContent2 {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 29px;
+}
+
+.awarenessModal .ant-btn {
+  width: 58px;
+  height: 28px;
+  background-color: #000000;
+  text-align: center;
+  margin-top: 0;
+}
+
+.btn1 {
+  background-color: #dcdada;
+  color: black;
+  font-family: "Arimo";
+}
+
+.btn2 {
+  background-color: #69acda;
+  color: black;
+  font-family: "Arimo";
+}
+
+.card {
+  margin-bottom: 0px;
+}
+
+.ms-4 {
+  margin-left: 2.45rem !important;
+}
+
+hr {
+  width: 344.02px;
+  margin-top: 14.17px !important;
+  margin-bottom: 14.17px !important;
+}
+
+.SelfLearningBG {
+  background-color: #ffeb3d;
+}
+
+.ThingsLearningBG {
+  background-color: #214dea;
+}
+
+.UserGuideBG {
+  background-color: #44a82b;
+}
+
+.profileBG {
+  background-color: white;
+}
+
+.newBuild {
+  border: 0 !important;
+}
+
+.flash {
+  right: 21px;
+  bottom: 25px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 30px;
+  color: #000000;
+}
+
+.mkCard {
+  right: 21px;
+  bottom: 115px;
+
+  .card1 {
+    border: 1px solid black;
+    border-radius: 6px;
+    height: 60px;
+    width: 40px;
+    padding: 0px !important;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 30px;
+    color: #000000;
+  }
+
+  .card-body {
+    padding: 6px;
+  }
+
+  .card2 {
+    border: 1px solid black;
+    border-radius: 4px;
+    height: 18.27px !important;
+    width: 41px;
+    padding: 0px !important;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 30px;
+    color: #000000;
+    margin-top: 1px;
+  }
+  .backGroundPlus {
+    background-color: #44a82b;
+  }
+  .backGroundAdd {
+    background-color: #898989;
+    pointer-events: none !important;
+  }
+  .card-body {
+    padding: 10px;
+    .anticon svg {
+      height: 17.22px !important;
+      width: 18.75px !important;
+      margin-top: -11px !important;
+    }
+  }
+}
+
+.videoCard01 {
+  .title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #000000;
+    font-family: "Arimo";
+  }
+
+  .iframs {
+    display: none;
+    border-radius: 10px !important;
+  }
+}
+
+.btn {
+  :hover {
+    :hover {
+      background-color: white;
+      color: black;
+    }
+  }
+}
+
+.high-btn {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  width: 68px;
+  height: 61px;
+  padding: 10px;
+  text-align: center;
+}
+
+.high-btn:hover {
+  background-color: white;
+  /* Green */
+  color: black;
+}
+
+.high-btn3 {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  width: 68px;
+  height: 61px;
+  padding: 2px;
+  text-align: center;
+}
+
+.high-btn3:hover {
+  background-color: white;
+  /* Green */
+  color: black;
+}
+
+.high-btn2 {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  width: 100px;
+  height: 57px;
+  padding: 16px;
+  text-align: center;
+}
+
+.high-btn2:hover {
+  background-color: white;
+  /* Green */
+  color: black;
+}
+
+.threeButton .btn {
+  padding-left: 0;
+  padding-right: 0;
+  color: black;
+  font-family: "Kanit";
+  font-weight: 400;
+}
+
+.inspirationButton {
+  background-color: #7d1597;
+  transform: translate(19%, 154%);
+  color: #f8f8f8;
+  position: sticky;
+  z-index: 1;
+  font-family: "Arimo";
+  font-weight: 700;
+}
+
+.resistanceButton {
+  background-color: #d91919;
+  // transform: translate(105%, -11%);
+  transform: translate(105%, -128%);
+  color: #f8f8f8;
+  margin-left: -15px;
+  font-family: "Arimo";
+  font-weight: 700;
+}
+
+.acceptanceButton {
+  background-color: #1235ae;
+  transform: translate(158%, -343%);
+  color: #f8f8f8;
+  font-family: "Arimo";
+  font-weight: 700;
+}
+
+.inspirationButton:hover {
+  background-color: #7d1597;
+  color: #f8f8f8;
+}
+
+.acceptanceButton:hover {
+  background-color: #1235ae;
+  color: #f8f8f8;
+}
+
+.blue {
+  margin-left: -1px;
+}
+
+.resistanceButton:hover {
+  background-color: #d91919;
+  color: #f8f8f8;
+}
+
+.redtraingle {
+  margin-top: -125px;
+  margin-bottom: 35px;
+}
+
+.accptanceModalBG {
+  .ant-modal {
+    margin-left: 754px;
+  }
+
+  .ant-modal-content {
+    border-radius: 7px;
+    background-color: #b2b5ed;
+
+    .ant-modal-header {
+      background-color: #b2b5ed;
+      border-radius: 7px;
+    }
+  }
+
+  textarea.ant-input {
+    border-radius: 5px;
+  }
+
+  .ant-btn {
+    width: auto;
+    height: 28px;
+    background-color: #000000;
+    text-align: center;
+    margin-top: 0;
+    color: white;
+  }
+}
+
+.resistanceModalBG {
+  .ant-modal-content,
+  .ant-modal-header {
+    background-color: #e8abab;
+  }
+
+  textarea.ant-input {
+    border-radius: 5px;
+  }
+
+  .ant-btn {
+    width: auto;
+    height: 28px;
+    background-color: #000000;
+    text-align: center;
+    margin-top: 0;
+    color: white;
+  }
+}
+
+.redpolygon {
+  clip-path: polygon(5% 68%, 100% 67%, 53% 3%);
+  background-color: #d91919;
+  width: 264.04px;
+  height: 113.54px;
+  margin-top: -112px;
+  margin-left: 1px;
+}
+
+.bluePolygon {
+  clip-path: polygon(48% 1%, 96% 100%, 48% 65%);
+  background-color: #1235ae;
+  width: 259.04px;
+  height: 200.54px;
+  margin-top: -201px;
+  margin-left: 16px;
+}
+
+.purplePolygon {
+  clip-path: polygon(48% 1%, 0 100%, 49% 65%);
+  background-color: #7d1597;
+  width: 259.04px;
+  height: 200.54px;
+  margin-top: -51px;
+  margin-left: 16px;
+}
+
+.inspirationModalBG {
+  .ant-modal-content,
+  .ant-modal-header {
+    background-color: #e0c0eb;
+  }
+
+  textarea.ant-input {
+    border-radius: 5px;
+  }
+
+  .ant-btn {
+    width: auto;
+    height: 28px;
+    background-color: #000000;
+    text-align: center;
+    margin-top: 0;
+    color: white;
+  }
+}
+
+@keyframes blinking {
+  0% {
+    background-color: #7d159779;
+    border: 1px solid rgba(102, 102, 102, 0.342);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+
+  100% {
+    background-color: #1234ae5d;
+    border: 1px solid rgba(102, 102, 102, 0.342);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+}
+
+#blink {
+  animation: blinking 1s infinite;
+}
+
+.ant-tooltip-placement-bottom .ant-tooltip-arrow {
+  left: 24%;
+}
+
+.bulb {
+  margin: 7px;
+
+  padding: 4px;
+}
+
+.blue {
+  margin-left: -1px;
+}
+
+.tooltipOfImages {
+  position: absolute;
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  padding: 1px;
+}
+
+.ant-form-item-label > label::after {
+  content: none;
+}
+
+.textarea.ant-input {
+  margin-left: 2px !important;
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+}
+
+.textBoxInnerNone {
+  display: none;
+}
+
+.textBoxInnerBlock {
+  display: block;
+}
+
+.buttonSave {
+  width: 225px;
+  height: 50px;
+}
+
+.btnrv {
+  .ant-btn {
+    display: none !important;
+  }
+}
+
+.googleicon {
+  margin-top: -8px;
+}
+
+.googleicon:hover {
+  cursor: pointer;
+}
+
+.googlecolor {
+  background-color: #4285f4;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: black !important;
+}
+
+.AwareInput {
+  background-color: #d9d9d9 !important;
+  height: 74px;
+  width: 413px;
+}
+
+.AwareInputFirst {
+  height: 160px;
+  width: 413px;
+}
+
+.AwareInputChallenge {
+  height: 160px;
+  width: 372px;
+  margin-left: 39px !important;
+}
+
+.AwareInputChallengeHeader {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 9px;
+  text-align: left;
+  margin-left: 39px;
+  margin-bottom: 3px;
+}
+
+.challengeAcceptBtn {
+  width: 100px !important;
+  height: -24px;
+  background-color: #000000 !important;
+  text-align: center;
+  margin-left: 304px !important;
+}
+
+.awarenessTypeModal {
+  .ant-btn {
+    width: 63px !important;
+    height: -24px;
+    background-color: #000000 !important;
+    text-align: center;
+    margin-left: 0px !important;
+    color: white;
+  }
+}
+
+.awarenessDotModal {
+  .ant-modal {
+    overflow: scroll;
+  }
+
+  .ant-modal-content {
+    color: #000000;
+  }
+
+  .ant-modal-body {
+    text-align: center;
+    margin: -10px;
+    margin-bottom: -62px;
+  }
+
+  textarea.ant-input {
+    border-radius: 2px;
+  }
+
+  .ant-btn {
+    width: 111px;
+    height: -24px;
+    background-color: #44a82b;
+    text-align: center;
+    margin-left: 304px;
+  }
+
+  .yellowBtn {
+    background-color: #ffe500;
+  }
+
+  .header {
+    font-family: "Arimo";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 8px;
+    line-height: 9px;
+    text-align: left;
+    margin-bottom: 3px;
+  }
+
+  .ant-modal-footer {
+    display: none;
+  }
+
+  .ant-form-item {
+    margin-top: 5px;
+    margin-bottom: -4px;
+  }
+
+  .ant-btn .challenge {
+    width: 111px;
+    height: -24px;
+    background-color: #000000;
+    text-align: center;
+  }
+}
+
+.acceptDotBg {
+  background-color: #1235ae;
+}
+
+.resistanceDotBg {
+  background-color: #d91919;
+}
+
+.inspirationDotBg {
+  background-color: #7d1597;
+}
+
+* {
+  -ms-overflow-style: none;
+}
+
+.img-rounded {
+  border-radius: 50%;
+  border: 10px solid black;
+}
+.img-rounded1 {
+  border-radius: 50%;
+  border: 6px solid black;
+}
+.img-roundedAdmin {
+  border-radius: 50%;
+  // border: 10px solid black;
+}
+
+.ant-select-selection-placeholder {
+  color: #000000;
+}
+
+.filterInProfile {
+  height: 42px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.searchBar {
+  width: 1430px;
+}
+
+.centerHeader {
+  text-align: center !important;
+  font: "Arimo" !important;
+  font-weight: 400px !important;
+  font-size: 20px !important;
+  line-height: 23px !important;
+  margin-top: 70px;
+}
+
+.disableClass {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.logOut {
+  margin-top: 10px;
+}
+
+.content {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+  background-color: #d9d9d9;
+  width: 396px;
+  color: black;
+  text-align: center;
+}
+
+.videoProfile1 {
+  padding-right: 1rem;
+  margin-top: 30px;
+}
+
+.headerSizeInsearch {
+  font-size: 20px !important;
+}
+
+.videoCard {
+  /* width */
+  ::-webkit-scrollbar {
+    // width: 1089px;
+    height: 10px;
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    // border-radius: 3px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #636262;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #636262;
+    // border-radius: 3px;
+  }
+}
+
+.textFontSize {
+  font-size: 13px;
+  border-radius: 4px;
+}
+.textfont {
+  .ant-input {
+    max-width: 100%;
+    height: auto;
+    min-height: 32px;
+    line-height: 1.5715;
+    vertical-align: bottom;
+    transition: all 0.3s, height 0s;
+    font-family: "Arimo";
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    text-align: center;
+    font-style: normal;
+    border-radius: 4px;
+  }
+}
+.ant-modal-confirm {
+  .ant-modal-confirm-btns {
+    margin-top: 41px !important;
+    text-align: center;
+  }
+
+  .ant-modal-confirm-body .ant-modal-confirm-title {
+    text-align: left !important;
+    font-size: 18px;
+  }
+}
+
+.groupSelection {
+  display: inherit;
+  margin-top: -14px;
+}
+
+.groupSelectionNot {
+  display: inherit;
+  margin-top: -14px !important;
+
+  .ant-checkbox {
+    display: none;
+  }
+}
+
+.ant-checkbox {
+  margin-top: -14px;
+}
+
+.ant-checkbox-inner {
+  border-radius: 19px;
+}
+
+// .groupBox {
+//  .ant-form-item{
+// width: 50%;
+//  }
+// text-align: center;
+
+.submitButton:hover {
+  color: white;
+  background-color: #54a754;
+  border: none;
+}
+.btn {
+  border: none;
+}
+.buttons:hover {
+  color: white;
+  background-color: #dcdada;
+  border: none;
+}
+
+// }
+.group {
+  .ant-form-item {
+    width: 100%;
+    height: 100%;
+  }
+  .ant-input {
+    border: 0.3px solid rgba(0, 0, 0, 0.25);
+  }
+  .ant-input:hover {
+    border: 0.3px solid rgba(0, 0, 0, 0.25);
+  }
+  .ant-btn {
+    background-color: #579ebb;
+    color: white;
+    border-radius: 5px;
+  }
+}
+
+.groupHeader {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: black;
+  text-align: center;
+  word-wrap: break-word;
+  min-height: 30px;
+  max-width: 100%;
+  margin-bottom: -1px !important;
+}
+.editGroupHeader {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: black;
+  text-align: center;
+  word-wrap: break-word;
+  min-height: 33px;
+  max-height: 0px;
+  max-width: 100%;
+  margin-bottom: -1px !important;
+}
+.headerGroup {
+  width: 92.4%;
+  margin-left: 3.8%;
+  margin-top: -1px;
+  margin-bottom: -2px;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .headerGroup {
+    width: 93%;
+    margin-left: 3.5%;
+    margin-top: -1px;
+    margin-bottom: -2px;
+  }
+}
+
+@media only screen and (width: 1024px) {
+  .headerGroup {
+    width: 88.1%;
+    margin-left: 5.9%;
+    margin-top: -1px;
+    margin-bottom: -2px;
+  }
+}
+@media only screen and (width: 1440px) {
+  .headerGroup {
+    width: 92.8%;
+    margin-left: 3.6%;
+    margin-top: -1px;
+    margin-bottom: -2px;
+  }
+}
+
+.noneGroup {
+  width: 100%;
+  // margin-left: 3%;
+}
+.width-btn {
+  width: 78px !important;
+}
+.activeSelection {
+  margin-top: 1px !important;
+  margin-bottom: -1px !important;
+}
+.activeSelection1 {
+  margin-top: 3px !important;
+  margin-bottom: -1px !important;
+}
+.textarea {
+  resize: none;
+}
+.hideTitle {
+  margin-top: -1px;
+  margin-bottom: -1px;
+}
+.hideTitle1 {
+  margin-top: -1px;
+  margin-bottom: 3px;
+}
+.dotSize {
+  font-size: 15px;
+  width: 35px;
+  text-align: center;
+}
+.difficult {
+  height: 93px;
+}
+.ant-input:focus {
+  outline: none !important;
+  // border : 1px solid black;
+  box-shadow: none;
+}
+
+.submitButton {
+  padding: 31%;
+  /* margin: 7%; */
+  padding-left: 50%;
+  padding-right: 50%;
+  background-color: #54a754;
+  color: black;
+}
+.buttons {
+  padding: 3%;
+  /* margin: 7%; */
+  padding-left: 2%;
+  padding-right: 2%;
+  background-color: #dcdada;
+  .btn {
+    background-color: #dcdada;
+    color: black;
+  }
+  border-radius: 3px;
+}
+.buttonSubmit {
+  width: 16%;
+  margin-right: 50px !important;
+}
+.btn-check:checked + .btn,
+:not(.btn-check) + .btn:active,
+.btn:first-child:active,
+.btn.active,
+.btn.show {
+  color: #000000;
+  background-color: #dcdada;
+  border-color: #dcdada;
+}
+
+.dis .ant-checkbox-inner {
+  display: none;
+  pointer-events: none !important;
+}
+.newBuildSideCard {
+  position: fixed;
+  width: 47.5vh;
+  overflow: auto;
+  height: 100vh;
+  .ant-input {
+    margin-bottom: 1% !important;
+    border: 1px solid black !important;
+    font-size: 16.5px !important;
+    textarea.ant-input {
+      border: 1px solid black !important;
+    }
+
+    .ant-input:focus,
+    .ant-input:hover,
+    .ant-input:placeholder-shown,
+    .ant-input-focused ::placeholder {
+      text-overflow: ellipsis;
+      color: black;
+      background-color: #d4d4d4;
+    }
+    .ant-input:hover {
+      border-color: #000000 !important;
+      border-right-width: 1px;
+    }
+    .ant-input:focus {
+      border: none !important;
+    }
+  }
+}
+.sbn {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .col-md-5 {
+    flex: 0 0 auto;
+    width: 33.666667%;
+  }
+  .newBuildSideCard {
+    position: fixed;
+    width: 38.7vh;
+  }
+  .mainPage .newBuildBoxsMain .newBuildBoxs {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+
+    .boxesMain .innerBoxMain {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+
+      .side-Arrow .innerBoxs {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1024px) {
+  .newBuildSideCard {
+    position: fixed;
+    width: 47.5vh;
+  }
+}
+@media only screen and (min-width: 1920px) and (max-width: 2024px) {
+  .col-xl-9 {
+    flex: 0 0 auto;
+    width: 62%;
+    margin-left: 31%;
+  }
+  .newBuildSideCard {
+    position: fixed;
+    width: 47.5vh;
+  }
+  .mainPage .newBuildBoxsMain .newBuildBoxs {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+
+    .boxesMain .innerBoxMain {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+
+      .side-Arrow .innerBoxs {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
+    }
+  }
+}
+.newBuildBoxes {
+  overflow-y: scroll;
+  overflow: auto;
+}
+.triangle {
+  margin-bottom: -31px;
+}
+.triangle1 {
+  margin-bottom: -18px !important;
+}
+.newBuildBoxes {
+  margin-left: 22%;
+}
+textarea {
+  resize: none;
+}
+
+.flashQA {
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.5px;
+  line-height: 22px;
+  color: black;
+}
+.btn {
+  border: none;
+}
+.btn:hover {
+  border: none;
+}
+.Toastify__progress-bar {
+  opacity: -0.3 !important;
+}
+
+.Toastify__toast-container--top-right {
+  top: 7px !important;
+}
+.Toastify__toast-container {
+  background: transparent !important;
+  width: 26% !important;
+}
+
+.Toastify__close-button--light {
+  color: none !important;
+  display: none !important;
+}
+.Toastify__toast {
+  box-shadow: none !important;
+  overflow: unset !important;
+}
+.Toastify__toast-theme--light {
+  background: none !important;
+  color: none !important;
+}
+.Toastify__toast-body {
+  display: block !important;
+}
+.Toastify__toast--warning {
+  .Toastify__toast-body > div:last-child {
+    margin-top: -35px !important;
+    color: #000000;
+    font-weight: 700;
+    font-size: 18px;
+    margin-left: -15px;
+  }
+  .Toastify__toast-icon {
+    width: 66px !important;
+    background-color: white !important;
+    margin-left: -26% !important;
+  }
+}
+.Toastify__toast--success {
+  .Toastify__toast-body > div:last-child {
+    margin-top: -42px !important;
+    color: #000000;
+    font-weight: 700;
+    font-size: 15px;
+    margin-left: -183px;
+    word-wrap: break-word;
+  }
+  .Toastify__toast-icon {
+    width: 53px !important;
+    background-color: white !important;
+    border-radius: 50% !important;
+    margin-left: 55% !important;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .Toastify__toast--success {
+    .Toastify__toast-body > div:last-child {
+      margin-top: -57px !important;
+      color: #000000;
+      font-weight: 700;
+      font-size: 15px;
+      margin-left: -30px;
+      word-wrap: break-word;
+    }
+    .Toastify__toast-icon {
+      width: 53px !important;
+      background-color: white !important;
+      border-radius: 50% !important;
+      margin-left: -60% !important;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .Toastify__toast--warning {
+    .Toastify__toast-body > div:last-child {
+      margin-top: -35px !important;
+      color: #000000;
+      font-weight: 700;
+      font-size: 18px;
+      margin-left: -59px;
+    }
+    .Toastify__toast-icon {
+      width: 66px !important;
+      background-color: white !important;
+      margin-left: 10px !important;
+    }
+  }
+}
+.guideVideo {
+  height: 100%;
+  width: 100%;
+}

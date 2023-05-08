@@ -1,0 +1,79 @@
+{
+  "extends": "./tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": [
+      "es2017",
+      "esnext.asynciterable"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "@types"
+    ],
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "allowJs": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "server/*"
+      ],
+      "@configs": [
+        "server/configs"
+      ],
+      "@databases": [
+        "server/databases"
+      ],
+      "@controllers/*": [
+        "server/controllers/*"
+      ],
+      "@dtos/*": [
+        "server/dtos/*"
+      ],
+      "@exceptions/*": [
+        "server/exceptions/*"
+      ],
+      "@interfaces/*": [
+        "server/interfaces/*"
+      ],
+      "@middlewares/*": [
+        "server/middlewares/*"
+      ],
+      "@models/*": [
+        "server/models/*"
+      ],
+      "@services/*": [
+        "server/services/*"
+      ],
+      "@utils/*": [
+        "server/utils/*"
+      ]
+    }
+  },
+  "include": [
+    "server/**/*.ts",
+    "server/**/*.json",
+    "index.ts",
+    ".env",
+    "ecosystem.config.js",
+    "tailwind.config.js",
+    "postcss.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "src"
+  ]
+}

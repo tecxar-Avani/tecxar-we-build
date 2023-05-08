@@ -1,0 +1,62 @@
+/**
+ * This injects Tailwind's base styles and any base styles registered by
+ * plugins.
+ */
+ @tailwind base;
+
+ /**
+  * This injects Tailwind's component classes and any component classes
+  * registered by plugins.
+  */
+ @tailwind components;
+ 
+ /**
+  * This injects Tailwind's utility classes and any utility classes registered
+  * by plugins.
+  */
+ @tailwind utilities;
+ 
+ /**
+  * Use this directive to control where Tailwind injects the responsive
+  * variations of each utility.
+  *
+  * If omitted, Tailwind will append these classes to the very end of
+  * your stylesheet by default.
+  */
+ @tailwind screens;
+ /* 
+ .h-full #__next {
+     height: 100%;
+ } */
+ 
+ .shadow {
+     --tw-shadow: 0 0px 2px 0 rgb(0 0 0 / 54%), 0 1px 2px -1px rgb(0 0 0 / 54%);
+     --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+ }
+ /* Chrome, Safari, Edge, Opera */
+ input::-webkit-outer-spin-button,
+ input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+ }
+ 
+ /* Firefox */
+ input[type=number] {
+   -moz-appearance: textfield;
+ }
+ .bg-discord {
+   background-color: #7289da !important;
+ }
+ 
+ @media only screen and (max-width: 639px) {
+     .OpenSideMobile {
+         padding-left: 3.5rem;
+     }
+     .Mobile {
+         padding-left: 11rem;
+     }
+   }
+
+   
+ 

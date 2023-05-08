@@ -1,0 +1,12 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 240" width="2560" height="240">
+	<title>New Project</title>
+	<style>
+		.s0 { fill: #ff0000 } 
+		.s1 { mix-blend-mode: luminosity;fill: #ff0000 } 
+	</style>
+	<path id="Shape 1" class="s0" d="m30.8 192.9l4.4-2.4 27 48.3-4.4 2.4z"/>
+	<path id="Shape 2" class="s0" d="m62.1 241.4l-4.2-2.8 30-45.3 4.2 2.8z"/>
+	<path id="Shape 3" class="s0" d="m62.5 240.1l-5-0.2 3-144.2 5 0.1z"/>
+	<path id="Shape 4" class="s0" d="m61 96.2v-5l2469-6v5z"/>
+	<path id="Shape 5" class="s1" d="m2534.5 89.8l-5-0.2 3-89.7 5 0.2z"/>
+</svg>
