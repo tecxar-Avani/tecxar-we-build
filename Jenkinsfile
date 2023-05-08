@@ -7,7 +7,7 @@ pipeline {
     environment {
       DEPLOY_DIR = '~/applications/webuild.tecxar.io'
     }
-    tools {nodejs "NodeJS18"}
+    tools {nodejs "NodeJS14"}
     stages {
       // stage('Cloning Repo') {
       //   steps {
