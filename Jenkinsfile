@@ -26,7 +26,7 @@ pipeline {
             message: "Build Started - ${env.JOB_NAME} ${env.BUILD_COMMIT_BY}",
             teamDomain: 'tecxar',
             tokenCredentialId: 'tecxar.slack.com'
-            sh 'yarn deploy'
+            sh 'yarn build'
             slackSend channel: 'jenkins-ci',
             color: 'good', failOnError: true,
             message: "Build Successfully - ${env.JOB_NAME}",
