@@ -49,7 +49,11 @@ let result = value.replace(wsRegex, "");
       props.responseCallback(propsId, value, id);
     }
     if(nextId != null){
-       document.getElementById(nextId)?.focus()
+      console.log("nextId",nextId)
+
+      setTimeout(() => {
+        const data = document.getElementById(nextId)?.focus()
+      }, 100);
     }
   };
   const userId = buildById?.data?.map((a: any) => a.created_by);
