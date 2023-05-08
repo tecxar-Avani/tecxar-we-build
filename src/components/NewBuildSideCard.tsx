@@ -496,7 +496,7 @@ console.log("------------------",e)
                 <Image src="/img/save.svg" alt="no image" />
               )}
             </div>
-            <div className="d-flex">
+            {/* <div className="d-flex">
               <div className="backward bd-highlight cursor-pointer">
                 <Image
                   src="/img/backward.svg"
@@ -533,7 +533,7 @@ console.log("------------------",e)
                   }
                 />
               </div>
-            </div>
+            </div> */}
             {/* <Link href={`../`}> */}
             <div
               className="delt bd-highlight cursor-pointer"

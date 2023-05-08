@@ -23,7 +23,7 @@ const OuterBox = (props: any) => {
   const [form] = Form.useForm();
   var redoArray = [];
   var BoxData: any;
-  const handleChange = (event: any) => {
+  const handleChange = (event: any,nextId:any) => {
     const { value, id } = event.target;
     value.length > 0 && props.setTextEnter(true)
     const propsId = Number(props.id + 1);
@@ -47,6 +47,9 @@ let result = value.replace(wsRegex, "");
     } else if (props.boxId && result.length === 150) {
       props.setBoxData(BoxData);
       props.responseCallback(propsId, value, id);
+    }
+    if(nextId != null){
+       document.getElementById(nextId)?.focus()
     }
   };
   const userId = buildById?.data?.map((a: any) => a.created_by);
@@ -234,7 +237,9 @@ let result = value.replace(wsRegex, "");
                               }
                               //onInput for add new boxes properly
                               // onChange={}
-                              onInput={handleChange}
+                              // onInput={handleChange}
+                              onPressEnter={(e) => {handleChange(e,`${props.id + 1}`)}}
+                              // onMouseEnter={handleChange}
                               id={props.id}
                               className="textFontSize"
                               onFocus={() => {
@@ -255,6 +260,7 @@ let result = value.replace(wsRegex, "");
                                   : false
                               }
                               style={checked ? { background: "#e7edf3" } : {}}
+                              name={`${props.id}`}
                             />
                           </Form.Item>
 
