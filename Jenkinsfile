@@ -16,7 +16,7 @@ pipeline {
       // }
       stage('Installing dependencies') {
         steps {
-            sh 'yarn --silent'
+            sh 'yarn'
         }
       }
       stage('Building') {
