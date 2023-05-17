@@ -123,7 +123,7 @@ console.log("------------------",e)
             
           </div>
         }
-        <div className="d-flex align-items-center border-top border-bottom border-dark p-2 justify-content-center">
+        {/* <div className="d-flex align-items-center border-top border-bottom border-dark p-2 justify-content-center">
           <div
             className="mx-1 buttons"
             onClick={groupSelect}
@@ -160,7 +160,7 @@ console.log("------------------",e)
               </Button>
             </div>
           )}
-        </div>
+        </div> */}
 
         <div
           style={
@@ -246,7 +246,7 @@ console.log("------------------",e)
           </div>
         </div>
 
-        <div className="px-2 threeButton align-items-center border-bottom border-dark ">
+        {/* <div className="px-2 threeButton align-items-center border-bottom border-dark ">
           <div className="d-flex mt-4 justify-content-between">
             <div className="text-center">
               <Button variant="" ref={typeVideo} onClick={() => {setType(!type); setPolarisation(false); setDifficulty(false)} }>
@@ -458,8 +458,8 @@ console.log("------------------",e)
               </Overlay>
             </div>
           </div>
-        </div>
-        <div className="px-3 mt-3">
+        </div> */}
+        <div className="px-3 mt-4">
           <div className="d-flex owd bd-highlight justify-content-between align-items-center">
             {/* {props.isLoggedIn === true ? ( */}
             <div

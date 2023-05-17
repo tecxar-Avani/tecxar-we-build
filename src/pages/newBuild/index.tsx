@@ -983,7 +983,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
         {/* </>)}
               </Droppable> */}
 
-        <div className="position-absolute mkCard">
+        {/* <div className="position-absolute mkCard">
           {userArr &&
             userArr?.length > 0 &&
             userArr?.map((data: any) => {
@@ -1007,8 +1007,8 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
                   </Fragment>
               );
             })}
-        </div>
-        <div
+        </div> */}
+        {/* <div
           className="position-absolute flash"
           style={
             buildIdForFlash == "undefined"
@@ -1025,7 +1025,7 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
               setAddFlashcard(true);
             }}
           />
-        </div>
+        </div> */}
 
         <AddFlashCardModal
           modal2Open={addFlashCardData}

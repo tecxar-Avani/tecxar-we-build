@@ -101,14 +101,14 @@ const SideBar = (toggle: any) => {
           className={`h-full d-flex px-3 flex-column justify-content-center align-items-center mySidebar ${sideBarBG}`}
         >
           <div className="d-flex flex-column justify-content-between align-items-center">
-            <Link href={"/search?selfLearning=true"}>
+            {/* <Link href={"/search?selfLearning=true"}>
               <a>
                 <Image src={`/img/user-pre.png`} className="img-fluid sideImg" />
               </a>
-            </Link>
+            </Link> */}
             <Link href="/search?selfLeaning=false">
               <a>
-                <Image src={`/img/book.png`} className="img-fluid sideImg" />
+                <Image src={`/img/user-pre.png`} className="img-fluid sideImg" />
               </a>
             </Link>
             <Link
