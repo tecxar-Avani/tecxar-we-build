@@ -316,11 +316,11 @@ let result = value.replace(wsRegex, "");
         </div>
         {/* //   )}
         // </Draggable> */}
-        {props.boxId && (
+        {/* {props.boxId && (
           <div className="arrowRight">
             <Image layout="fill" width={"100"} src={"/public/redArrow.svg"} />
           </div>
-        )}
+        )} */}
       </Col>
     </Fragment>
   );

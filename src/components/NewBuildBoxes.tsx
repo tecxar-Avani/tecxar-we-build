@@ -143,7 +143,7 @@ const NewBuildBoxes = (props: any) => {
                       </TaskList>
                     )}
                   </Droppable>
-                  {props.buildId ? 
+                  {/* {props.buildId ? 
                   <div className="myArrowBottom">
                     <Image
                       layout="fill"
@@ -152,7 +152,7 @@ const NewBuildBoxes = (props: any) => {
                     />
                   </div>
                   : <div></div>
-      }
+      } */}
                 </div>
               </div>
             );
@@ -341,13 +341,13 @@ const NewBuildBoxes = (props: any) => {
                             </TaskList>
                           )}
                         </Droppable>
-                        <div className="myArrowBottom">
+                        {/* <div className="myArrowBottom">
                           <Image
                             layout="fill"
                             width={"100"}
                             src={"/public/red-main.svg"}
                           />
-                        </div>
+                        </div> */}
                       </Row>
                     </div>
                   );

@@ -215,12 +215,12 @@ const ProfileCard = (props: any) => {
             </p>
           </div>
         </div>
-        {props.profile && props.profile.flashCardsNumber && (
+        {/* {props.profile && props.profile.flashCardsNumber && (
           <div className="flashCardsContent">
             {props.profile.flashCardsNumber} Cards
           </div>
-        )}
-        {props.profile && props.profile.flashCardProfile && (
+        )} */}
+        {/* {props.profile && props.profile.flashCardProfile && (
           <div
             className="flashCards"
             onClick={() => {
@@ -245,7 +245,7 @@ const ProfileCard = (props: any) => {
               />
             )}
           </div>
-        )}
+        )} */}
         <div className="button justify-content-center d-flex">
           {props.profile && props.profile.blockIcon && (
             <figure>
