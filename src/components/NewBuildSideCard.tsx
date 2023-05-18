@@ -82,7 +82,6 @@ const NewBuildSideCard = (props: any) => {
   };
 
   const backGroundChange = (e:any) =>{
-console.log("------------------",e)
   }
   return (
     <Fragment>

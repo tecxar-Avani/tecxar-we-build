@@ -13,7 +13,6 @@ const authMiddleware = async (
 ) => {
   try {
     const userService = new USerService();
-
     const Authorization =
       req.cookies["authorization"] ||
       req.header("authorization")?.split("Bearer ")[1] ||

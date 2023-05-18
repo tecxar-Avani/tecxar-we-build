@@ -36,7 +36,8 @@ import { toast } from "react-toastify";
 import { userSelector, getUserByEmail } from "@/store/reducers/user.reducer";
 import Head from "next/head";
 import moment from "moment";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+
 import {
   DragDropContext,
   DropResult,
@@ -55,6 +56,7 @@ import _ from "lodash";
 import LogInButton from "@/components/LogInButton";
 
 const NewBuild = (props: any) => {
+  console.log("props new build page",props)
   const [form] = Form.useForm();
   const router = useRouter();
   const { flashCardList,flashCardDeck } = useAppSelector(flashCardSelector);
@@ -1197,8 +1199,22 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
   );
 };
 
-export default NewBuild;
-export const getServerSideProps: GetServerSideProps = async () => {
-  resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
-  return { props: { data: [] } };
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext | any) => {
+  const ctx = context.req;
+  if (ctx.session && ctx.session?.dbUser) {
+    return {
+      props: {
+        user: ctx.session?.dbUser,
+      },
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
 };
+export default NewBuild;
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+//   return { props: { data: [] } };
+// };

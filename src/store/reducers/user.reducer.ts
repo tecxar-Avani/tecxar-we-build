@@ -80,6 +80,20 @@ export const windowStatus = createAsyncThunk(
     return data;
   }
 );
+export const logout = createAsyncThunk(
+  `user/logout`,
+  async (): Promise<ICurrentUser> => {
+    const { data } = await userService.logOut();
+    return data;
+  }
+);
+export const googleCallBack = createAsyncThunk(
+  `user/callback`,
+  async (): Promise<ICurrentUser> => {
+    const { data } = await userService.googleCallBack();
+    return data;
+  }
+);
 interface State {
   id: number;
   loading: boolean;
@@ -90,7 +104,8 @@ interface State {
   editUser: IUserResponseRowsCountResponse | any;
   totalCount: IUserResponseRowsCountResponse | any;
   toastLog: any;
-  windowStatus:any
+  windowStatus:any;
+  callBack:any
 }
 
 const initialState: State = {
@@ -109,7 +124,9 @@ const initialState: State = {
     rows: [],
   },
   toastLog: "",
-  windowStatus:'false'
+  windowStatus:'false',
+  callBack:{}
+
 };
 
 const isPendingAction = (action: AnyAction): action is PendingAction =>
@@ -157,7 +174,7 @@ const userSlice = createSlice({
           ) {
             toast.success("");
           } else {
-            toast.success("You  logged in successfully Please save your data");
+            toast.success("You logged in successfully Please save your data");
           }
           // setTimeout(() => {
           //   Router.reload();
@@ -262,7 +279,38 @@ const userSlice = createSlice({
           };
         }
       })
+      .addCase(logout.fulfilled, (state, action) => {
+        if (action.payload) {
+          window.location.replace("/");
+          toast.success(action.payload.message);
+          return {
+            ...state,
+            loading: false,
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+          };
+        }
+      })
+      .addCase(googleCallBack.fulfilled, (state, action) => {
+        if (action.payload) {
+          console.log("FFFFFFFFFFFFFFF",action.payload)
+          return {
+            ...state,
+            loading: false,
+            callBack:action.payload
+          };
+        } else {
+          return {
+            ...state,
+            loading: false,
+            callBack:initialState.callBack
 
+          };
+        }
+      })
 
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;

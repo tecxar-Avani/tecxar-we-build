@@ -21,16 +21,17 @@ export class Authenticate implements ExpressMiddlewareInterface {
 }
 
 export class GoogleAuthentication implements ExpressMiddlewareInterface {
-  authenticate = (callback: any) =>
+  authenticate = (callback: any) => 
     passport.authenticate(
       "google",
       { failureRedirect: "https://webuild.tecxar.io/", session: false },
-
       callback
     );
+    
 
   use(req: Request | any, res: Response, next: NextFunction): any {
     return this.authenticate((err: any, user: any, info: any) => {
+      console.log("MMMMMMMMMMMMMMMMMMMM",req)
       if (err || !user) {
         return res.redirect(`https://webuild.tecxar.io/`);
         // return res

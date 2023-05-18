@@ -30,6 +30,7 @@ import {
 import Head from "next/head";
 import _ from "lodash";
 import { useRouter } from "next/router";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 const Profile = (props: any) => {
   const dispatch = useAppDispatch();
@@ -509,5 +510,4 @@ const withOutAdminUnblockUser = unBlocked_user && unBlocked_user.length>0 && unB
     </>
   );
 };
-
 export default Profile;

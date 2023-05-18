@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
 import { IVideoBuild } from "../../../@types/common";
 import { getAuthCookie, userSelector } from "../../store/reducers/user.reducer";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 const SearchPage = (props: any) => {
   const router = useRouter();
@@ -216,5 +217,4 @@ const SearchPage = (props: any) => {
     </div>
   );
 };
-
 export default SearchPage;

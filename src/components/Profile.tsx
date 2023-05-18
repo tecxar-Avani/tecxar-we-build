@@ -1,4 +1,4 @@
-import { updateUserById, userSelector } from "@/store/reducers/user.reducer";
+import { logout, updateUserById, userSelector } from "@/store/reducers/user.reducer";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import React from "react";
 import { Image } from "react-bootstrap";
@@ -43,10 +43,11 @@ const ProfileCard = (props: any) => {
     dispatch(updateUserById(userData));
   };
 
-  const logout =  async() => {
-    await router.push("/")
-    await  toast.success(""); 
-   cookieCutter.set("authorization", "", { expires: new Date(0)})
+  const logoutF =  async() => {
+    await cookieCutter.set("authorization", "", { expires: new Date(0) });
+    await cookieCutter.set("email", "", { expires: new Date(0) });
+    await cookieCutter.set("user", "", { expires: new Date(0) });
+    dispatch(logout());
   };
 
   return (
@@ -159,7 +160,7 @@ const ProfileCard = (props: any) => {
           <Button
             className="logOut"
             type="primary"
-            onClick={() => logout()}
+            onClick={() => logoutF()}
             href={`/`}
           >
             {props.profile.logout}

@@ -1,3 +1,4 @@
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import React, { useState } from "react";
 import GoogleButton from "react-google-button";
 

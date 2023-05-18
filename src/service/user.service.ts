@@ -19,5 +19,11 @@ class UserService {
   totalbuilds() {
     return API.get(`/build/totalbuilds`);
   }
+  logOut() {
+    return API.get(`/logout`);
+  }
+  googleCallBack() {
+    return API.get(`/google_callback`)
+  }
 }
 export default new UserService();

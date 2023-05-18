@@ -14,7 +14,7 @@
 
 body,
 .ant-layout {
-  background-color: #ffffff;
+   background-color: #ffffff;
   color: black !important;
 }
 
@@ -31,7 +31,82 @@ body,
   // color: rgba(0, 0, 0, 0.25);
 }
 .we-build {
-  left: 66px;
+  position: absolute;
+  width: 223px;
+  height: 94.73px;
+  left: 37px;
+  top: 14px;
+}
+.centerDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 99;
+  background: transparent;
+  width: 100%;
+  height: 100vh;
+  color: red;
+
+  .listen {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 0px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #D91919;
+  }
+  .discover{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 55px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #FFE601;
+  }
+  .who{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 0px;
+    /* identical to box height */
+    
+    text-align: center;
+    
+    color: #7D1597;
+  }
+   .landigPageButton {
+    background-color: #FF6B00;
+    color: #000000;
+    font-weight: 900;
+    border-radius: 10px;
+    font-size: 20px;
+}
+    .btn:hover {
+      color: 000000;
+      background-color:  #FF6B00;
+      border-color:  #FF6B00;
+    }
+}
+.landingPage{
+  z-index: 0;
+}
+.btnrv{
+  .landigPageButton {
+    background-color: #FF6B00;
+    color: #000000;
+    font-weight: 900;
+    border-radius: 10px;
+    font-size: 20px;
+}
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
   .we-build {
@@ -130,6 +205,7 @@ body,
   position: fixed;
 }
 
+
 .mySidebar {
   max-width: 120px !important;
   min-width: 120px !important;
@@ -143,6 +219,13 @@ body,
   justify-content: center;
   display: flex;
   height: 55vh;
+  border-radius: 0px 10px 10px 0px;
+  padding-top: 20%;
+  padding-bottom: 20%;
+  width: 16vh;
+}
+.Myborder .ant-layout-sider-children {
+  border: 4px solid #000000;
 }
 
 .left-66 {
@@ -976,12 +1059,18 @@ hr {
   background-color: #44a82b;
 }
 
-.profileBG {
-  background-color: white;
-}
+// .profileBG {
+//   background-color: white;
+// }
 
 .newBuild {
   border: 0 !important;
+}
+.sidbar{
+  z-index: 9999;
+  .ant-layout-sider{
+    background-color: transparent !important;
+  }
 }
 
 .flash {
@@ -1296,7 +1385,25 @@ hr {
 #blink {
   animation: blinking 1s infinite;
 }
+@keyframes blinking {
+  0% {
+    background-color: hwb(36 13% 3%);
+    border: 1px solid rgba(102, 102, 102, 0.342);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
 
+  100% {
+    background-color: hsl(71, 90%, 70%);
+    border: 1px solid rgba(102, 102, 102, 0.342);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+}
+
+#vlink {
+  animation: blinking 1s infinite;
+}
 .ant-tooltip-placement-bottom .ant-tooltip-arrow {
   left: 24%;
 }
@@ -1348,6 +1455,9 @@ hr {
 .btnrv {
   .ant-btn {
     display: none !important;
+  }
+  .ant-modal-content{
+    background-color: #FF6B00;
   }
 }
 
@@ -1501,11 +1611,11 @@ h6 {
 
 .img-rounded {
   border-radius: 50%;
-  border: 10px solid black;
+  // border: 10px solid black;
 }
 .img-rounded1 {
   border-radius: 50%;
-  border: 6px solid black;
+  // border: 6px solid black;
 }
 .img-roundedAdmin {
   border-radius: 50%;
