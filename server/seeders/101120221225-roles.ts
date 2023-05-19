@@ -7,18 +7,18 @@ export = {
           id: 1,
           role: "Admin",
           createdAt: new Date(),
-          createdBy: 1,
+          created_by: 1,
           updatedAt: new Date(),
-          updatedBy: 1,
+          updated_by: 1,
         },
         {
           id: 2,
           role: "User",
           createdAt: new Date(),
-          createdBy: 1,
+          created_by: 1,
           updatedAt: new Date(),
-          updatedBy: 1,
-        }
+          updated_by: 1,
+        },
       ],
       {}
     );
