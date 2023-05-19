@@ -465,8 +465,9 @@ const NewBuildSideCard = (props: any) => {
               id={`${hoverEffect && "blink"}`}
               className={`save bd-highlight cursor-pointer`}
               onClick={() => {
-                props.isLoggedIn === true || loggedInUser?.length > 0
-                  ? props.isSave === false &&
+                // props.isLoggedIn === true || loggedInUser?.length > 0
+                //   ?
+                   props.isSave === false &&
                     props.onSave(
                       videoType,
                       polarisationLevel,
@@ -474,7 +475,7 @@ const NewBuildSideCard = (props: any) => {
                       url,
                       videoDesc  
                     )
-                  : setModal5Open(true);
+                  // : setModal5Open(true);
               }}
               style={
                 props.id == undefined ||

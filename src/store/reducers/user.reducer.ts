@@ -87,13 +87,13 @@ export const logout = createAsyncThunk(
     return data;
   }
 );
-export const googleCallBack = createAsyncThunk(
-  `user/callback`,
-  async (): Promise<ICurrentUser> => {
-    const { data } = await userService.googleCallBack();
-    return data;
-  }
-);
+// export const googleCallBack = createAsyncThunk(
+//   `user/callback`,
+//   async (): Promise<ICurrentUser> => {
+//     const { data } = await userService.googleCallBack();
+//     return data;
+//   }
+// );
 interface State {
   id: number;
   loading: boolean;
@@ -144,7 +144,9 @@ const userSlice = createSlice({
     loggedInUser: (state: State, action: PayloadAction<any>) => {
       return { ...state, user: action.payload };
     },
-  
+    callBack:(state:State,action: PayloadAction<any>) => {
+      return { ...state, callBack: action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -294,23 +296,23 @@ const userSlice = createSlice({
           };
         }
       })
-      .addCase(googleCallBack.fulfilled, (state, action) => {
-        if (action.payload) {
-          console.log("FFFFFFFFFFFFFFF",action.payload)
-          return {
-            ...state,
-            loading: false,
-            callBack:action.payload
-          };
-        } else {
-          return {
-            ...state,
-            loading: false,
-            callBack:initialState.callBack
+      // .addCase(googleCallBack.fulfilled, (state, action) => {
+      //   if (action.payload) {
+      //     console.log("FFFFFFFFFFFFFFF",action.payload)
+      //     return {
+      //       ...state,
+      //       loading: false,
+      //       callBack:action.payload
+      //     };
+      //   } else {
+      //     return {
+      //       ...state,
+      //       loading: false,
+      //       callBack:initialState.callBack
 
-          };
-        }
-      })
+      //     };
+      //   }
+      // })
 
       .addMatcher(isPendingAction, (state) => {
         state.loading = true;

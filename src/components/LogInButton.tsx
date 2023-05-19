@@ -7,14 +7,14 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import {
   getAuthCookie,
   getUserByEmail,
-  googleCallBack,
   userSelector,
 } from "../store/reducers/user.reducer";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { Button } from "react-bootstrap";
+import userService from "../service/user.service";
 
 const LogInButton = (props: any) => {
-  const { loggedInUser ,toastLog , windowStatus} = useAppSelector(userSelector);
+  const { loggedInUser ,toastLog , windowStatus,callBack} = useAppSelector(userSelector);
   const dispatch = useAppDispatch();
   const router = useRouter();  
     const getCookie = () => {
@@ -23,19 +23,18 @@ const LogInButton = (props: any) => {
         dispatch(getUserByEmail());
       }, 5000);
     };
- console.log("OOOOOOOOOOOOOOO",router.pathname)
-//   useEffect(() => {
-//     setTimeout(() => {
-//       dispatch(getAuthCookie());
-//       dispatch(getUserByEmail());
-//     }, 1000);
-// }, []);
-// useEffect(() => {
-  const getCallBack:any= () => {
-    console.log("FFFFFFFFF")
-    dispatch(googleCallBack())
-  }
-// },[])
+// //   useEffect(() => {
+// //     setTimeout(() => {
+// //       dispatch(getAuthCookie());
+// //       dispatch(getUserByEmail());
+// //     }, 1000);
+// // }, []);
+// // useEffect(() => {
+//   const getCallBack:any= () => {
+//     console.log("FFFFFFFFF")
+//     dispatch(googleCallBack())
+//   }
+// // },[])
     
   return (
     <>
@@ -59,7 +58,7 @@ const LogInButton = (props: any) => {
               // ) {
                 // getCookie();
               // }
-              getCallBack();
+              // getCallBack();
               window.open(`/api/google`,"_self");
             }}
           >BOOK YOUR ONBOARDING HERE</Button>
@@ -70,19 +69,40 @@ const LogInButton = (props: any) => {
     </>
   );
 };
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext | any) => {
-  const ctx = context.req;
-  if (ctx.session && ctx.session?.dbUser) {
-    
-    return {
-      props: {
-        user: ctx.session?.dbUser,
-      },
-    };
-  } else {
-    return {
-      props: {},
-    };
-  }
-};
+// export const getServerSideProps: GetServerSideProps = async (
+//   context: GetServerSidePropsContext | any
+// ) => {
+//   const cookie = context.req ? context.req.cookies : null;
+//   const ctx = context.req;
+
+//   let cookies = "";
+//   if (cookie) {
+//     Object.keys(cookie).forEach((key) => {
+//       cookies += key + "=" + cookie[key] + ";";
+//     });
+//   }
+
+//   const headers = { cookie: cookies };
+//   const { id } = context.query;
+//   if(id) {
+//     const { status, data } = await userService.googleCallBack(headers);
+//     if (ctx.session && ctx.session?.dbUser) {
+//       return {
+//         props: {
+//           UserData: data,
+//         },
+//       };
+//     } else {
+//       return {
+//         props: {}
+//       }
+//     }
+//   } else {
+//     return {
+//       props: {
+//         userData: null
+//       }
+//     }
+//   }
+// };
 export default LogInButton;

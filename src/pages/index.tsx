@@ -10,7 +10,7 @@ import { Button } from "react-bootstrap";
 // import Link from "antd/lib/typography/Link";
 const { Content } = Layout;
 
-const Home: NextPage = (props) => {
+const Home: NextPage = (props:any) => {
   const router = useRouter();
   useEffect(() => {
     if (router.asPath == "/?isLoggedIn") {

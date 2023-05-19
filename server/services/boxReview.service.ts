@@ -8,7 +8,7 @@ import DB from "@databases";
 import { isEmpty } from "class-validator";
 import { QueryTypes } from "sequelize";
 
-class BoxService {
+class BoxReviewService {
   getTotalAwerness(user: any) {
     throw new Error("Method not implemented.");
   }
@@ -74,4 +74,4 @@ class BoxService {
     return AwarenessById;
   }
 }
-export default BoxService;
+export default BoxReviewService;

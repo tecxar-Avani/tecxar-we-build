@@ -1,4 +1,6 @@
 import API from "../plugins/api";
+import axios, { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
+
 
 class UserService {
   userAuthentication() {
@@ -22,8 +24,8 @@ class UserService {
   logOut() {
     return API.get(`/logout`);
   }
-  googleCallBack() {
-    return API.get(`/google_callback`)
-  }
+  // googleCallBack(headers: AxiosRequestHeaders) {
+  //   return API.get(`/google_callback`,{headers})
+  // }
 }
 export default new UserService();

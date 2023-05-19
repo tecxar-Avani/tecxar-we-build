@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
 import * as utils from '../utils';
+import userService from "../service/user.service";
 const cookieCutter = require("cookie-cutter");
 
 // modified version - allows for custom pageProps type, falling back to 'any'
@@ -78,30 +79,7 @@ WeBuildApp.getInitialProps = async (context: AppContext) => {
   const originalUrl = ctx.pathname;
   let loggedInUser: any = {};
   loggedInUser = (ctx as NextPageContextRequest)!.req?.session?.user;
-  // const dbUser = (ctx as NextPageContextRequest)!.req?.session?.dbUser;
-
-
   if (utils.isBrowser()) {
-  //   if (loggedInUser) {
-  //     if (originalUrl == '/' && dbUser !== undefined) {
-  //       return window.location.replace('/');
-  //     } else if(!dbUser) {
-  //       if(originalUrl == '/') {
-  //         return window.location.replace('/');
-  //       }
-  //     }
-  //     // else if(!dbUser) {
-  //     //   if(originalUrl == '/newBuild') {
-  //     //     return window.location.replace('/newBuild');
-  //     //   }
-  //     // }
-  //   } else {
-  //     // Show not logged in page instead
-  //     // window.location.replace('/');
-  //     return { pageProps, userProps: { user: null, loggedIn: false } };
-  //   }
-  // } else {
-    // const { user }: any = (ctx as NextPageContextRequest)!.req;
     if (loggedInUser) { 
       // Logged In
       if (originalUrl == '/' && loggedInUser !== undefined) {
