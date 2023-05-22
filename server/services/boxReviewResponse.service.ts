@@ -58,7 +58,6 @@ class BoxResponseService {
       subQuery: boolean;
     } = {
       attributes: ["boxReview_id", "review_type", "comment"],
-      logging: console.log,
       where: where,
       subQuery: false,
       include: include,

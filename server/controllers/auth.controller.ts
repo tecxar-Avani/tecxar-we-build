@@ -79,11 +79,11 @@ export class AuthController {
             })
             if(req?.cookies?.OrderData){
               const orderData = JSON.parse(req?.cookies?.OrderData)
-              await this.createBuild(orderData,req,res).then((res) => console.log(res))
+              await this.createBuild(orderData,req,res)
             }
             if(req?.cookies?.awarenessData){
               const awarenessDatas = JSON.parse(req?.cookies?.awarenessData)
-              await this.createReview(awarenessDatas,req,res).then((res) => console.log(res))
+              await this.createReview(awarenessDatas,req,res)
             }
           res.redirect(`${config.urlHost}`);
         } else {
@@ -122,11 +122,11 @@ export class AuthController {
             })
             if(req?.cookies?.OrderData){
               const orderData = JSON.parse(req?.cookies?.OrderData)
-              await this.createBuild(orderData,req,res).then((res) => console.log(res))
+              await this.createBuild(orderData,req,res)
             }
             if(req?.cookies?.awarenessData){
               const awarenessDatas = JSON.parse(req?.cookies?.awarenessData)
-              await this.createReview(awarenessDatas,req,res).then((res) => console.log(res))
+              await this.createReview(awarenessDatas,req,res)
             }
             res.redirect(`${config.urlHost}`);
         } else {
@@ -156,11 +156,11 @@ export class AuthController {
           })
           if(req?.cookies?.OrderData){
             const orderData = JSON.parse(req?.cookies?.OrderData)
-            await this.createBuild(orderData,req,res).then((res) => console.log(res))
+            await this.createBuild(orderData,req,res)
           }
           if(req?.cookies?.awarenessData){
             const awarenessDatas = JSON.parse(req?.cookies?.awarenessData)
-            await this.createReview(awarenessDatas,req,res).then((res) => console.log(res))
+            await this.createReview(awarenessDatas,req,res)
           }
           res.redirect(`${config.urlHost}`);
       } 
