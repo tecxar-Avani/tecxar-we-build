@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import Link from "next/link";
 import { IVideoBuild } from "../../../@types/common";
 import { getAuthCookie, userSelector } from "../../store/reducers/user.reducer";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 const SearchPage = (props: any) => {
   const router = useRouter();
@@ -25,7 +26,6 @@ const SearchPage = (props: any) => {
   const { loggedInUser } = useAppSelector(userSelector);
   const [videosData, setVideosData] = useState<IVideoBuild[]>([]);
   const [buildListData, setBuildListData] = useState(buildList?.box);
-
   const pattern = new RegExp(
     "^(https?:\\/\\/)?" + // protocol
       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
@@ -61,8 +61,8 @@ const SearchPage = (props: any) => {
       (props.isLoggedIn == true || loggedInUser?.length > 0)
     ) {
       dispatch(getUsersBuild());
-    } else if (props.isLoggedIn == true || loggedInUser?.length > 0) {
-      dispatch(getOthersBuilds());
+    // } else if (props.isLoggedIn == true || loggedInUser?.length > 0) {
+    //   dispatch(getOthersBuilds());
     } else {
       dispatch(getBuilds());
     }
@@ -70,8 +70,9 @@ const SearchPage = (props: any) => {
 
   useEffect(() => {
     if (
-      buildList.box.length > 0 &&
-      (props.isLoggedIn || loggedInUser?.length > 0)
+      buildList.box.length > 0
+      //  &&
+      // (props.isLoggedIn || loggedInUser?.length > 0)
     ) {
       setVideosData(buildList.box);
     }
@@ -91,22 +92,24 @@ const SearchPage = (props: any) => {
 
 
   useEffect(() => {
-    if (
-      router &&
-      router.query.selfLearning &&
-      userBuilds?.box &&
-      (props.isLoggedIn || loggedInUser?.length > 0)
-    ) {
-      setVideosData(userBuilds.box);
-    } else if (
-      buildList.box.length == 0 &&
-      (props.isLoggedIn || loggedInUser?.length > 0)
+    // if (
+    //   router &&
+    //   router.query.selfLearning &&
+    //   userBuilds?.box &&
+    //   (props.isLoggedIn || loggedInUser?.length > 0)
+    // ) {
+    //   setVideosData(userBuilds.box);
+    // } else
+     if (
+      buildList.box.length == 0 
+      // &&
+      // (props.isLoggedIn || loggedInUser?.length > 0)
     ) {
       setVideosData(buildList.box);
     } else {
       setVideosData(buildList.box);
     }
-  }, [userBuilds, buildList]);
+  }, [buildList]);
 
   return (
     // loading ? (
@@ -116,7 +119,7 @@ const SearchPage = (props: any) => {
     // ) : (
     <div className="mx-4">
       <SearchBar searchResult={searchResult} />
-      {router && router.query.selfLearning ? (
+      {/* {router && router.query.selfLearning ? (
         <HeaderTitle
           title={
             buildListByUrl.allBuilds.length > 0 &&
@@ -145,7 +148,7 @@ const SearchPage = (props: any) => {
           }
           className={`title-list-of-profile py-4 Search`}
         />
-      ) : (
+      ) : ( */}
         <HeaderTitle
           title={
             buildListByUrl.allBuilds.length > 0 &&
@@ -174,7 +177,7 @@ const SearchPage = (props: any) => {
           }
           className="title-list-of-profile py-4 Search"
         />
-      )}
+      {/* )} */}
 
       <Row className="Search m-0">
         {videosData.map((videoData: any, index: number) => {
@@ -216,5 +219,4 @@ const SearchPage = (props: any) => {
     </div>
   );
 };
-
 export default SearchPage;

@@ -2,6 +2,7 @@ import React from "react";
 import { Image } from "react-bootstrap";
 import Head from "next/head";
 import VideoCard from "@/components/VideoCard";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 const UserGuide = () => {
   const videoData = {
@@ -79,5 +80,4 @@ const UserGuide = () => {
     </>
   );
 };
-
 export default UserGuide;

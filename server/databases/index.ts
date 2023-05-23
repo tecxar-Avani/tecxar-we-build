@@ -44,16 +44,30 @@ const sequelize = new Sequelize(database, user, password, {
     }
   },
 });
+const migrationsPath = `../migrations/*.${config.isDev ? "ts" : "js"}`;
+const seedersPath = `../seeders/*.${config.isDev ? "ts" : "js"}`;
+// const umzugMigrations = new Umzug({
+//   migrations: {
+//     glob: path.join(__dirname, `../migrations/*.${config.isDev ? "ts" : "js"}`),
+//   },
+//   context: sequelize.getQueryInterface(),
+//   storage: new SequelizeStorage({ sequelize }),
+//   logger,
+// });
 
 const umzugMigrations = new Umzug({
-  migrations: { glob: path.join(__dirname, `../migrations/*.${config.isDev ? 'ts' : 'js'}`) },
+  migrations: {
+    glob: [migrationsPath, { cwd: __dirname, ignore: "*.gitkeep" }],
+  },
   context: sequelize.getQueryInterface(),
   storage: new SequelizeStorage({ sequelize }),
   logger,
 });
 
 const umzugSeeders = new Umzug({
-  migrations: { glob: path.join(__dirname, `../seeders/*.${config.isDev ? 'ts' : 'js'}`) },
+  migrations: {
+    glob: [seedersPath, { cwd: __dirname, ignore: "*.gitkeep" }],
+  },
   context: sequelize.getQueryInterface(),
   storage: new SequelizeStorage({ sequelize }),
   logger,
@@ -61,19 +75,55 @@ const umzugSeeders = new Umzug({
 
 sequelize
   .authenticate()
-  .then(() => {
+  .then(async () => {
     if (cluster.isPrimary) {
     }
-    logger.info(`Connected to ${'My Sql'}, host: ${config.db.host}`);
+    try {
+      umzugMigrations.up();
+      await umzugSeeders.up();
+    } catch (error) {
+      logger.error(error);
+    }
+    logger.info(`Connected to ${"My Sql"}, host: ${config.db.host}`);
   })
-  .catch(err => {
+  .catch((err) => {
     throw err;
   });
 
-sequelize.afterBulkSync('afterSync', () => {
-  // umzugMigrations.up();
+sequelize.afterBulkSync("afterSync", () => {
+  umzugMigrations.up();
   umzugSeeders.up(); // Don't open comment
 });
+
+// const umzugMigrations = new Umzug({
+//   migrations: { glob: path.join(__dirname, `../migrations/*.${config.isDev ? 'ts' : 'js'}`) },
+//   context: sequelize.getQueryInterface(),
+//   storage: new SequelizeStorage({ sequelize }),
+//   logger,
+// });
+
+// const umzugSeeders = new Umzug({
+//   migrations: { glob: path.join(__dirname, `../seeders/*.${config.isDev ? 'ts' : 'js'}`) },
+//   context: sequelize.getQueryInterface(),
+//   storage: new SequelizeStorage({ sequelize }),
+//   logger,
+// });
+
+// sequelize
+//   .authenticate()
+//   .then(() => {
+//     if (cluster.isPrimary) {
+//     }
+//     logger.info(`Connected to ${'My Sql'}, host: ${config.db.host}`);
+//   })
+//   .catch(err => {
+//     throw err;
+//   });
+
+// sequelize.afterBulkSync('afterSync', () => {
+//   // umzugMigrations.up();
+//   umzugSeeders.up(); // Don't open comment
+// });
 const DB = {
   roles: Role,
   users: User,

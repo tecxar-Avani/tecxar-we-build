@@ -27,11 +27,14 @@ export class FlashController {
   @UseBefore(authMiddleware)
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new BoxReviews" })
-  async createReview(@Body() reviewData: any, @Req() req: RequestWithUser) {
+  async createReview(@Body() reviewData: any, @Req() req: RequestWithUser,res:Response) {
     try {
       reviewData.created_by = req.user.id;
       const createReviewData: IBoxReviews | null =
         await this.reviewService.createBoxReview(reviewData);
+        if(req?.cookies?.awarenessData) {
+        res?.cookie("awarenessData", "",  {expires: new Date(0)});
+      }
       return {
         status: true,
         data: createReviewData,

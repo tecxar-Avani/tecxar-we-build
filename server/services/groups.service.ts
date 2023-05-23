@@ -69,7 +69,6 @@ class GroupService {
       where: { box_id: boxId },
       group: ["group_id"],
       raw: true,
-      logging: console.log,
     });
     if (getGroupBox) {
       const result = await getGroupBox.map((a) => a.group_id);
@@ -102,7 +101,6 @@ class GroupService {
       attributes: ["id"],
       where: { build_id: buildId },
       raw: true,
-      logging: console.log,
     });
     if (getBox) {
       const result = await getBox.map((a) => a.id);
@@ -111,7 +109,7 @@ class GroupService {
         where: { box_id: result },
         group: ["group_id"],
         raw: true,
-        logging: console.log,
+
       });
 
       if (getGroupBox) {

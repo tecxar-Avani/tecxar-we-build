@@ -82,7 +82,6 @@ const NewBuildSideCard = (props: any) => {
   };
 
   const backGroundChange = (e:any) =>{
-console.log("------------------",e)
   }
   return (
     <Fragment>
@@ -466,8 +465,9 @@ console.log("------------------",e)
               id={`${hoverEffect && "blink"}`}
               className={`save bd-highlight cursor-pointer`}
               onClick={() => {
-                props.isLoggedIn === true || loggedInUser?.length > 0
-                  ? props.isSave === false &&
+                // props.isLoggedIn === true || loggedInUser?.length > 0
+                //   ?
+                   props.isSave === false &&
                     props.onSave(
                       videoType,
                       polarisationLevel,
@@ -475,7 +475,7 @@ console.log("------------------",e)
                       url,
                       videoDesc  
                     )
-                  : setModal5Open(true);
+                  // : setModal5Open(true);
               }}
               style={
                 props.id == undefined ||

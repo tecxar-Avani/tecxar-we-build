@@ -98,7 +98,7 @@ const SideBar = (toggle: any) => {
         <Sider
           trigger={null}
           collapsible
-          className={`h-full d-flex px-3 flex-column justify-content-center align-items-center mySidebar ${sideBarBG}`}
+          className={`h-full d-flex flex-column justify-content-center mySidebar ${sideBarBG} ${router.asPath == `/` ? 'Myborder' : ''}`}
         >
           <div className="d-flex flex-column justify-content-between align-items-center">
             {/* <Link href={"/search?selfLearning=true"}>
@@ -122,8 +122,8 @@ const SideBar = (toggle: any) => {
                 <span
                   onClick={(e) =>
                     toggle.isLoggedIn || loggedInUser?.length > 0
-                      ? setModal5Open(false)
-                      : setModal5Open(true)
+                      ? router.asPath == `/` ? toggle.setHightLight(false) : setModal5Open(false)
+                      : router.asPath == `/` ? toggle.setHightLight(true) : setModal5Open(true)
                   }
                 >
                   <Image src={`/img/profile.png`} className="img-fluid sideImg" />
@@ -144,6 +144,7 @@ const SideBar = (toggle: any) => {
         className="btnrv"
         handleCancel={handleCancel}
         isLoggedIn={toggle.isLoggedIn}
+        user={toggle.user}
         // setAuth={(data: any) => {
         //   setAuth(data);
         //   setModal5Open(false);

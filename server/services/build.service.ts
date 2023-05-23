@@ -162,7 +162,6 @@ class BuildService {
       order: [["id", "ASC"]],
       raw: true,
       subQuery: false,
-      logging: console.log,
     };
 
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
@@ -259,7 +258,6 @@ class BuildService {
       raw: true,
       limit: 10,
       subQuery: false,
-      logging: console.log,
     };
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
       option

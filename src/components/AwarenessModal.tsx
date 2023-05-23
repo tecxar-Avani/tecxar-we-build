@@ -46,9 +46,10 @@ const AwarenessModal = (props: any) => {
           form={form}
           id="form"
           onFinish={(data: any) =>
-            props.isLoggedIn || loggedInUser?.length > 0
-              ? props.handleSubmit(props.handleSubmit(data, props.title))
-              : setModal5Open(true)
+            // props.isLoggedIn || loggedInUser?.length > 0
+              // ? 
+              props.handleSubmit(props.handleSubmit(data, props.title))
+              // : setModal5Open(true)
           }
           layout="vertical"
           autoComplete="off"
