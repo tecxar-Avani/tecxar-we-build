@@ -70,7 +70,7 @@ pipeline {
         steps {
           sh '''
             cd $JENKINS_HOME/jobs/webuild-app/builds/$BUILD_ID/archive/dist
-            scp -i $JENKINS_HOME/.ssh/id_rsa webuild_app_build_$BUILD_ID.zip  root@139.84.165.89:~/uploads
+            scp -i $JENKINS_HOME/.ssh/id_rsa.pem webuild_app_build_$BUILD_ID.zip  root@139.84.165.89:~/uploads
             '''
         }
       }
