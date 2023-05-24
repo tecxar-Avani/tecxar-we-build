@@ -255,7 +255,6 @@ const NewBuild = (props: any) => {
       video_url: url,
       video_description:videoDesc,
     };
-
     const editData = {
       type_of_video: videoType,
       potential_polarization: polarisationLevel,
