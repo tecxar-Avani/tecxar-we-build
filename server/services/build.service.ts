@@ -230,7 +230,7 @@ class BuildService {
       subQuery: boolean;
       attributes: any;
       raw: boolean;
-      limit: number;
+      limit?: number;
       order: any;
       where: any;
       logging?: any;
