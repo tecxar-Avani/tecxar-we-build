@@ -255,7 +255,6 @@ class BuildService {
       nest: true,
       order: [["id", "DESC"]],
       raw: true,
-      limit: 10,
       subQuery: false,
     };
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
