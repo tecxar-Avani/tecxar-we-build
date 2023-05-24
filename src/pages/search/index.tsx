@@ -172,7 +172,7 @@ const SearchPage = (props: any) => {
               buildListData?.length == 0 ? (
               "Results"
             ) : (
-              "Want to learn from others’ builds?"
+              "Learn something new about yourself"
             )
           }
           className="title-list-of-profile py-4 Search"
