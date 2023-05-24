@@ -94,7 +94,6 @@ class FlashCardService {
         "flashCard.question",
         "flashCard.answer",
       ],
-      logging: console.log,
       order: [["id", "ASC"]],
       where: where,
       subQuery: false,
@@ -125,7 +124,6 @@ class FlashCardService {
       subQuery: boolean;
     } = {
       attributes: ["id", "flash_card_id", "response_type", "created_by"],
-      logging: console.log,
       order: [["id", "ASC"]],
       where: where,
       subQuery: false,
@@ -198,7 +196,6 @@ class FlashCardService {
         "answer",
         [col("created_by_user.id"), "user_id"],
       ],
-      logging: console.log,
       order: [["id", "ASC"]],
       where: where,
       subQuery: false,
@@ -274,7 +271,6 @@ class FlashCardService {
         "flashCard.answer",
         "flashCard.created_by",
       ],
-      logging: console.log,
       order: [["id", "ASC"]],
       where: where,
       subQuery: false,

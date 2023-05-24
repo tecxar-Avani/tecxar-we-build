@@ -309,7 +309,7 @@ const buildSlice = createSlice({
       .addCase(addBuild.fulfilled, (state, action) => {
         if (action.payload.data.status) {
           toast.success("");
-          Router.push("/search?selfLearning=true");
+          Router.push("/search?selfLearning=false");
           return {
             ...state,
             loading: false,
@@ -328,7 +328,7 @@ const buildSlice = createSlice({
           }
           else{
             toast.success("");
-            Router.push("/search?selfLearning=true");
+            Router.push("/search?selfLearning=false");
           }
 
           return {

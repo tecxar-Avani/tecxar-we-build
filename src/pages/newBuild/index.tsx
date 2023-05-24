@@ -36,7 +36,9 @@ import { toast } from "react-toastify";
 import { userSelector, getUserByEmail } from "@/store/reducers/user.reducer";
 import Head from "next/head";
 import moment from "moment";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+const cookieCutter = require("cookie-cutter");
+
 import {
   DragDropContext,
   DropResult,
@@ -237,7 +239,7 @@ const NewBuild = (props: any) => {
       }
     }
   };
-  const onSave = (
+  const onSave = async (
     videoType: any,
     polarisationLevel: any,
     difficultyLevel: any,
@@ -253,7 +255,6 @@ const NewBuild = (props: any) => {
       video_url: url,
       video_description:videoDesc,
     };
-
     const editData = {
       type_of_video: videoType,
       potential_polarization: polarisationLevel,
@@ -281,7 +282,10 @@ const NewBuild = (props: any) => {
         toast.warning("Please type the what is video about");
       }
       else{
-        dispatch(addBuild(saveData));
+        const data = await cookieCutter.set("OrderData",  JSON.stringify(saveData), {expires: new Date(Date.now() + 300000)});
+        props.isLoggedIn ? 
+        dispatch(addBuild(saveData)) : 
+        setModal5Open(true)
         setIsSave(true)
       }
     
@@ -317,16 +321,22 @@ const NewBuild = (props: any) => {
     setBoxId(e.boxId);
   };
 
-  const handleData = (comment: any, review: any) => {
+  const handleData = async (comment: any, review: any) => {
     const data = {
-      comment: comment.comment,
+      comment: comment?.comment,
       review_type: review,
       box_id: Number(boxId),
       build_id: buildId,
     };
-    dispatch(addAwareness(data));
-    setReview(review);
-    setAwarenessModal(false);
+    if(data.comment && data.review_type){
+      const dataA = await cookieCutter.set("awarenessData",  JSON.stringify(data), {expires: new Date(Date.now() + 300000)});
+      props.isLoggedIn ? 
+      dispatch(addAwareness(data)) : 
+      setModal5Open(true)
+      // setReview(review);
+      setAwarenessModal(false);
+    }
+   
   };
 
   // for awarenessType modal
@@ -1197,8 +1207,22 @@ if(editGroupId && editGroupId !== undefined && groupTitle?.target?.value != ""){
   );
 };
 
-export default NewBuild;
-export const getServerSideProps: GetServerSideProps = async () => {
-  resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
-  return { props: { data: [] } };
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext | any) => {
+  const ctx = context.req;
+  if (ctx.session && ctx.session?.dbUser) {
+    return {
+      props: {
+        user: ctx.session?.dbUser,
+      },
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
 };
+export default NewBuild;
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+//   return { props: { data: [] } };
+// };

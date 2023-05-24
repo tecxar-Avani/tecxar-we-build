@@ -41,7 +41,7 @@ export class FlashController {
   @HttpCode(201)
   @OpenAPI({ summary: "Create a new build" })
   async createBuild(
-    @Body() videoBuildData: videoBuildDto,
+    @Body() videoBuildData: videoBuildDto | any,
     @Req() req: RequestWithUser
   ) {
     try {

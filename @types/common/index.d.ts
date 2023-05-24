@@ -105,6 +105,7 @@ export interface ICurrentUser {
   email?: string;
   role_id?: number;
   profile_image?: string | File | null;
+  message?: string;
 }
 
 export interface ICreateUser {

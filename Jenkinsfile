@@ -61,7 +61,7 @@ pipeline {
         steps {
           
           sh '''
-            cd $JENKINS_HOME/jobs/webuild-app/branches/${BRANCH_NAME}/builds/$BUILD_ID/archive/dist
+            cd $JENKINS_HOME/jobs/webuild-app/builds/$BUILD_ID/archive/dist
             zip -r webuild_app_build_$BUILD_ID .
             '''
         }
@@ -69,7 +69,7 @@ pipeline {
       stage('Uploading') {
         steps {
           sh '''
-            cd $JENKINS_HOME/jobs/webuild-app/branches/${BRANCH_NAME}/builds/$BUILD_ID/archive/dist
+            cd $JENKINS_HOME/jobs/webuild-app/builds/$BUILD_ID/archive/dist
             scp -i $JENKINS_HOME/.ssh/id_rsa webuild_app_build_$BUILD_ID.zip  root@139.84.165.89:~/uploads
             '''
         }
@@ -104,7 +104,7 @@ pipeline {
         steps{
           echo "cleaning upload artifact"
           sh '''
-            cd $JENKINS_HOME/jobs/webuild-app/branches/${BRANCH_NAME}/builds/$BUILD_ID/archive/dist
+            cd $JENKINS_HOME/jobs/webuild-app/builds/$BUILD_ID/archive/dist
             rm -f webuild_app_build_$BUILD_ID.zip
             '''
         }

@@ -49,8 +49,6 @@ let result = value.replace(wsRegex, "");
       props.responseCallback(propsId, value, id);
     }
     if(nextId != null){
-      console.log("nextId",nextId)
-
       setTimeout(() => {
         const data = document.getElementById(nextId)?.focus()
       }, 100);

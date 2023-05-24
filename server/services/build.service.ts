@@ -11,7 +11,6 @@ class BuildService {
   public async createBuild(
     buildData: IVideoBuild
   ): Promise<IVideoBuild | null> {
-   
     if (isEmpty(buildData)) {
       throw new HttpException(400, "Enter the build data");
     }
@@ -26,7 +25,7 @@ class BuildService {
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll({
       where: { created_by: userId },
       raw: true,
-      logging:true
+      logging: true,
     });
 
     if (!videoBuilds) {
@@ -134,7 +133,7 @@ class BuildService {
       where: any;
       raw: boolean;
       order: any;
-      logging: any;
+      logging?: any;
     } = {
       attributes: [
         "id",
@@ -162,7 +161,6 @@ class BuildService {
       order: [["id", "ASC"]],
       raw: true,
       subQuery: false,
-      logging: console.log,
     };
 
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
@@ -235,7 +233,7 @@ class BuildService {
       limit: number;
       order: any;
       where: any;
-      logging: any;
+      logging?: any;
     } = {
       attributes: [
         "id",
@@ -259,7 +257,6 @@ class BuildService {
       raw: true,
       limit: 10,
       subQuery: false,
-      logging: console.log,
     };
     const videoBuilds: IVideoBuild[] | null = await this.videoBuild.findAll(
       option
@@ -268,7 +265,6 @@ class BuildService {
   }
 
   public async updateBuild(id: number, data: any): Promise<IVideoBuild | null> {
-
     const videoBuildsUpdate: any | null = await this.videoBuild.update(
       { ...data },
       { where: { id: id } }
@@ -280,11 +276,11 @@ class BuildService {
     }
   }
 
-  public async deleteBuild(id: number): Promise<IVideoBuild[] | null> { 
+  public async deleteBuild(id: number): Promise<IVideoBuild[] | null> {
     const videoBuildsDelete: any | null = await this.videoBuild.destroy({
       where: { id: id },
     });
-    
+
     if (!videoBuildsDelete) {
       return null;
     } else {
