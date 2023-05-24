@@ -134,7 +134,7 @@ class BuildService {
       where: any;
       raw: boolean;
       order: any;
-      logging: any;
+      logging?: any;
     } = {
       attributes: [
         "id",
@@ -234,7 +234,7 @@ class BuildService {
       limit: number;
       order: any;
       where: any;
-      logging: any;
+      logging?: any;
     } = {
       attributes: [
         "id",
