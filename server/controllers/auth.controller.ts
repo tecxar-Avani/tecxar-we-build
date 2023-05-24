@@ -222,6 +222,7 @@ export class AuthController {
         await this.flashCardService.createBulkFlashCard(newArr);
       }
       res.cookie("OrderData", "",  {expires: new Date(0)});
+      res.cookie("orderMessage","Video Build created successfully.",{ expires: new Date(Date.now() + 7000)})
       return {
         status: true,
         data: createBuildData,
@@ -340,6 +341,8 @@ export class AuthController {
       const createReviewData: IBoxReviews | null =
         await this.reviewService.createBoxReview(reviewData);
       res.cookie("awarenessData", "",  {expires: new Date(0)});
+      res.cookie("awareMessage","Review created successfully.",{ expires: new Date(Date.now() + 7000)})
+
       return {
         status: true,
         data: createReviewData,

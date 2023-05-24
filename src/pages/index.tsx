@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import GoogleButton from "react-google-button";
 import { Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+const cookieCutter = require("cookie-cutter");
+
 // import Link from "antd/lib/typography/Link";
 const { Content } = Layout;
 
@@ -15,6 +18,18 @@ const Home: NextPage = (props:any) => {
   useEffect(() => {
     if (router.asPath == "/?isLoggedIn") {
       window.close();
+    }
+  }, []);
+  useEffect(() => {
+    const orderMessage = cookieCutter.get("orderMessage");
+    if(orderMessage){
+      toast.success("")
+    }
+  }, []);
+  useEffect(() => {
+    const awareMessage = cookieCutter.get("awareMessage");
+    if(awareMessage){
+      toast.success("")
     }
   }, []);
   return (
