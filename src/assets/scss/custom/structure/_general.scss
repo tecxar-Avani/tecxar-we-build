@@ -107,6 +107,7 @@ body,
     border-radius: 10px;
     font-size: 20px;
 }
+
 }
 @media only screen and (min-width: 768px) and (max-width: 992px) {
   .we-build {
@@ -1229,7 +1230,7 @@ hr {
 
 .inspirationButton {
   background-color: #7d1597;
-  transform: translate(19%, 154%);
+  transform: translate(19%, 173%);
   color: #f8f8f8;
   position: sticky;
   z-index: 1;
@@ -1466,9 +1467,17 @@ hr {
     display: none !important;
   }
   .ant-modal-content{
-    background-color: #FF6B00;
+    background-color: #f1f1f1;
   }
 }
+// .btnModel {
+//   .ant-btn {
+//     display: none !important;
+//   }
+//   .ant-modal-content{
+//     background-color: #FF6B00;
+//   }
+// }
 
 .googleicon {
   margin-top: -8px;

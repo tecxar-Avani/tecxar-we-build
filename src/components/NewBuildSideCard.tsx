@@ -169,7 +169,7 @@ const NewBuildSideCard = (props: any) => {
           }
           className="triangle align-items-center border-bottom border-dark"
         >
-          <div className="mt-3 mb-0 triangle1 ms-3">
+          <div className="mt-3 mb-0 triangle1 ms-1">
             <span
               onClick={() => {
                 props.value == "" ? {} : props.setAwarenessModal(true);

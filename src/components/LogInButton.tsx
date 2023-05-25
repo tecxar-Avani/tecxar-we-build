@@ -46,7 +46,7 @@ const LogInButton = (props: any) => {
         destroyOnClose={true}
         onCancel={props.handleCancel}
       >
-        <div className="mb-n3">
+        {/* <div className="mb-n3">
           <Button
             className="m-auto landigPageButton"
             onClick={() => {
@@ -62,6 +62,23 @@ const LogInButton = (props: any) => {
               window.open(`/api/google`,"_self");
             }}
           >{router.pathname == `/newBuild` || `/search` ? "Login" : "BOOK YOUR ONBOARDING HERE"}</Button>
+          <br />
+        </div> */}
+         <div className="mb-n3">
+          <GoogleButton
+            className="m-auto googleButton"
+            onClick={() => {
+              if (
+                props.isLoggedIn == false ||
+                props.isLoggedIn == undefined ||
+                props.isLoggedIn == "undefined" ||
+                loggedInUser?.length == 0
+              ) {
+                getCookie();
+              }
+              window.open(`/api/google`, "_self");
+            }}
+          />
           <br />
         </div>
       </Modal>
