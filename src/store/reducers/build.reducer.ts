@@ -79,6 +79,7 @@ export const addBuild = createAsyncThunk(
   async (createBuildData: IVideoBuild | any, { dispatch }) => {
     const { status, data } = await BuildService.addBuild(createBuildData);
     dispatch(getUsersBuild);
+    dispatch(getBuilds)
     return { status, data };
   }
 );
