@@ -458,7 +458,7 @@ const NewBuildSideCard = (props: any) => {
             </div>
           </div>
         </div> */}
-        <div className="px-3 mt-4">
+        <div className="px-3 mt-4 py-1">
           <div className="d-flex owd bd-highlight justify-content-between align-items-center">
             {/* {props.isLoggedIn === true ? ( */}
             <div
