@@ -61,7 +61,7 @@ const LogInButton = (props: any) => {
               // getCallBack();
               window.open(`/api/google`,"_self");
             }}
-          >BOOK YOUR ONBOARDING HERE</Button>
+          >{router.pathname == `/newBuild` || `/search` ? "Login" : "BOOK YOUR ONBOARDING HERE"}</Button>
           <br />
         </div>
       </Modal>
